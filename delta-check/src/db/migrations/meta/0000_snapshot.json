@@ -1,5 +1,5 @@
 {
-  "id": "4a71e8f1-24f3-43e6-a694-63aa1cb7d290",
+  "id": "00e31611-08f2-40e5-aa8a-aa319f83aeca",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1270,14 +1270,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "vehicle_year_min": {
-          "name": "vehicle_year_min",
+        "vehicle_age_min": {
+          "name": "vehicle_age_min",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
-        "vehicle_year_max": {
-          "name": "vehicle_year_max",
+        "vehicle_age_max": {
+          "name": "vehicle_age_max",
           "type": "integer",
           "primaryKey": false,
           "notNull": false

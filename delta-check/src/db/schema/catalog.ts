@@ -92,8 +92,12 @@ export const rateRules = pgTable("rate_rules", {
   rateTableId: uuid("rate_table_id")
     .notNull()
     .references(() => rateTables.id),
-  vehicleYearMin: integer("vehicle_year_min"),
-  vehicleYearMax: integer("vehicle_year_max"),
+  // Antigüedad del vehículo en años (currentYear - año del vehículo), no
+  // año de fabricación — así la regla sigue siendo válida al pasar los años
+  // calendario. Ver EXCEL-AUDIT.md §2.1: la fórmula real del Excel es
+  // YEAR(TODAY()) - año_vehículo, comparada contra <=10, 11-13, >13.
+  vehicleAgeMin: integer("vehicle_age_min"),
+  vehicleAgeMax: integer("vehicle_age_max"),
   valueMinCents: bigint("value_min_cents", { mode: "number" }),
   valueMaxCents: bigint("value_max_cents", { mode: "number" }),
   bodyType: text("body_type"), // LIVIANO | PICKUP

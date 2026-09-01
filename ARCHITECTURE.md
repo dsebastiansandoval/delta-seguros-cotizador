@@ -26,6 +26,8 @@
 | Tests | Vitest + Playwright | Dominio con Vitest; flujo de cotización con Playwright |
 
 > **Nota Next.js 16:** el archivo de interceptación de requests (guard de sesión, RBAC por ruta, headers de CSP) se llama **`proxy.ts`** con función exportada `proxy`, no `middleware.ts`/`middleware` — Next.js 16 renombró la convención y corre siempre en runtime `nodejs` (ya no en `edge`). Verificado contra los docs versionados que trae instalado `node_modules/next/dist/docs/` — no asumido de memoria.
+>
+> **Nota Auth.js v5:** `Session` se declara en `@auth/core/types`, no en `next-auth` (que solo lo re-exporta) — pero incluso augmentando el módulo correcto, la fusión de tipos no aplicó de forma confiable en este proyecto (`Session extends DefaultSession {}` con cuerpo propio vacío). Se resolvió centralizando la sesión en `getAppSession()` (`src/lib/auth.ts`) — un solo cast, documentado, en un solo lugar — en vez de perseguir el caso límite de TypeScript. Cualquier código nuevo que necesite `organizationId`/`userId` de la sesión usa ese helper, nunca `auth()` crudo.
 
 **Por qué este stack soporta las APIs futuras (Fase 4):** la capa de aseguradoras se define como un *puerto* (`InsurerGateway`). En Fase 1 el adaptador es `ManualRateAdapter` (lee tasas de la BD); en Fase 4 se agregan `AigApiAdapter`, `ZurichApiAdapter`, etc. implementando la misma interfaz. **Ningún componente ni servicio de cotización cambia** cuando se conecta una API real — solo se registra otro adaptador. Ver §5.
 
@@ -51,7 +53,12 @@ CREATE POLICY tenant_isolation ON clients
 ```ts
 // Cada request de un agente autenticado fija el tenant antes de cualquier query.
 // No hay forma de "olvidarlo" porque vive en el middleware de sesión, no en cada handler.
-await db.execute(sql`SET LOCAL app.current_org_id = ${session.organizationId}`);
+//
+// OJO: `SET LOCAL x = $1` no es SQL válido — Postgres solo acepta literales
+// ahí, no parámetros (bug real, encontrado probando el flujo completo en el
+// navegador). set_config(name, value, is_local) sí acepta parámetros;
+// is_local=true es el equivalente exacto de SET LOCAL.
+await db.execute(sql`SELECT set_config('app.current_org_id', ${session.organizationId}, true)`);
 ```
 
 ### Qué es del tenant y qué es compartido
@@ -284,7 +291,7 @@ erDiagram
 | `coverages` 🌐 | `id`, `code` (`RC`,`AP`,`GM`,`AUTO_SUSTITUTO`,`AMPARO_PATRIMONIAL`…), `name`, `branch`, `value_type` (`BOOLEAN`\|`AMOUNT`\|`TEXT`), `display_order` |
 | `insurer_coverages` | `insurer_id`, `coverage_id`, `granted` (bool), `amount_cents`, `text_value`, `valid_from`, `valid_to` — **versionado por vigencia, nunca UPDATE destructivo** |
 | `rate_tables` | `id`, `organization_id`, `insurer_id`, `branch`, `visibility` (`PRIVATE`\|`TEMPLATE`), `cloned_from_id`, `is_confirmed`, `valid_from`, `valid_to`, `created_by` — ver §1b para el modo plantilla |
-| `rate_rules` | `id`, `rate_table_id`, `vehicle_year_min/max`, `value_min_cents`, `value_max_cents`, `body_type`, `usage_type`, `rate_percent` (`numeric(7,5)`), `min_premium_cents`, `emission_fee_cents` |
+| `rate_rules` | `id`, `rate_table_id`, `vehicle_age_min/max`, `value_min_cents`, `value_max_cents`, `body_type`, `usage_type`, `rate_percent` (`numeric(7,5)`), `min_premium_cents`, `emission_fee_cents` |
 | `deductible_rules` | `id`, `insurer_id`, `kind` (`PARCIAL`\|`TOTAL_DANO`\|`TOTAL_ROBO`), `percent_of_loss`, `percent_of_insured_value`, `min_amount_cents`, `requires_tracker`, `text_label` |
 
 **Cotización** (🏢 todas)
@@ -324,7 +331,7 @@ CREATE INDEX idx_quote_options_risk     ON quote_options (quote_risk_id, total_p
 CREATE INDEX idx_policies_renewal       ON policies (ends_at) WHERE lifecycle_status = 'VIGENTE';
 CREATE INDEX idx_clients_document       ON clients (document_number);
 CREATE INDEX idx_audit_entity           ON audit_logs (entity_type, entity_id, created_at DESC);
-CREATE INDEX idx_rate_rules_lookup      ON rate_rules (rate_table_id, vehicle_year_min, vehicle_year_max);
+CREATE INDEX idx_rate_rules_lookup      ON rate_rules (rate_table_id, vehicle_age_min, vehicle_age_max);
 ```
 
 ---
@@ -566,6 +573,8 @@ Logo: `Delta_Logocolor.png` (fondo claro) / `Delta_Logoblanco.png` (fondo oscuro
 - **Enmascaramiento:** vistas `*_masked` (ej. cédula → `17****4001`) usadas por el rol `LECTOR`; el dato completo solo se expone con permiso `client:read_pii`.
 - **Menor privilegio:** rol `app_rw` (CRUD, sin DDL) para la app · `app_ro` para reportes · `app_migrate` (DDL) solo en CI de migraciones. Ningún servicio usa el superusuario.
 - **Nunca almacenar:** tarjetas de crédito ni contraseñas en texto plano. La forma de pago se guarda como *plan* (`CONTADO`/`TARJETA` + cuotas), **jamás el número de tarjeta**.
+
+**⚠️ Hueco identificado, sin cerrar:** RLS con `FORCE` en `users` bloquea, por diseño, resolver "a qué `organization_id` pertenece este email" en el momento del login — todavía no hay tenant fijado para que la política deje pasar la fila. Hoy no se manifiesta porque el pool de conexión local corre como superusuario de Postgres (salta RLS por completo, verificado). En cuanto exista el rol `app_rw` de arriba, ese lookup se rompe tal como está. Solución pendiente de implementar: un rol de BD aparte y estrecho (`app_auth`, sin `FORCE RLS` o con una política de excepción explícita) usado *solo* por el callback de login de Auth.js para ese único lookup — nunca por el resto del código. No se construye todavía; queda documentado para no descubrirlo en producción.
 
 ### 8.4 Roles (RBAC)
 

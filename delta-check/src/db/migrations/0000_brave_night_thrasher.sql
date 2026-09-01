@@ -189,8 +189,8 @@ CREATE TABLE "insurers" (
 CREATE TABLE "rate_rules" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"rate_table_id" uuid NOT NULL,
-	"vehicle_year_min" integer,
-	"vehicle_year_max" integer,
+	"vehicle_age_min" integer,
+	"vehicle_age_max" integer,
 	"value_min_cents" bigint,
 	"value_max_cents" bigint,
 	"body_type" text,
