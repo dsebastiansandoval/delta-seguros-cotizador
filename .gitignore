@@ -1,0 +1,8 @@
+# Excel fuente (contiene datos sensibles de negociación con aseguradoras)
+COTIZADOR DELTA.xlsm
+
+# sistema
+.DS_Store
+
+# delta-check/ tiene su propio .gitignore (generado por create-next-app,
+# node_modules/.next/.env* etc.) — no se duplica acá.

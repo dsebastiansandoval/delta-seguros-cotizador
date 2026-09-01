@@ -1,0 +1,581 @@
+<title>Cotizador Delta — Vista Previa MVP</title>
+<style>
+  :root{
+    --navy-900:#0f2340;
+    --navy-800:#152a52;
+    --navy-700:#1b325f;
+    --accent-600:#01579e;
+    --accent-500:#1f74bd;
+    --accent-100:#e4eef8;
+    --paper:#f5f6f9;
+    --surface:#ffffff;
+    --line:#dfe1e6;
+    --line-strong:#c6c9d1;
+    --ink:#182338;
+    --muted:#6b6f76;
+    --good:#157a4f;
+    --good-bg:#e5f5ee;
+    --warn:#9a6b0c;
+    --warn-bg:#fbf1de;
+    --bad:#af3a26;
+    --bad-bg:#fbe9e5;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(15,35,64,.06), 0 8px 24px -12px rgba(15,35,64,.18);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --navy-900:#0a1730;
+      --navy-800:#132444;
+      --navy-700:#1a2f56;
+      --accent-600:#3d8fd6;
+      --accent-500:#5da3e0;
+      --accent-100:#132a44;
+      --paper:#0b1220;
+      --surface:#111a2c;
+      --line:#26324a;
+      --line-strong:#374561;
+      --ink:#e7ebf3;
+      --muted:#9aa3b5;
+      --good:#3fbf8c;
+      --good-bg:#0f2a22;
+      --warn:#e0ab4c;
+      --warn-bg:#2c2311;
+      --bad:#e2695a;
+      --bad-bg:#301917;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy-900:#0a1730; --navy-800:#132444; --navy-700:#1a2f56;
+    --accent-600:#3d8fd6; --accent-500:#5da3e0; --accent-100:#132a44;
+    --paper:#0b1220; --surface:#111a2c; --line:#26324a; --line-strong:#374561;
+    --ink:#e7ebf3; --muted:#9aa3b5;
+    --good:#3fbf8c; --good-bg:#0f2a22; --warn:#e0ab4c; --warn-bg:#2c2311; --bad:#e2695a; --bad-bg:#301917;
+    color-scheme:dark;
+  }
+  :root[data-theme="light"]{
+    --navy-900:#0f2340; --navy-800:#152a52; --navy-700:#1b325f;
+    --accent-600:#01579e; --accent-500:#1f74bd; --accent-100:#e4eef8;
+    --paper:#f5f6f9; --surface:#ffffff; --line:#dfe1e6; --line-strong:#c6c9d1;
+    --ink:#182338; --muted:#6b6f76;
+    --good:#157a4f; --good-bg:#e5f5ee; --warn:#9a6b0c; --warn-bg:#fbf1de; --bad:#af3a26; --bad-bg:#fbe9e5;
+    color-scheme:light;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .figures{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+  h1,h2,h3{text-wrap:balance;margin:0;}
+  a{color:inherit;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    font-size:11.5px;
+    font-weight:700;
+    color:var(--accent-600);
+  }
+
+  /* ---- notice banner ---- */
+  .notice{
+    background:var(--navy-900);
+    color:#cfe0f4;
+    font-size:13px;
+    text-align:center;
+    padding:8px 16px;
+    letter-spacing:.02em;
+  }
+  .notice b{color:#fff;}
+
+  /* ---- top bar ---- */
+  .topbar{
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 28px;
+    gap:20px;
+    position:sticky;
+    top:0;
+    z-index:20;
+  }
+  .topbar-left{display:flex;align-items:center;gap:22px;}
+  .logo-mark{height:30px;display:block;}
+  .topnav{display:flex;gap:4px;}
+  .topnav a{
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--muted);
+    padding:8px 12px;
+    border-radius:7px;
+    text-decoration:none;
+  }
+  .topnav a.active{color:var(--navy-800);background:var(--accent-100);}
+  @media (prefers-color-scheme: dark){ .topnav a.active{color:#dfeaf7;} }
+  :root[data-theme="dark"] .topnav a.active{color:#dfeaf7;}
+  :root[data-theme="light"] .topnav a.active{color:var(--navy-800);}
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .search{
+    display:flex;align-items:center;gap:8px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:7px 12px;
+    font-size:13px;
+    color:var(--muted);
+    width:220px;
+  }
+  .avatar{
+    width:32px;height:32px;border-radius:50%;
+    background:var(--navy-800);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12.5px;font-weight:700;
+  }
+
+  /* ---- shell ---- */
+  .shell{display:flex;max-width:1320px;margin:0 auto;}
+  .sidebar{
+    width:220px;flex-shrink:0;
+    padding:24px 14px;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .side-section{margin-bottom:18px;}
+  .side-label{
+    font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);padding:0 12px;margin-bottom:8px;
+  }
+  .side-link{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 12px;border-radius:8px;
+    font-size:13.5px;font-weight:600;color:var(--ink);
+    text-decoration:none;
+  }
+  .side-link .dot{width:6px;height:6px;border-radius:50%;background:var(--line-strong);flex-shrink:0;}
+  .side-link.active{background:var(--navy-800);color:#fff;}
+  .side-link.active .dot{background:#7fb3e0;}
+
+  .main{flex:1;min-width:0;padding:28px 28px 80px;display:flex;flex-direction:column;gap:34px;}
+
+  .page-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .page-head h1{font-size:23px;font-weight:700;letter-spacing:-.01em;}
+  .page-head p{margin:4px 0 0;color:var(--muted);font-size:13.5px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13.5px;font-weight:700;
+    padding:10px 16px;border-radius:8px;
+    border:1px solid transparent;cursor:default;
+    text-decoration:none;
+  }
+  .btn-primary{background:var(--accent-600);color:#fff;}
+  .btn-ghost{background:transparent;border-color:var(--line-strong);color:var(--ink);}
+
+  /* ---- kpi row ---- */
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;box-shadow:var(--shadow);
+  }
+  .kpi .label{font-size:12px;color:var(--muted);font-weight:600;}
+  .kpi .value{font-size:25px;font-weight:700;margin-top:6px;letter-spacing:-.01em;}
+  .kpi .delta{font-size:12px;margin-top:6px;font-weight:600;}
+  .kpi .delta.up{color:var(--good);}
+  .kpi .delta.flat{color:var(--muted);}
+
+  /* ---- card ---- */
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .card-head{
+    padding:18px 22px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .card-head h2{font-size:16.5px;font-weight:700;}
+  .card-head .sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .card-body{padding:22px;}
+  .step-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--accent-100);color:var(--accent-600);
+    font-size:11.5px;font-weight:700;letter-spacing:.03em;
+    padding:5px 10px;border-radius:999px;
+  }
+
+  /* ---- form ---- */
+  .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 18px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:12px;font-weight:600;color:var(--muted);}
+  .field .input{
+    border:1px solid var(--line-strong);border-radius:8px;
+    padding:10px 12px;font-size:13.5px;background:var(--paper);color:var(--ink);
+  }
+  .field.span-2{grid-column:span 2;}
+  .field.span-3{grid-column:span 3;}
+  .riesgo-tabs{display:flex;gap:8px;margin-bottom:16px;}
+  .riesgo-tab{
+    font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:8px;
+    background:var(--paper);border:1px solid var(--line);color:var(--muted);
+  }
+  .riesgo-tab.active{background:var(--navy-800);color:#fff;border-color:var(--navy-800);}
+
+  /* ---- comparator ---- */
+  .comparator-scroll{overflow-x:auto;}
+  table.compare{border-collapse:collapse;width:100%;min-width:900px;font-size:13px;}
+  table.compare th, table.compare td{
+    padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;
+  }
+  table.compare thead th{
+    background:var(--paper);position:sticky;top:0;
+    font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700;
+  }
+  table.compare td.row-label, table.compare th.row-label{
+    position:sticky;left:0;background:var(--surface);
+    font-weight:600;white-space:normal;min-width:190px;box-shadow:1px 0 0 var(--line);
+  }
+  table.compare thead th.row-label{background:var(--paper);}
+  table.compare .insurer-head{display:flex;flex-direction:column;gap:2px;}
+  table.compare .insurer-head .name{color:var(--ink);font-size:12.5px;}
+  .pill{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;
+  }
+  .pill.yes{background:var(--good-bg);color:var(--good);}
+  .pill.no{background:var(--bad-bg);color:var(--bad);}
+  .pill.limit{background:var(--warn-bg);color:var(--warn);}
+  .best-col{background:var(--accent-100);}
+  table.compare tr.premium-row td{
+    font-weight:700;font-size:14px;background:var(--paper);
+    border-top:2px solid var(--line-strong);border-bottom:none;
+  }
+  .best-tag{
+    display:inline-flex;align-items:center;gap:5px;
+    background:var(--navy-800);color:#fff;font-size:10.5px;font-weight:700;
+    padding:3px 8px;border-radius:6px;margin-top:4px;letter-spacing:.02em;
+  }
+  .legend{display:flex;gap:18px;padding:14px 22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);flex-wrap:wrap;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+
+  /* ---- proposal preview ---- */
+  .proposal-wrap{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
+  .proposal-doc{
+    flex:1 1 460px;
+    background:var(--surface);border:1px solid var(--line);border-radius:10px;
+    box-shadow:var(--shadow);padding:30px 34px;font-size:12.5px;line-height:1.55;
+    min-width:340px;
+  }
+  .proposal-doc .doc-logo{height:26px;margin-bottom:18px;}
+  .proposal-doc h3{font-size:14px;margin-bottom:2px;}
+  .proposal-doc .ref{color:var(--muted);font-size:11.5px;margin-bottom:16px;}
+  .proposal-doc .doc-total{
+    margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-strong);
+    display:flex;justify-content:space-between;font-weight:700;font-size:15px;
+  }
+  .proposal-actions{flex:0 0 220px;display:flex;flex-direction:column;gap:10px;}
+  .proposal-actions .btn{justify-content:center;}
+  .mini-note{font-size:11.5px;color:var(--muted);}
+
+  /* ---- back office strip ---- */
+  .modules-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  .module-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:18px;box-shadow:var(--shadow);
+  }
+  .module-card .m-title{font-weight:700;font-size:13.5px;margin-bottom:4px;}
+  .module-card .m-sub{font-size:12px;color:var(--muted);margin-bottom:14px;}
+  .bars{display:flex;flex-direction:column;gap:8px;}
+  .bar-row{display:flex;align-items:center;gap:10px;font-size:11.5px;color:var(--muted);}
+  .bar-track{flex:1;height:6px;border-radius:99px;background:var(--paper);overflow:hidden;}
+  .bar-fill{height:100%;border-radius:99px;background:var(--accent-600);}
+
+  footer{
+    text-align:center;padding:26px;color:var(--muted);font-size:11.5px;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width:900px){
+    .sidebar{display:none;}
+    .form-grid,.kpi-row,.modules-row{grid-template-columns:1fr 1fr;}
+  }
+</style>
+
+<div class="notice">Vista previa visual del <b>Cotizador Delta</b> · Maqueta de interfaz — sin funcionalidad real, datos de ejemplo</div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <img class="logo-mark" alt="Delta Seguros" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAAArCAYAAAAQeugIAAALaklEQVR42u1dT0wb2Rn/GRw75U/sMUPAqVSwiUJ3NylObTWREikUkSZSlIQoAVkcbKOtQGoP68NuoKeFQyXY5EAvkcKhxj4gC1cK2Sg9tFFKqm67qoaEVVhtt1IckFKcgBNDCVEhIfTg95zHMOMZGww4mk9Cij1vvvfezM/fn9/3zUSHTZZCYwkqDl00AxgBcALAFICmaSE4Dk00kRDdZivc5/ICwCAAL/P1PIDqaSE4p11yTcRSsJnKivj9AOAQARAATAD82uXWJOcgNFcfA4B+mcP+fS5vtXbJNckZCEv3OQCgnsSBUmIC0K1dck1yCMI6GgumE80SapIbEFb85CJIzFelMHRUu+SabHp2zFAyk8TlysnUtBDULKEmm28JKw5dBIn1TApDtXhQE0nRb+RkY2kljfM+URh6b1oIDuZqExWH3SgoNHQC6FV5yh0AYzEh1CU+wNWcwG6uqhnAcBZLqXn7ZjlaoFdcS0tMCEXEX1pdHgD4M4DGDV4SS0wIJaQOMHPciQmhvrx3x4SYHgFwXmHoz599d3uUO3vFjCSFUw1gDoAvHm6b26zNkAs8DKCZfNVHgWbcY4XlwEk7gHZy3E7GdEndDKKrF0CnWFcK/A43CODaiT5XTAiNyaxFUofEnC8AcAAi5IfSJ6EvEhNCLQDAf3AGu4rL2gE4yTrAroOVovIDMFUddQIQAERjQqgmr90xQ8koATA4LQRHubNXKGC9SNI45zc7UYkJIQBoAbDOCiz9N4aYEIoSENQAGCCHeq0uT6+Mri4AUbn5no2HMfPwRh8AF4AxAh7xWuj50XQANO6xggCZIz+MFjWWKv7dbcSE0MDLpxMdAE6mG2uqOgrmR2G3ujzNeQ7COkCemKYyD6C79MgvAaAJ6znEOt4dyEWsGFUC69uV5Q4CMgDotLo87TLDx9LpWllawOvF5wkCai7NWtLqKf3hT0HccDQbN7nw5D4NM/pk1kHFyfw7f0HI154GAB+AOoWh/dNCcNJoS19J4d0B81Zv/NmDMMgNo+DozFZXIvpXUPcpdViNjl3FZdQS3sl2HS+fTlAgclKxLgHdHWadzVaXx553iUmhsQSG0gqzCis4BaCfdwdoZizHIZqILt9Wb/7l0wmUVB7sIoG63erydKqxQkws2BgTQidXlhZAEoFEtmth3H/WsvDkPhae3JcE8W6uioKwg6zzOjnUvtF5t9wSEkrGr4aSYbpmlADm5d0Bx1ZvnnFh1GWqykoL9Abq1qL5QIGw8Sb5sQwwP5j2vHLHDCXjVxj6jYiSGVehvn8br8OYRLwkawWJ627eiOXbSjHbU66YpYVoYsZZXZ7OvAFhWe0p6lqVrGAKpPN3+wB1bVwneHegaZuuQ5S5IXJBfafV5Vkt0BtW8Y4DzAsQEsvdHhNCAwAwP/U1RIBszgsQMpSMV2HozWkhmKJeXs/8C0iW9H6nxhpuR5KiUvpiQkiHJLcaUZOF7wQRJSQAgFez/6bWP+UBrC5PYx6AsI5aQSVZZ/UStz6j584rnFuF7Wl+pRliQq7SIEogWsgN3PEgZBKSdqvLs0r/AKyKwo/2HQ1Cs+04IM3ziaVnWghOir9cWYzj9cz3cyoB5ufdgeotvg5OUWyYVt6+WabubFNBWOFww+rydKYJCbJNSBqRLOXp6N/Mwxs6ABYmpGjcrHlzAsKisho1icN8ujHzd3uBZL/hNwp6tqz5lXFV1BKq4uiejYcRE0J9rNUsNJbC6vJwVpfnRTbcW1H5ARToDU6or39nkpAMiC38ytICjWlTCcp2WUNFEJL6cDeUewVZSgaFxTx4d8DMuwP1NM57NXFTbZLi5d2B+lxuvNBYit1cFSdKMgZUuGxJ4T84k3JpMSHEWkhOzflMSS2aJiTIyFLRhARJUn6dzDy8AXJsW+magvQ3qgQAzCqAMzUtBFNW0NTQBe7sFR9JSP4CYJJ3BxyvJkaAZL34poq1bcQa0hsuG2zvPXQBSDYEsI0MiTSu2innrox7rCjQG2hzxJjMWpxWl8cpZwXxrgEhqmJfmVBJsnEuYw1pomXfDromLQgJMd2vgpLxsRZw195as+g8E4BR3h0wZ0jZ+DLZDNOmxDE3fpgFj9XlAWlYeMSAtIPSFyJdvcyNtwMYZov+1AVbDpzsRbIzxU5BxHS9sBZwmK1RG/dYYXV57Kaqo/R8TiokkNBll2q6YAHItJM55eriDPgbRVTUllpE2VYuY2klympPVQN4rKDj3rQQTLlOUqYblKFyeuLhtm6mlPe5ijizWqndK4t+Qhr/jRHqJcHGiRvoJwSSZTFuA7Fd6gehci1rehMJYAUJazkWE0IuFeNYsSixBTkFIYkFR1VkxIfp2xV2246j5MjHDgAP0oy3JW59Nkl6C8dVxJo98XBbNzR5b6VAmhN0AOkf36QSZF/vUXLkYzVZ9CBD2agB1+fbQNlosv0gVPX45rxMbKcE3BO8O1DPUDb3VKyzX7tV76+sa+XK4PHNfpl3ywShXNobBFD9auImig6e7yYZdDo5z7sD9fFw2+hmbJo73QO9pbqdxG6R2SFvKiMtdrSg6MMzjUwSwM0OefvW6+iG3mKjOiAeI9JDqyvNABKzQ96IzFxjs0PedYR5YUk5LOeusjzemjXLrCkyO+SN+nw+BAIBx8ifooebfmF/oNPpxne0JSw0lqDQUGJW4SanpoXgujGkPOeHivIc7w74GcomuFXWkL90DXpLdSeTEcpRErTfrrG8NZjKcA2VH6G8NWjXW2yPKHAANJe3BtfQQYbKD2lGfZ3QIAkCQmeauYT1ej6C5dxVO0kiokSPUN4adK7fl23NvgpL9uL2cgN37vIf/17JF//+H2NPb+14d5xJr6Ak77QYB5IPMKkBTDfvDpgzAG4d7w74N7phnaGYgoObHfL2zQ55O9jji+PDYGiSAWKdUlbH1HCZgiYyO+QdmL/7xR2sfZaE6Imk9MwOeaOry4v0czTdXCJKRzxfhIyLiLPvdPv6+j/Pf/Dto+cwlRpKdjQImV5BJdok7eOb8XAbBemUgh4TgP5sgLuRDc8OeSmNkihvDa6KLYpIHkG6zakRQIK/dA2mhsuUGtoot/aIrG9Abj4AePPiMbW+jUr7Wnk5gwHvscSA91hvmWn3P40G/W93NAhJr6AqICgNWHr8FaC+POfIELgbomu40z0A0L66vNiCZFu7LJ83f/eLGgAny1uDYiBGADTG//ArIFn2ckJEMi8//Ras1WMslVxFpAOAs7w1KFWViVDQ6S02qicijgel9nXhVA0unKr5zYVTNUf220xXd2xikunjm+9cRRd27a31QfpFR2otVj+A+qXHX8FoO+YHcENh/Ce8O9AfD7dNZrVhSzUANOsMxU5IPFjEX7qWihNNDZevM4lFBABefPkpLOeudpC4bFjKhYoBVN4apPGcnXWTFDj0IwG0UN4adM0OeRMS811nYkvX2n3Z0u5rJ4sOUE1MzwNw0FYtBoCBTVjHhXi4bYRUUpTWAQD34uG2+mwn23P81zD+6GfNAKLibJTJRDnG1a2zXqLMNkJBk2YcR7NimbkSL778NEE+Q6yPWTPEetTsa0eDkK89DUNphRow9dCMuLCYB6l4TKpIYtTIVDzcVq2y4rIGuBrLlv9SQB7fVIqz1vQKkrcp+DcJgJSy6f7f478ByVLellE2muyMxMQPZWLaT4npXXt/rDaLzlT8GVI2VTl6e4Mm2wBCn5IVZCkZU0MnoFzSy0ZMAHwMZaNmjnrtFr4fIFSygqkstOhgE73xJ3K0HjMAvJ75nrplJRnVbuH7AUKlRzHr9rm8viQIz+fKCtK4czDp8msBda8FmdNuYf6Lzmw7jqKymiYk//+RdDKyvL9+Drl7Z8wg02foV3C1kwD64+G2ce0W5r/8HzENG0fgqYgjAAAAAElFTkSuQmCC" />
+    <nav class="topnav">
+      <a class="active" href="#">Resumen</a>
+      <a href="#">Autos</a>
+      <a href="#">Salud</a>
+      <a href="#">Back-office</a>
+    </nav>
+  </div>
+  <div class="topbar-right">
+    <div class="search">🔍 Buscar cliente o placa…</div>
+    <div class="avatar">RE</div>
+  </div>
+</div>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="side-section">
+      <div class="side-label">Cotizador</div>
+      <a class="side-link active" href="#"><span class="dot"></span>Nueva cotización</a>
+      <a class="side-link" href="#"><span class="dot"></span>Autos</a>
+      <a class="side-link" href="#"><span class="dot"></span>Salud (AM)</a>
+      <a class="side-link" href="#"><span class="dot"></span>Vida &amp; Patrimonio</a>
+    </div>
+    <div class="side-section">
+      <div class="side-label">Gestión</div>
+      <a class="side-link" href="#"><span class="dot"></span>Emisiones</a>
+      <a class="side-link" href="#"><span class="dot"></span>Renovaciones</a>
+      <a class="side-link" href="#"><span class="dot"></span>Comisiones</a>
+      <a class="side-link" href="#"><span class="dot"></span>Siniestros</a>
+    </div>
+    <div class="side-section">
+      <div class="side-label">Cuenta</div>
+      <a class="side-link" href="#"><span class="dot"></span>Ejecutivos</a>
+      <a class="side-link" href="#"><span class="dot"></span>Configuración</a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <h1>Nueva cotización — Vehículos</h1>
+        <p>Richard Escobar · Riesgo 1 de 1 · Ecuador</p>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <a class="btn btn-ghost" href="#">Guardar borrador</a>
+        <a class="btn btn-primary" href="#">Generar oferta →</a>
+      </div>
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="label">Cotizaciones · julio</div>
+        <div class="value figures">86</div>
+        <div class="delta up">↑ 12% vs. junio</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Pólizas emitidas</div>
+        <div class="value figures">31</div>
+        <div class="delta up">↑ 4 esta semana</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Renovaciones pendientes</div>
+        <div class="value figures">14</div>
+        <div class="delta flat">próximos 30 días</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Comisión generada</div>
+        <div class="value figures">$18.240</div>
+        <div class="delta up">↑ 7% vs. junio</div>
+      </div>
+    </div>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>1 · Datos del cliente y vehículo</h2>
+          <div class="sub">Reemplaza la hoja «DATOS VH» del Excel actual</div>
+        </div>
+        <span class="step-pill">PASO 1 DE 3</span>
+      </div>
+      <div class="card-body">
+        <div class="riesgo-tabs">
+          <div class="riesgo-tab active">Riesgo 1</div>
+          <div class="riesgo-tab">+ Añadir riesgo</div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Cliente</label><div class="input">Alejandra Torres Vivanco</div></div>
+          <div class="field"><label>RUC / Cédula</label><div class="input">1792233445001</div></div>
+          <div class="field"><label>Fuente</label><div class="input">Referido — Diego Viera</div></div>
+
+          <div class="field"><label>Placa</label><div class="input">PBX-1234</div></div>
+          <div class="field"><label>Marca / Modelo</label><div class="input">Toyota Fortuner</div></div>
+          <div class="field"><label>Año</label><div class="input">2023</div></div>
+
+          <div class="field"><label>Valor comercial (casco)</label><div class="input figures">$ 38.500,00</div></div>
+          <div class="field"><label>Extras / accesorios</label><div class="input figures">$ 1.200,00</div></div>
+          <div class="field"><label>Ciudad de circulación</label><div class="input">Quito</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>2 · Comparador multi-aseguradora</h2>
+          <div class="sub">Reemplaza las hojas «OFERTA» y «DATOS OFERTA» — 13 aseguradoras disponibles, mostrando 6</div>
+        </div>
+        <span class="step-pill">PASO 2 DE 3</span>
+      </div>
+      <div class="comparator-scroll">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th class="row-label">Cobertura</th>
+              <th>AIG</th>
+              <th>Zurich</th>
+              <th class="best-col">Sweaden</th>
+              <th>Latina</th>
+              <th>Chubb</th>
+              <th>Cóndor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">Pérdida total / parcial</td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td class="best-col"><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+            </tr>
+            <tr>
+              <td class="row-label">Robo total / parcial</td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td class="best-col"><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+            </tr>
+            <tr>
+              <td class="row-label">Responsabilidad civil</td>
+              <td>$30.000</td>
+              <td>$40.000</td>
+              <td class="best-col">$10.000</td>
+              <td>$40.000</td>
+              <td>$40.000</td>
+              <td>$35.000</td>
+            </tr>
+            <tr>
+              <td class="row-label">Auto sustituto</td>
+              <td>15 días</td>
+              <td>10 días</td>
+              <td class="best-col">USD 50/día</td>
+              <td>No otorga</td>
+              <td>10 días</td>
+              <td>10 días</td>
+            </tr>
+            <tr>
+              <td class="row-label">Deducible pérdida total</td>
+              <td><span class="pill limit">10–20% VA</span></td>
+              <td><span class="pill limit">15–20% VA</span></td>
+              <td class="best-col"><span class="pill limit">25% VA</span></td>
+              <td><span class="pill limit">15–20% VA</span></td>
+              <td><span class="pill limit">20% VA</span></td>
+              <td><span class="pill limit">15–20% VA</span></td>
+            </tr>
+            <tr>
+              <td class="row-label">Asistencia exequial</td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td class="best-col"><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill no">No otorga</span></td>
+              <td><span class="pill yes">Sí otorga</span></td>
+              <td><span class="pill no">No otorga</span></td>
+            </tr>
+            <tr class="premium-row">
+              <td class="row-label">Prima total anual</td>
+              <td class="figures">$1.482,30</td>
+              <td class="figures">$1.395,60</td>
+              <td class="best-col figures">$1.208,90<div class="best-tag">★ Mejor opción</div></td>
+              <td class="figures">$1.410,00</td>
+              <td class="figures">$1.531,40</td>
+              <td class="figures">$1.347,75</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span>● <b style="color:var(--good)">Sí otorga</b> — cobertura incluida</span>
+        <span>● <b style="color:var(--bad)">No otorga</b> — sin cobertura</span>
+        <span>● <b style="color:var(--warn)">Condicionado</b> — con límite o deducible</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <div>
+          <h2>3 · Propuesta lista para el cliente</h2>
+          <div class="sub">Reemplaza la hoja «CARÁTULA» — generación automática, sin copiar y pegar</div>
+        </div>
+        <span class="step-pill">PASO 3 DE 3</span>
+      </div>
+      <div class="card-body">
+        <div class="proposal-wrap">
+          <div class="proposal-doc">
+            <img class="doc-logo" alt="Delta Seguros" src="data:image/png;base64,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" />
+            <div class="ref">Quito, 27 de julio de 2026 · Ref: Póliza de Vehículos — Toyota Fortuner 2023</div>
+            <h3>Señores</h3>
+            <p style="margin:0 0 10px;">Alejandra Torres Vivanco<br/>Presente.-</p>
+            <p style="margin:0 0 10px;">De nuestra consideración: nos permitimos poner en su consideración nuestra mejor oferta del mercado ecuatoriano para la cobertura del vehículo de su propiedad.</p>
+            <p style="margin:0 0 4px;"><b>Aseguradora recomendada:</b> Sweaden Seguros</p>
+            <p style="margin:0 0 4px;">Valor asegurado: <span class="figures">$38.500,00</span></p>
+            <p style="margin:0 0 4px;">Valor extras: <span class="figures">$1.200,00</span></p>
+            <div class="doc-total"><span>Prima total anual</span><span class="figures">$1.208,90</span></div>
+          </div>
+          <div class="proposal-actions">
+            <a class="btn btn-primary" href="#">Descargar PDF</a>
+            <a class="btn btn-ghost" href="#">Enviar por correo</a>
+            <a class="btn btn-ghost" href="#">Comparar otra aseguradora</a>
+            <p class="mini-note">El documento se arma solo con los datos ya cargados — hoy esto toma copiar y pegar manual entre 13 hojas de Excel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="page-head" style="margin-bottom:14px;">
+        <div>
+          <h1 style="font-size:18px;">Módulos de gestión interna</h1>
+          <p>Reemplazan las hojas «BASE» de seguimiento operativo</p>
+        </div>
+      </div>
+      <div class="modules-row">
+        <div class="module-card">
+          <div class="m-title">Emisiones &amp; pendientes</div>
+          <div class="m-sub">Estado de trámite por póliza</div>
+          <div class="bars">
+            <div class="bar-row"><span style="width:70px;">Emitidas</span><div class="bar-track"><div class="bar-fill" style="width:78%;"></div></div><span>78%</span></div>
+            <div class="bar-row"><span style="width:70px;">En trámite</span><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div><span>15%</span></div>
+            <div class="bar-row"><span style="width:70px;">Canceladas</span><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><span>7%</span></div>
+          </div>
+        </div>
+        <div class="module-card">
+          <div class="m-title">Comisiones por aseguradora</div>
+          <div class="m-sub">Julio 2026</div>
+          <div class="bars">
+            <div class="bar-row"><span style="width:70px;">Sweaden</span><div class="bar-track"><div class="bar-fill" style="width:64%;"></div></div><span class="figures">$5.980</span></div>
+            <div class="bar-row"><span style="width:70px;">Zurich</span><div class="bar-track"><div class="bar-fill" style="width:48%;"></div></div><span class="figures">$4.410</span></div>
+            <div class="bar-row"><span style="width:70px;">Cóndor</span><div class="bar-track"><div class="bar-fill" style="width:39%;"></div></div><span class="figures">$3.560</span></div>
+          </div>
+        </div>
+        <div class="module-card">
+          <div class="m-title">Siniestros abiertos</div>
+          <div class="m-sub">Seguimiento por estado</div>
+          <div class="bars">
+            <div class="bar-row"><span style="width:70px;">Ingresado</span><div class="bar-track"><div class="bar-fill" style="width:30%;"></div></div><span>3</span></div>
+            <div class="bar-row"><span style="width:70px;">En ajuste</span><div class="bar-track"><div class="bar-fill" style="width:50%;"></div></div><span>5</span></div>
+            <div class="bar-row"><span style="width:70px;">Cerrado</span><div class="bar-track"><div class="bar-fill" style="width:90%;"></div></div><span>9</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>Cotizador Delta — maqueta visual de interfaz · Delta Seguros Cía. Ltda. · Elaborado para evaluación interna</footer>

@@ -1,0 +1,370 @@
+<title>Propuesta Comercial — Cotizador Delta</title>
+<style>
+  :root{
+    --navy:#152a52;
+    --navy-2:#1b325f;
+    --accent:#01579e;
+    --accent-soft:#e6eef7;
+    --paper:#f7f5f0;
+    --sheet:#fffdf9;
+    --line:#e4e0d3;
+    --line-strong:#d3cdbb;
+    --ink:#242219;
+    --muted:#77725f;
+    --good:#166a4c;
+    --good-bg:#e7f2ea;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --navy:#33507e; --navy-2:#4066a0; --accent:#5b9bd9; --accent-soft:#152538;
+      --paper:#15130f; --sheet:#1c1a15; --line:#3a3628; --line-strong:#4c4733;
+      --ink:#ece8dc; --muted:#a9a38c; --good:#5cc394; --good-bg:#173428;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --navy:#33507e; --navy-2:#4066a0; --accent:#5b9bd9; --accent-soft:#152538;
+    --paper:#15130f; --sheet:#1c1a15; --line:#3a3628; --line-strong:#4c4733;
+    --ink:#ece8dc; --muted:#a9a38c; --good:#5cc394; --good-bg:#173428;
+    color-scheme:dark;
+  }
+  :root[data-theme="light"]{
+    --navy:#152a52; --navy-2:#1b325f; --accent:#01579e; --accent-soft:#e6eef7;
+    --paper:#f7f5f0; --sheet:#fffdf9; --line:#e4e0d3; --line-strong:#d3cdbb;
+    --ink:#242219; --muted:#77725f; --good:#166a4c; --good-bg:#e7f2ea;
+    color-scheme:light;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sans{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;}
+  .figures{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+  h1,h2,h3{text-wrap:balance;margin:0;}
+  p{margin:0 0 12px;}
+  a{color:var(--accent);}
+
+  .toolbar{
+    max-width:760px;margin:0 auto;padding:18px 28px 0;
+    display:flex;justify-content:flex-end;
+  }
+  .print-btn{
+    font-family:inherit;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    background:var(--navy);color:#fff;border:none;border-radius:6px;padding:9px 14px;cursor:pointer;
+  }
+  .print-btn.sans{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+  @media print{ .toolbar{display:none;} body{background:#fff;} .sheet{box-shadow:none !important;border:none !important;} }
+
+  .sheet{
+    max-width:760px;margin:18px auto 60px;background:var(--sheet);
+    border:1px solid var(--line);border-radius:3px;
+    box-shadow:0 1px 3px rgba(20,20,10,.05), 0 20px 50px -30px rgba(20,20,10,.35);
+    padding:56px 64px 48px;
+  }
+
+  /* letterhead */
+  .letterhead{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:38px;padding-bottom:24px;border-bottom:2px solid var(--navy);}
+  .letterhead img{height:34px;}
+  .letterhead .meta{text-align:right;}
+  .letterhead .meta .tag{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+  }
+  .letterhead .meta .date{font-size:12.5px;color:var(--muted);margin-top:4px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+
+  .title-block{margin-bottom:30px;}
+  .title-block h1{font-size:28px;color:var(--navy);line-height:1.2;}
+  .title-block .subtitle{font-size:14.5px;color:var(--muted);margin-top:8px;font-style:italic;}
+
+  .addressee{font-size:14px;margin-bottom:28px;}
+  .addressee .to-label{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+  }
+  .addressee strong{font-size:15.5px;color:var(--ink);}
+
+  .lede{font-size:15px;line-height:1.7;color:var(--ink);}
+
+  section.block{margin-top:38px;}
+  .block-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
+  .block-num{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.04em;flex-shrink:0;
+  }
+  .block-head h2{font-size:17.5px;color:var(--navy);}
+  .block-body{font-size:14.5px;line-height:1.7;}
+  .block-body p{margin:0 0 12px;}
+  .block-body ul{margin:0 0 12px;padding-left:20px;}
+  .block-body li{margin-bottom:6px;}
+
+  /* comparison of current vs proposed */
+  .vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 6px;}
+  .vs-card{border:1px solid var(--line);border-radius:6px;padding:16px 18px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+  .vs-card.current{background:var(--paper);}
+  .vs-card.proposed{background:var(--accent-soft);border-color:var(--accent);}
+  .vs-card .vs-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+  .vs-card.proposed .vs-label{color:var(--accent);}
+  .vs-card ul{margin:0;padding-left:16px;font-size:12.8px;line-height:1.6;}
+  .vs-card li{margin-bottom:5px;}
+
+  /* phase cards */
+  .phase{
+    border:1px solid var(--line);border-radius:8px;margin-bottom:14px;overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  }
+  .phase-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:13px 18px;background:var(--paper);border-bottom:1px solid var(--line);
+  }
+  .phase-head .ph-left{display:flex;align-items:center;gap:12px;}
+  .phase-num{
+    width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;
+  }
+  .phase-title{font-size:14px;font-weight:700;color:var(--ink);}
+  .phase-duration{font-size:11.5px;color:var(--muted);}
+  .phase-price{font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap;}
+  .phase-price .note{display:block;font-size:10px;font-weight:600;color:var(--muted);text-transform:none;}
+  .phase-body{padding:14px 18px;font-size:12.8px;line-height:1.6;color:var(--ink);}
+  .phase-body ul{margin:0;padding-left:16px;}
+  .phase-body li{margin-bottom:4px;}
+  .phase.included .phase-price{color:var(--good);}
+  .phase.included .phase-head{background:var(--good-bg);}
+
+  /* pricing table */
+  .price-table-wrap{overflow-x:auto;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+  table.price{border-collapse:collapse;width:100%;font-size:13px;min-width:520px;}
+  table.price th, table.price td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;}
+  table.price thead th{
+    font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;
+    border-bottom:2px solid var(--line-strong);
+  }
+  table.price td:last-child, table.price th:last-child{text-align:right;}
+  table.price tr.total td{border-top:2px solid var(--navy);border-bottom:none;font-weight:700;font-size:15px;color:var(--navy);padding-top:14px;}
+
+  .callout{
+    background:var(--accent-soft);border-left:3px solid var(--accent);
+    padding:14px 18px;border-radius:0 6px 6px 0;font-size:13px;line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);
+    margin-top:16px;
+  }
+
+  .terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:12.8px;line-height:1.65;}
+  .terms-grid h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:8px;}
+  .terms-grid ul{margin:0;padding-left:16px;}
+  .terms-grid li{margin-bottom:5px;}
+
+  .closing{margin-top:40px;font-size:14.5px;line-height:1.7;}
+  .signature{margin-top:34px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;}
+  .signature .name{font-size:14.5px;font-weight:700;color:var(--navy);font-family:Georgia,serif;}
+  .signature .role{font-size:12px;color:var(--muted);margin-top:2px;}
+  .signature .contact{font-size:12px;color:var(--muted);margin-top:10px;}
+
+  .foot-note{
+    margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    font-size:10.5px;color:var(--muted);text-align:center;letter-spacing:.02em;
+  }
+
+  @media (max-width:640px){
+    .sheet{padding:32px 22px;}
+    .vs-grid, .terms-grid{grid-template-columns:1fr;}
+    .letterhead{flex-direction:column;gap:14px;}
+    .letterhead .meta{text-align:left;}
+  }
+</style>
+
+<div class="toolbar">
+  <button class="print-btn sans" onclick="window.print()">Imprimir / Guardar PDF</button>
+</div>
+
+<div class="sheet">
+
+  <div class="letterhead">
+    <img alt="Delta Seguros" src="data:image/png;base64,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" />
+    <div class="meta">
+      <div class="tag">Propuesta comercial · confidencial</div>
+      <div class="date">Quito, 27 de julio de 2026</div>
+    </div>
+  </div>
+
+  <div class="title-block">
+    <h1>Cotizador Delta: de macro de Excel a plataforma web</h1>
+    <div class="subtitle">Propuesta de desarrollo por fases, con integración de APIs de aseguradoras</div>
+  </div>
+
+  <div class="addressee">
+    <div class="to-label">Presentado a</div>
+    <strong>Diego Viera</strong> — Delta Seguros Cía. Ltda.
+  </div>
+
+  <p class="lede">Diego: adjunto la propuesta para llevar el cotizador de vehículos y salud que hoy vive en <em>COTIZADOR DELTA.xlsm</em> a una plataforma web multiusuario, con el mismo nivel de detalle que maneja el archivo actual (13 aseguradoras de autos, 8 de salud, carátulas y bases de gestión) y, en una fase posterior, cotización en tiempo real vía API con cada aseguradora. Ya preparé una <a href="https://claude.ai/code/artifact/7bbfe484-fb6f-48e5-9440-d9bc8a6148ab" target="_blank" rel="noopener">vista previa visual del producto</a> para que la revisemos juntos antes de entrar en alcance y presupuesto.</p>
+
+  <section class="block">
+    <div class="block-head"><span class="block-num">01</span><h2>Situación actual</h2></div>
+    <div class="block-body">
+      <p>El archivo <code>COTIZADOR DELTA.xlsm</code> (30 hojas, macros VBA) es hoy el motor comercial de la operación: arma la comparación entre aseguradoras, genera la carátula que se envía al cliente y lleva el control de emisiones, comisiones, pendientes y siniestros. Funciona, pero tiene límites estructurales que un archivo de Excel no puede resolver:</p>
+      <div class="vs-grid">
+        <div class="vs-card current">
+          <div class="vs-label">Hoy — Excel con macros</div>
+          <ul>
+            <li>Un solo usuario a la vez; se pisan cambios entre ejecutivos</li>
+            <li>Tasas y coberturas de cada aseguradora se digitan a mano</li>
+            <li>La carátula se arma copiando y pegando entre hojas</li>
+            <li>Sin historial de clientes ni trazabilidad por ejecutivo</li>
+            <li>El archivo (5+ MB) se envía por correo o WhatsApp</li>
+            <li>Riesgo real de pérdida o corrupción del archivo maestro</li>
+          </ul>
+        </div>
+        <div class="vs-card proposed">
+          <div class="vs-label">Propuesto — Cotizador Delta web</div>
+          <ul>
+            <li>Multiusuario, con roles por ejecutivo y permisos</li>
+            <li>Fase 1: misma carga manual, centralizada en la nube</li>
+            <li>Fase 4: tasas en tiempo real vía API por aseguradora</li>
+            <li>Carátula y oferta se generan en PDF con un clic</li>
+            <li>Historial de clientes, pólizas y renovaciones</li>
+            <li>Acceso desde cualquier equipo, con respaldo automático</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><span class="block-num">02</span><h2>Alcance funcional</h2></div>
+    <div class="block-body">
+      <p>La plataforma replica —y ordena— lo que hoy hacen las hojas del Excel:</p>
+      <ul>
+        <li><strong>Autos:</strong> datos de cliente y vehículo (como «DATOS VH»), comparador de 13 aseguradoras con coberturas, deducibles y formas de pago (como «OFERTA» / «DATOS OFERTA»), carátula de oferta en PDF (como «CARÁTULA»).</li>
+        <li><strong>Salud (AM):</strong> el mismo flujo para BMI, Humana, SaludSA, Confiamed, Bupa, Pro, VB y Salud.</li>
+        <li><strong>Gestión interna:</strong> emisiones, pólizas pendientes, comisiones por aseguradora, cancelaciones y siniestros — hoy dispersos en 6 hojas «BASE».</li>
+        <li><strong>Integraciones API:</strong> conexión directa con las aseguradoras que ofrezcan canal técnico, para traer tasas y emitir sin digitación manual.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><span class="block-num">03</span><h2>Plan por fases e inversión</h2></div>
+    <div class="block-body">
+      <p>Precios en USD, desarrollo individual con apoyo de herramientas de IA (Claude Code) para acelerar la construcción sin subir el costo de una consultora tradicional. Cada fase se factura al completarse y queda operativa por sí sola.</p>
+
+      <div class="phase included">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">0</div><div><div class="phase-title">MVP visual — vista previa de interfaz</div><div class="phase-duration">Entregado</div></div></div>
+          <div class="phase-price">Cortesía<span class="note">ya incluido</span></div>
+        </div>
+        <div class="phase-body">Maqueta navegable con la identidad de Delta Seguros, sin lógica ni datos reales — para validar juntos la dirección de producto antes de construir.</div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">1</div><div><div class="phase-title">Plataforma base — línea Autos</div><div class="phase-duration">5–6 semanas</div></div></div>
+          <div class="phase-price figures">$912</div>
+        </div>
+        <div class="phase-body"><ul><li>Login y roles por ejecutivo</li><li>Gestión de clientes y vehículos</li><li>Comparador de las 13 aseguradoras (carga manual centralizada)</li><li>Generación automática de carátula + oferta en PDF</li></ul></div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">2</div><div><div class="phase-title">Módulo Salud (AM)</div><div class="phase-duration">2–3 semanas</div></div></div>
+          <div class="phase-price figures">$360</div>
+        </div>
+        <div class="phase-body"><ul><li>Comparador para las 8 aseguradoras de salud</li><li>Carátula de oferta específica para salud</li></ul></div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">3</div><div><div class="phase-title">Gestión interna / back-office</div><div class="phase-duration">2–3 semanas</div></div></div>
+          <div class="phase-price figures">$408</div>
+        </div>
+        <div class="phase-body"><ul><li>Emisiones, pendientes y cancelaciones</li><li>Comisiones por aseguradora</li><li>Seguimiento de siniestros</li><li>Panel de indicadores para gerencia</li></ul></div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">4</div><div><div class="phase-title">Integraciones API con aseguradoras</div><div class="phase-duration">Piloto: 3–5 semanas</div></div></div>
+          <div class="phase-price figures">desde $576<span class="note">piloto 3–4 aseguradoras</span></div>
+        </div>
+        <div class="phase-body">Fase de descubrimiento por aseguradora (no todas exponen un canal técnico hoy); se cotiza un piloto con las que sí lo tengan y $144–$240 por cada aseguradora adicional que se sume después. Corre en paralelo a las fases 1–3, sin bloquear el resto del proyecto.</div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-head">
+          <div class="ph-left"><div class="phase-num">5</div><div><div class="phase-title">Despliegue y entrega</div><div class="phase-duration">3–5 días</div></div></div>
+          <div class="phase-price figures">$60</div>
+        </div>
+        <div class="phase-body">Publicación en producción y sesión de entrega/capacitación al equipo comercial. Soporte posterior al mes de garantía disponible como retainer opcional.</div>
+      </div>
+
+      <div class="price-table-wrap" style="margin-top:24px;">
+        <table class="price">
+          <thead><tr><th>Paquete</th><th>Incluye</th><th>Inversión</th></tr></thead>
+          <tbody>
+            <tr><td>Base operativa</td><td>Fases 1 + 3 + 5</td><td class="figures">$1.380</td></tr>
+            <tr><td>Recomendado</td><td>Fases 1 + 2 + 3 + 5</td><td class="figures">$1.740</td></tr>
+            <tr class="total"><td>Completo con piloto API</td><td>Fases 1 a 5</td><td class="figures">desde $2.316</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">Recomendación: iniciar con el <strong>paquete recomendado</strong> (Autos + Salud + back-office) para reemplazar el Excel por completo en ~9 semanas, y correr el descubrimiento de la Fase 4 en paralelo para saber con qué aseguradoras es viable la integración antes de comprometer ese presupuesto.</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><span class="block-num">04</span><h2>Cronograma estimado</h2></div>
+    <div class="block-body">
+      <table class="price" style="width:100%;">
+        <thead><tr><th>Semana</th><th>Hito</th></tr></thead>
+        <tbody>
+          <tr><td class="figures">1–6</td><td>Fase 1 — Plataforma base y línea Autos en producción interna</td></tr>
+          <tr><td class="figures">5–7</td><td>Fase 2 — Módulo Salud (en paralelo, sobre la base ya construida)</td></tr>
+          <tr><td class="figures">6–8</td><td>Fase 3 — Back-office y paneles de gestión</td></tr>
+          <tr><td class="figures">2–6</td><td>Fase 4 — Descubrimiento y piloto de integración API (paralelo)</td></tr>
+          <tr><td class="figures">9</td><td>Fase 5 — Despliegue y entrega</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><span class="block-num">05</span><h2>Condiciones comerciales</h2></div>
+    <div class="block-body">
+      <div class="terms-grid">
+        <div>
+          <h4>Forma de pago</h4>
+          <ul>
+            <li>40% al iniciar cada fase</li>
+            <li>30% a la mitad del desarrollo</li>
+            <li>30% contra entrega y aprobación</li>
+          </ul>
+        </div>
+        <div>
+          <h4>No incluye</h4>
+          <ul>
+            <li>Costos de hosting y dominio (facturados por el proveedor, ref. USD 15–30/mes)</li>
+            <li>Costos que cobre cada aseguradora por habilitar su API</li>
+            <li>Soporte y mantenimiento posteriores a la entrega (retainer opcional USD 180/mes)</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:12.5px;color:var(--muted);">Propuesta válida por 30 días desde la fecha de este documento. Los montos son una estimación inicial; se confirman por escrito al aprobar cada fase.</p>
+    </div>
+  </section>
+
+  <p class="closing">Diego, la idea es que revisemos la vista previa visual juntos, ajustemos alcance o prioridades si hace falta, y arranquemos con la Fase 1. Quedo atento para agendar una llamada esta semana.</p>
+
+  <div class="signature">
+    <div class="name">David Sandoval</div>
+    <div class="role">Desarrollo — Cotizador Delta</div>
+    <div class="contact">dsebastiansandoval@gmail.com</div>
+  </div>
+
+  <div class="foot-note">DELTASEGUROS CÍA. LTDA. · Propuesta comercial confidencial · No constituye una factura ni un contrato</div>
+</div>

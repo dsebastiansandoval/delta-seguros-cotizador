@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+/*
+ * Tokens de marca Delta — ARCHITECTURE.md §7. Mismos valores reales
+ * extraídos de deltaseguros.com.ec ya usados en el MVP visual y la
+ * propuesta comercial: no se inventan de nuevo acá.
+ */
+:root {
+  --color-delta-navy: #152a52;
+  --color-delta-navy-2: #1b325f;
+  --color-delta-blue: #01579e;
+  --color-delta-gray: #797c7f;
+
+  --background: #f5f6f9;
+  --foreground: #182338;
+  --surface: #ffffff;
+  --border: #dfe1e6;
+  --muted: #6b6f76;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+
+  --color-delta-navy: var(--color-delta-navy);
+  --color-delta-navy-2: var(--color-delta-navy-2);
+  --color-delta-blue: var(--color-delta-blue);
+  --color-delta-gray: var(--color-delta-gray);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Menlo", "Consolas", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #0b1220;
+    --foreground: #e7ebf3;
+    --surface: #111a2c;
+    --border: #26324a;
+    --muted: #9aa3b5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --background: #0b1220;
+  --foreground: #e7ebf3;
+  --surface: #111a2c;
+  --border: #26324a;
+  --muted: #9aa3b5;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
