@@ -13,8 +13,10 @@ import {
   branchEnum,
   coverageValueTypeEnum,
   deductibleKindEnum,
+  genderEnum,
   integrationModeEnum,
   rateTableVisibilityEnum,
+  regionEnum,
 } from "./enums";
 
 /**
@@ -105,6 +107,29 @@ export const rateRules = pgTable("rate_rules", {
   ratePercent: numeric("rate_percent", { precision: 7, scale: 5 }).notNull(),
   minPremiumCents: bigint("min_premium_cents", { mode: "number" }),
   emissionFeeCents: bigint("emission_fee_cents", { mode: "number" }),
+});
+
+/**
+ * 🏢 Tarifas de Salud — edad × sexo × región × plan × deducible, no "tasa
+ * sobre valor asegurado" como Autos (EXCEL-AUDIT.md §2.3/§2.4: Salud no
+ * aplica impuestos ecuatorianos, la prima de la tabla YA es el total por
+ * persona). `premiumCents` es directo, sin desglose de IVA/SB/campesino.
+ * `gender`/`region`/`deductibleCode` nulos significan "aplica a cualquiera"
+ * (ej. Humana no distingue región; el plan "Plan Predilecto" de VB sí
+ * distingue sexo pero no región).
+ */
+export const healthRateRules = pgTable("health_rate_rules", {
+  id: id(),
+  rateTableId: uuid("rate_table_id")
+    .notNull()
+    .references(() => rateTables.id),
+  planCode: text("plan_code").notNull(), // "SIGMA", "METROHUMANA_150"...
+  ageMin: integer("age_min").notNull(),
+  ageMax: integer("age_max").notNull(),
+  gender: genderEnum("gender"),
+  region: regionEnum("region"),
+  deductibleCode: text("deductible_code"), // "D150", "I150"... nulo si el plan no distingue
+  premiumCents: bigint("premium_cents", { mode: "number" }).notNull(),
 });
 
 /** 🏢 Deducibles por pérdida parcial/total, con o sin dispositivo de rastreo. */

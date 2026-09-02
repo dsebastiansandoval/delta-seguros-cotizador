@@ -6,12 +6,14 @@
  *
  * Uso: npm run db:seed:dev
  */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { db } from "./index";
 import { organizations } from "./schema/organizations";
 import { roles, userRoles, users } from "./schema/identity";
 import { insurers } from "./schema/catalog";
-import { rateRules, rateTables } from "./schema/catalog";
+import { healthRateRules, rateRules, rateTables } from "./schema/catalog";
 
 const DEV_USER_EMAIL = "dev@deltaseguros.local";
 
@@ -127,6 +129,74 @@ async function seedLatinaAndCondorRates(organizationId: string) {
   }
 }
 
+type SigmaRow = { age: number; region: "COSTA" | "SIERRA" | "AUSTRO"; deductible: string; premium: number };
+type HumanaRow = {
+  ageMin: number;
+  ageMax: number;
+  product: string;
+  gender: "MASCULINO" | "FEMENINO";
+  premium: number;
+};
+
+/**
+ * BMI (Sigma) y Humana — exportados directo del Excel a JSON con un script
+ * de Python (reference-data/salud_bmi_sigma.json, salud_humana.json) en vez
+ * de transcritos a mano: son ~2.000 puntos de dato, demasiado para copiar
+ * sin error. Ver EXCEL-AUDIT.md §2.3 para el resto de aseguradoras
+ * (Confiamed/SaludSA/Pro/VB) — rango confirmado por fórmula, pero todavía
+ * sin sembrar.
+ */
+async function seedHealthRates(organizationId: string) {
+  const referenceDataDir = join(process.cwd(), "..", "reference-data");
+
+  const [bmi] = await db.select().from(insurers).where(eq(insurers.code, "BMI"));
+  const [humana] = await db.select().from(insurers).where(eq(insurers.code, "HUMANA"));
+  if (!bmi || !humana) throw new Error("Corré primero: npm run db:seed");
+
+  // --- BMI / Sigma ---
+  const sigmaRows: SigmaRow[] = JSON.parse(
+    readFileSync(join(referenceDataDir, "salud_bmi_sigma.json"), "utf-8"),
+  );
+  const [bmiTable] = await db
+    .insert(rateTables)
+    .values({ organizationId, insurerId: bmi.id, branch: "SALUD", visibility: "PRIVATE", isConfirmed: true, validFrom: "2026-01-01" })
+    .returning();
+
+  await db.insert(healthRateRules).values(
+    sigmaRows.map((r) => ({
+      rateTableId: bmiTable.id,
+      planCode: "SIGMA",
+      ageMin: r.age,
+      ageMax: r.age, // edad individual, no rango — EXCEL-AUDIT.md §2.3
+      region: r.region,
+      deductibleCode: r.deductible,
+      premiumCents: Math.round(r.premium * 100),
+    })),
+  );
+  console.log(`  BMI (Sigma): ${sigmaRows.length} reglas de tarifa sembradas`);
+
+  // --- Humana ---
+  const humanaRows: HumanaRow[] = JSON.parse(
+    readFileSync(join(referenceDataDir, "salud_humana.json"), "utf-8"),
+  );
+  const [humanaTable] = await db
+    .insert(rateTables)
+    .values({ organizationId, insurerId: humana.id, branch: "SALUD", visibility: "PRIVATE", isConfirmed: true, validFrom: "2026-01-01" })
+    .returning();
+
+  await db.insert(healthRateRules).values(
+    humanaRows.map((r) => ({
+      rateTableId: humanaTable.id,
+      planCode: r.product,
+      ageMin: r.ageMin,
+      ageMax: r.ageMax,
+      gender: r.gender,
+      premiumCents: Math.round(r.premium * 100),
+    })),
+  );
+  console.log(`  Humana: ${humanaRows.length} reglas de tarifa sembradas`);
+}
+
 async function main() {
   console.log("Sembrando organización Delta Seguros…");
   const org = await seedDeltaOrganization();
@@ -136,6 +206,9 @@ async function main() {
 
   console.log("Sembrando tasas reales de Latina y Cóndor…");
   await seedLatinaAndCondorRates(org.id);
+
+  console.log("Sembrando tarifas reales de Salud (BMI + Humana)…");
+  await seedHealthRates(org.id);
 
   console.log("Listo. Organización:", org.id);
   process.exit(0);

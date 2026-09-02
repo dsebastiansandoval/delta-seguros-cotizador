@@ -11,7 +11,9 @@ Cotizador comparativo para agentes de un broker de seguros. Ver `../ARCHITECTURE
 - **Auto x Km**: modalidad completa — grilla de 13 aseguradoras × 6 rangos de km, 100% digitación manual (confirmado en el Excel que ninguna aseguradora tiene tabla para esta modalidad).
 - **Carátula en PDF**: se genera con los datos reales de la cotización y la aseguradora más barata ya cotizada — mismo texto de coberturas/cláusulas/aclaratorio que la hoja `CARATULA` del Excel.
 
-Falta para Fase 2 en adelante: módulo de Salud, back-office (cartera/comisiones/siniestros), y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
+**Fase 2 (Salud) v1 completa** — a diferencia de Autos, el Excel SÍ tiene motor de tarifas real para Salud (EXCEL-AUDIT.md §2.3): titular + hasta 3 dependientes, comparador contra las 8 aseguradoras. BMI (Sigma, las 6 combinaciones de región×deducible) y Humana (5 planes) calculan la prima real por edad/sexo/región — sumando el precio individual de cada miembro de la familia. Las otras (SaludSA, Salud genérica, Confiamed, Pro, VB) tienen su rango de datos confirmado en el Excel pero todavía sin sembrar; Bupa es 100% manual (sin tabla en el archivo). Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ninguna hoja de Salud referencia esos impuestos, a diferencia de Autos.
+
+Falta para Fase 3 en adelante: back-office (cartera/comisiones/siniestros), sembrar el resto de aseguradoras de Salud, y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
 ## Requisitos
 

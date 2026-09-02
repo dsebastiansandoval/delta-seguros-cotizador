@@ -77,22 +77,28 @@ Verificado celda por celda (no fórmula) en `DATOS OFERTA`: AIG, SESA, Generali,
 
 **Este es el hallazgo más importante de la auditoría.** Existe una hoja oculta, `BASES ASEGURADORAS AM` (238 filas × 152 columnas), que es una tabla maestra de tarifas real, de producción, para múltiples aseguradoras concatenadas verticalmente. Confirmé mediante `VLOOKUP` por edad (`'DATOS AM'!F10`, la edad del titular o dependiente) que **BMI la usa en vivo** (`VLOOKUP(edad, 'BASES ASEGURADORAS AM'!B35:T140, columna_por_región)`), y por los rótulos de columna encontré bloques que corresponden a:
 
-| Aseguradora | Producto(s) identificados en la tabla | Estructura |
-|---|---|---|
-| Humana | Metrohumana 50/80/150, Practihumana 15/30/50 | Rango de edad (`DESDE`/`HASTA`) × Hombre/Mujer |
-| BMI | Sigma | Edad individual (0–105+) × Región (Costa/Sierra/Austro) × Deducible (150/250/500/1000/2000) |
-| SaludSA | Star 15-70, Star 30-90, Sky 70, Sky 70 Plus | Edad × plan × deducible (100/200/500) × sub-tramo (1500/2500/5000) |
-| Pro | Pro 150-150, 150-300, 500-200, 500-400 | Edad × plan × sub-tramo (2500/5000/10000) |
-| Confiamed | tramos 10K/15K/30K/60K/110K, con/sin maternidad | Edad × tramo × maternidad |
-| VB | tramo 20K | Edad × tramo |
+**Actualización — mapeo cerrado con evidencia de fórmula, no por patrón de rótulo.** En vez de inferir qué bloque pertenece a qué aseguradora por el nombre del producto, revisé las fórmulas `VLOOKUP` de las hojas `BMI`, `HUMANA`, `SALUDSA`, `CONFIAMED`, `PRO`, `VB`, `SALUD` y `BUPA` una por una — cada una dice exactamente contra qué rango de `BASES ASEGURADORAS AM` apunta. Esto es autoridad de fórmula, no adivinado:
 
-Sin confirmar aún si **Bupa** y la hoja genérica **Salud** (distinta de SaludSA) tienen su bloque en esta misma tabla o viven en otro lado — quedó pendiente, ver §4.
+| Aseguradora | Rango real en `BASES ASEGURADORAS AM` | Producto(s) | Estructura |
+|---|---|---|---|
+| Humana | `B7:O28` aprox. | Metrohumana 50/80/150, Practihumana 15/30/50 | Rango de edad (`DESDE`/`HASTA`) × Hombre/Mujer |
+| BMI | `B35:AX~145` | Sigma, Innova, GMM | Edad individual (0–105+) × Región (Costa/Sierra/Austro) × Deducible (I150/D150/D250/D500/D1000/D2000), GMM con tramos 5K/10K/15K/20K |
+| Confiamed | `D147:AM~176` aprox. | tramos 10K/30K/60K/110K | Edad × sexo × Red1/Red2 × con/sin maternidad |
+| SaludSA | `D176:BH187` | Star 15-70, Star 30-90, Sky 70-100, Sky 70 Plus (100/200/500) | Edad × sexo × sub-tramo (1500/2500/5000) |
+| **Salud** (genérica) | `B190:I191` **y** `BN190:BW191` | dos planes sin nombre confirmado | Edad × sexo — **tabla angosta, solo 2 tramos de edad (0–1, 2–17)**, no cubre adultos con precisión — ver nota abajo |
+| **Pro** | `B200:G210` | "Plan 10.000" / "Plan 15.000" | Edad × sexo |
+| **VB** | `B224:G238` | "Plan Predilecto 20.000" + rider dental | Edad × sexo, con tabla dental aparte (Básico/Plus × sexo) |
+| **Bupa** | — | — | **Confirmado 100% manual: cero fórmulas `VLOOKUP` en toda la hoja `BUPA`.** Mismo patrón que 11 de las 13 aseguradoras de Autos. |
 
-**Consecuencia directa para Fase 2:** a diferencia de Autos, en Salud **no vamos a depender de digitación manual** — hay datos reales de tarifa para poblar `rate_rules` desde el día uno, por edad/región/plan/deducible. Volqué la tabla completa (sin interpretar) a [`reference-data/salud_bases_aseguradoras_am_RAW.csv`](./reference-data/salud_bases_aseguradoras_am_RAW.csv) para no perder nada mientras se termina de mapear cada bloque a su aseguradora exacta.
+**Nota sobre Salud (genérica):** su rango (`B190:I191`) solo tiene dos filas de datos — edad 0–1 y edad 2–17. Con `VLOOKUP` en modo aproximado, cualquier edad ≥2 cae en la fila "2–17", incluyendo adultos. Es lo que hay en el archivo — no es un límite que yo haya inventado, pero sí es una limitación real que vale la pena confirmar con Delta antes de ofrecerle esta aseguradora a un cliente adulto.
 
-### 2.4 Impuestos y cargos (aplican a ambas líneas)
+**Consecuencia directa para Fase 2:** a diferencia de Autos (11 de 13 sin tabla), acá es al revés — **7 de las 8 aseguradoras de Salud tienen motor de tarifas real**, solo Bupa queda en modo manual. Volqué la tabla completa (sin interpretar) a [`reference-data/salud_bases_aseguradoras_am_RAW.csv`](./reference-data/salud_bases_aseguradoras_am_RAW.csv). Para la Fase 2 v1 sembré con datos reales **BMI (Sigma) y Humana** — los dos productos con estructura más simple y ya verificada a fondo — y dejé Confiamed/SaludSA/Pro/VB con el rango ya confirmado pero sin sembrar todavía (mapear cada columna a su combinación exacta de tramo/red/maternidad es trabajo adicional, igual de honesto dejarlo pendiente que inventarlo). Bupa arranca en manual, como las 11 de Autos.
 
-Confirmado en `INFO GENERAL`: IVA `15%` (`E37`), Superintendencia de Bancos `3.5%` (`E38`), Seguro Campesino `0.5%` (`E39`), derechos de emisión por tabla de tramos de valor asegurado (`T6:V11`, de $0.50 a $9 según el tramo). Esto es exactamente lo que ya está en `premium.calculator.ts` en `ARCHITECTURE.md` §6 — sin cambios.
+### 2.4 Impuestos y cargos — **solo Autos, no Salud**
+
+Confirmado en `INFO GENERAL`: IVA `15%` (`E37`), Superintendencia de Bancos `3.5%` (`E38`), Seguro Campesino `0.5%` (`E39`), derechos de emisión por tabla de tramos de valor asegurado (`T6:V11`, de $0.50 a $9 según el tramo). Esto es exactamente lo que ya está en `premium.calculator.ts`.
+
+**Corrección a lo que decía antes este documento ("aplican a ambas líneas"):** no es cierto. Busqué toda referencia a `INFO GENERAL!E37/E38/E39` en las hojas `BMI`, `HUMANA`, `SALUD`, `SALUDSA`, `CONFIAMED`, `PRO`, `VB`, `BUPA`, `OFERTA AM` y `CARATULA AM` — **cero resultados**. Ninguna hoja de Salud aplica IVA, Superintendencia de Bancos ni Seguro Campesino. La prima de Salud que se le muestra al cliente es directamente la suma de las primas individuales de cada miembro (titular + dependientes) para el plan elegido, sin ninguna capa de impuesto encima. Consecuencia para el código: `premium.calculator.ts` es exclusivo de Autos — Salud no lo usa, ni una versión adaptada de él.
 
 ### 2.5 Comisión — confirmado manual, sin tabla
 
@@ -110,7 +116,7 @@ Confirmado en `INFO GENERAL`: IVA `15%` (`E37`), Superintendencia de Bancos `3.5
 
 ## 4. Pendiente (no resuelto en esta auditoría)
 
-- Confirmar el bloque exacto de **Bupa** y **Salud** (genérica) dentro de `BASES ASEGURADORAS AM`, o si viven en otra hoja/rango.
-- Mapear con precisión cada columna del CSV exportado a su aseguradora + producto + deducible (hoy está identificado por región/patrón de rótulo, falta la pasada fila-por-fila para Fase 2).
+- ~~Confirmar el bloque exacto de Bupa y Salud (genérica)~~ — resuelto en §2.3, con evidencia de fórmula.
+- Mapear columna por columna (tramo/red/maternidad exactos) de Confiamed, SaludSA, Pro y VB para poder sembrarlos con datos reales — el rango ya está confirmado, falta la pasada fina. BMI y Humana ya están sembrados en Fase 2 v1.
 - Confirmar si `CARATULA` / `CARATULA AM` tienen alguna fórmula de composición de texto no trivial (no se revisó — son mayormente combinación de texto/mail-merge, riesgo bajo).
 - Las 14 macros de "búsqueda/relleno" tienen columnas de tabla mapeadas por número de índice (`,34,FALSE`, `,35,FALSE`…) — antes de construir el buscador de renovaciones en Fase 1 hay que resolver esos 48 índices contra los encabezados reales de la tabla `BASE_VEHICULOS`.

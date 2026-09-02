@@ -68,6 +68,10 @@ export const quoteOptions = pgTable("quote_options", {
   // Solo cuando modality = POR_KM — uno de KM_BRACKETS (900|1500|3000|5000|7500|10000),
   // ver domains/quoting/services/km.constants.ts. Nulo en modalidad ANUAL.
   kmBracket: integer("km_bracket"),
+  // Solo branch = SALUD — una aseguradora puede ofrecer varios planes (BMI:
+  // Sigma/Innova/GMM). Nulo en Autos, donde insurerId ya alcanza para
+  // identificar la fila.
+  planCode: text("plan_code"),
   netPremiumCents: bigint("net_premium_cents", { mode: "number" }),
   superBancosCents: bigint("super_bancos_cents", { mode: "number" }), // 3.50%
   campesinoCents: bigint("campesino_cents", { mode: "number" }), // 0.50%

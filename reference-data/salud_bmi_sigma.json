@@ -1,0 +1,11450 @@
+[
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 0,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 0,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 0,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 1,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 1,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 1,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 2,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 2,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 2,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 3,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 3,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 3,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 4,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 4,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 4,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 5,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 5,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 5,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 6,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 6,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 6,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 7,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 7,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 7,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 8,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 8,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 8,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 9,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 9,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 9,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1741.22
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2093.42
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1828.49
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1488.01
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1181.93
+  },
+  {
+    "age": 10,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 923.64
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1396.43
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1765.48
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1426.62
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1213.8
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 964.07
+  },
+  {
+    "age": 10,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 753.43
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1117.13
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1412.39
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1141.31
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 971.04
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 771.28
+  },
+  {
+    "age": 10,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 602.73
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 11,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 11,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 11,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 12,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 12,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 12,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 13,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 13,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 13,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 14,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 14,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 14,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 15,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 15,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 15,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 16,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 16,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 16,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1530.17
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 1839.67
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 1606.85
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1307.64
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1038.66
+  },
+  {
+    "age": 17,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 811.68
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1227.16
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 1551.47
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1253.69
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1066.66
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 847.21
+  },
+  {
+    "age": 17,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 662.1
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 981.72
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1241.19
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1002.98
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 853.33
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 677.78
+  },
+  {
+    "age": 17,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 529.67
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1996.39
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2400.2
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2096.43
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1706.08
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1355.1
+  },
+  {
+    "age": 18,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1058.98
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1601.05
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2024.14
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1635.7
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1391.64
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1105.35
+  },
+  {
+    "age": 18,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 863.8
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1280.83
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1619.32
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1308.56
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1113.31
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 884.26
+  },
+  {
+    "age": 18,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 691.05
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 1996.39
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2405.66
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2101.22
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1709.98
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1358.22
+  },
+  {
+    "age": 19,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1061.4
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1601.05
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2027.11
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1638.1
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1393.67
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1106.98
+  },
+  {
+    "age": 19,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 865.08
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1280.83
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1621.7
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1310.48
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1114.93
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 885.58
+  },
+  {
+    "age": 19,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 692.05
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2000.95
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2449.15
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2139.19
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1740.86
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1382.76
+  },
+  {
+    "age": 20,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1080.6
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1603.39
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2065.44
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1669.05
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1420.02
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1127.91
+  },
+  {
+    "age": 20,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 881.42
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1282.71
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1652.36
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1335.25
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1136.02
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 902.33
+  },
+  {
+    "age": 20,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 705.15
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2037.11
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2449.21
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2139.24
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1740.9
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1382.78
+  },
+  {
+    "age": 21,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1080.62
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1633.73
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2065.48
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1669.11
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1420.05
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1127.94
+  },
+  {
+    "age": 21,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 881.44
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1306.97
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1652.38
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1335.28
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1136.04
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 902.36
+  },
+  {
+    "age": 21,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 705.17
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2037.16
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2450.58
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2140.46
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1741.89
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1383.57
+  },
+  {
+    "age": 22,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1081.2
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1633.75
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2066.41
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1669.86
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1420.71
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1128.43
+  },
+  {
+    "age": 22,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 881.84
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1306.99
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1653.12
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1335.88
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1136.56
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 902.75
+  },
+  {
+    "age": 22,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 705.47
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2038.3
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2462.6
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2150.93
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1750.42
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1390.35
+  },
+  {
+    "age": 23,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1086.53
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1634.5
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2075.09
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1676.88
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1426.66
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1133.17
+  },
+  {
+    "age": 23,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 885.55
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1307.58
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1660.08
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1341.48
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1141.31
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 906.53
+  },
+  {
+    "age": 23,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 708.43
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2048.28
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2512.87
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2194.86
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1786.15
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1418.74
+  },
+  {
+    "age": 24,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1108.71
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1641.35
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2117.42
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1711.07
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1455.77
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1156.3
+  },
+  {
+    "age": 24,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 903.62
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1313.08
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1693.93
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1368.86
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1164.62
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 925.04
+  },
+  {
+    "age": 24,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 722.89
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2090.1
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2564.14
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2239.62
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1822.63
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1447.68
+  },
+  {
+    "age": 25,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1131.31
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1674.83
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2160.63
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1745.99
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1485.48
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1179.9
+  },
+  {
+    "age": 25,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 922.06
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1339.87
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1728.51
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1396.79
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1188.39
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 943.92
+  },
+  {
+    "age": 25,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 737.63
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2132.75
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2616.53
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2285.39
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1859.85
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1477.25
+  },
+  {
+    "age": 26,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1154.42
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1709.02
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2204.8
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1781.68
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1515.83
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1204.01
+  },
+  {
+    "age": 26,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 940.9
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1367.21
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1763.83
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1425.35
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1212.67
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 963.21
+  },
+  {
+    "age": 26,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 752.72
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2176.33
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2669.88
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2331.99
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1897.76
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1507.37
+  },
+  {
+    "age": 27,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1177.98
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1743.94
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2249.75
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1818.02
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1546.75
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1228.57
+  },
+  {
+    "age": 27,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 960.08
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1395.15
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1799.78
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1454.4
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1237.39
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 982.85
+  },
+  {
+    "age": 27,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 768.08
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2220.7
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2724.36
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2379.56
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1936.49
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1538.12
+  },
+  {
+    "age": 28,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1202.02
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1779.5
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2295.66
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1855.1
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1578.29
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1253.63
+  },
+  {
+    "age": 28,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 979.67
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1423.6
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1836.53
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1484.07
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1262.63
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1002.92
+  },
+  {
+    "age": 28,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 783.74
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2266.02
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2779.97
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2428.14
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 1976.03
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1569.52
+  },
+  {
+    "age": 29,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1226.55
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1815.81
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2342.52
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1892.96
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1610.5
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1279.23
+  },
+  {
+    "age": 29,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 999.68
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1452.66
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1874.02
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1514.38
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1288.41
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1023.38
+  },
+  {
+    "age": 29,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 799.73
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2312.26
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2836.7
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2477.7
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2016.35
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1601.56
+  },
+  {
+    "age": 30,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1251.56
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1852.87
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2390.3
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1931.57
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1643.37
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1305.33
+  },
+  {
+    "age": 30,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1020.07
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1482.29
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1912.25
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1545.25
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1314.71
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1044.27
+  },
+  {
+    "age": 30,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 816.05
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2359.45
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2894.58
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2528.23
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2057.48
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1634.24
+  },
+  {
+    "age": 31,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1277.11
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1890.68
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2439.11
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 1971.03
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1676.92
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1331.94
+  },
+  {
+    "age": 31,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1040.88
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1512.56
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1951.29
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1576.82
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1341.55
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1065.55
+  },
+  {
+    "age": 31,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 832.69
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2407.59
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 2953.69
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2579.86
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2099.48
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1667.59
+  },
+  {
+    "age": 32,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1303.17
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1929.27
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2488.9
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2011.28
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1711.16
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1359.17
+  },
+  {
+    "age": 32,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1062.14
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1543.42
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 1991.13
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1609.02
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1368.93
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1087.34
+  },
+  {
+    "age": 32,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 849.71
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2456.76
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3013.92
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2632.49
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2142.32
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1701.6
+  },
+  {
+    "age": 33,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1329.76
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 1968.67
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2539.65
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2052.26
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1746.04
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1386.85
+  },
+  {
+    "age": 33,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1083.81
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1574.94
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2031.71
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1641.8
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1396.85
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1109.48
+  },
+  {
+    "age": 33,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 867.04
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2506.86
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3075.46
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2686.22
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2186.06
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1736.36
+  },
+  {
+    "age": 34,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1356.91
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2008.78
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2591.48
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2094.16
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1781.68
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1415.16
+  },
+  {
+    "age": 34,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1105.92
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1607.02
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2073.18
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1675.32
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1425.34
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1132.12
+  },
+  {
+    "age": 34,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 884.73
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2558.03
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3138.27
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2741.09
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2230.71
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1771.82
+  },
+  {
+    "age": 35,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1384.63
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2049.79
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2644.42
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2136.93
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1818.08
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1444.07
+  },
+  {
+    "age": 35,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1128.5
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1639.84
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2115.54
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1709.54
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1454.46
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1155.25
+  },
+  {
+    "age": 35,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 902.8
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2704.62
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3318.0
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2898.06
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2358.45
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1873.29
+  },
+  {
+    "age": 36,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1463.92
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2167.25
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2795.86
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2259.32
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1922.21
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1526.77
+  },
+  {
+    "age": 36,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1193.14
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1733.8
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2236.69
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1807.46
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1537.76
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1221.42
+  },
+  {
+    "age": 36,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 954.5
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2759.77
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3385.72
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 2957.23
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2406.59
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1911.52
+  },
+  {
+    "age": 37,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1493.81
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2211.45
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2852.95
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2305.45
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 1961.44
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1557.93
+  },
+  {
+    "age": 37,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1217.51
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1769.17
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2282.37
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1844.35
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1569.15
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1246.35
+  },
+  {
+    "age": 37,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 974.01
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2816.1
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3454.77
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3017.54
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2455.68
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1950.5
+  },
+  {
+    "age": 38,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1524.27
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2256.61
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2911.15
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2352.46
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2001.47
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1589.74
+  },
+  {
+    "age": 38,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1242.32
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1805.28
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2328.92
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1881.98
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1601.19
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1271.79
+  },
+  {
+    "age": 38,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 993.85
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2873.53
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3525.03
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3078.9
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2505.62
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 1990.18
+  },
+  {
+    "age": 39,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1555.26
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2302.62
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 2970.38
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2400.33
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2042.18
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1622.07
+  },
+  {
+    "age": 39,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1267.61
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1842.12
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2376.29
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1920.26
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1633.75
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1297.66
+  },
+  {
+    "age": 39,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1014.08
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2931.96
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3595.55
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3140.51
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2555.72
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2030.0
+  },
+  {
+    "age": 40,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1586.38
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2349.5
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3029.78
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2448.35
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2083.02
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1654.52
+  },
+  {
+    "age": 40,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1292.97
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1879.59
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2423.82
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1958.69
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1666.41
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1323.6
+  },
+  {
+    "age": 40,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1034.36
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 2990.63
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3667.43
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3203.3
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2606.83
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2070.57
+  },
+  {
+    "age": 41,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1618.11
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2396.48
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3090.4
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2497.32
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2124.71
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1687.61
+  },
+  {
+    "age": 41,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1318.82
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1917.19
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2472.33
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 1997.85
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1699.76
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1350.09
+  },
+  {
+    "age": 41,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1055.06
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3050.42
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3740.76
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3267.3
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2658.95
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2111.97
+  },
+  {
+    "age": 42,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1650.46
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2444.43
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3152.17
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2547.23
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2167.16
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1721.34
+  },
+  {
+    "age": 42,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1345.17
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1955.53
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2521.74
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2037.79
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1733.72
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1377.06
+  },
+  {
+    "age": 42,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1076.13
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3111.39
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3815.79
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3332.86
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2712.27
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2154.33
+  },
+  {
+    "age": 43,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1683.55
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2493.29
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3215.35
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2598.3
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2210.6
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1755.84
+  },
+  {
+    "age": 43,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1372.14
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 1994.62
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2572.28
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2078.64
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1768.48
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1404.68
+  },
+  {
+    "age": 43,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1097.72
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3173.82
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3895.39
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3402.4
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2768.86
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2199.27
+  },
+  {
+    "age": 44,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1718.68
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2543.25
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3281.79
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2651.98
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2256.27
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1792.15
+  },
+  {
+    "age": 44,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1400.51
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2034.6
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2625.44
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2121.56
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1805.03
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1433.71
+  },
+  {
+    "age": 44,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1120.4
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3240.02
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 3992.79
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3487.47
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2838.1
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2254.27
+  },
+  {
+    "age": 45,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1761.64
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2595.81
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3363.81
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2718.25
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2312.69
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1836.94
+  },
+  {
+    "age": 45,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1435.5
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2076.66
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2691.06
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2174.61
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1850.15
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1469.55
+  },
+  {
+    "age": 45,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1148.4
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3321.04
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 4092.58
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3574.62
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2909.02
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2310.62
+  },
+  {
+    "age": 46,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1805.67
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2660.7
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3447.93
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2786.23
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2370.5
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1882.84
+  },
+  {
+    "age": 46,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1471.37
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2128.55
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2758.34
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2228.99
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1896.42
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1506.29
+  },
+  {
+    "age": 46,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1177.1
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3404.03
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 4194.95
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3664.03
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 2981.77
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2368.4
+  },
+  {
+    "age": 47,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1850.82
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2727.22
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3534.13
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2855.89
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2429.76
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1929.93
+  },
+  {
+    "age": 47,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1508.18
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2181.76
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2827.3
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2284.72
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1943.81
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1543.94
+  },
+  {
+    "age": 47,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1206.53
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3489.17
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 4299.8
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3755.6
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3056.31
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2427.59
+  },
+  {
+    "age": 48,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1897.1
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2795.41
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3622.47
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 2927.28
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2490.51
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 1978.19
+  },
+  {
+    "age": 48,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1545.88
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2236.32
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2897.97
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2341.81
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 1992.41
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1582.56
+  },
+  {
+    "age": 48,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1236.72
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3576.39
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 4407.29
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3849.52
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3132.71
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2488.26
+  },
+  {
+    "age": 49,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1944.52
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2865.28
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3713.06
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3000.49
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2552.79
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2027.65
+  },
+  {
+    "age": 49,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1584.55
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2292.22
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 2970.44
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2400.39
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2042.23
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1622.12
+  },
+  {
+    "age": 49,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1267.64
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 3665.8
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 4517.46
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 3945.69
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3211.03
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2550.46
+  },
+  {
+    "age": 50,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 1993.12
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 2936.93
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 3805.88
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3075.48
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2616.61
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2078.32
+  },
+  {
+    "age": 50,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1624.16
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2349.54
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3044.69
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2460.39
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2093.29
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1662.65
+  },
+  {
+    "age": 50,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1299.33
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4113.14
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5068.78
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 4427.26
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3602.92
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2861.74
+  },
+  {
+    "age": 51,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2236.36
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3295.34
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4270.34
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3450.81
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 2935.93
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2331.96
+  },
+  {
+    "age": 51,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1822.38
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2636.28
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3416.28
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2760.65
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2348.74
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1865.58
+  },
+  {
+    "age": 51,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1457.89
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4215.97
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5195.51
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 4537.95
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3693.01
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 2933.28
+  },
+  {
+    "age": 52,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2292.27
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3377.74
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4377.07
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3537.07
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3009.29
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2390.25
+  },
+  {
+    "age": 52,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1867.92
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2702.19
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3501.65
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2829.66
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2407.44
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1912.2
+  },
+  {
+    "age": 52,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1494.33
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4321.41
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5325.35
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 4651.39
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3785.3
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3006.63
+  },
+  {
+    "age": 53,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2349.58
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3462.16
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4486.53
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3625.5
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3084.55
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2450.03
+  },
+  {
+    "age": 53,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1914.62
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2769.73
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3589.22
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2900.41
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2467.63
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 1960.02
+  },
+  {
+    "age": 53,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1531.68
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4429.41
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5458.49
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 4767.65
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3879.93
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3081.76
+  },
+  {
+    "age": 54,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2408.32
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3548.71
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4598.63
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3716.11
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3161.62
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2511.25
+  },
+  {
+    "age": 54,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 1962.47
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2838.98
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3678.91
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 2972.88
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2529.31
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2009.0
+  },
+  {
+    "age": 54,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1569.99
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4540.14
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5594.96
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 4886.88
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 3976.95
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3158.83
+  },
+  {
+    "age": 55,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2468.53
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3637.4
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4713.67
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3809.07
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3240.71
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2574.06
+  },
+  {
+    "age": 55,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2011.56
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2909.92
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3770.92
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3047.24
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2592.56
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2059.24
+  },
+  {
+    "age": 55,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1609.26
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4653.67
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5734.82
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5009.02
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4076.35
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3237.77
+  },
+  {
+    "age": 56,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2530.23
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3728.4
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4831.45
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 3904.25
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3321.7
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2638.37
+  },
+  {
+    "age": 56,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2061.83
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 2982.73
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3865.15
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3123.4
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2657.37
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2110.7
+  },
+  {
+    "age": 56,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1649.46
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4769.97
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 5878.17
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5134.25
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4178.24
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3318.73
+  },
+  {
+    "age": 57,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2593.48
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3821.54
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 4952.26
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4001.86
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3404.75
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2704.36
+  },
+  {
+    "age": 57,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2113.38
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3057.24
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 3961.79
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3201.48
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2723.81
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2163.48
+  },
+  {
+    "age": 57,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1690.71
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 4889.21
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6025.21
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5262.63
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4282.74
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3401.73
+  },
+  {
+    "age": 58,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2658.35
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 3917.11
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5076.07
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4101.92
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3489.87
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2771.98
+  },
+  {
+    "age": 58,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2166.2
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3133.68
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4060.85
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3281.53
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2791.91
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2217.58
+  },
+  {
+    "age": 58,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1732.96
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5011.51
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6175.81
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5394.19
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4389.79
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3486.74
+  },
+  {
+    "age": 59,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2724.8
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4015.04
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5202.97
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4204.45
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3577.11
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2841.26
+  },
+  {
+    "age": 59,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2220.35
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3212.04
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4162.37
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3363.57
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2861.69
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2272.99
+  },
+  {
+    "age": 59,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1776.27
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5136.78
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6330.21
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5529.06
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4499.55
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3573.91
+  },
+  {
+    "age": 60,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2792.92
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4115.41
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5333.05
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4309.58
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3666.56
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2912.31
+  },
+  {
+    "age": 60,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2275.89
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3292.33
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4266.45
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3447.65
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 2933.26
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2329.82
+  },
+  {
+    "age": 60,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1820.7
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5265.21
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6488.46
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5667.31
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4612.03
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3663.28
+  },
+  {
+    "age": 61,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2862.76
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4218.31
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5466.4
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4417.31
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3758.24
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 2985.13
+  },
+  {
+    "age": 61,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2332.78
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3374.64
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4373.09
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3533.86
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3006.58
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2388.1
+  },
+  {
+    "age": 61,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1866.23
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5396.83
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6650.63
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5808.95
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4727.32
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3754.85
+  },
+  {
+    "age": 62,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 2934.29
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4323.78
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5603.02
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4527.72
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3852.16
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3059.71
+  },
+  {
+    "age": 62,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2391.07
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3459.02
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4482.41
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3622.17
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3081.73
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2447.79
+  },
+  {
+    "age": 62,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1912.87
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5531.71
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6816.89
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 5954.14
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4845.48
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3848.72
+  },
+  {
+    "age": 63,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3007.66
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4431.85
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5743.1
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4640.93
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 3948.47
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3136.21
+  },
+  {
+    "age": 63,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2450.89
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3545.47
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4594.47
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3712.75
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3158.78
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2508.97
+  },
+  {
+    "age": 63,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 1960.72
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 5670.01
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 6987.37
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 6103.08
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 4966.65
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 3944.95
+  },
+  {
+    "age": 64,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3082.87
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 4542.65
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 5886.72
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 4756.99
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 4047.19
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3214.64
+  },
+  {
+    "age": 64,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2512.16
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 3634.11
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 4709.36
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 3805.6
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3237.76
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 2571.7
+  },
+  {
+    "age": 64,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2009.72
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 6660.05
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 8207.38
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 7168.68
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 5833.86
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 4633.78
+  },
+  {
+    "age": 65,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3621.15
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 5335.83
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 6914.52
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 5587.56
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 4753.83
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3775.92
+  },
+  {
+    "age": 65,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 2950.79
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4268.66
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 5531.6
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 4470.03
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3803.07
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3020.74
+  },
+  {
+    "age": 65,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2360.64
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 6826.57
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 8412.49
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 7347.8
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 5979.64
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 4749.54
+  },
+  {
+    "age": 66,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3711.67
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 5469.23
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 7087.36
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 5727.25
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 4872.68
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3870.29
+  },
+  {
+    "age": 66,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3024.54
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4375.37
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 5669.9
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 4581.79
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3898.14
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3096.23
+  },
+  {
+    "age": 66,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2419.61
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 6997.15
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 8622.81
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 7531.55
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6129.14
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 4868.3
+  },
+  {
+    "age": 67,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3804.44
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 5605.93
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 7264.52
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 5870.42
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 4994.47
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 3967.07
+  },
+  {
+    "age": 67,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3100.16
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4484.76
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 5811.63
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 4696.33
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 3995.56
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3173.65
+  },
+  {
+    "age": 67,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2480.11
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 7172.1
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 8838.41
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 7719.84
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6282.41
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 4990.04
+  },
+  {
+    "age": 68,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3899.57
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 5746.07
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 7446.14
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6017.15
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5119.34
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4066.22
+  },
+  {
+    "age": 68,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3177.67
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4596.86
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 5956.92
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 4813.74
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4095.46
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3252.99
+  },
+  {
+    "age": 68,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2542.12
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 7351.44
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 9059.3
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 7912.75
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6439.4
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5114.71
+  },
+  {
+    "age": 69,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 3996.99
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 5889.72
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 7632.25
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6167.55
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5247.29
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4167.84
+  },
+  {
+    "age": 69,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3257.06
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4711.76
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6105.82
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 4934.04
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4197.83
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3334.28
+  },
+  {
+    "age": 69,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2605.66
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 7535.15
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 9285.87
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 8110.66
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6600.46
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5242.63
+  },
+  {
+    "age": 70,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4096.98
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6036.94
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 7823.18
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6321.83
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5378.53
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4272.11
+  },
+  {
+    "age": 70,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3338.54
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4829.54
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6258.52
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5057.44
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4302.83
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3417.68
+  },
+  {
+    "age": 70,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2670.82
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 7723.62
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 9518.02
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 8313.41
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6765.46
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5373.68
+  },
+  {
+    "age": 71,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4199.4
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6187.91
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 8018.7
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6479.83
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5512.96
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4378.87
+  },
+  {
+    "age": 71,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3421.99
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 4950.34
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6414.96
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5183.86
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4410.37
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3503.09
+  },
+  {
+    "age": 71,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2737.59
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 7916.69
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 9755.91
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 8521.18
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 6934.57
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5508.03
+  },
+  {
+    "age": 72,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4304.36
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6342.58
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 8219.18
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6641.83
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5650.81
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4488.37
+  },
+  {
+    "age": 72,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3507.54
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5074.08
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6575.34
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5313.48
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4520.66
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3590.68
+  },
+  {
+    "age": 72,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2806.03
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 8114.55
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 9999.87
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 8734.28
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 7107.94
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5645.76
+  },
+  {
+    "age": 73,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4412.01
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6501.15
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 8424.67
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6807.9
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5792.1
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4600.6
+  },
+  {
+    "age": 73,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3595.24
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5200.93
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6739.74
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5446.34
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4633.68
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3680.47
+  },
+  {
+    "age": 73,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2876.18
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 8317.45
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 10249.88
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 8952.67
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 7285.66
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5786.9
+  },
+  {
+    "age": 74,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4522.31
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6663.71
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 8635.26
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 6978.11
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 5936.89
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4715.61
+  },
+  {
+    "age": 74,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3685.09
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5330.96
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 6908.19
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5582.47
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4749.51
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3772.47
+  },
+  {
+    "age": 74,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 2948.08
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 8525.43
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 10506.08
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 9176.42
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 7467.81
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 5931.58
+  },
+  {
+    "age": 75,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4635.34
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 6830.29
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 8851.14
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 7152.52
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6085.28
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4833.47
+  },
+  {
+    "age": 75,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3777.22
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5464.23
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 7080.92
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5722.01
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4868.23
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3866.75
+  },
+  {
+    "age": 75,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3021.79
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 8738.54
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 10768.74
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 9405.85
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 7654.48
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6079.86
+  },
+  {
+    "age": 76,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4751.23
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7001.03
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 9072.44
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 7331.34
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6237.46
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 4954.32
+  },
+  {
+    "age": 76,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3871.67
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5600.83
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 7257.94
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 5865.07
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 4989.97
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 3963.45
+  },
+  {
+    "age": 76,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3097.33
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 8956.98
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 11037.93
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 9641.0
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 7845.83
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6231.82
+  },
+  {
+    "age": 77,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4870.01
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7176.08
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 9299.24
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 7514.59
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6393.37
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5078.17
+  },
+  {
+    "age": 77,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 3968.45
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5740.84
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 7439.38
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6011.69
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5114.7
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4062.52
+  },
+  {
+    "age": 77,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3174.77
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 9180.88
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 11313.88
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 9882.02
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 8041.97
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6387.65
+  },
+  {
+    "age": 78,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 4991.74
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7355.45
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 9531.72
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 7702.47
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6553.22
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5205.12
+  },
+  {
+    "age": 78,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4067.66
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 5884.37
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 7625.38
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6162.0
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5242.57
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4164.09
+  },
+  {
+    "age": 78,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3254.13
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 9410.42
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 11596.71
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 10129.01
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 8243.0
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6547.3
+  },
+  {
+    "age": 79,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5116.54
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7539.34
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 9769.99
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 7895.03
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6717.02
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5335.25
+  },
+  {
+    "age": 79,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4169.34
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6031.48
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 7815.99
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6316.03
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5373.6
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4268.19
+  },
+  {
+    "age": 79,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3335.47
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 9645.66
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 11886.67
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 10382.28
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 8449.12
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6711.01
+  },
+  {
+    "age": 80,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5244.46
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7727.82
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 10014.24
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 8092.42
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 6884.93
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5468.63
+  },
+  {
+    "age": 80,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4273.57
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6182.28
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 8011.4
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6473.93
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5507.95
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4374.9
+  },
+  {
+    "age": 80,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3418.85
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 9886.83
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 12183.88
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 10641.89
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 8660.36
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 6878.83
+  },
+  {
+    "age": 81,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5375.6
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 7921.02
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 10264.63
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 8294.74
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7057.08
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5605.35
+  },
+  {
+    "age": 81,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4380.42
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6336.81
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 8211.7
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6635.8
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5645.67
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4484.28
+  },
+  {
+    "age": 81,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3504.34
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 10134.03
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 12488.44
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 10907.91
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 8876.87
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7050.76
+  },
+  {
+    "age": 82,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5509.99
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 8119.06
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 10521.23
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 8502.11
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7233.51
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5745.49
+  },
+  {
+    "age": 82,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4489.96
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6495.26
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 8416.99
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6801.7
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5786.8
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4596.4
+  },
+  {
+    "age": 82,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3591.96
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 10387.36
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 12800.65
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 11180.61
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 9098.77
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7227.05
+  },
+  {
+    "age": 83,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5647.73
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 8322.03
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 10784.29
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 8714.67
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7414.39
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 5889.12
+  },
+  {
+    "age": 83,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4602.18
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6657.62
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 8627.44
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 6971.72
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 5931.52
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4711.32
+  },
+  {
+    "age": 83,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3681.75
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 10647.03
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 13120.72
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 11460.14
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 9326.26
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7407.75
+  },
+  {
+    "age": 84,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5788.93
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 8530.1
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 11053.9
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 8932.56
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7599.71
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6036.36
+  },
+  {
+    "age": 84,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4717.25
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6824.07
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 8843.12
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 7146.03
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6079.76
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4829.09
+  },
+  {
+    "age": 84,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3773.81
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 10913.27
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 13448.7
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 11746.63
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 9559.42
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7592.9
+  },
+  {
+    "age": 85,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 5933.65
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 8743.34
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 11330.27
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 9155.88
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7789.73
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6187.28
+  },
+  {
+    "age": 85,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4835.2
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 6994.66
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 9064.22
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 7324.68
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6231.79
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 4949.84
+  },
+  {
+    "age": 85,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3868.16
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 11186.06
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 13784.93
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 12040.28
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 9798.39
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7782.71
+  },
+  {
+    "age": 86,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6081.98
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 8961.97
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 11613.5
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 9384.78
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 7984.46
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6341.95
+  },
+  {
+    "age": 86,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 4956.06
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 7169.56
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 9290.8
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 7507.82
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6387.56
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5073.55
+  },
+  {
+    "age": 86,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 3964.85
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 11465.71
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 14129.5
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 12341.29
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 10043.3
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 7977.3
+  },
+  {
+    "age": 87,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6234.03
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 9185.98
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 11903.82
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 9619.36
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 8184.06
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6500.5
+  },
+  {
+    "age": 87,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5079.95
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 7348.79
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 9523.05
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 7695.5
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6547.24
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5200.38
+  },
+  {
+    "age": 87,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4063.94
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 11752.34
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 14482.74
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 12649.81
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 10294.41
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 8176.73
+  },
+  {
+    "age": 88,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6389.88
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 9415.62
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 12201.37
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 9859.81
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 8388.62
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6662.98
+  },
+  {
+    "age": 88,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5206.93
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 7532.51
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 9761.08
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 7887.85
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6710.9
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5330.39
+  },
+  {
+    "age": 88,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4165.55
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 12046.12
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 14844.78
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 12966.03
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 10551.75
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 8381.1
+  },
+  {
+    "age": 89,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6549.6
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 9650.98
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 12506.43
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 10106.31
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 8598.34
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 6829.56
+  },
+  {
+    "age": 89,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5337.12
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 7720.79
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 10005.14
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 8085.04
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 6878.69
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5463.64
+  },
+  {
+    "age": 89,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4269.69
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 12347.26
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 15215.96
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 13290.21
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 10815.56
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 8590.67
+  },
+  {
+    "age": 90,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6713.37
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 9892.25
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 12819.12
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 10359.0
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 8813.31
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7000.35
+  },
+  {
+    "age": 90,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5470.56
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 7913.79
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 10255.3
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 8287.21
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7050.64
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5600.27
+  },
+  {
+    "age": 90,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4376.44
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 12655.98
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 15596.37
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 13622.5
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 11085.97
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 8805.46
+  },
+  {
+    "age": 91,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 6881.21
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 10139.59
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 13139.58
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 10617.95
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 9033.68
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7175.34
+  },
+  {
+    "age": 91,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5607.31
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 8111.67
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 10511.66
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 8494.37
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7226.93
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5740.26
+  },
+  {
+    "age": 91,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4485.84
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 12972.4
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 15986.25
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 13963.03
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 11363.11
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 9025.56
+  },
+  {
+    "age": 92,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7053.25
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 10393.09
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 13468.08
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 10883.42
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 9259.52
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7354.7
+  },
+  {
+    "age": 92,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5747.5
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 8314.47
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 10774.49
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 8706.75
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7407.63
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 5883.76
+  },
+  {
+    "age": 92,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4598.02
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 13296.68
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 16385.96
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 14312.15
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 11647.24
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 9251.25
+  },
+  {
+    "age": 93,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7229.58
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 10652.92
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 13804.81
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 11155.53
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 9491.02
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7538.61
+  },
+  {
+    "age": 93,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 5891.22
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 8522.33
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 11043.83
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 8924.42
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7592.82
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6030.91
+  },
+  {
+    "age": 93,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4712.97
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 13629.14
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 16795.6
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 14669.97
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 11938.41
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 9482.53
+  },
+  {
+    "age": 94,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7410.32
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 10919.27
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 14149.89
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 11434.4
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 9728.29
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7727.05
+  },
+  {
+    "age": 94,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6038.48
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 8735.41
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 11319.92
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 9147.53
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7782.61
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6181.64
+  },
+  {
+    "age": 94,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4830.78
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 13969.88
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 17215.39
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 15036.62
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 12236.8
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 9719.52
+  },
+  {
+    "age": 95,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7595.54
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 11192.22
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 14503.58
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 11720.22
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 9971.45
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 7920.18
+  },
+  {
+    "age": 95,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6189.4
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 8953.78
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 11602.87
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 9376.17
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 7977.18
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6336.15
+  },
+  {
+    "age": 95,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 4951.52
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 14319.03
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 17645.78
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 15412.52
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 12542.7
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 9962.53
+  },
+  {
+    "age": 96,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7785.44
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 11471.97
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 14866.22
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 12013.24
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 10220.72
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 8118.21
+  },
+  {
+    "age": 96,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6344.14
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 9177.57
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 11892.97
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 9610.6
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 8176.6
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6494.57
+  },
+  {
+    "age": 96,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5075.32
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 14677.02
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 18086.99
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 15797.9
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 12856.35
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 10211.63
+  },
+  {
+    "age": 97,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 7980.07
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 11758.81
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 15237.91
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 12313.61
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 10476.29
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 8321.21
+  },
+  {
+    "age": 97,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6502.77
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 9407.04
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 12190.33
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 9850.89
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 8381.02
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6656.96
+  },
+  {
+    "age": 97,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5202.21
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 15044.01
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 18539.16
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 16192.85
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 13177.72
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 10466.91
+  },
+  {
+    "age": 98,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 8179.58
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 12052.8
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 15618.83
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 12621.4
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 10738.18
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 8529.21
+  },
+  {
+    "age": 98,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6665.32
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 9642.24
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 12495.06
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 10097.13
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 8590.54
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6823.36
+  },
+  {
+    "age": 98,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5332.25
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 15420.07
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 19002.67
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 16597.68
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 13507.21
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 10728.58
+  },
+  {
+    "age": 99,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 8384.11
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 12354.09
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 16009.33
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 12936.98
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 11006.67
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 8742.45
+  },
+  {
+    "age": 99,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 6831.96
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 9883.27
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 12807.46
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 10349.57
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 8805.34
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 6993.95
+  },
+  {
+    "age": 99,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5465.57
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 15805.62
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 19477.69
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 17012.59
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 13844.85
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 10996.77
+  },
+  {
+    "age": 100,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 8593.69
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 12662.97
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 16409.54
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 13260.4
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 11281.8
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 8961.0
+  },
+  {
+    "age": 100,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7002.77
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 10130.37
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 13127.64
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 10608.32
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 9025.44
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7168.8
+  },
+  {
+    "age": 100,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5602.22
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 16200.73
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 19964.6
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 17437.89
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 14190.93
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 11271.7
+  },
+  {
+    "age": 101,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 8808.51
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 12979.54
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 16819.77
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 13591.88
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 11563.86
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 9185.01
+  },
+  {
+    "age": 101,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7177.82
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 10383.62
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 13455.81
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 10873.52
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 9251.08
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7348.0
+  },
+  {
+    "age": 101,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5742.27
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 16605.72
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 20363.9
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 17786.65
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 14474.75
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 11497.12
+  },
+  {
+    "age": 102,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 8984.67
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 13304.02
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 17156.14
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 13863.73
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 11795.09
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 9368.72
+  },
+  {
+    "age": 102,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7321.4
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 10643.21
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 13724.9
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 11090.97
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 9436.08
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7494.96
+  },
+  {
+    "age": 102,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5857.12
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 16937.84
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 20771.19
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 18142.38
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 14764.25
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 11727.06
+  },
+  {
+    "age": 103,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 9164.36
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 13570.08
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 17499.28
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 14140.99
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 12031.03
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 9556.08
+  },
+  {
+    "age": 103,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7467.83
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 10856.08
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 13999.43
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 11312.81
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 9624.84
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7644.85
+  },
+  {
+    "age": 103,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 5974.26
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 17276.58
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 21186.61
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 18505.22
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 15059.55
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 11961.61
+  },
+  {
+    "age": 104,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 9347.64
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 13841.48
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 17849.27
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 14423.8
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 12271.65
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 9747.21
+  },
+  {
+    "age": 104,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7617.17
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 11073.19
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 14279.42
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 11539.05
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 9817.33
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7797.77
+  },
+  {
+    "age": 104,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 6093.74
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "I150",
+    "premium": 17622.12
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "D150",
+    "premium": 21610.34
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "D250",
+    "premium": 18875.33
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "D500",
+    "premium": 15360.71
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "D1000",
+    "premium": 12200.83
+  },
+  {
+    "age": 105,
+    "region": "COSTA",
+    "deductible": "D2000",
+    "premium": 9534.61
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "I150",
+    "premium": 14118.32
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "D150",
+    "premium": 18206.27
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "D250",
+    "premium": 14712.28
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "D500",
+    "premium": 12517.1
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "D1000",
+    "premium": 9942.16
+  },
+  {
+    "age": 105,
+    "region": "SIERRA",
+    "deductible": "D2000",
+    "premium": 7769.51
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "I150",
+    "premium": 11294.65
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "D150",
+    "premium": 14565.0
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "D250",
+    "premium": 11769.82
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "D500",
+    "premium": 10013.69
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "D1000",
+    "premium": 7953.73
+  },
+  {
+    "age": 105,
+    "region": "AUSTRO",
+    "deductible": "D2000",
+    "premium": 6215.61
+  }
+]

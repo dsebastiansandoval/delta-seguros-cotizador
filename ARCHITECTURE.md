@@ -605,7 +605,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 |---|---|---|
 | 0 | MVP visual | ✅ Entregado |
 | 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
-| 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | Pendiente |
+| 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ v1 completa — BMI y Humana con tarifa real; SaludSA/Salud/Confiamed/Pro/VB con rango confirmado sin sembrar; Bupa 100% manual (§2.3 de `EXCEL-AUDIT.md`) |
 | 3 | Cartera, comisiones, siniestros, KPIs, ARCO | Pendiente |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |
 | 5 | Despliegue, capacitación, entrega | Pendiente |
