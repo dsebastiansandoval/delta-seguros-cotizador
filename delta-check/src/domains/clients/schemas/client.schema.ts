@@ -19,6 +19,10 @@ function optionalText() {
  * "DATOS VH" del Excel (EXCEL-AUDIT.md), no se inventaron de cero.
  */
 export const newClientVehicleSchema = z.object({
+  // Modalidad — ANUAL (con motor de tasas para Latina/Cóndor) o POR_KM
+  // (100% manual para las 13, EXCEL-AUDIT.md §11.4b).
+  modality: z.enum(["ANUAL", "POR_KM"]).default("ANUAL"),
+
   // Cliente
   personType: z.enum(["NATURAL", "JURIDICA"]),
   documentType: z.enum(["CEDULA", "RUC", "PASAPORTE"]),

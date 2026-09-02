@@ -1,5 +1,6 @@
 "use server";
 
+import { z } from "zod";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -54,7 +55,11 @@ export async function createAutoQuote(
       operationType: "NUEVA",
     });
 
-    await comparisonService.runComparisonForRisk(tx, session.organizationId, risk.id);
+    if (input.modality === "POR_KM") {
+      await comparisonService.runKmComparisonForRisk(tx, session.organizationId, risk.id);
+    } else {
+      await comparisonService.runComparisonForRisk(tx, session.organizationId, risk.id);
+    }
 
     await audit(tx, {
       organizationId: session.organizationId,
@@ -69,6 +74,48 @@ export async function createAutoQuote(
 
   revalidatePath("/cotizar/autos");
   redirect(`/cotizar/autos/${quoteId}/comparar`);
+}
+
+const manualPremiumSchema = z.object({
+  quoteOptionId: z.uuid(),
+  quoteId: z.uuid(),
+  netPremiumDollars: z.coerce.number().positive("La prima debe ser mayor a 0"),
+});
+
+/**
+ * El ejecutivo digita la prima que le pasó la aseguradora — el mismo paso
+ * manual de siempre, ver comparisonService.setManualPremium.
+ */
+export async function setManualPremium(
+  _prevState: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const session = await requirePermission("quote:create");
+  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
+
+  const parsed = manualPremiumSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) {
+    return { ok: false, errors: parsed.error.flatten().fieldErrors };
+  }
+  const { quoteOptionId, quoteId, netPremiumDollars } = parsed.data;
+
+  await withOrganization(session.organizationId, async (tx) => {
+    await comparisonService.setManualPremium(
+      tx,
+      quoteOptionId,
+      dollarsToCents(netPremiumDollars),
+    );
+    await audit(tx, {
+      organizationId: session.organizationId,
+      userId: session.userId,
+      action: "quote_option.manual_premium_set",
+      entityType: "quote_options",
+      entityId: quoteOptionId,
+    });
+  });
+
+  revalidatePath(`/cotizar/autos/${quoteId}/comparar`);
+  return { ok: true, value: undefined };
 }
 
 export async function getQuoteComparison(quoteId: string) {

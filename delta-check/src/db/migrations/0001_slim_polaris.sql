@@ -1,0 +1,1 @@
+ALTER TABLE "quote_options" ADD COLUMN "km_bracket" integer;

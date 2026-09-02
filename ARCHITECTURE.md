@@ -604,7 +604,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 | Fase | Alcance | Estado |
 |---|---|---|
 | 0 | MVP visual | ✅ Entregado |
-| 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) **+ modalidad Auto x Km** + carátula PDF | Pendiente |
+| 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
 | 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | Pendiente |
 | 3 | Cartera, comisiones, siniestros, KPIs, ARCO | Pendiente |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |

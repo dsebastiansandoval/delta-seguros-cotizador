@@ -4,9 +4,14 @@ Cotizador comparativo para agentes de un broker de seguros. Ver `../ARCHITECTURE
 
 ## Estado actual
 
-Fase 1 en construcción. **Ya funciona de punta a punta, probado en el navegador, no solo en tests aislados:** login (dev) → formulario de cliente/vehículo → creación de cotización → comparador contra las 13 aseguradoras de Autos, con Latina y Cóndor calculando la prima real (tasa real de INFO GENERAL, impuestos ecuatorianos exactos) y las otras 11 marcadas "Pendiente — digitar", tal como opera hoy el Excel.
+**Fase 1 completa**, probada de punta a punta (navegador + ejecución directa de los servicios de dominio, no solo tests aislados):
 
-Falta: módulo de Salud, back-office (cartera/comisiones/siniestros), generación de carátula en PDF, y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
+- Login (dev) → formulario de cliente/vehículo → cotización → comparador contra las 13 aseguradoras de Autos, con Latina y Cóndor calculando la prima real y las demás en digitación manual.
+- **Digitación manual funcional**: cada fila pendiente tiene un campo real para que el ejecutivo escriba la prima que le cotizaron por teléfono — recalcula impuestos con la misma fórmula, y reordena el ranking.
+- **Auto x Km**: modalidad completa — grilla de 13 aseguradoras × 6 rangos de km, 100% digitación manual (confirmado en el Excel que ninguna aseguradora tiene tabla para esta modalidad).
+- **Carátula en PDF**: se genera con los datos reales de la cotización y la aseguradora más barata ya cotizada — mismo texto de coberturas/cláusulas/aclaratorio que la hoja `CARATULA` del Excel.
+
+Falta para Fase 2 en adelante: módulo de Salud, back-office (cartera/comisiones/siniestros), y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
 ## Requisitos
 
