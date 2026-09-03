@@ -605,7 +605,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 |---|---|---|
 | 0 | MVP visual | ✅ Entregado |
 | 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
-| 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ v1 completa — BMI y Humana con tarifa real; SaludSA/Salud/Confiamed/Pro/VB con rango confirmado sin sembrar; Bupa 100% manual (§2.3 de `EXCEL-AUDIT.md`) |
+| 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ Completa — BMI, Humana, Confiamed, SaludSA, Pro y VB con tarifa real (6/8); Salud genérica con rango confirmado sin sembrar (estructura de 9 sub-bloques, pendiente de mapear); Bupa 100% manual, sin tabla en el Excel (§2.3 de `EXCEL-AUDIT.md`) |
 | 3 | Cartera, comisiones, siniestros, KPIs, ARCO | Pendiente |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |
 | 5 | Despliegue, capacitación, entrega | Pendiente |
@@ -650,7 +650,7 @@ Confirmado también en las macros: `AUTOXKM()`, `DATOS_CLIENTE_XKM()`, `ALTA_EN_
 
 ### 11.4b Salud (AM) — hallazgo mayor: sí hay motor de tarifas real
 
-A diferencia de Autos, la línea Salud **no depende de digitación manual**. Existe una hoja oculta (`BASES ASEGURADORAS AM`, 238×152 celdas) con tablas de tarifa reales por edad × región × plan × deducible para Humana, BMI, SaludSA, Pro, Confiamed y VB (Bupa y Salud genérica quedan por confirmar). Está exportada completa en [`reference-data/salud_bases_aseguradoras_am_RAW.csv`](./reference-data/salud_bases_aseguradoras_am_RAW.csv). Cambia el diseño de `rate_rules` para Fase 2: no es "tramo × tasa fija" como en Autos, es una tabla multidimensional. Detalle completo en `EXCEL-AUDIT.md` §2.3.
+A diferencia de Autos, la línea Salud **no depende de digitación manual**. Existe una hoja oculta (`BASES ASEGURADORAS AM`, 238×152 celdas) con tablas de tarifa reales por edad × región × plan × deducible para Humana, BMI, SaludSA, Pro, Confiamed y VB — las 6 ya sembradas con datos reales, rango de cada una confirmado por su propia fórmula VLOOKUP, no por posición/rótulo cercano (Bupa no tiene tabla; Salud genérica queda por confirmar, ver `EXCEL-AUDIT.md` §2.3). Está exportada completa en [`reference-data/salud_bases_aseguradoras_am_RAW.csv`](./reference-data/salud_bases_aseguradoras_am_RAW.csv). Cambia el diseño de `rate_rules` para Fase 2: no es "tramo × tasa fija" como en Autos, es una tabla multidimensional. Detalle completo en `EXCEL-AUDIT.md` §2.3.
 
 ### 11.4c SoftSeguros — parcialmente resuelto
 

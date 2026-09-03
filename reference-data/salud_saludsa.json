@@ -1,0 +1,2570 @@
+[
+{
+"planCode": "UNICO_7K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 53.7926
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 53.7926
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 53.7926
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 23.4825
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 23.4825
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 23.4825
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 35.4308
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 70.4374
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 35.4308
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 35.4308
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 70.4374
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 70.4374
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 52.9341
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 61.4787
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 61.4787
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 70.4374
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 72.5786
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 72.5786
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 120.8162
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 96.051
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 96.051
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 234.8048
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 175.033
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 175.033
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 274.9321
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 195.9501
+},
+{
+"planCode": "UNICO_7K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 195.9501
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 76.8307
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 76.8307
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 76.8307
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 33.5421
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 33.5421
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 33.5421
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 50.6111
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 100.6162
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 50.6111
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 50.6111
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 73.1745
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 73.1745
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 75.6187
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 87.8094
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 87.8094
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 100.6162
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 103.6664
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 103.6664
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 172.5686
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 137.1984
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 137.1984
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 335.3907
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 250.0154
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 250.0154
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 392.7082
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 279.8912
+},
+{
+"planCode": "ESENCIAL_15K",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 279.8912
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 170.5183
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 170.5183
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 170.5183
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 74.437
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 74.437
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 74.437
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 112.3322
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 223.3009
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 112.3322
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 112.3322
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 223.3009
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 223.3009
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 167.8115
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 194.8795
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 194.8795
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 223.3009
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 230.0679
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 230.0679
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 383.0021
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 304.5049
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 304.5049
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 744.3397
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 554.8738
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 554.8738
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 871.5593
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 621.1904
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 621.1904
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 245.7734
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 245.7734
+},
+{
+"planCode": "PRACTICO_30K_3",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 245.7734
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 102.3332
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 102.3332
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 102.3332
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 44.6723
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 44.6723
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 44.6723
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 67.4175
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 134.0169
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 67.4175
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 67.4175
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 97.465
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 97.465
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 100.7172
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 116.958
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 116.958
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 134.0169
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 138.0771
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 138.0771
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 229.8558
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 182.7494
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 182.7494
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 446.7129
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 332.997
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 332.997
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 523.0588
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 372.8011
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 372.8011
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 147.5105
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 147.5105
+},
+{
+"planCode": "PRACTICO_30K_3D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 147.5105
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 222.6848
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 222.6848
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 222.6848
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 97.2024
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 97.2024
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 97.2024
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 146.6924
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 291.6072
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 146.6924
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 146.6924
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 291.6072
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 291.6072
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 219.1498
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 254.4998
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 254.4998
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 291.6072
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 300.4447
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 300.4447
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 500.1621
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 397.6471
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 397.6471
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 972.0341
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 724.6144
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 724.6144
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1138.169
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 811.2118
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 811.2118
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 320.9578
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 320.9578
+},
+{
+"planCode": "IDEAL_45K_4",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 320.9578
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 160.3476
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 160.3476
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 160.3476
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 69.993
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 69.993
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 69.993
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 105.6258
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 209.9689
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 105.6258
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 105.6258
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 152.712
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 152.712
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 157.8024
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 183.2544
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 183.2544
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 209.9689
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 216.3319
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 216.3319
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 360.1357
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 286.3249
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 286.3249
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 699.9098
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 521.7559
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 521.7559
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 819.5342
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 584.1032
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 584.1032
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 231.1082
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 231.1082
+},
+{
+"planCode": "IDEAL_45K_4D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 231.1082
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 267.1046
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 267.1046
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 267.1046
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 116.5944
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 116.5944
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 116.5944
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 175.9521
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 349.7832
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 175.9521
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 175.9521
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 349.7832
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 349.7832
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 262.8727
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 305.2624
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 305.2624
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 349.7832
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 360.3882
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 360.3882
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 599.9299
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 476.9826
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 476.9826
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1165.944
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 869.1656
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 869.1656
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1365.217
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 973.034
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 973.034
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 384.9716
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 384.9716
+},
+{
+"planCode": "ELITE_100K_5",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 384.9716
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 186.1935
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 186.1935
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 186.1935
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 81.2747
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 81.2747
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 81.2747
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 122.6544
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 243.8241
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 122.6544
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 122.6544
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 177.3257
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 177.3257
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 183.2342
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 212.7969
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 212.7969
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 243.8241
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 251.2173
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 251.2173
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 418.2006
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 332.492
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 332.492
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 812.7571
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 605.8687
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 605.8687
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 951.6624
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 678.2756
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 678.2756
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 268.357
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 268.357
+},
+{
+"planCode": "ELITE_100K_5D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 268.357
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 319.6347
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 319.6347
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 319.6347
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 139.5214
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 139.5214
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 139.5214
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 210.5547
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 418.5743
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 210.5547
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 210.5547
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 418.5743
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 418.5743
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 314.5645
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 365.2968
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 365.2968
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 418.5743
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 431.2498
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 431.2498
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 717.908
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 570.7813
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 570.7813
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1395.2342
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 1040.0879
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 1040.0879
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1633.6952
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 1164.3886
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 1164.3886
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 459.6813
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 459.6813
+},
+{
+"planCode": "PRIVILEGIO_1M_7",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 459.6813
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 266.8824
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 266.8824
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 266.8824
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 116.4934
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 116.4934
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 116.4934
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 175.8006
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 349.4903
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 175.8006
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 175.8006
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 254.1766
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 254.1766
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 262.6404
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 305.0099
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 305.0099
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 349.4903
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 360.0751
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 360.0751
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 599.4249
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 476.5786
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 476.5786
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1164.9542
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 868.4182
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 868.4182
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1364.0555
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 972.2058
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 972.2058
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 384.6484
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 384.6484
+},
+{
+"planCode": "PRIVILEGIO_1M_7D",
+"ageMin": 0,
+"ageMax": 2,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 384.6484
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 317.544
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 317.544
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 317.544
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 138.6124
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 138.6124
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 138.6124
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 209.1811
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 415.8372
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 209.1811
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 209.1811
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 302.4243
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 302.4243
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 312.5041
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 362.9132
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 362.9132
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 415.8372
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 428.442
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 428.442
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 713.2216
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 567.0544
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 567.0544
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1386.124
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 1033.2906
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 1033.2906
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"deductibleCode": null,
+"premium": 1623.0296
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "CON_MATERNIDAD",
+"premium": 1156.7833
+},
+{
+"planCode": "PRIVILEGIO_PLUS_1M_8D",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"deductibleCode": "SIN_MATERNIDAD",
+"premium": 1156.7833
+}
+]

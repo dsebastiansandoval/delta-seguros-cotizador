@@ -11,9 +11,15 @@ Cotizador comparativo para agentes de un broker de seguros. Ver `../ARCHITECTURE
 - **Auto x Km**: modalidad completa — grilla de 13 aseguradoras × 6 rangos de km, 100% digitación manual (confirmado en el Excel que ninguna aseguradora tiene tabla para esta modalidad).
 - **Carátula en PDF**: se genera con los datos reales de la cotización y la aseguradora más barata ya cotizada — mismo texto de coberturas/cláusulas/aclaratorio que la hoja `CARATULA` del Excel.
 
-**Fase 2 (Salud) v1 completa** — a diferencia de Autos, el Excel SÍ tiene motor de tarifas real para Salud (EXCEL-AUDIT.md §2.3): titular + hasta 3 dependientes, comparador contra las 8 aseguradoras. BMI (Sigma, las 6 combinaciones de región×deducible) y Humana (5 planes) calculan la prima real por edad/sexo/región — sumando el precio individual de cada miembro de la familia. Las otras (SaludSA, Salud genérica, Confiamed, Pro, VB) tienen su rango de datos confirmado en el Excel pero todavía sin sembrar; Bupa es 100% manual (sin tabla en el archivo). Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ninguna hoja de Salud referencia esos impuestos, a diferencia de Autos.
+**Fase 2 (Salud) completa** — a diferencia de Autos, el Excel SÍ tiene motor de tarifas real para Salud (EXCEL-AUDIT.md §2.3): titular + hasta 3 dependientes, comparador contra las 8 aseguradoras. De esas, 6 calculan la prima real por edad/sexo/región (sumando el precio individual de cada miembro de la familia), todas con rango confirmado por la propia fórmula VLOOKUP de cada hoja de aseguradora, no por posición/rótulo cercano:
 
-Falta para Fase 3 en adelante: back-office (cartera/comisiones/siniestros), sembrar el resto de aseguradoras de Salud, y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
+- **BMI** (Sigma, 6 combinaciones región×deducible), **Humana** (5 planes).
+- **Confiamed** (4 tramos × RED1/RED2 × con/sin maternidad), **SaludSA** (11 planes/deducibles, con caso especial para menores de 2 años), **Pro** (2 planes), **VB** (2 planes dentales).
+- **Salud genérica** tiene su rango confirmado en el Excel pero sin sembrar todavía (estructura de 9 sub-bloques distinta a las demás, pendiente de mapear). **Bupa** es 100% manual — su hoja no tiene una sola fórmula VLOOKUP, confirmado que no hay tabla en el archivo.
+
+Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ninguna hoja de Salud referencia esos impuestos, a diferencia de Autos. Y un hallazgo de datos real: en VB el Excel guarda el HASTA de cada tramo igual al DESDE del siguiente (p. ej. `35-40` y `40-45`), pero `VLOOKUP(...,TRUE)` solo usa la columna DESDE (aproximación) — la columna HASTA es cosmética. La siembra corrige esto (HASTA efectivo = siguiente DESDE − 1) para que la edad límite no matchee dos tramos a la vez.
+
+Falta para Fase 3 en adelante: back-office (cartera/comisiones/siniestros), sembrar Salud genérica, y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
 ## Requisitos
 

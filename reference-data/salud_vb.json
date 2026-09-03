@@ -1,0 +1,422 @@
+[
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 0,
+"ageMax": 4,
+"gender": "MASCULINO",
+"premium": 55.2058
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 0,
+"ageMax": 4,
+"gender": "MASCULINO",
+"premium": 57.6958
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 0,
+"ageMax": 4,
+"gender": "FEMENINO",
+"premium": 55.2058
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 0,
+"ageMax": 4,
+"gender": "FEMENINO",
+"premium": 57.6958
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 5,
+"ageMax": 9,
+"gender": "MASCULINO",
+"premium": 51.6197
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 5,
+"ageMax": 9,
+"gender": "MASCULINO",
+"premium": 54.1097
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 5,
+"ageMax": 9,
+"gender": "FEMENINO",
+"premium": 51.6197
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 5,
+"ageMax": 9,
+"gender": "FEMENINO",
+"premium": 54.1097
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 10,
+"ageMax": 14,
+"gender": "MASCULINO",
+"premium": 47.1179
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 10,
+"ageMax": 14,
+"gender": "MASCULINO",
+"premium": 49.6079
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 10,
+"ageMax": 14,
+"gender": "FEMENINO",
+"premium": 47.1179
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 10,
+"ageMax": 14,
+"gender": "FEMENINO",
+"premium": 49.6079
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 15,
+"ageMax": 19,
+"gender": "MASCULINO",
+"premium": 39.57
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 15,
+"ageMax": 19,
+"gender": "MASCULINO",
+"premium": 42.06
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 15,
+"ageMax": 19,
+"gender": "FEMENINO",
+"premium": 50.5208
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 15,
+"ageMax": 19,
+"gender": "FEMENINO",
+"premium": 53.0108
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 20,
+"ageMax": 24,
+"gender": "MASCULINO",
+"premium": 39.57
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 20,
+"ageMax": 24,
+"gender": "MASCULINO",
+"premium": 42.06
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 20,
+"ageMax": 24,
+"gender": "FEMENINO",
+"premium": 50.5208
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 20,
+"ageMax": 24,
+"gender": "FEMENINO",
+"premium": 53.0108
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 25,
+"ageMax": 29,
+"gender": "MASCULINO",
+"premium": 40.1717
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 25,
+"ageMax": 29,
+"gender": "MASCULINO",
+"premium": 42.6617
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 25,
+"ageMax": 29,
+"gender": "FEMENINO",
+"premium": 49.0575
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 25,
+"ageMax": 29,
+"gender": "FEMENINO",
+"premium": 51.5475
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 30,
+"ageMax": 34,
+"gender": "MASCULINO",
+"premium": 44.5408
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 30,
+"ageMax": 34,
+"gender": "MASCULINO",
+"premium": 47.0308
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 30,
+"ageMax": 34,
+"gender": "FEMENINO",
+"premium": 51.4692
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 30,
+"ageMax": 34,
+"gender": "FEMENINO",
+"premium": 53.9592
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 35,
+"ageMax": 39,
+"gender": "MASCULINO",
+"premium": 52.4475
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 35,
+"ageMax": 39,
+"gender": "MASCULINO",
+"premium": 54.9375
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 35,
+"ageMax": 39,
+"gender": "FEMENINO",
+"premium": 57.6775
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 35,
+"ageMax": 39,
+"gender": "FEMENINO",
+"premium": 60.1675
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 40,
+"ageMax": 44,
+"gender": "MASCULINO",
+"premium": 59.01
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 40,
+"ageMax": 44,
+"gender": "MASCULINO",
+"premium": 61.5
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 40,
+"ageMax": 44,
+"gender": "FEMENINO",
+"premium": 62.7308
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 40,
+"ageMax": 44,
+"gender": "FEMENINO",
+"premium": 65.2208
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 45,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 79.2625
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 45,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 81.7525
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 45,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 81.6817
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 45,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 84.1717
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 50,
+"ageMax": 54,
+"gender": "MASCULINO",
+"premium": 97
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 50,
+"ageMax": 54,
+"gender": "MASCULINO",
+"premium": 99.49
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 50,
+"ageMax": 54,
+"gender": "FEMENINO",
+"premium": 98.3717
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 50,
+"ageMax": 54,
+"gender": "FEMENINO",
+"premium": 100.8617
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 55,
+"ageMax": 59,
+"gender": "MASCULINO",
+"premium": 120.8483
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 55,
+"ageMax": 59,
+"gender": "MASCULINO",
+"premium": 123.3383
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 55,
+"ageMax": 59,
+"gender": "FEMENINO",
+"premium": 121.2575
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 55,
+"ageMax": 59,
+"gender": "FEMENINO",
+"premium": 123.7475
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 60,
+"ageMax": 64,
+"gender": "MASCULINO",
+"premium": 146.8375
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 60,
+"ageMax": 64,
+"gender": "MASCULINO",
+"premium": 149.3275
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 60,
+"ageMax": 64,
+"gender": "FEMENINO",
+"premium": 146.5542
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 60,
+"ageMax": 64,
+"gender": "FEMENINO",
+"premium": 149.0442
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 65,
+"ageMax": 69,
+"gender": "MASCULINO",
+"premium": 176.2325
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 65,
+"ageMax": 69,
+"gender": "MASCULINO",
+"premium": 178.7225
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 65,
+"ageMax": 69,
+"gender": "FEMENINO",
+"premium": 175.4575
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 65,
+"ageMax": 69,
+"gender": "FEMENINO",
+"premium": 177.9475
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 70,
+"ageMax": 100,
+"gender": "MASCULINO",
+"premium": 228.7267
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 70,
+"ageMax": 100,
+"gender": "MASCULINO",
+"premium": 231.2167
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_BASICO",
+"ageMin": 70,
+"ageMax": 100,
+"gender": "FEMENINO",
+"premium": 227.5775
+},
+{
+"planCode": "PREDILECTO_20K_DENTAL_PLUS",
+"ageMin": 70,
+"ageMax": 100,
+"gender": "FEMENINO",
+"premium": 230.0675
+}
+]

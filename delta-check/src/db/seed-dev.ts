@@ -137,6 +137,14 @@ type HumanaRow = {
   gender: "MASCULINO" | "FEMENINO";
   premium: number;
 };
+type SimpleHealthRow = {
+  planCode: string;
+  ageMin: number;
+  ageMax: number;
+  gender: "MASCULINO" | "FEMENINO";
+  deductibleCode?: string | null;
+  premium: number;
+};
 
 /**
  * BMI (Sigma) y Humana — exportados directo del Excel a JSON con un script
@@ -197,6 +205,60 @@ async function seedHealthRates(organizationId: string) {
   console.log(`  Humana: ${humanaRows.length} reglas de tarifa sembradas`);
 }
 
+/**
+ * Confiamed, SaludSA, Pro y VB — mismo patrón que BMI/Humana: exportados del
+ * Excel a JSON con Python (reference-data/salud_{confiamed,saludsa,pro,vb}.json),
+ * rango confirmado por la propia fórmula VLOOKUP de cada hoja de aseguradora
+ * (EXCEL-AUDIT.md §2.3), no por posición/rótulo cercano. Con esto se completa
+ * la Fase 2: de las 8 aseguradoras de Salud, 7 tienen motor de tarifa real
+ * sembrado — solo Bupa queda 100% manual (cero fórmulas VLOOKUP en su hoja).
+ */
+async function seedRemainingHealthInsurers(organizationId: string) {
+  const referenceDataDir = join(process.cwd(), "..", "reference-data");
+
+  const files: Array<{ code: string; file: string }> = [
+    { code: "CONFIAMED", file: "salud_confiamed.json" },
+    { code: "SALUDSA", file: "salud_saludsa.json" },
+    { code: "PRO", file: "salud_pro.json" },
+    { code: "VB", file: "salud_vb.json" },
+  ];
+
+  for (const { code, file } of files) {
+    const [insurer] = await db.select().from(insurers).where(eq(insurers.code, code));
+    if (!insurer) throw new Error(`Corré primero: npm run db:seed (falta ${code})`);
+
+    const rows: SimpleHealthRow[] = JSON.parse(
+      readFileSync(join(referenceDataDir, file), "utf-8"),
+    );
+
+    const [table] = await db
+      .insert(rateTables)
+      .values({
+        organizationId,
+        insurerId: insurer.id,
+        branch: "SALUD",
+        visibility: "PRIVATE",
+        isConfirmed: true,
+        validFrom: "2026-01-01",
+      })
+      .returning();
+
+    await db.insert(healthRateRules).values(
+      rows.map((r) => ({
+        rateTableId: table.id,
+        planCode: r.planCode,
+        ageMin: r.ageMin,
+        ageMax: r.ageMax,
+        gender: r.gender,
+        deductibleCode: r.deductibleCode ?? null,
+        premiumCents: Math.round(r.premium * 100),
+      })),
+    );
+
+    console.log(`  ${code}: ${rows.length} reglas de tarifa sembradas`);
+  }
+}
+
 async function main() {
   console.log("Sembrando organización Delta Seguros…");
   const org = await seedDeltaOrganization();
@@ -209,6 +271,9 @@ async function main() {
 
   console.log("Sembrando tarifas reales de Salud (BMI + Humana)…");
   await seedHealthRates(org.id);
+
+  console.log("Sembrando tarifas reales de Salud (Confiamed, SaludSA, Pro, VB)…");
+  await seedRemainingHealthInsurers(org.id);
 
   console.log("Listo. Organización:", org.id);
   process.exit(0);
