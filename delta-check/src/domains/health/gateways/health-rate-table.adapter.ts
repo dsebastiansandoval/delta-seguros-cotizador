@@ -7,10 +7,11 @@ import type {
 } from "./health-insurer.gateway";
 
 /**
- * Fase 2 completa: BMI, Humana, Confiamed, SaludSA, Pro y VB tienen tabla
- * real sembrada (EXCEL-AUDIT.md §2.3). Solo Bupa queda en PENDIENTE_MANUAL —
- * su hoja no tiene una sola fórmula VLOOKUP, confirmado que no hay tabla en
- * absoluto. Ninguna cifra se inventa para lo que falta.
+ * Fase 2 completa: las 7 aseguradoras de Salud con motor de tarifas real en
+ * el Excel (BMI, Humana, Confiamed, SaludSA, Pro, VB y Salud genérica)
+ * tienen tabla sembrada (EXCEL-AUDIT.md §2.3). Solo Bupa queda en
+ * PENDIENTE_MANUAL — su hoja no tiene una sola fórmula VLOOKUP, confirmado
+ * que no hay tabla en absoluto. Ninguna cifra se inventa para lo que falta.
  */
 export class HealthRateTableAdapter implements HealthInsurerGateway {
   constructor(private readonly tx: Db) {}

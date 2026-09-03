@@ -1,0 +1,4300 @@
+[
+{
+"planCode": "STAR_15_70",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 42.6119
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 61.61
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 42.6119
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 61.61
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 63.6603
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 73.932
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 84.7087
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 87.2741
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 145.2885
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 115.5137
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 282.3657
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 210.484
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 330.6235
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 235.6431
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 87.7892
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 87.7892
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 36.966
+},
+{
+"planCode": "STAR_15_70",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 36.966
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 35.8752
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 51.8635
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 35.8752
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 51.8635
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 53.5906
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 62.2362
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 71.306
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 73.4674
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 122.311
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 97.2428
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 237.7035
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 177.1944
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 278.3257
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 198.3741
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 73.9017
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 73.9017
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 31.1181
+},
+{
+"planCode": "STAR_15_70_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 31.1181
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 33.8956
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 49.0052
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 33.8956
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 49.0052
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 50.6313
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 58.8022
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 67.3771
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 69.4173
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 115.5642
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 91.8797
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 224.5937
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 167.4176
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 262.9737
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 187.4257
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 69.8314
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 69.8314
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 29.4011
+},
+{
+"planCode": "STAR_15_70_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 29.4011
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 60.8525
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 87.9811
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 60.8525
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 87.9811
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 90.9101
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 105.5753
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 120.9677
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 124.634
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 207.4843
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 164.9633
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 403.2425
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 300.5962
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 472.1548
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 336.5219
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 125.3713
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 125.3713
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 52.7826
+},
+{
+"planCode": "STAR_30_90",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 52.7826
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 51.409
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 74.3158
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 51.409
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 74.3158
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 76.8004
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 89.183
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 102.1918
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 105.2824
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 175.2754
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 139.3497
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 340.6326
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 253.9241
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 398.849
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 284.2746
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 105.9086
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 105.9086
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 44.5915
+},
+{
+"planCode": "STAR_30_90_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 44.5915
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 48.5608
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 70.2152
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 48.5608
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 70.2152
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 72.5483
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 84.2542
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 96.5358
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 99.4648
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 165.5794
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 131.6434
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 321.8062
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 239.8851
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 376.8007
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 268.559
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 100.0506
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 100.0506
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 42.1271
+},
+{
+"planCode": "STAR_30_90_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 42.1271
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 45.7328
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 66.1247
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 45.7328
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 66.1247
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 68.3265
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 79.3557
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 90.9202
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 93.6775
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 155.944
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 123.9876
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 303.0808
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 225.937
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 354.8837
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 252.9343
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 94.233
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 94.233
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 39.6728
+},
+{
+"planCode": "STAR_30_90_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 39.6728
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 89.6173
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 129.5628
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 89.6173
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 129.5628
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 133.8856
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 155.4794
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 178.1539
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 183.5473
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 305.5553
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 242.9353
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 593.8295
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 442.6729
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 695.3244
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 495.5767
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 184.628
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 184.628
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 77.7397
+},
+{
+"planCode": "SKY_70_100",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 77.7397
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 76.659
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 110.8374
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 76.659
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 110.8374
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 114.534
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 133.0069
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 152.3989
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 157.0247
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 261.388
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 207.8176
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 508.0098
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 378.6995
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 594.8294
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 423.9576
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 157.9438
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 157.9438
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 66.4984
+},
+{
+"planCode": "SKY_70_100_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 66.4984
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 72.6493
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 105.0299
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 72.6493
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 105.0299
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 108.5346
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 126.0379
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 144.4199
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 148.7932
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 247.7025
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 196.9399
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 481.3963
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 358.8631
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 563.6709
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 401.7477
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 149.6719
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 149.6719
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 63.024
+},
+{
+"planCode": "SKY_70_100_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 63.024
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 68.175
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 98.576
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 68.175
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 98.576
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 101.8585
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 118.2912
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 135.5319
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 139.6426
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 232.4616
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 184.8199
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 451.7932
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 336.7845
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 529.0077
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 377.033
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 140.4607
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 140.4607
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 59.1456
+},
+{
+"planCode": "SKY_70_100_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 59.1456
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 86.9812
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 125.7551
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 86.9812
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 125.7551
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 129.9466
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 150.9041
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 172.912
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 178.1539
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 296.5764
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 235.7946
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 576.3868
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 429.6742
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 674.8921
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 481.0226
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 179.2043
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 179.2043
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 75.4571
+},
+{
+"planCode": "SKY_70_PLUS_100",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 75.4571
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 75.3965
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 109.0093
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 75.3965
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 109.0093
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 112.6453
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 130.8051
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 149.884
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 154.429
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 257.0753
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 204.3937
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 499.6167
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 372.4375
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 585.0021
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 416.9482
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 155.338
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 155.338
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 65.4076
+},
+{
+"planCode": "SKY_70_PLUS_100_1500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 65.4076
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 71.4171
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 103.2523
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 71.4171
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 103.2523
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 106.6964
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 123.8967
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 141.9656
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 146.2682
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 243.5009
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 193.5968
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 473.2355
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 352.7728
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 554.1062
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 394.9302
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 147.1267
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 147.1267
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 61.9534
+},
+{
+"planCode": "SKY_70_PLUS_100_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 61.9534
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 67.064
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 96.96
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 67.064
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 96.96
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 100.192
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 116.352
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 133.32
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 137.36
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 228.664
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 181.8
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 444.4
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 331.28
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 520.352
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 370.872
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 138.168
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 138.168
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 58.176
+},
+{
+"planCode": "SKY_70_PLUS_100_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 58.176
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 79.9617
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 115.6147
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 79.9617
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 115.6147
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 119.4628
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 138.7336
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 158.9639
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 163.7816
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 272.6495
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 216.7763
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 529.8965
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 395.011
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 620.4531
+},
+{
+"planCode": "SKY_70_PLUS_200",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 442.2184
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 70.0031
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 101.202
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 70.0031
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 101.202
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 104.5754
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 121.4424
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 139.1578
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 143.3695
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 238.6731
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 189.7588
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 463.8425
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 345.7735
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 543.1174
+},
+{
+"planCode": "SKY_70_PLUS_200_1500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 387.1027
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 64.9228
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 93.8694
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 64.9228
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 93.8694
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 97.0004
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 112.6453
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 129.0679
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 132.9867
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 221.3718
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 176.0026
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 430.2398
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 320.7255
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 503.7678
+},
+{
+"planCode": "SKY_70_PLUS_200_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 359.055
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 59.4284
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 85.9207
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 59.4284
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 85.9207
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 88.779
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 103.1008
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 118.1397
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 121.7151
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 202.6262
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 161.095
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 393.799
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 293.5565
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 461.0953
+},
+{
+"planCode": "SKY_70_PLUS_200_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 328.6439
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 135.1885
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 195.4552
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 135.1885
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 195.4552
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 201.9697
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 234.5523
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 268.761
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 276.9016
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 460.9539
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 366.4886
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 895.8599
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 667.8221
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1048.9658
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 747.6323
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 278.5277
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 278.5277
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 117.2711
+},
+{
+"planCode": "PRO_150_150",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 117.2711
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 101.707
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 147.0358
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 101.707
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 147.0358
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 151.9444
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 176.447
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 202.1818
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 208.3024
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 346.7734
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 275.6997
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 673.9326
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 502.3841
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 789.113
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 562.4286
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 209.5346
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 209.5346
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 88.2235
+},
+{
+"planCode": "PRO_150_150_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 88.2235
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 90.9
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 131.4212
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 90.9
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 131.4212
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 135.7945
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 157.7014
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 180.6991
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 186.1733
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 309.9286
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 246.4097
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 602.3337
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 449.0056
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 705.2729
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 502.6669
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 187.2742
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 187.2742
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 78.8507
+},
+{
+"planCode": "PRO_150_150_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 78.8507
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 84.2845
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 121.8565
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 84.2845
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 121.8565
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 125.9167
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 146.2278
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 167.5489
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 172.6292
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 287.3753
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 228.4822
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 558.4997
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 416.3321
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 653.9548
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 466.0948
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 173.6392
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 173.6392
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 73.1139
+},
+{
+"planCode": "PRO_150_150_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 73.1139
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 128.4316
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 185.6885
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 128.4316
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 185.6885
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 191.8798
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 222.8262
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 255.328
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 263.0646
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 437.9158
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 348.1672
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 851.0866
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 634.4416
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 996.5367
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 710.2623
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 264.6099
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 264.6099
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 111.4131
+},
+{
+"planCode": "PRO_150_300",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 111.4131
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 95.5662
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 138.168
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 95.5662
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 138.168
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 142.7736
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 165.8016
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 189.981
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 195.738
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 325.8462
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 259.065
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 633.27
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 472.074
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 741.5016
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 528.4926
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 196.8894
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 196.8894
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 82.9008
+},
+{
+"planCode": "PRO_150_300_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 82.9008
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 83.6381
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 120.9172
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 83.6381
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 120.9172
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 124.9471
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 145.1067
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 166.2662
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 171.3061
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 285.1735
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 226.7248
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 554.2274
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 413.1506
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 648.9452
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 462.5194
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 172.3161
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 172.3161
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 72.5483
+},
+{
+"planCode": "PRO_150_300_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 72.5483
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 76.356
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 110.393
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 76.356
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 110.393
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 114.0694
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 132.4716
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 151.7828
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 156.3884
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 260.3376
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 206.9793
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 505.9494
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 377.1643
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 592.4256
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 422.2406
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 157.3075
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 157.3075
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 66.2358
+},
+{
+"planCode": "PRO_150_300_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 66.2358
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 196.0915
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 283.507
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 196.0915
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 283.507
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 292.9606
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 340.2084
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 389.8297
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 401.6366
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 668.6099
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 531.5832
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 1299.4256
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 968.6607
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1521.5044
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 1084.4269
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 404
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 404
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 170.1042
+},
+{
+"planCode": "PRO_500_200",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 170.1042
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 159.8022
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 231.0476
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 159.8022
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 231.0476
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 238.7438
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 277.2551
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 317.6854
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 327.3107
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 544.8748
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 433.2092
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 1058.9547
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 789.3958
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1239.9366
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 883.7399
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 329.2398
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 329.2398
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 138.6225
+},
+{
+"planCode": "PRO_500_200_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 138.6225
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 143.8442
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 207.9691
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 143.8442
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 207.9691
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 214.8977
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 249.5609
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 285.9512
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 294.617
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 490.456
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 389.9408
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 953.1875
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 710.5552
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1116.0904
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 795.476
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 296.3542
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 296.3542
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 124.7754
+},
+{
+"planCode": "PRO_500_200_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 124.7754
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 131.502
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 190.1224
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 131.502
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 190.1224
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 196.4652
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 228.1489
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 261.4284
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 269.3468
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 448.3794
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 356.4896
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 871.4179
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 649.6017
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1020.3424
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 727.2303
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 270.9325
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 270.9325
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 114.0795
+},
+{
+"planCode": "PRO_500_200_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 114.0795
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 186.3147
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 269.367
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 186.3147
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 269.367
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 278.3459
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 323.2404
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 370.3771
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 381.6083
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 635.2597
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 505.0606
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 1234.6038
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 920.3423
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1445.6029
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 1030.3313
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 383.8505
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 383.8505
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 161.6202
+},
+{
+"planCode": "PRO_500_400",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 161.6202
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 152.3282
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 220.2305
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 152.3282
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 220.2305
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 227.5732
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 264.2766
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 302.8182
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 311.9991
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 519.3824
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 412.9385
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 1009.4041
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 752.4601
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1181.9121
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 842.3905
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 313.8272
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 313.8272
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 132.1383
+},
+{
+"planCode": "PRO_500_400_2500",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 132.1383
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 135.1178
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 195.3542
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 135.1178
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 195.3542
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 201.8586
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 234.421
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 268.6095
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 276.7501
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 460.7014
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 366.2866
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 895.3549
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 667.4484
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 1048.38
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 747.2182
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 278.3762
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 278.3762
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 117.2105
+},
+{
+"planCode": "PRO_500_400_5000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 117.2105
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "MASCULINO",
+"premium": 121.8464
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 18,
+"ageMax": 23,
+"gender": "FEMENINO",
+"premium": 176.1642
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "MASCULINO",
+"premium": 121.8464
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 24,
+"ageMax": 31,
+"gender": "FEMENINO",
+"premium": 176.1642
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "MASCULINO",
+"premium": 182.0323
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 32,
+"ageMax": 49,
+"gender": "FEMENINO",
+"premium": 211.393
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "MASCULINO",
+"premium": 242.2283
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 50,
+"ageMax": 60,
+"gender": "FEMENINO",
+"premium": 249.571
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "MASCULINO",
+"premium": 415.4534
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 61,
+"ageMax": 65,
+"gender": "FEMENINO",
+"premium": 330.3104
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "MASCULINO",
+"premium": 807.4243
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 66,
+"ageMax": 70,
+"gender": "FEMENINO",
+"premium": 601.8994
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "MASCULINO",
+"premium": 945.4105
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 71,
+"ageMax": 999,
+"gender": "FEMENINO",
+"premium": 673.8316
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "MASCULINO",
+"premium": 251.0355
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 0,
+"ageMax": 1,
+"gender": "FEMENINO",
+"premium": 251.0355
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "MASCULINO",
+"premium": 105.6965
+},
+{
+"planCode": "PRO_500_400_10000",
+"ageMin": 2,
+"ageMax": 17,
+"gender": "FEMENINO",
+"premium": 105.6965
+}
+]

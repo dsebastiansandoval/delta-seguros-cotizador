@@ -259,6 +259,55 @@ async function seedRemainingHealthInsurers(organizationId: string) {
   }
 }
 
+/**
+ * Salud genérica (código de aseguradora "SALUD") — la más compleja de las 8:
+ * 9 productos (Star/Sky/Pro con sus variantes de deducible), cada uno con
+ * DOS tablas separadas en el Excel: adultos (edad>=18, filas 181-187 de su
+ * bloque — las filas 179-180 del mismo bloque son datos muertos, la propia
+ * fórmula VLOOKUP nunca las lee porque <18 siempre usa la otra tabla) y
+ * niños (edad<18, filas 190-191, en un bloque de columnas aparte — para el
+ * producto SKY_70_PLUS_200 ese bloque de niños existe en la hoja pero está
+ * completamente vacío, así que no se siembra esa combinación, igual que
+ * Practihumana 50 en Humana). Ver EXCEL-AUDIT.md §2.3 para el detalle de
+ * cómo se corrigió la atribución de este bloque (antes confundido con
+ * SaludSA por rótulos cercanos, no por fórmula).
+ */
+async function seedSaludGenerica(organizationId: string) {
+  const referenceDataDir = join(process.cwd(), "..", "reference-data");
+  const [insurer] = await db.select().from(insurers).where(eq(insurers.code, "SALUD"));
+  if (!insurer) throw new Error("Corré primero: npm run db:seed (falta SALUD)");
+
+  const rows: SimpleHealthRow[] = JSON.parse(
+    readFileSync(join(referenceDataDir, "salud_generica.json"), "utf-8"),
+  );
+
+  const [table] = await db
+    .insert(rateTables)
+    .values({
+      organizationId,
+      insurerId: insurer.id,
+      branch: "SALUD",
+      visibility: "PRIVATE",
+      isConfirmed: true,
+      validFrom: "2026-01-01",
+    })
+    .returning();
+
+  await db.insert(healthRateRules).values(
+    rows.map((r) => ({
+      rateTableId: table.id,
+      planCode: r.planCode,
+      ageMin: r.ageMin,
+      ageMax: r.ageMax,
+      gender: r.gender,
+      deductibleCode: r.deductibleCode ?? null,
+      premiumCents: Math.round(r.premium * 100),
+    })),
+  );
+
+  console.log(`  SALUD (genérica): ${rows.length} reglas de tarifa sembradas`);
+}
+
 async function main() {
   console.log("Sembrando organización Delta Seguros…");
   const org = await seedDeltaOrganization();
@@ -274,6 +323,9 @@ async function main() {
 
   console.log("Sembrando tarifas reales de Salud (Confiamed, SaludSA, Pro, VB)…");
   await seedRemainingHealthInsurers(org.id);
+
+  console.log("Sembrando tarifas reales de Salud (genérica)…");
+  await seedSaludGenerica(org.id);
 
   console.log("Listo. Organización:", org.id);
   process.exit(0);

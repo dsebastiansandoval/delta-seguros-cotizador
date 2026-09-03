@@ -11,15 +11,19 @@ Cotizador comparativo para agentes de un broker de seguros. Ver `../ARCHITECTURE
 - **Auto x Km**: modalidad completa — grilla de 13 aseguradoras × 6 rangos de km, 100% digitación manual (confirmado en el Excel que ninguna aseguradora tiene tabla para esta modalidad).
 - **Carátula en PDF**: se genera con los datos reales de la cotización y la aseguradora más barata ya cotizada — mismo texto de coberturas/cláusulas/aclaratorio que la hoja `CARATULA` del Excel.
 
-**Fase 2 (Salud) completa** — a diferencia de Autos, el Excel SÍ tiene motor de tarifas real para Salud (EXCEL-AUDIT.md §2.3): titular + hasta 3 dependientes, comparador contra las 8 aseguradoras. De esas, 6 calculan la prima real por edad/sexo/región (sumando el precio individual de cada miembro de la familia), todas con rango confirmado por la propia fórmula VLOOKUP de cada hoja de aseguradora, no por posición/rótulo cercano:
+**Fase 2 (Salud) completa** — a diferencia de Autos, el Excel SÍ tiene motor de tarifas real para Salud (EXCEL-AUDIT.md §2.3): titular + hasta 3 dependientes, comparador contra las 8 aseguradoras. **7 de las 8 calculan la prima real** por edad/sexo/región (sumando el precio individual de cada miembro de la familia), todas con rango confirmado por la propia fórmula VLOOKUP de cada hoja de aseguradora, no por posición/rótulo cercano:
 
 - **BMI** (Sigma, 6 combinaciones región×deducible), **Humana** (5 planes).
 - **Confiamed** (4 tramos × RED1/RED2 × con/sin maternidad), **SaludSA** (11 planes/deducibles, con caso especial para menores de 2 años), **Pro** (2 planes), **VB** (2 planes dentales).
-- **Salud genérica** tiene su rango confirmado en el Excel pero sin sembrar todavía (estructura de 9 sub-bloques distinta a las demás, pendiente de mapear). **Bupa** es 100% manual — su hoja no tiene una sola fórmula VLOOKUP, confirmado que no hay tabla en el archivo.
+- **Salud genérica** — la más rica: 9 productos (Star/Sky/Pro con sus variantes de deducible, 35 planes en total), cada uno con tabla separada para adultos (≥18) y niños (&lt;18). Un producto (Sky 70 Plus-200) no tiene datos de niño en el Excel — esas 4 combinaciones quedan sin sembrar en vez de inventar un precio.
+- **Bupa** es 100% manual — su hoja no tiene una sola fórmula VLOOKUP, confirmado que no hay tabla en el archivo.
 
-Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ninguna hoja de Salud referencia esos impuestos, a diferencia de Autos. Y un hallazgo de datos real: en VB el Excel guarda el HASTA de cada tramo igual al DESDE del siguiente (p. ej. `35-40` y `40-45`), pero `VLOOKUP(...,TRUE)` solo usa la columna DESDE (aproximación) — la columna HASTA es cosmética. La siembra corrige esto (HASTA efectivo = siguiente DESDE − 1) para que la edad límite no matchee dos tramos a la vez.
+Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ninguna hoja de Salud referencia esos impuestos, a diferencia de Autos. Y dos hallazgos de datos reales que corrigieron la extracción:
 
-Falta para Fase 3 en adelante: back-office (cartera/comisiones/siniestros), sembrar Salud genérica, y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
+- En **VB** el Excel guarda el HASTA de cada tramo igual al DESDE del siguiente (p. ej. `35-40` y `40-45`), pero `VLOOKUP(...,TRUE)` solo usa la columna DESDE (aproximación) — la columna HASTA es cosmética. La siembra corrige esto (HASTA efectivo = siguiente DESDE − 1) para que la edad límite no matchee dos tramos a la vez.
+- En **Salud genérica**, un bloque que en una pasada anterior de la auditoría se había atribuido a SaludSA (por rótulos "Star"/"Sky" cercanos) en realidad pertenece a la propia hoja `SALUD` — la fórmula real de `SALUDSA` apunta a una zona de columnas completamente distinta. Corregido en EXCEL-AUDIT.md §2.3.
+
+Falta para Fase 3 en adelante: back-office (cartera/comisiones/siniestros), y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
 ## Requisitos
 
