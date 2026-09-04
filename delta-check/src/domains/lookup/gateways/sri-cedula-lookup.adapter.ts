@@ -1,5 +1,5 @@
 import type { CedulaLookupGateway, PersonLookupResult } from "./cedula-lookup.gateway";
-import { cedulaToNaturalPersonRuc, isValidCedula } from "../cedula.validator";
+import { cedulaToNaturalPersonRuc, isValidCedula, provinceFromCedula } from "../cedula.validator";
 import { splitRazonSocial } from "../razon-social.parser";
 
 const SRI_RUC_ENDPOINT =
@@ -50,7 +50,13 @@ export class SriCedulaLookupAdapter implements CedulaLookupGateway {
 
       const { firstName, lastName } = splitRazonSocial(record.razonSocial);
 
-      return { status: "FOUND", firstName, lastName, fullName: record.razonSocial };
+      return {
+        status: "FOUND",
+        firstName,
+        lastName,
+        fullName: record.razonSocial,
+        province: provinceFromCedula(documentNumber),
+      };
     } catch (err) {
       const message = err instanceof Error && err.name === "AbortError" ? "SRI no respondió a tiempo" : "No se pudo contactar al SRI";
       return { status: "ERROR", message };

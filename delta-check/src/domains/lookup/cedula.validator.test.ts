@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cedulaToNaturalPersonRuc, isValidCedula } from "./cedula.validator";
+import { cedulaToNaturalPersonRuc, isValidCedula, provinceFromCedula } from "./cedula.validator";
 
 describe("isValidCedula", () => {
   it("acepta una cédula con dígito verificador correcto (algoritmo módulo 10)", () => {
@@ -31,5 +31,23 @@ describe("isValidCedula", () => {
 describe("cedulaToNaturalPersonRuc", () => {
   it("agrega el sufijo 001", () => {
     expect(cedulaToNaturalPersonRuc("1701234567")).toBe("1701234567001");
+  });
+});
+
+describe("provinceFromCedula", () => {
+  it("resuelve el código real de provincia (17 = Pichincha)", () => {
+    expect(provinceFromCedula("1701234567")).toBe("Pichincha");
+  });
+
+  it("resuelve otro código real (09 = Guayas)", () => {
+    expect(provinceFromCedula("0901234567")).toBe("Guayas");
+  });
+
+  it("null si no son 10 dígitos", () => {
+    expect(provinceFromCedula("170123456")).toBeNull();
+  });
+
+  it("null si el código no mapea a ninguna provincia", () => {
+    expect(provinceFromCedula("9901234567")).toBeNull();
   });
 });

@@ -15,10 +15,13 @@ export function CedulaLookupButton({
   documentNumberRef,
   firstNameRef,
   lastNameRef,
+  provinceRef,
 }: {
   documentNumberRef: RefObject<HTMLInputElement | null>;
   firstNameRef: RefObject<HTMLInputElement | null>;
   lastNameRef: RefObject<HTMLInputElement | null>;
+  /** Opcional — casilla informativa "Provincia (según cédula)", nunca se envía en el formulario. */
+  provinceRef?: RefObject<HTMLInputElement | null>;
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
@@ -33,7 +36,13 @@ export function CedulaLookupButton({
       if (result.status === "FOUND") {
         if (firstNameRef.current) firstNameRef.current.value = result.firstName;
         if (lastNameRef.current) lastNameRef.current.value = result.lastName;
-        setMessage({ kind: "ok", text: `Encontrado: ${result.fullName}` });
+        if (provinceRef?.current) provinceRef.current.value = result.province ?? "";
+        setMessage({
+          kind: "ok",
+          text: result.province
+            ? `Encontrado: ${result.fullName} — cédula de ${result.province}`
+            : `Encontrado: ${result.fullName}`,
+        });
       } else if (result.status === "NOT_FOUND") {
         setMessage({ kind: "error", text: "No se encontró en el SRI — digita el nombre a mano" });
       } else {

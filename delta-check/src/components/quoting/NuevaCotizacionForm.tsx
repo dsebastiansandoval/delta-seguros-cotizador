@@ -20,6 +20,7 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const provinceRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
@@ -103,8 +104,19 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
             documentNumberRef={documentNumberRef}
             firstNameRef={firstNameRef}
             lastNameRef={lastNameRef}
+            provinceRef={provinceRef}
           />
         </div>
+
+        <label className="flex flex-col gap-1 text-sm">
+          Provincia (según cédula)
+          <input
+            ref={provinceRef}
+            readOnly
+            placeholder="—"
+            className="rounded-lg border border-border bg-background px-3 py-2 text-muted"
+          />
+        </label>
 
         <div className="flex items-end">
           <RenewalLookupButton

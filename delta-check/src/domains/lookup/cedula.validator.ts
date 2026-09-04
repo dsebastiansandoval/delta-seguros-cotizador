@@ -33,3 +33,47 @@ export function isValidCedula(value: string): boolean {
 export function cedulaToNaturalPersonRuc(cedula: string): string {
   return `${cedula}001`;
 }
+
+/**
+ * Los 2 primeros dígitos de la cédula son el código de provincia oficial
+ * del INEC — el mismo que usa el Registro Civil para emitirla. Es dato
+ * real, no un truco: se puede sugerir la provincia sin ninguna llamada
+ * externa, ya que se valida el mismo prefijo en `isValidCedula`.
+ *
+ * Ojo con la semántica: es la provincia donde se **emitió** la cédula
+ * (normalmente, donde la persona nació o se registró por primera vez), no
+ * necesariamente donde vive hoy — se muestra como sugerencia a revisar,
+ * nunca como un hecho verificado de residencia actual.
+ */
+const PROVINCE_BY_CODE: Record<string, string> = {
+  "01": "Azuay",
+  "02": "Bolívar",
+  "03": "Cañar",
+  "04": "Carchi",
+  "05": "Cotopaxi",
+  "06": "Chimborazo",
+  "07": "El Oro",
+  "08": "Esmeraldas",
+  "09": "Guayas",
+  "10": "Imbabura",
+  "11": "Loja",
+  "12": "Los Ríos",
+  "13": "Manabí",
+  "14": "Morona Santiago",
+  "15": "Napo",
+  "16": "Pastaza",
+  "17": "Pichincha",
+  "18": "Tungurahua",
+  "19": "Zamora Chinchipe",
+  "20": "Galápagos",
+  "21": "Sucumbíos",
+  "22": "Orellana",
+  "23": "Santo Domingo de los Tsáchilas",
+  "24": "Santa Elena",
+};
+
+/** Provincia sugerida por el prefijo de la cédula — null si no es una cédula válida de 10 dígitos. */
+export function provinceFromCedula(cedula: string): string | null {
+  if (!/^\d{10}$/.test(cedula)) return null;
+  return PROVINCE_BY_CODE[cedula.slice(0, 2)] ?? null;
+}

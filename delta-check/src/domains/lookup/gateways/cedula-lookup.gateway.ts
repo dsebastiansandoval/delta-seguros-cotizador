@@ -9,7 +9,7 @@
  * sobre un endpoint no documentado sin autorización.
  */
 export type PersonLookupResult =
-  | { status: "FOUND"; firstName: string; lastName: string; fullName: string }
+  | { status: "FOUND"; firstName: string; lastName: string; fullName: string; province: string | null }
   | { status: "NOT_FOUND" }
   | { status: "ERROR"; message: string };
 
