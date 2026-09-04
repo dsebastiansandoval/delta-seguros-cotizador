@@ -1,8 +1,8 @@
-import { listVehicleBrands } from "@/actions/catalog.actions";
+import { listVehicleBrands, listVehicleModelsByBrand } from "@/actions/catalog.actions";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 export default async function NuevaCotizacionAutosPage() {
-  const brands = await listVehicleBrands();
+  const [brands, modelsByBrand] = await Promise.all([listVehicleBrands(), listVehicleModelsByBrand()]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -13,7 +13,7 @@ export default async function NuevaCotizacionAutosPage() {
           copiar entre hojas.
         </p>
       </header>
-      <NuevaCotizacionForm brands={brands.map((b) => b.name)} />
+      <NuevaCotizacionForm brands={brands.map((b) => b.name)} modelsByBrand={modelsByBrand} />
     </main>
   );
 }

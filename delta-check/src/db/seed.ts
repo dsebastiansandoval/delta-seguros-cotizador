@@ -5,9 +5,12 @@
  *
  * Uso: npm run db:seed
  */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { eq } from "drizzle-orm";
 import { db } from "./index";
 import { roles, permissions, rolePermissions } from "./schema/identity";
-import { insurers, coverages, vehicleBrands } from "./schema/catalog";
+import { insurers, coverages, vehicleBrands, vehicleModels } from "./schema/catalog";
 
 async function seedRoles() {
   const roleRows = [
@@ -181,6 +184,37 @@ async function seedVehicleBrands() {
   console.log(`  ${brands.length} marcas de vehículo sembradas`);
 }
 
+/**
+ * Modelo en cascada según la marca — mismo origen real que
+ * seedVehicleBrands() (Prodeseg, sin autenticación), consultado una sola
+ * vez para las 66 marcas ya curadas y exportado a
+ * reference-data/vehicle_models.json (950 modelos reales en total). Las
+ * marcas que Delta Check consolida en un solo nombre (p. ej. "GREAT WALL
+ * (GWM)") ya vienen fusionadas y sin duplicados en ese archivo.
+ */
+async function seedVehicleModels() {
+  const referenceDataDir = join(process.cwd(), "..", "reference-data");
+  const raw = readFileSync(join(referenceDataDir, "vehicle_models.json"), "utf-8");
+  const modelsByBrand: Record<string, string[]> = JSON.parse(raw);
+
+  let total = 0;
+  for (const [brandName, models] of Object.entries(modelsByBrand)) {
+    const [brand] = await db.select().from(vehicleBrands).where(eq(vehicleBrands.name, brandName));
+    if (!brand) {
+      console.warn(`  ⚠️  Marca "${brandName}" no está en vehicleBrands — se omiten sus modelos`);
+      continue;
+    }
+
+    await db
+      .insert(vehicleModels)
+      .values(models.map((name, i) => ({ brandId: brand.id, name, displayOrder: i })))
+      .onConflictDoNothing({ target: [vehicleModels.brandId, vehicleModels.name] });
+    total += models.length;
+  }
+
+  console.log(`  ${total} modelos de vehículo sembrados (${Object.keys(modelsByBrand).length} marcas)`);
+}
+
 async function main() {
   console.log("Sembrando roles y permisos…");
   await seedRoles();
@@ -188,6 +222,8 @@ async function main() {
   await seedCatalog();
   console.log("Sembrando catálogo de marcas de vehículo…");
   await seedVehicleBrands();
+  console.log("Sembrando catálogo de modelos de vehículo…");
+  await seedVehicleModels();
   console.log("Listo.");
   process.exit(0);
 }

@@ -827,3 +827,25 @@ components/shared/RenewalLookupButton.tsx
 ```
 
 **Verificación:** script directo contra Postgres real — crea cliente + vehículo + póliza emitida (simulando "el año pasado"), confirma que `findPreviousVehicleData` trae exactamente esa placa/marca/modelo y esa aseguradora/póliza/fecha de vencimiento, y confirma que una cotización nueva creada con `operationType: RENOVACION` y esos `previousInsurerId`/`previousPolicyNumber` los guarda correctamente en `quotes`. Confirmado en el HTML real servido por Next.js que el botón, el select de Tipo de operación y los campos ocultos de aseguradora/póliza anterior están presentes. El clic en sí no se pudo probar en vivo por el mismo problema de hidratación ya reportado.
+
+---
+
+## 18. Cierre del "autocompletado chico" — provincia, fecha de nacimiento y modelo en cascada
+
+Tres mejoras menores al llenado manual, agrupadas porque comparten el mismo criterio ya establecido en §13/§15/§16: nunca bloquear el formulario, y usar solo fuente real (nunca inventar ni "adivinar" un dato).
+
+**Provincia según cédula.** El código de provincia real del INEC está codificado en los primeros 2 dígitos de la cédula ecuatoriana (01-24, el mismo rango que ya valida `isValidCedula`). `provinceFromCedula()` (`src/domains/lookup/cedula.validator.ts`) resuelve esos 24 códigos a nombre de provincia; `SriCedulaLookupAdapter` lo agrega al resultado `FOUND` sin ninguna llamada extra (es aritmética local, no otra consulta al SRI). `CedulaLookupButton` (ya usado en Autos y Salud) ahora también llena un campo informativo, de solo lectura y no enviable, "Provincia (según cédula)".
+
+**Fecha de nacimiento → edad, en Salud.** El formulario de Salud pedía la edad del titular/dependientes como número suelto — se desactualiza cada año, y `insured_members.birth_date` ya existía en el esquema desde Fase 2 sin usarse. Ahora se pide fecha de nacimiento (`<input type="date">`) y `newHealthQuoteSchema` calcula la edad con un `.transform()` (`calculateAge()`, `src/domains/shared/age.ts`) — `health-quote.actions.ts` no cambió, sigue leyendo `titularAge`/`depNAge` como siempre.
+
+**Modelo en cascada según marca, en Autos.** Mismo origen y mismo criterio que el catálogo de marcas (§15): la API pública de Prodeseg trae, además de `/api/public/marcas`, un endpoint hermano `/api/public/modelos?idM=<id de marca>` — mismo namespace `api/public`, sin autenticación, ya aceptado como fuente para este proyecto. Se consultó una sola vez para las 66 marcas ya curadas (950 modelos reales en total, exportados a `reference-data/vehicle_models.json`) y se sembró en una tabla nueva `vehicle_models` (🌐 global, sin RLS, FK a `vehicle_brands`) — igual que las marcas mismas, **no** se consulta en vivo en cada cotización: el cascadeo es puro cliente, sin depender de que Prodeseg esté disponible mientras el ejecutivo cotiza. Marcas que Delta Check consolida en un solo nombre (`"GREAT WALL (GWM)"`, `"SSANGYONG (KGM)"`) fusionan los modelos de ambas entradas de Prodeseg, sin duplicados.
+
+El campo Modelo sigue siendo texto libre (`required`, mismo `<input>` de siempre) — lo único nuevo es un `<datalist>` que se repuebla en el `onChange` de Marca con los modelos reales de esa marca, como sugerencias de autocompletado nativas del navegador. Si el modelo no está en la lista, se escribe a mano igual que "Otra" en Marca — ningún catálogo restringe la cotización.
+
+```
+db/schema/catalog.ts        # vehicleModels — FK a vehicleBrands, único (brandId, name)
+db/seed.ts                  # seedVehicleModels() — lee reference-data/vehicle_models.json
+actions/catalog.actions.ts  # listVehicleModelsByBrand() — una sola query, agrupada en memoria
+```
+
+**Verificación:** `provinceFromCedula` y `calculateAge` con tests unitarios (4 y 5 casos respectivamente, incluido el borde "hoy es el cumpleaños"/"recién nacido"). Los tres flujos completos (provincia persistida en el mensaje de estado, edad calculada y persistida en `insured_members`, catálogo de modelos agrupado por marca) se corrieron con scripts directos contra Postgres real, no solo unit tests — incluido el caso de un dependiente recién nacido con `age = 0` (no confundido con "vacío", mismo bug de `""` vs `undefined` que el resto del proyecto). Seed de `vehicle_models` confirmado idempotente (950 filas, sin duplicar en una segunda corrida). La interacción de los `onChange` en el navegador no se pudo confirmar en vivo por el mismo problema de hidratación ya reportado en §13 — mismo patrón de código que el resto de estos botones/selects, del que sí se verificó la parte servidor.

@@ -6,6 +6,7 @@ import {
   numeric,
   pgTable,
   text,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 import { id, organizationId } from "./_helpers";
@@ -62,6 +63,30 @@ export const vehicleBrands = pgTable("vehicle_brands", {
   isActive: boolean("is_active").notNull().default(true),
   displayOrder: integer("display_order").notNull().default(0),
 });
+
+/**
+ * 🌐 Modelo en cascada según la marca elegida — mismo origen y mismo
+ * criterio que vehicleBrands (Prodeseg `/api/public/marcas` +
+ * `/api/public/modelos?idM=`, sin autenticación, namespace ya usado y
+ * documentado ahí). Se seedea una sola vez desde
+ * reference-data/vehicle_models.json en vez de consultarse en vivo en cada
+ * cotización — igual que el catálogo de marcas, para no depender de la
+ * disponibilidad de un tercero durante el flujo de cotizar. El formulario
+ * igual deja el modelo como texto libre editable: si no aparece en la
+ * lista, se escribe a mano.
+ */
+export const vehicleModels = pgTable(
+  "vehicle_models",
+  {
+    id: id(),
+    brandId: uuid("brand_id")
+      .notNull()
+      .references(() => vehicleBrands.id),
+    name: text("name").notNull(),
+    displayOrder: integer("display_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("vehicle_models_brand_name_idx").on(t.brandId, t.name)],
+);
 
 /**
  * 🏢 Qué otorga cada aseguradora — versionado por vigencia, nunca se

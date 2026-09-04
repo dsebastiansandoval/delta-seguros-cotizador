@@ -15,7 +15,14 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
   return <p className="text-xs text-red-600">{fieldErrors[0]}</p>;
 }
 
-export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
+export function NuevaCotizacionForm({
+  brands,
+  modelsByBrand,
+}: {
+  brands: string[];
+  /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
+  modelsByBrand: Record<string, string[]>;
+}) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -23,6 +30,7 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
   const provinceRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
+  const modelDatalistRef = useRef<HTMLDataListElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
   const plateRef = useRef<HTMLInputElement>(null);
   const bodyTypeRef = useRef<HTMLSelectElement>(null);
@@ -174,7 +182,21 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
           <select
             defaultValue=""
             onChange={(e) => {
-              if (brandRef.current) brandRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
+              const brandName = e.target.value === "__OTRA__" ? "" : e.target.value;
+              if (brandRef.current) brandRef.current.value = brandName;
+
+              // Modelo en cascada: repuebla las sugerencias del datalist con
+              // los modelos reales de la marca elegida (no obliga a
+              // escogerlas — el campo Modelo sigue siendo texto libre).
+              if (modelDatalistRef.current) {
+                modelDatalistRef.current.replaceChildren(
+                  ...(modelsByBrand[brandName] ?? []).map((model) => {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    return option;
+                  }),
+                );
+              }
             }}
             className="rounded-lg border border-border bg-background px-3 py-2"
           >
@@ -199,7 +221,17 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Modelo
-          <input ref={modelRef} name="model" required className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={modelRef}
+            name="model"
+            list="model-suggestions"
+            required
+            placeholder="Escribe o elige de la lista al seleccionar marca"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
+          {/* Sugerencias reales por marca (Prodeseg, ver reference-data/vehicle_models.json)
+              — no restringe: si el modelo no aparece, se escribe a mano igual que "Otra" en Marca. */}
+          <datalist ref={modelDatalistRef} id="model-suggestions" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
