@@ -44,6 +44,26 @@ export const coverages = pgTable("coverages", {
 });
 
 /**
+ * 🌐 Catálogo de marcas para el selector de "Nueva cotización — Autos", en
+ * vez de texto libre. El Excel sí tenía este dropdown (`DATOS VH!D9`), pero
+ * su lista de origen fue borrada — la validación de datos quedó apuntando a
+ * `#REF!`, sin rastro del catálogo real en ningún nombre definido del
+ * libro. Este catálogo se compiló de cero, curado a partir del catálogo
+ * público real de marcas de un bróker ecuatoriano (Prodeseg,
+ * `/api/public/marcas`, sin autenticación) filtrado a lo que aplica a
+ * Autos LIVIANO/PICKUP — se excluyeron camiones pesados, motos y
+ * maquinaria, que ellos también cubren pero Delta Check no cotiza. El
+ * formulario igual deja "Otra" como texto libre — ningún catálogo de
+ * marcas es exhaustivo para siempre.
+ */
+export const vehicleBrands = pgTable("vehicle_brands", {
+  id: id(),
+  name: text("name").notNull().unique(),
+  isActive: boolean("is_active").notNull().default(true),
+  displayOrder: integer("display_order").notNull().default(0),
+});
+
+/**
  * 🏢 Qué otorga cada aseguradora — versionado por vigencia, nunca se
  * sobreescribe (ARCHITECTURE.md §4.2: "nunca UPDATE destructivo").
  */

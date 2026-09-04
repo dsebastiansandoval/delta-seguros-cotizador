@@ -732,6 +732,17 @@ Botón "Buscar en SRI" junto al campo Documento en ambos formularios de nueva co
 
 **Nota de verificación:** el pipeline completo (validación local, llamada real al SRI, parseo de nombre, permiso + auditoría contra la BD) se verificó con scripts directos y tests unitarios (`cedula.validator.test.ts`, `razon-social.parser.test.ts`). La interacción del botón en el navegador (clic → Server Action) no se pudo confirmar en esta sesión: el entorno de automoción del navegador usado para probar tuvo un problema de hidratación de React ajeno a este código (confirmado con `curl` que el HTML del servidor sí trae el script de arranque correcto de Next.js) que dejó inertes todos los botones `onClick` de la página, no solo este — mismo patrón, ya documentado antes en este proyecto, de que la automatización del navegador puede fallar sin que sea un bug de la app.
 
+### 13.1 Investigación adicional — competencia y PatioTuerca
+
+A pedido del usuario se investigaron en vivo (navegador real, no solo búsqueda web) 5 cotizadores de seguro de auto que operan en Ecuador — Zurich, AseguraDeUna, Sur One, Prodeseg y Seguros.com — para confirmar si alguno resuelve el autocompletado de datos del vehículo o el avalúo desde la placa. **Ninguno lo hace** — los 5 piden marca/modelo/año/placa/valor comercial como texto libre o selects estáticos, igual que Delta Check. Zurich (aseguradora grande, con presupuesto) tiene exactamente los mismos campos que ya construimos.
+
+Al inspeccionar Prodeseg con las herramientas de red del navegador (no ingeniería inversa de nada oculto — son las mismas llamadas que dispara su propia página al cargar, sin autenticación) se confirmó que:
+- Su catálogo de marcas (`/api/public/marcas`) es real, público, y sirvió de referencia para curar `vehicle_brands` (§15).
+- **Prodeseg es quien opera el cotizador de seguros embebido en PatioTuerca** — su propio JSON de aseguradoras trae `landingsEnabled: ["PRODESEG","PATIOTUERCA"]`. Mismo backend, dos marcas al frente.
+- Un intento de enviar el formulario (con autorización explícita del usuario, usando su propio correo) reveló que la validación de email de Prodeseg (`zero-bounce`, un servicio de terceros) está bloqueada por Cloudflare (`error code: 1020`) — no se intentó sortear ese bloqueo, es exactamente el tipo de protección que este proyecto no evade.
+
+**PatioTuerca — reconfirmado, no es un error de una sola vez.** Se probó el widget de avalúo dos veces, en dos páginas distintas (marca y modelo+año): las dos veces mostró *"Este contenido no está disponible en este momento"*. Lo que sí funciona y es útil como referencia humana (no programática) son los anuncios reales del marketplace que la misma página muestra debajo — precios de venta reales de autos similares, no un avalúo calculado.
+
 ---
 
 ## 14. KPIs y derechos ARCO (cierre de Fase 3)
@@ -762,3 +773,15 @@ Separación real de responsabilidad, no cosmética: cualquier agente puede **reg
 Todo cambio (rectificar, anonimizar, fijar oposición) audita en `audit_logs` (`arco.*`) y marca la solicitud como `COMPLETADA` automáticamente — coherente con §9 ("cada acción crítica... va a `audit_logs`").
 
 **Verificación:** dominio completo (KPIs + los 4 tipos de ARCO, incluidos ambos casos de Cancelación — con y sin póliza) probado con un script directo contra Postgres real, con aserciones explícitas sobre cada resultado (incluida la corrección del bug de `Promise.all`). La interacción de UI no se pudo confirmar en esta sesión — la extensión de automatización del navegador se desconectó (mismo patrón ya documentado antes en este proyecto); no se reintentó a ciegas, se dejó constancia acá en vez de simular una verificación que no ocurrió.
+
+---
+
+## 15. Catálogo de marcas de vehículo
+
+El selector "Marca" de "Nueva cotización — Autos" era texto libre. El propio Excel **sí tenía** un dropdown ahí (`DATOS VH!D9`, con validación de datos tipo lista), pero su rango de origen fue borrado en algún momento de la vida del archivo — la validación quedó apuntando a `#REF!`, y no queda ningún nombre definido en el libro con un catálogo recuperable. No hay nada que "extraer" del Excel para esto — confirmado, no asumido.
+
+Se compiló `vehicle_brands` (🌐 catálogo global, sin RLS, mismo trato que `insurers`/`coverages`) a partir del catálogo público real de marcas de Prodeseg (`/api/public/marcas`, ver §13.1 — 192 marcas, sin autenticación), filtrado a las ~66 relevantes para Autos LIVIANO/PICKUP (se excluyeron camiones pesados, motos y maquinaria que ellos cubren pero Delta Check no cotiza) y ordenado por prevalencia real en el mercado ecuatoriano, no alfabético.
+
+`listVehicleBrands()` (`src/actions/catalog.actions.ts`) se consulta directo, sin `withOrganization()` — es catálogo compartido, igual que la lista de aseguradoras. El formulario de nueva cotización (`NuevaCotizacionForm.tsx`) usa un `<select>` con el catálogo que, al elegir una marca, llena el campo de texto real (`name="brand"`) — el campo de texto sigue siendo la fuente de verdad y queda editable, así que "Otra (especificar abajo)" simplemente lo deja vacío para digitación manual. Ningún catálogo de marcas es exhaustivo para siempre; no se bloquea la cotización de una marca fuera de la lista.
+
+**Verificación:** script directo confirma 66 marcas sin duplicados, consultable sin tenant. Confirmado en el HTML servido por el Server Component (`document.querySelectorAll('select')`) que el `<select>` trae las 66 opciones reales de la base más "Otra" — 68 en total. La interacción del `onChange` (copiar la marca elegida al campo de texto) no se pudo probar en vivo por el mismo problema de hidratación de §13 — el patrón de código es idéntico al ya usado (y solo parcialmente verificado por el mismo motivo) en `CedulaLookupButton.tsx`.

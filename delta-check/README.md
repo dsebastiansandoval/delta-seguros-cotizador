@@ -29,7 +29,9 @@ Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ningu
 
 Falta para Fase 3+: credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
-**Autocompletar desde cédula (SRI)** — igual que otros cotizadores en línea de Ecuador: en ambos formularios de nueva cotización, un botón "Buscar en SRI" junto a Documento trae el nombre legal real desde el RUC de persona natural (cédula + `001`, fuente pública y sin autenticación del SRI, confirmada en vivo). Se investigó también placa→datos del vehículo (ANT) y avalúo comercial (PatioTuerca/SRI vehicular) — ninguna tiene API pública real, así que no se construyó nada sobre un endpoint no documentado sin autorización; ver ARCHITECTURE.md §13 para el detalle de qué se investigó y por qué.
+**Autocompletar desde cédula (SRI)** — igual que otros cotizadores en línea de Ecuador: en ambos formularios de nueva cotización, un botón "Buscar en SRI" junto a Documento trae el nombre legal real desde el RUC de persona natural (cédula + `001`, fuente pública y sin autenticación del SRI, confirmada en vivo). Se investigó también placa→datos del vehículo (ANT) y avalúo comercial (PatioTuerca/SRI vehicular, y 5 cotizadores de la competencia) — ninguno tiene API pública real ni resuelve esto tampoco (ni Zurich), así que no se construyó nada sobre un endpoint no documentado sin autorización; ver ARCHITECTURE.md §13 para el detalle de qué se investigó y por qué (incluye el hallazgo de que Prodeseg opera el cotizador embebido en PatioTuerca).
+
+**Catálogo de marcas de vehículo** — el selector "Marca" de Nueva cotización — Autos ya no es texto libre: trae 66 marcas reales curadas del mercado ecuatoriano (con "Otra" como salida para lo que falte). El Excel tenía este dropdown originalmente pero su lista de origen se perdió (`DATOS VH!D9` apunta a `#REF!`); ver ARCHITECTURE.md §15.
 
 ## Requisitos
 

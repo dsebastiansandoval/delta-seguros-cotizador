@@ -7,7 +7,7 @@
  */
 import { db } from "./index";
 import { roles, permissions, rolePermissions } from "./schema/identity";
-import { insurers, coverages } from "./schema/catalog";
+import { insurers, coverages, vehicleBrands } from "./schema/catalog";
 
 async function seedRoles() {
   const roleRows = [
@@ -134,11 +134,60 @@ async function seedCatalog() {
     .onConflictDoNothing({ target: coverages.code });
 }
 
+/**
+ * Catálogo de marcas para el selector de "Nueva cotización — Autos" (ver
+ * comentario en src/db/schema/catalog.ts sobre por qué no viene del Excel:
+ * el dropdown original existía pero su lista de origen fue borrada,
+ * `DATOS VH!D9` quedó apuntando a `#REF!`).
+ *
+ * Curado a partir del catálogo público real de marcas de Prodeseg
+ * (`portal.prodeseg.com/.../api/public/marcas`, endpoint sin autenticación,
+ * consultado en vivo — 192 marcas en total), filtrado a lo que aplica a
+ * Autos LIVIANO/PICKUP: se excluyeron camiones pesados (Freightliner, Hino,
+ * Fuso, Iveco, Scania, Kenworth…), motos (Harley Davidson, Yamaha, KTM…) y
+ * maquinaria — ramos que Prodeseg cubre pero Delta Check no cotiza. También
+ * se consolidaron variantes de un mismo fabricante que su catálogo trae
+ * como entradas separadas (p. ej. "GWM (ANTES GREAT WALL)"/"GREAT WALL" →
+ * una sola fila). Ordenado por prevalencia real en el mercado ecuatoriano,
+ * no alfabético — las primeras ~10 son las que más se cotizan.
+ *
+ * No es exhaustivo a propósito: el formulario deja "Otra" como texto libre
+ * para cualquier marca fuera de esta lista.
+ */
+async function seedVehicleBrands() {
+  const brands = [
+    // Mercado masivo — las más cotizadas en Ecuador
+    "CHEVROLET", "KIA", "TOYOTA", "HYUNDAI", "NISSAN", "RENAULT", "FORD",
+    "MAZDA", "SUZUKI", "VOLKSWAGEN",
+    // Marcas chinas con presencia fuerte y creciente
+    "GREAT WALL (GWM)", "CHERY", "JAC", "CHANGAN", "BYD", "DFSK", "FOTON",
+    "MG", "GEELY", "HAVAL", "ZOTYE", "SOUEAST", "JMC", "OMODA", "JAECOO",
+    "JETOUR", "KAIYI", "FORTHING", "CHANGHE", "SAIC WULING",
+    // Resto de mercado masivo / utilitario
+    "MITSUBISHI", "HONDA", "SUBARU", "PEUGEOT", "CITROËN", "FIAT", "DODGE",
+    "RAM", "GMC", "JEEP", "ISUZU", "TATA", "MAHINDRA", "SSANGYONG (KGM)",
+    "DAIHATSU", "DAEWOO", "LADA", "UAZ",
+    // Premium / lujo
+    "MERCEDES BENZ", "BMW", "AUDI", "VOLVO", "LAND ROVER", "JAGUAR", "MINI",
+    "PORSCHE", "LEXUS", "CADILLAC", "ALFA ROMEO", "MASERATI",
+    "LAMBORGHINI", "CHRYSLER", "SKODA", "SEAT", "OPEL", "SMART",
+  ];
+
+  await db
+    .insert(vehicleBrands)
+    .values(brands.map((name, i) => ({ name, displayOrder: i })))
+    .onConflictDoNothing({ target: vehicleBrands.name });
+
+  console.log(`  ${brands.length} marcas de vehículo sembradas`);
+}
+
 async function main() {
   console.log("Sembrando roles y permisos…");
   await seedRoles();
   console.log("Sembrando catálogo de aseguradoras y coberturas…");
   await seedCatalog();
+  console.log("Sembrando catálogo de marcas de vehículo…");
+  await seedVehicleBrands();
   console.log("Listo.");
   process.exit(0);
 }

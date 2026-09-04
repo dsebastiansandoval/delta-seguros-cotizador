@@ -36,6 +36,13 @@
       "when": 1788537063132,
       "tag": "0004_grey_tarantula",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788557628173,
+      "tag": "0005_blue_liz_osborn",
+      "breakpoints": true
     }
   ]
 }

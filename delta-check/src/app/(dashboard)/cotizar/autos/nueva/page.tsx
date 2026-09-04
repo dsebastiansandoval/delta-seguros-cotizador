@@ -1,6 +1,9 @@
+import { listVehicleBrands } from "@/actions/catalog.actions";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
-export default function NuevaCotizacionAutosPage() {
+export default async function NuevaCotizacionAutosPage() {
+  const brands = await listVehicleBrands();
+
   return (
     <main className="mx-auto max-w-3xl p-8">
       <header className="mb-6">
@@ -10,7 +13,7 @@ export default function NuevaCotizacionAutosPage() {
           copiar entre hojas.
         </p>
       </header>
-      <NuevaCotizacionForm />
+      <NuevaCotizacionForm brands={brands.map((b) => b.name)} />
     </main>
   );
 }

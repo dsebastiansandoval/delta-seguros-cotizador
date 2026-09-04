@@ -13,11 +13,12 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
   return <p className="text-xs text-red-600">{fieldErrors[0]}</p>;
 }
 
-export function NuevaCotizacionForm() {
+export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const brandRef = useRef<HTMLInputElement>(null);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -98,7 +99,30 @@ export function NuevaCotizacionForm() {
 
         <label className="flex flex-col gap-1 text-sm">
           Marca
-          <input name="brand" required className="rounded-lg border border-border bg-background px-3 py-2" />
+          <select
+            defaultValue=""
+            onChange={(e) => {
+              if (brandRef.current) brandRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
+            }}
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
+            <option value="" disabled>
+              Selecciona una marca
+            </option>
+            {brands.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+            <option value="__OTRA__">Otra (especificar abajo)</option>
+          </select>
+          <input
+            ref={brandRef}
+            name="brand"
+            required
+            placeholder="Marca"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
