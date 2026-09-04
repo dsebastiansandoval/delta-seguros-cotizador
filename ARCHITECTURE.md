@@ -741,7 +741,7 @@ Al inspeccionar Prodeseg con las herramientas de red del navegador (no ingenier�
 - **Prodeseg es quien opera el cotizador de seguros embebido en PatioTuerca** — su propio JSON de aseguradoras trae `landingsEnabled: ["PRODESEG","PATIOTUERCA"]`. Mismo backend, dos marcas al frente.
 - Un intento de enviar el formulario (con autorización explícita del usuario, usando su propio correo) reveló que la validación de email de Prodeseg (`zero-bounce`, un servicio de terceros) está bloqueada por Cloudflare (`error code: 1020`) — no se intentó sortear ese bloqueo, es exactamente el tipo de protección que este proyecto no evade.
 
-**PatioTuerca — reconfirmado, no es un error de una sola vez.** Se probó el widget de avalúo dos veces, en dos páginas distintas (marca y modelo+año): las dos veces mostró *"Este contenido no está disponible en este momento"*. Lo que sí funciona y es útil como referencia humana (no programática) son los anuncios reales del marketplace que la misma página muestra debajo — precios de venta reales de autos similares, no un avalúo calculado.
+**PatioTuerca — corrección: sí hay un precio real, en una página distinta a la que se probó primero.** El widget interactivo "Nuevo avalúo" (el que pide tipo/marca/modelo/año en un solo formulario) se probó dos veces, en dos páginas distintas, y las dos veces mostró *"Este contenido no está disponible en este momento"* — eso sigue roto, confirmado dos veces. Pero es una feature *distinta* de la guía de precios estática: en `ecuador.patiotuerca.com/precio/autos/{marca}/{modelo}/{año}` (con año incluido en la URL) sí aparece un precio real — "Precio ideal / más bajo / más alto", calculado sobre datos de sus propias publicaciones, no un solo anuncio. Ver §16 para el detalle y por qué igual no se integra por API.
 
 ---
 
@@ -785,3 +785,22 @@ Se compiló `vehicle_brands` (🌐 catálogo global, sin RLS, mismo trato que `i
 `listVehicleBrands()` (`src/actions/catalog.actions.ts`) se consulta directo, sin `withOrganization()` — es catálogo compartido, igual que la lista de aseguradoras. El formulario de nueva cotización (`NuevaCotizacionForm.tsx`) usa un `<select>` con el catálogo que, al elegir una marca, llena el campo de texto real (`name="brand"`) — el campo de texto sigue siendo la fuente de verdad y queda editable, así que "Otra (especificar abajo)" simplemente lo deja vacío para digitación manual. Ningún catálogo de marcas es exhaustivo para siempre; no se bloquea la cotización de una marca fuera de la lista.
 
 **Verificación:** script directo confirma 66 marcas sin duplicados, consultable sin tenant. Confirmado en el HTML servido por el Server Component (`document.querySelectorAll('select')`) que el `<select>` trae las 66 opciones reales de la base más "Otra" — 68 en total. La interacción del `onChange` (copiar la marca elegida al campo de texto) no se pudo probar en vivo por el mismo problema de hidratación de §13 — el patrón de código es idéntico al ya usado (y solo parcialmente verificado por el mismo motivo) en `CedulaLookupButton.tsx`.
+
+---
+
+## 16. Referencia de precio a PatioTuerca (enlace, no integración)
+
+Corrección a §13/§13.1: PatioTuerca **sí publica un avalúo real**, solo que en una página distinta a la del widget interactivo que está roto. En `ecuador.patiotuerca.com/precio/autos/{marca}/{modelo}/{año}` (con año incluido — la sola marca o marca+modelo no lo muestra) la página trae "Precio ideal / Precio más bajo / Precio más alto" calculado sobre sus propias publicaciones.
+
+Revisando el HTML servido (`curl`, sin ejecutar JS) se confirmó que ese precio viene **incrustado en el payload de React Server Components de esa página**, no de una llamada a una API JSON separada — no hay nada limpio que llamar por HTTP. Traerlo por programa exigiría pedir una página por cada combinación marca/modelo/año y parsear el precio de adentro del marcado — eso es scraping de contenido que PatioTuerca genera y publica como propio, no una API pensada para terceros. Mismo criterio de todo este documento: no se construye ahí sin su autorización.
+
+Lo que sí se construyó es un **enlace de referencia**, cero integración: en "Nueva cotización — Autos", junto a Valor comercial, un botón arma la URL a partir de lo que el agente ya escribió (marca/modelo/año) y la abre en pestaña nueva — el agente ve la página real de PatioTuerca con sus propios ojos, ningún dato viaja de vuelta a Delta Check.
+
+```
+domains/shared/patiotuerca-link.ts    # buildPatioTuercaUrl() — función pura, testeada
+components/shared/PatioTuercaReferenceLink.tsx
+```
+
+Patrón de slug de la URL confirmado navegando el sitio real (no adivinado): espacios y puntos se reemplazan por `+`, todo en minúsculas — `"Alfa Romeo"` → `alfa+romeo`, `"Corolla 1.2"` → `corolla+1+2`. Verificado con `find`/`read_page` contra los `href` reales de la página, no inferido del texto visible.
+
+**Verificación:** 5 tests unitarios de `buildPatioTuercaUrl()` (incluye el caso real de Alfa Romeo Mito 2014 que motivó esto), confirmados contra las URLs reales visitadas. Botón confirmado renderizado y visible en el HTML servido por Next.js (`document.querySelectorAll('button')`). El `onClick` (armar la URL final y abrir la pestaña) no se pudo ejercitar en vivo por el mismo problema de hidratación ya reportado — mismo patrón de código (ref + `useState` + handler) que `CedulaLookupButton.tsx`, del que sí se verificó la parte servidor.

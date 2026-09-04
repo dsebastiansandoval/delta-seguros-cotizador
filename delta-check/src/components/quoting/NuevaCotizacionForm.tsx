@@ -3,6 +3,7 @@
 import { useActionState, useRef } from "react";
 import { createAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
+import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -19,6 +20,8 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLInputElement>(null);
+  const modelRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -127,12 +130,19 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Modelo
-          <input name="model" required className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={modelRef} name="model" required className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Año
-          <input name="year" type="number" required defaultValue={new Date().getFullYear()} className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={yearRef}
+            name="year"
+            type="number"
+            required
+            defaultValue={new Date().getFullYear()}
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
@@ -153,6 +163,10 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
           <input name="commercialValueDollars" type="number" step="0.01" required className="rounded-lg border border-border bg-background px-3 py-2" />
           <FieldError errors={state?.ok === false ? state.errors : undefined} name="commercialValueDollars" />
         </label>
+
+        <div className="flex items-end">
+          <PatioTuercaReferenceLink brandRef={brandRef} modelRef={modelRef} yearRef={yearRef} />
+        </div>
 
         <label className="flex flex-col gap-1 text-sm">
           Extras (USD)

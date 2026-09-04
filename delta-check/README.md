@@ -33,6 +33,8 @@ Falta para Fase 3+: credenciales reales de Microsoft/Google (hoy solo hay un log
 
 **Catálogo de marcas de vehículo** — el selector "Marca" de Nueva cotización — Autos ya no es texto libre: trae 66 marcas reales curadas del mercado ecuatoriano (con "Otra" como salida para lo que falte). El Excel tenía este dropdown originalmente pero su lista de origen se perdió (`DATOS VH!D9` apunta a `#REF!`); ver ARCHITECTURE.md §15.
 
+**Referencia de precio a PatioTuerca** — junto a Valor comercial, un botón abre en pestaña nueva la guía de precios real de PatioTuerca para la marca/modelo/año que el agente ya escribió (`ecuador.patiotuerca.com/precio/autos/{marca}/{modelo}/{año}` — ese precio existe de verdad, solo que no está detrás de una API pública sino incrustado en el HTML de cada página, así que esto es un enlace, no una integración — ver ARCHITECTURE.md §16). Ningún dato de PatioTuerca entra al sistema.
+
 ## Requisitos
 
 - Node.js 20.9+ (usa v26 en este entorno)
