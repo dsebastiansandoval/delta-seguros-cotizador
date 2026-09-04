@@ -27,6 +27,8 @@ Importante: **Salud no aplica IVA/SB/Seguro Campesino** — confirmado que ningu
 
 Falta para Fase 3+: KPIs (dashboard), ARCO (derechos LOPDP del titular de datos), y credenciales reales de Microsoft/Google (hoy solo hay un login de desarrollo, ver `src/lib/auth.ts`).
 
+**Autocompletar desde cédula (SRI)** — igual que otros cotizadores en línea de Ecuador: en ambos formularios de nueva cotización, un botón "Buscar en SRI" junto a Documento trae el nombre legal real desde el RUC de persona natural (cédula + `001`, fuente pública y sin autenticación del SRI, confirmada en vivo). Se investigó también placa→datos del vehículo (ANT) y avalúo comercial (PatioTuerca/SRI vehicular) — ninguna tiene API pública real, así que no se construyó nada sobre un endpoint no documentado sin autorización; ver ARCHITECTURE.md §13 para el detalle de qué se investigó y por qué.
+
 ## Requisitos
 
 - Node.js 20.9+ (usa v26 en este entorno)

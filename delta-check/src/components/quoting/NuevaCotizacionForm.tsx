@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import { createAutoQuote, type ActionResult } from "@/actions/quote.actions";
+import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -14,6 +15,9 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
 
 export function NuevaCotizacionForm() {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
+  const documentNumberRef = useRef<HTMLInputElement>(null);
+  const firstNameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -50,18 +54,31 @@ export function NuevaCotizacionForm() {
 
         <label className="flex flex-col gap-1 text-sm">
           Documento
-          <input name="documentNumber" required className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={documentNumberRef}
+            name="documentNumber"
+            required
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
           <FieldError errors={state?.ok === false ? state.errors : undefined} name="documentNumber" />
         </label>
 
+        <div className="flex items-end">
+          <CedulaLookupButton
+            documentNumberRef={documentNumberRef}
+            firstNameRef={firstNameRef}
+            lastNameRef={lastNameRef}
+          />
+        </div>
+
         <label className="flex flex-col gap-1 text-sm">
           Nombres
-          <input name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Apellidos
-          <input name="lastName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">

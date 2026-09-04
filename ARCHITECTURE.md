@@ -701,3 +701,32 @@ Con Auto x Km sumado a Fase 1 (el resto de fases no cambia):
 - **Migraciones:** `drizzle-kit generate` → revisar SQL a mano → commit. Nunca `push` directo a producción.
 - **Sin datos reales de clientes en desarrollo.** Seeds sintéticos en `src/db/seed.ts`.
 - **Definition of done por fase:** tests de dominio en verde · flujo E2E principal en verde · migración aplicada · `ARCHITECTURE.md` actualizado.
+
+---
+
+## 13. Autocompletar desde fuentes externas (cédula, placa, avalúo)
+
+Como en otros cotizadores en línea de Ecuador, se investigó autocompletar datos desde el documento del cliente y desde la placa del vehículo, para reducir digitación. Antes de construir nada se investigó qué fuentes son realmente públicas y sin autenticación — no se construyó sobre un endpoint no documentado o protegido sin autorización explícita.
+
+| Dato | Fuente investigada | Resultado |
+|---|---|---|
+| Nombre desde cédula | SRI — `srienlinea.sri.gob.ec/sri-catastro-sujeto-servicio-internet/rest/ConsolidadoContribuyente/obtenerPorNumerosRuc` | ✅ **Implementado.** Pública, sin autenticación, confirmada en vivo (probada primero contra el RUC institucional del propio SRI antes de tocar cualquier dato personal). El RUC de persona natural es cédula + `"001"` — convención del propio SRI, no un truco. `razonSocial` de persona natural es el nombre legal completo, misma fuente que usaría el Registro Civil (que no tiene servicio público propio). |
+| Datos del vehículo desde placa | ANT — portal de consulta vehicular | ❌ No implementado. Sin API pública documentada; el propio portal aclara que el nombre del propietario está protegido por LOPDP y no se muestra en la consulta pública. Construir esto requeriría scraping de un portal interactivo (con posible CAPTCHA) sin autorización — fuera de lo que se hace en este proyecto. |
+| Avalúo comercial desde marca/modelo/año o placa | PatioTuerca (guía de precios), SRI avalúo vehicular | ❌ No implementado. PatioTuerca solo tiene un formulario web, sin API pública. El avalúo vehicular del SRI existe pero vive bajo `sri-en-linea` (requiere sesión del contribuyente autenticado), no es un endpoint público como el de RUC. |
+
+**Diseño — puerto/adaptador, mismo patrón que `InsurerGateway` (§5):**
+
+```
+domains/lookup/
+  gateways/
+    cedula-lookup.gateway.ts        # interfaz — PersonLookupResult: FOUND | NOT_FOUND | ERROR
+    sri-cedula-lookup.adapter.ts    # implementación real contra el SRI
+  cedula.validator.ts               # módulo 10 — valida antes de gastar una llamada externa
+  razon-social.parser.ts            # "APELLIDO1 APELLIDO2 NOMBRE1.." → {firstName, lastName}
+```
+
+`lookupPersonByCedula()` (`src/actions/lookup.actions.ts`) exige `client:read_pii` (es una consulta de identidad de un tercero) y se audita como `cedula.lookup` — mismo criterio que ver la cédula/nombre de un cliente (§9). Nunca bloquea el formulario: `NOT_FOUND` o `ERROR` (timeout, SRI caído) dejan los campos para digitación manual, igual que cualquier otro dato sin fuente real en este proyecto — nunca se inventa un nombre.
+
+Botón "Buscar en SRI" junto al campo Documento en ambos formularios de nueva cotización (Autos y Salud) — ver `src/components/shared/CedulaLookupButton.tsx`.
+
+**Nota de verificación:** el pipeline completo (validación local, llamada real al SRI, parseo de nombre, permiso + auditoría contra la BD) se verificó con scripts directos y tests unitarios (`cedula.validator.test.ts`, `razon-social.parser.test.ts`). La interacción del botón en el navegador (clic → Server Action) no se pudo confirmar en esta sesión: el entorno de automoción del navegador usado para probar tuvo un problema de hidratación de React ajeno a este código (confirmado con `curl` que el HTML del servidor sí trae el script de arranque correcto de Next.js) que dejó inertes todos los botones `onClick` de la página, no solo este — mismo patrón, ya documentado antes en este proyecto, de que la automatización del navegador puede fallar sin que sea un bug de la app.
