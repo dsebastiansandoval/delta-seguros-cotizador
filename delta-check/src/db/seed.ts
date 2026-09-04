@@ -29,6 +29,7 @@ async function seedRoles() {
     "commission:manage", // fijar % comisión, marcar pagada — Fase 3
     "policy:manage", // emitir/cancelar póliza, cuotas — Fase 3 (EXCEL-AUDIT.md §4)
     "claim:manage", // registrar/actualizar siniestro — Fase 3
+    "compliance:manage", // procesar solicitud ARCO (rectificar/anonimizar/oposición) — Fase 3
     "client:read_pii",
     "user:manage",
     "org:manage", // PLATFORM_ADMIN
@@ -51,6 +52,7 @@ async function seedRoles() {
       "commission:manage",
       "policy:manage",
       "claim:manage",
+      "compliance:manage",
       "client:read_pii",
     ],
     AGENTE: [

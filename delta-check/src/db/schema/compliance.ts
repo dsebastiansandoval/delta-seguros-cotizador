@@ -1,5 +1,6 @@
 import { inet, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId } from "./_helpers";
+import { arcoRequestStatusEnum, arcoRequestTypeEnum } from "./enums";
 import { clients } from "./clients";
 import { users } from "./identity";
 
@@ -35,4 +36,29 @@ export const auditLogs = pgTable("audit_logs", {
   userAgent: text("user_agent"),
   metadata: jsonb("metadata"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+/**
+ * 🏢 Solicitud ARCO del titular — Acceso/Rectificación/Cancelación/Oposición
+ * (ARCHITECTURE.md §9/§14, LOPDP Ecuador). `channel` es texto libre (cómo
+ * llegó el pedido — igual que ESTATUS en las hojas BASE_* del Excel, no hay
+ * un vocabulario fijo que copiar de ningún lado porque esto no existe en el
+ * Excel). Un agente registra el pedido; SUPERVISOR/ADMIN lo procesa
+ * (compliance:manage) — separación real de responsabilidad, no cosmética.
+ */
+export const arcoRequests = pgTable("arco_requests", {
+  id: id(),
+  organizationId: organizationId(),
+  clientId: uuid("client_id")
+    .notNull()
+    .references(() => clients.id),
+  type: arcoRequestTypeEnum("type").notNull(),
+  status: arcoRequestStatusEnum("status").notNull().default("RECIBIDA"),
+  channel: text("channel"), // cómo llegó el pedido: email, teléfono, presencial...
+  notes: text("notes"),
+  requestedByUserId: uuid("requested_by_user_id").references(() => users.id),
+  requestedAt: timestamp("requested_at", { withTimezone: true }).notNull().defaultNow(),
+  resolvedByUserId: uuid("resolved_by_user_id").references(() => users.id),
+  resolvedAt: timestamp("resolved_at", { withTimezone: true }),
+  resolutionNotes: text("resolution_notes"),
 });

@@ -29,6 +29,13 @@
       "when": 1788488223319,
       "tag": "0003_dazzling_leader",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788537063132,
+      "tag": "0004_grey_tarantula",
+      "breakpoints": true
     }
   ]
 }

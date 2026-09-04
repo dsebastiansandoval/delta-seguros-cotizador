@@ -56,3 +56,22 @@ export const commissionStatusEnum = pgEnum("commission_status", ["PENDIENTE", "C
 export const claimStatusEnum = pgEnum("claim_status", ["REPORTADO", "APROBADO", "REPARADO"]);
 
 export const integrationProviderEnum = pgEnum("integration_provider", ["SOFTSEGUROS"]);
+
+/**
+ * ARCO — derechos LOPDP (Ecuador) del titular de datos: Acceso, Rectificación,
+ * Cancelación, Oposición. Sin equivalente en el Excel (no es un dato de
+ * negocio del cotizador) — diseño propio de Delta Check, ver ARCHITECTURE.md
+ * §9/§14.
+ */
+export const arcoRequestTypeEnum = pgEnum("arco_request_type", [
+  "ACCESO",
+  "RECTIFICACION",
+  "CANCELACION",
+  "OPOSICION",
+]);
+export const arcoRequestStatusEnum = pgEnum("arco_request_status", [
+  "RECIBIDA",
+  "EN_PROCESO",
+  "COMPLETADA",
+  "RECHAZADA",
+]);

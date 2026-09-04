@@ -1,4 +1,4 @@
-import { bigint, boolean, date, integer, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { bigint, boolean, date, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
 import { documentTypeEnum, genderEnum, insuredRelationEnum, personTypeEnum, regionEnum } from "./enums";
 import { users } from "./identity";
@@ -17,6 +17,12 @@ export const clients = pgTable("clients", {
   phone: text("phone"),
   source: text("source"), // FUENTE del Excel
   assignedAgentId: uuid("assigned_agent_id").references(() => users.id),
+  // ARCO — Cancelación/Oposición (ARCHITECTURE.md §14). `isAnonymized` no
+  // borra la fila (pólizas/siniestros ligados exigen retención legal) — ver
+  // arcoService.anonymizeClient() para qué campos sí se redactan.
+  isAnonymized: boolean("is_anonymized").notNull().default(false),
+  anonymizedAt: timestamp("anonymized_at", { withTimezone: true }),
+  marketingOptOut: boolean("marketing_opt_out").notNull().default(false),
   ...timestamps,
 });
 

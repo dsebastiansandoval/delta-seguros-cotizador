@@ -278,7 +278,7 @@ erDiagram
 
 | Tabla | Campos clave |
 |---|---|
-| `clients` | `id`, `person_type` (`NATURAL`\|`JURIDICA`), `document_type` (`CEDULA`\|`RUC`\|`PASAPORTE`), `document_number` (unique + índice), `first_name`, `last_name`, `business_name`, `email`, `phone`, `source` (FUENTE del Excel), `assigned_agent_id → users` |
+| `clients` | `id`, `person_type` (`NATURAL`\|`JURIDICA`), `document_type` (`CEDULA`\|`RUC`\|`PASAPORTE`), `document_number` (unique + índice), `first_name`, `last_name`, `business_name`, `email`, `phone`, `source` (FUENTE del Excel), `assigned_agent_id → users`, `is_anonymized`, `anonymized_at`, `marketing_opt_out` (ARCO, §14) |
 | `vehicles` | `id`, `client_id`, `plate`, `brand`, `model`, `year`, `body_type`, `color`, `chassis`, `commercial_value_cents`, `extras_value_cents`, `has_tracker` (afecta deducible de robo), `city` |
 | `insured_groups` | `id`, `client_id`, `region` (`SIERRA`\|`COSTA`) — grupo de salud |
 | `insured_members` | `id`, `group_id`, `relation` (`TITULAR`\|`DEPENDIENTE`), `age`, `gender`, `birth_date` |
@@ -322,6 +322,7 @@ erDiagram
 |---|---|
 | `consents` | `id`, `user_id`, `client_id`, `policy_version`, `terms_version`, `accepted_at`, `ip_address` (inet), `user_agent` |
 | `audit_logs` | `id`, `user_id`, `action`, `entity_type`, `entity_id`, `ip_address` (inet), `user_agent`, `metadata` (jsonb), `created_at` — **append-only, sin UPDATE/DELETE** |
+| `arco_requests` | `id`, `client_id`, `type` (`ACCESO`\|`RECTIFICACION`\|`CANCELACION`\|`OPOSICION`), `status` (`RECIBIDA`\|`EN_PROCESO`\|`COMPLETADA`\|`RECHAZADA`), `channel`, `notes`, `requested_by_user_id`, `requested_at`, `resolved_by_user_id`, `resolved_at`, `resolution_notes` — derechos ARCO, §14 |
 
 ### 4.3 Índices mínimos
 
@@ -596,7 +597,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 - **Consentimiento explícito:** checkbox **no premarcado** de Políticas de Privacidad y Términos de Uso. El botón **Cotizar** permanece deshabilitado hasta marcarlo. Se registra en `consents` con versión del documento, timestamp, IP y user-agent.
 - **Trazabilidad:** cada acción crítica (cotizar, emitir, cancelar, exportar, ver PII) va a `audit_logs` con usuario, IP, hora, entidad y resultado. Tabla **append-only**: `REVOKE UPDATE, DELETE ON audit_logs FROM app_rw`.
 - **Minimización:** solo se recolecta lo que la cotización requiere. Retención definida por política del broker (pendiente de confirmar con Delta — ver §11).
-- **Derechos ARCO:** endpoints de exportación y eliminación de datos del titular (Fase 3).
+- **Derechos ARCO:** ✅ implementado — ver §14.
 
 ---
 
@@ -607,7 +608,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 | 0 | MVP visual | ✅ Entregado |
 | 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
 | 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ Completa — BMI, Humana, Confiamed, SaludSA, Pro, VB y Salud genérica con tarifa real (7/8); solo Bupa 100% manual, sin tabla en el Excel (§2.3 de `EXCEL-AUDIT.md`) |
-| 3 | Cartera, comisiones, siniestros, KPIs, ARCO | 🟡 Cartera/comisiones/siniestros completos (emitir póliza desde una cotización cotizada, cuotas, comisión automática al emitir, siniestros) — falta KPIs (dashboard) y ARCO (derechos LOPDP del titular, §9) |
+| 3 | Cartera, comisiones, siniestros, KPIs, ARCO | ✅ Completa — cartera/comisiones/siniestros (emitir póliza desde una cotización cotizada, cuotas, comisión automática al emitir), dashboard de KPIs (§14) y derechos ARCO (§14) |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |
 | 5 | Despliegue, capacitación, entrega | Pendiente |
 
@@ -730,3 +731,34 @@ domains/lookup/
 Botón "Buscar en SRI" junto al campo Documento en ambos formularios de nueva cotización (Autos y Salud) — ver `src/components/shared/CedulaLookupButton.tsx`.
 
 **Nota de verificación:** el pipeline completo (validación local, llamada real al SRI, parseo de nombre, permiso + auditoría contra la BD) se verificó con scripts directos y tests unitarios (`cedula.validator.test.ts`, `razon-social.parser.test.ts`). La interacción del botón en el navegador (clic → Server Action) no se pudo confirmar en esta sesión: el entorno de automoción del navegador usado para probar tuvo un problema de hidratación de React ajeno a este código (confirmado con `curl` que el HTML del servidor sí trae el script de arranque correcto de Next.js) que dejó inertes todos los botones `onClick` de la página, no solo este — mismo patrón, ya documentado antes en este proyecto, de que la automatización del navegador puede fallar sin que sea un bug de la app.
+
+---
+
+## 14. KPIs y derechos ARCO (cierre de Fase 3)
+
+### 14.1 KPIs — dashboard
+
+El Excel original **no tiene un tablero real que reproducir**: las hojas `DASHBOARD` y `BASE DASHBOARD` están completamente vacías (confirmado al auditar Fase 3, sin una sola celda con contenido, ni fórmula `COUNTIF`/`SUMIF` que sugiera qué métrica mostrar). Las métricas de `/dashboard` son diseño propio de Delta Check sobre los datos que el dominio ya genera, no algo extraído del archivo original:
+
+- Cotizaciones (total, por estado, por ramo).
+- Conversión a póliza (% de cotizaciones que llegaron a emitirse — una póliza cancelada sigue contando como "llegó a emitirse", la cancelación es un evento posterior).
+- Cartera vigente (pólizas vigentes vs. canceladas, prima total vigente).
+- Comisiones (pendientes vs. comisionadas).
+- Siniestros (por estado, valor total).
+
+`dashboardService.getSummary()` (`src/domains/dashboard/services/dashboard.service.ts`) hace 5 queries agregadas (`count`/`sum` + `groupBy`) contra `quotes`/`policies`/`commissions`/`claims`. Corren **secuenciales, no con `Promise.all`** — encontrado como bug real durante la verificación: `tx` es una transacción sobre una única conexión Postgres, y lanzar varias queries a la vez en la misma conexión es comportamiento deprecado del driver `pg` (avisa en consola hoy, dejará de funcionar en `pg@9`). `getDashboardSummary()` exige `quote:read_all` — mismo nivel que ver comisiones de todos los agentes, no de un agente individual.
+
+### 14.2 Derechos ARCO — Acceso, Rectificación, Cancelación, Oposición
+
+Sin equivalente en el Excel — esto no es un dato de negocio del cotizador, es cumplimiento legal (LOPDP Ecuador), diseño propio. `arco_requests` (`src/db/schema/compliance.ts`) registra cada solicitud: `type` (`ACCESO`\|`RECTIFICACION`\|`CANCELACION`\|`OPOSICION`), `status` (`RECIBIDA`\|`EN_PROCESO`\|`COMPLETADA`\|`RECHAZADA`), `channel` (texto libre — cómo llegó el pedido, sin vocabulario fijo, mismo criterio que `ESTATUS` en las hojas `BASE_*` de cartera, EXCEL-AUDIT.md §4), notas de resolución, quién la registró y quién la resolvió.
+
+Separación real de responsabilidad, no cosmética: cualquier agente puede **registrar** el pedido que el cliente le hizo (`client:read_pii`, `/cumplimiento/nueva` — busca al cliente por documento, tiene que existir ya en el sistema), pero **procesarlo** (rectificar, anonimizar, fijar oposición, marcar la solicitud como resuelta) exige `compliance:manage` (SUPERVISOR/ADMIN).
+
+- **Acceso** — `arcoService.exportClientData()` trae *todo* el dato crudo ligado al cliente (datos propios, vehículos, grupos/miembros de salud, cotizaciones, pólizas, siniestros, consentimientos), sin resumir ni transformar: el titular tiene derecho a ver el dato tal cual está guardado.
+- **Rectificación** — corrige nombre/razón social/email/teléfono directamente sobre `clients`.
+- **Cancelación** — **nunca borra la fila**. Pólizas, comisiones y siniestros ligados a un cliente exigen retención legal (obligación regulatoria/tributaria de un intermediario de seguros), y el propio LOPDP exceptúa el borrado cuando hay una obligación legal de conservar el dato. Lo que sí pasa siempre: se redacta el contacto (`email`/`phone` → `"[ANONIMIZADO]"`, no hace falta para administrar una póliza ya emitida). El **nombre** solo se redacta si el cliente **nunca tuvo una póliza** — si tuvo alguna (vigente o cancelada), el nombre queda como identificación legal del historial. `clients.isAnonymized`/`anonymizedAt` marcan el resultado. **Esto es un default de ingeniería razonable, no asesoría legal** — antes de operar con clientes reales, un abogado de Delta debería confirmar el criterio de retención exacto para intermediarios de seguros en Ecuador.
+- **Oposición** — hoy la app no tiene ningún pipeline de marketing/comunicación automatizado que "detener"; `clients.marketingOptOut` deja el flag listo para cuando lo haya, con su propia solicitud ARCO auditada.
+
+Todo cambio (rectificar, anonimizar, fijar oposición) audita en `audit_logs` (`arco.*`) y marca la solicitud como `COMPLETADA` automáticamente — coherente con §9 ("cada acción crítica... va a `audit_logs`").
+
+**Verificación:** dominio completo (KPIs + los 4 tipos de ARCO, incluidos ambos casos de Cancelación — con y sin póliza) probado con un script directo contra Postgres real, con aserciones explícitas sobre cada resultado (incluida la corrección del bug de `Promise.all`). La interacción de UI no se pudo confirmar en esta sesión — la extensión de automatización del navegador se desconectó (mismo patrón ya documentado antes en este proyecto); no se reintentó a ciegas, se dejó constancia acá en vez de simular una verificación que no ocurrió.
