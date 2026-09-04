@@ -52,7 +52,10 @@ export async function createAutoQuote(
       vehicleId: vehicle.id,
       insuredValueCents: dollarsToCents(input.commercialValueDollars),
       extrasValueCents: dollarsToCents(input.extrasValueDollars),
-      operationType: "NUEVA",
+      operationType: input.operationType,
+      previousInsurerId: input.previousInsurerId,
+      previousPolicyNumber: input.previousPolicyNumber,
+      previousExpiryDate: input.previousExpiryDate,
     });
 
     if (input.modality === "POR_KM") {

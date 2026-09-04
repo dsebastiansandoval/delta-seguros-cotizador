@@ -804,3 +804,26 @@ components/shared/PatioTuercaReferenceLink.tsx
 Patrón de slug de la URL confirmado navegando el sitio real (no adivinado): espacios y puntos se reemplazan por `+`, todo en minúsculas — `"Alfa Romeo"` → `alfa+romeo`, `"Corolla 1.2"` → `corolla+1+2`. Verificado con `find`/`read_page` contra los `href` reales de la página, no inferido del texto visible.
 
 **Verificación:** 5 tests unitarios de `buildPatioTuercaUrl()` (incluye el caso real de Alfa Romeo Mito 2014 que motivó esto), confirmados contra las URLs reales visitadas. Botón confirmado renderizado y visible en el HTML servido por Next.js (`document.querySelectorAll('button')`). El `onClick` (armar la URL final y abrir la pestaña) no se pudo ejercitar en vivo por el mismo problema de hidratación ya reportado — mismo patrón de código (ref + `useState` + handler) que `CedulaLookupButton.tsx`, del que sí se verificó la parte servidor.
+
+---
+
+## 17. Renovación — buscar cotización anterior
+
+Retoma una función que el Excel sí tenía y que había quedado como pendiente sin resolver en la auditoría (EXCEL-AUDIT.md §5): el macro `BUSCAR_BASE_VEHICULOS` traía datos de una cotización/vehículo anterior contra una "REFERENCIA" que el ejecutivo escribía a mano, por `VLOOKUP` con índice de columna sobre la tabla `BASE_VEHICULOS` (120 columnas con nombre). Se leyó esa tabla completa y se contrastó índice por índice contra el código real del macro — el mapeo completo queda documentado en EXCEL-AUDIT.md §5, no se adivinó ningún índice.
+
+**Diferencia deliberada con el Excel:** el macro también copiaba, por cada referencia, la prima que las 13 aseguradoras habían cotizado la vez anterior (idx 50-107 de `BASE_VEHICULOS`) — una copia plana porque Excel no tiene una forma mejor de "recordar" una comparación pasada. Delta Check no replica esa copia: la comparación completa de la cotización anterior ya vive, intacta, en sus propios `quote_options` — no hace falta duplicarla.
+
+**Cómo funciona:** en "Nueva cotización — Autos", junto al botón "Buscar en SRI", un segundo botón "Buscar cotización anterior" busca por el documento ya escrito:
+
+1. `renewalService.findPreviousVehicleData()` (`src/domains/clients/services/renewal.service.ts`) busca el cliente por `documentNumber`, toma su vehículo más reciente, y busca la póliza más reciente ligada a ese vehículo específico (`vehicle → quote_risks → quote_options → policies`).
+2. Si encuentra vehículo, precarga Placa/Marca/Modelo/Año/Tipo/Color/Valor comercial/Extras/Rastreo/Ciudad — los mismos campos que ya llena a mano el formulario de cotización nueva.
+3. Si además encuentra una póliza emitida para ese vehículo, precarga `previousInsurerId`/`previousPolicyNumber`/`previousExpiryDate` (columnas de `quotes` que ya existían en el esquema desde Fase 1 pero nunca se habían llenado) y pone `operationType` en `RENOVACION`.
+4. Nunca bloquea el formulario — cliente nuevo, cliente sin vehículos, o vehículo sin póliza anterior son casos válidos que solo dejan menos precargado, nunca un error.
+
+```
+domains/clients/services/renewal.service.ts   # findPreviousVehicleData()
+actions/renewal.actions.ts                    # findRenewalData() — audita como renewal.lookup (PII de un cliente ya existente)
+components/shared/RenewalLookupButton.tsx
+```
+
+**Verificación:** script directo contra Postgres real — crea cliente + vehículo + póliza emitida (simulando "el año pasado"), confirma que `findPreviousVehicleData` trae exactamente esa placa/marca/modelo y esa aseguradora/póliza/fecha de vencimiento, y confirma que una cotización nueva creada con `operationType: RENOVACION` y esos `previousInsurerId`/`previousPolicyNumber` los guarda correctamente en `quotes`. Confirmado en el HTML real servido por Next.js que el botón, el select de Tipo de operación y los campos ocultos de aseguradora/póliza anterior están presentes. El clic en sí no se pudo probar en vivo por el mismo problema de hidratación ya reportado.

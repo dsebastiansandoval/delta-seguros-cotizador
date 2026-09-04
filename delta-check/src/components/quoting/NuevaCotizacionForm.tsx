@@ -4,6 +4,7 @@ import { useActionState, useRef } from "react";
 import { createAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
+import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -22,6 +23,17 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
+  const plateRef = useRef<HTMLInputElement>(null);
+  const bodyTypeRef = useRef<HTMLSelectElement>(null);
+  const colorRef = useRef<HTMLInputElement>(null);
+  const commercialValueRef = useRef<HTMLInputElement>(null);
+  const extrasValueRef = useRef<HTMLInputElement>(null);
+  const hasTrackerRef = useRef<HTMLInputElement>(null);
+  const cityRef = useRef<HTMLInputElement>(null);
+  const operationTypeRef = useRef<HTMLSelectElement>(null);
+  const previousInsurerIdRef = useRef<HTMLInputElement>(null);
+  const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
+  const previousExpiryDateRef = useRef<HTMLInputElement>(null);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -34,6 +46,25 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
             <option value="POR_KM">Auto x Km</option>
           </select>
         </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          Tipo de operación
+          <select
+            ref={operationTypeRef}
+            name="operationType"
+            defaultValue="NUEVA"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
+            <option value="NUEVA">Nueva</option>
+            <option value="RENOVACION">Renovación</option>
+          </select>
+        </label>
+        {/* CIA ANTERIOR / No. POLIZA / FIN VIGENCIA del Excel — se llenan
+            solos con "Buscar cotización anterior", quedan ocultos porque
+            no hace falta que el ejecutivo los toque a mano. */}
+        <input ref={previousInsurerIdRef} type="hidden" name="previousInsurerId" />
+        <input ref={previousPolicyNumberRef} type="hidden" name="previousPolicyNumber" />
+        <input ref={previousExpiryDateRef} type="hidden" name="previousExpiryDate" />
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -75,6 +106,26 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
           />
         </div>
 
+        <div className="flex items-end">
+          <RenewalLookupButton
+            documentNumberRef={documentNumberRef}
+            plateRef={plateRef}
+            brandRef={brandRef}
+            modelRef={modelRef}
+            yearRef={yearRef}
+            bodyTypeRef={bodyTypeRef}
+            colorRef={colorRef}
+            commercialValueRef={commercialValueRef}
+            extrasValueRef={extrasValueRef}
+            hasTrackerRef={hasTrackerRef}
+            cityRef={cityRef}
+            operationTypeRef={operationTypeRef}
+            previousInsurerIdRef={previousInsurerIdRef}
+            previousPolicyNumberRef={previousPolicyNumberRef}
+            previousExpiryDateRef={previousExpiryDateRef}
+          />
+        </div>
+
         <label className="flex flex-col gap-1 text-sm">
           Nombres
           <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
@@ -96,7 +147,13 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Placa
-          <input name="plate" required placeholder="PBX-1234" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={plateRef}
+            name="plate"
+            required
+            placeholder="PBX-1234"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
           <FieldError errors={state?.ok === false ? state.errors : undefined} name="plate" />
         </label>
 
@@ -147,7 +204,12 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Tipo
-          <select name="bodyType" defaultValue="LIVIANO" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select
+            ref={bodyTypeRef}
+            name="bodyType"
+            defaultValue="LIVIANO"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
             <option value="LIVIANO">Liviano</option>
             <option value="PICKUP">Pickup</option>
           </select>
@@ -155,12 +217,19 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Color
-          <input name="color" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={colorRef} name="color" className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Valor comercial (USD)
-          <input name="commercialValueDollars" type="number" step="0.01" required className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={commercialValueRef}
+            name="commercialValueDollars"
+            type="number"
+            step="0.01"
+            required
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
           <FieldError errors={state?.ok === false ? state.errors : undefined} name="commercialValueDollars" />
         </label>
 
@@ -170,16 +239,23 @@ export function NuevaCotizacionForm({ brands }: { brands: string[] }) {
 
         <label className="flex flex-col gap-1 text-sm">
           Extras (USD)
-          <input name="extrasValueDollars" type="number" step="0.01" defaultValue={0} className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input
+            ref={extrasValueRef}
+            name="extrasValueDollars"
+            type="number"
+            step="0.01"
+            defaultValue={0}
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Ciudad
-          <input name="city" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={cityRef} name="city" className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
 
         <label className="col-span-full flex items-center gap-2 text-sm">
-          <input name="hasTracker" type="checkbox" value="true" />
+          <input ref={hasTrackerRef} name="hasTracker" type="checkbox" value="true" />
           Tiene dispositivo de rastreo
         </label>
       </fieldset>

@@ -25,6 +25,12 @@ export const quoteService = {
       insuredValueCents: number;
       extrasValueCents: number;
       operationType: "NUEVA" | "RENOVACION";
+      // Solo RENOVACION — traídos de la póliza/cotización anterior del
+      // mismo vehículo (EXCEL-AUDIT.md §5, macro BUSCAR_BASE_VEHICULOS:
+      // CIA ANTERIOR, No. POLIZA, FIN VIGENCIA).
+      previousInsurerId?: string;
+      previousPolicyNumber?: string;
+      previousExpiryDate?: string;
     },
   ) {
     const [quote] = await tx
@@ -37,6 +43,9 @@ export const quoteService = {
         branch: "AUTOS",
         operationType: params.operationType,
         status: "BORRADOR",
+        previousInsurerId: params.previousInsurerId,
+        previousPolicyNumber: params.previousPolicyNumber,
+        previousExpiryDate: params.previousExpiryDate,
       })
       .returning();
 

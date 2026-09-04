@@ -35,6 +35,8 @@ Falta para Fase 3+: credenciales reales de Microsoft/Google (hoy solo hay un log
 
 **Referencia de precio a PatioTuerca** — junto a Valor comercial, un botón abre en pestaña nueva la guía de precios real de PatioTuerca para la marca/modelo/año que el agente ya escribió (`ecuador.patiotuerca.com/precio/autos/{marca}/{modelo}/{año}` — ese precio existe de verdad, solo que no está detrás de una API pública sino incrustado en el HTML de cada página, así que esto es un enlace, no una integración — ver ARCHITECTURE.md §16). Ningún dato de PatioTuerca entra al sistema.
 
+**Buscar cotización anterior (renovación)** — junto a "Buscar en SRI", un botón busca en la propia base de Delta Check el vehículo más reciente del cliente y, si tuvo una póliza, la aseguradora/número/vencimiento anteriores — precarga todo el formulario y pone el Tipo de operación en Renovación. Retoma una función que el Excel sí tenía (`BUSCAR_BASE_VEHICULOS`) y que había quedado pendiente de mapear en la auditoría; ver ARCHITECTURE.md §17 y EXCEL-AUDIT.md §5 para el mapeo completo de los 120 campos de `BASE_VEHICULOS` que se terminó de resolver.
+
 ## Requisitos
 
 - Node.js 20.9+ (usa v26 en este entorno)

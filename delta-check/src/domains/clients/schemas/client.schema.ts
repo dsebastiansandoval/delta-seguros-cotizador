@@ -23,6 +23,15 @@ export const newClientVehicleSchema = z.object({
   // (100% manual para las 13, EXCEL-AUDIT.md §11.4b).
   modality: z.enum(["ANUAL", "POR_KM"]).default("ANUAL"),
 
+  // Renovación — campos reales de "DATOS VH" y BASE_VEHICULOS del Excel
+  // (CIA ANTERIOR, No. POLIZA, INICIO/FIN VIGENCIA), restaurados por el
+  // macro BUSCAR_BASE_VEHICULOS que nunca se había mapeado — ver
+  // EXCEL-AUDIT.md §5. Todos opcionales: una cotización NUEVA no los trae.
+  operationType: z.enum(["NUEVA", "RENOVACION"]).default("NUEVA"),
+  previousInsurerId: z.preprocess((v) => (v === "" ? undefined : v), z.uuid().optional()),
+  previousPolicyNumber: optionalText(),
+  previousExpiryDate: z.preprocess((v) => (v === "" ? undefined : v), z.string().optional()),
+
   // Cliente
   personType: z.enum(["NATURAL", "JURIDICA"]),
   documentType: z.enum(["CEDULA", "RUC", "PASAPORTE"]),
