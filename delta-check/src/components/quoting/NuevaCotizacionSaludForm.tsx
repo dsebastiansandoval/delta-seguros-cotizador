@@ -12,8 +12,8 @@ function DependentFields({ n }: { n: 1 | 2 | 3 }) {
     <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 border-t border-border pt-4">
       <legend className="col-span-full text-sm font-semibold">Dependiente {n}</legend>
       <label className="flex flex-col gap-1 text-sm">
-        Edad
-        <input name={`dep${n}Age`} type="number" min={0} max={105} className="rounded-lg border border-border bg-background px-3 py-2" />
+        Fecha de nacimiento
+        <input name={`dep${n}BirthDate`} type="date" className="rounded-lg border border-border bg-background px-3 py-2" />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Sexo
@@ -32,6 +32,7 @@ export function NuevaCotizacionSaludForm() {
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const provinceRef = useRef<HTMLInputElement>(null);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -66,8 +67,18 @@ export function NuevaCotizacionSaludForm() {
             documentNumberRef={documentNumberRef}
             firstNameRef={firstNameRef}
             lastNameRef={lastNameRef}
+            provinceRef={provinceRef}
           />
         </div>
+        <label className="flex flex-col gap-1 text-sm">
+          Provincia (según cédula)
+          <input
+            ref={provinceRef}
+            readOnly
+            placeholder="—"
+            className="rounded-lg border border-border bg-background px-3 py-2 text-muted"
+          />
+        </label>
         <label className="flex flex-col gap-1 text-sm">
           Nombres
           <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
@@ -89,8 +100,13 @@ export function NuevaCotizacionSaludForm() {
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <legend className="col-span-full text-sm font-semibold">Titular</legend>
         <label className="flex flex-col gap-1 text-sm">
-          Edad
-          <input name="titularAge" type="number" min={0} max={105} required className="rounded-lg border border-border bg-background px-3 py-2" />
+          Fecha de nacimiento
+          <input
+            name="titularBirthDate"
+            type="date"
+            required
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Sexo
