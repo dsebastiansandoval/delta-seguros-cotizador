@@ -1,9 +1,15 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
 /**
- * Todos los enums del esquema en un solo lugar. Los valores son los mismos
- * que aparecen en ARCHITECTURE.md §4.2 y en EXCEL-AUDIT.md — no se inventó
- * ningún estado nuevo que no viniera del Excel o de la decisión documentada.
+ * Todos los enums del esquema en un solo lugar. Documentados en
+ * ARCHITECTURE.md §4.2. La mayoría vienen de una fórmula o estructura real
+ * del Excel (EXCEL-AUDIT.md) — la excepción es issue/payment/lifecycle/
+ * commission/claim status (cartera, comisiones, siniestros): en el Excel la
+ * columna ESTATUS de esas 5 hojas es texto libre, sin lista de validación ni
+ * fórmula que fije un vocabulario (confirmado revisando las macros
+ * ALTA_EN_BASE_* — ninguna escribe un literal en esa columna). Los valores
+ * de esos 5 enums son una decisión de diseño de Delta Check, no un hecho
+ * extraído del Excel — se documentan así en vez de inventar una "fuente".
  */
 
 export const roleCodeEnum = pgEnum("role_code", [

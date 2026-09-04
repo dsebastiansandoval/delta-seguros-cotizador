@@ -22,6 +22,13 @@
       "when": 1788389652552,
       "tag": "0002_stormy_miracleman",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788488223319,
+      "tag": "0003_dazzling_leader",
+      "breakpoints": true
     }
   ]
 }

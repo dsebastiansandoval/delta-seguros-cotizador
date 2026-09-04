@@ -1,4 +1,4 @@
-import { bigint, boolean, date, numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { bigint, boolean, date, integer, numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
 import { branchEnum, claimStatusEnum, commissionStatusEnum, issueStatusEnum, lifecycleStatusEnum, paymentStatusEnum } from "./enums";
 import { quoteOptions } from "./quoting";
@@ -32,11 +32,35 @@ export const policies = pgTable("policies", {
   startsAt: date("starts_at"),
   endsAt: date("ends_at"),
   premiumCents: bigint("premium_cents", { mode: "number" }),
+  // FACTURA / ANEXO — columnas reales de BASE_PENDIENTE (EXCEL-AUDIT.md §4).
+  invoiceNumber: text("invoice_number"),
+  annexNumber: text("annex_number"),
+  cancelledAt: date("cancelled_at"),
+  cancellationReason: text("cancellation_reason"),
+  notes: text("notes"), // OBSERVACIONES, columna en las 5 hojas BASE_*
   // Trazabilidad de origen SoftSeguros y de pólizas "creadas por error"
   // (ver ARCHITECTURE.md §5b.4) — nunca se borran, se marcan.
   externalId: text("external_id"),
   isVoid: boolean("is_void").notNull().default(false),
   ...timestamps,
+});
+
+/**
+ * 🏢 Cuotas de pago (`BASE PENDIENTE` del Excel trae hasta 12 columnas 1-12
+ * de seguimiento manual de cuota pagada/no pagada — acá una fila por cuota
+ * en vez de columnas fijas, mismo dato, sin el límite de 12).
+ */
+export const policyInstallments = pgTable("policy_installments", {
+  id: id(),
+  organizationId: organizationId(),
+  policyId: uuid("policy_id")
+    .notNull()
+    .references(() => policies.id),
+  installmentNumber: integer("installment_number").notNull(), // 1..N
+  dueDate: date("due_date"),
+  amountCents: bigint("amount_cents", { mode: "number" }).notNull(),
+  isPaid: boolean("is_paid").notNull().default(false),
+  paidAt: timestamp("paid_at", { withTimezone: true }),
 });
 
 /** 🏢 Historial de cambio de estado, append-only. */
@@ -72,9 +96,16 @@ export const commissions = pgTable("commissions", {
   amountCents: bigint("amount_cents", { mode: "number" }),
   status: commissionStatusEnum("status").notNull().default("PENDIENTE"),
   paidAt: timestamp("paid_at", { withTimezone: true }),
+  notes: text("notes"),
 });
 
-/** 🏢 Reportado → aprobado → reparado. */
+/**
+ * 🏢 Reportado → aprobado → reparado. Campos TALLER/ASESOR/CONTACTO/RC/
+ * PLACA RC/VALOR/VALOR RC son columnas reales de `BASE SINIESTROS`
+ * (EXCEL-AUDIT.md §4) — placa/marca/modelo del vehículo propio no se
+ * duplican acá, se llega a ellos por policy → quote_option → quote_risk →
+ * vehicle.
+ */
 export const claims = pgTable("claims", {
   id: id(),
   organizationId: organizationId(),
@@ -87,4 +118,12 @@ export const claims = pgTable("claims", {
   reportedAt: date("reported_at"),
   description: text("description"),
   deductibleAppliedCents: bigint("deductible_applied_cents", { mode: "number" }),
+  workshop: text("workshop"), // TALLER
+  advisorName: text("advisor_name"), // ASESOR
+  contactPhone: text("contact_phone"), // CONTACTO
+  hasThirdPartyLiability: boolean("has_third_party_liability").notNull().default(false), // RC (SI/NO — única validación real encontrada en la hoja)
+  thirdPartyPlate: text("third_party_plate"), // PLACA RC
+  claimValueCents: bigint("claim_value_cents", { mode: "number" }), // VALOR
+  thirdPartyValueCents: bigint("third_party_value_cents", { mode: "number" }), // VALOR RC
+  notes: text("notes"),
 });

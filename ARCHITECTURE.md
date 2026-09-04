@@ -306,14 +306,15 @@ erDiagram
 
 > **Regla clave:** `quote_option_coverages` guarda copia de las condiciones al momento de cotizar. Si la aseguradora cambia su cobertura mañana, la cotización enviada al cliente sigue siendo reproducible tal cual se emitió.
 
-**Cartera, comisiones y siniestros** (🏢 todas — estados tomados literalmente del Excel)
+**Cartera, comisiones y siniestros** (🏢 todas — columnas confirmadas en las hojas `BASE EMISIONES`/`BASE PENDIENTE`/`BASE COMISIONES`/`BASE CANCELADAS`/`BASE SINIESTROS` del Excel; los *valores* de los enums de estado son diseño de Delta Check, no un vocabulario fijo del Excel — ver nota en `src/db/schema/enums.ts` y EXCEL-AUDIT.md §4)
 
 | Tabla | Campos clave |
 |---|---|
-| `policies` | `id`, `quote_option_id`, `policy_number`, `insurer_id`, `client_id`, `branch`, `issue_status` (`PENDIENTE`\|`EMITIDA`\|`NO_EMITIDA`), `payment_status` (`PENDIENTE`\|`PAGADO`), `lifecycle_status` (`VIGENTE`\|`CANCELADA`), `inspection_required`, `starts_at`, `ends_at`, `premium_cents` |
+| `policies` | `id`, `quote_option_id`, `policy_number`, `insurer_id`, `client_id`, `branch`, `issue_status` (`PENDIENTE`\|`EMITIDA`\|`NO_EMITIDA`), `payment_status` (`PENDIENTE`\|`PAGADO`), `lifecycle_status` (`VIGENTE`\|`CANCELADA`), `inspection_required`, `starts_at`, `ends_at`, `premium_cents`, `invoice_number` (FACTURA), `annex_number` (ANEXO), `cancelled_at`, `cancellation_reason`, `notes` |
+| `policy_installments` | `id`, `policy_id`, `installment_number` (1..N), `due_date`, `amount_cents`, `is_paid`, `paid_at` — una fila por cuota en vez de las 12 columnas fijas 1-12 de `BASE PENDIENTE` |
 | `policy_events` | `id`, `policy_id`, `event_type`, `from_status`, `to_status`, `notes`, `user_id`, `created_at` — historial append-only |
-| `commissions` | `id`, `policy_id`, `insurer_id`, `agent_id`, `base_amount_cents`, `percent`, `amount_cents`, `status` (`PENDIENTE`\|`COMISIONADA`), `paid_at` |
-| `claims` | `id`, `policy_id`, `claim_number`, `status` (`REPORTADO`\|`APROBADO`\|`REPARADO`), `occurred_at`, `reported_at`, `description`, `deductible_applied_cents` |
+| `commissions` | `id`, `policy_id`, `insurer_id`, `agent_id`, `base_amount_cents`, `percent`, `amount_cents`, `status` (`PENDIENTE`\|`COMISIONADA`), `paid_at`, `notes` — creada automáticamente al emitir una póliza (confirmado: la macro `ALTA_EN_BASE_PENDIENTE` escribe en `BASE_PENDIENTE` **y** en `BASE_COMISIONES` en el mismo paso) |
+| `claims` | `id`, `policy_id`, `claim_number`, `status` (`REPORTADO`\|`APROBADO`\|`REPARADO`), `occurred_at`, `reported_at`, `description`, `deductible_applied_cents`, `workshop` (TALLER), `advisor_name` (ASESOR), `contact_phone` (CONTACTO), `has_third_party_liability` (RC — única lista de validación SI/NO real de esa hoja), `third_party_plate` (PLACA RC), `claim_value_cents` (VALOR), `third_party_value_cents` (VALOR RC), `notes` |
 
 **Cumplimiento y auditoría** (🏢 todas — §8)
 
@@ -606,7 +607,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 | 0 | MVP visual | ✅ Entregado |
 | 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
 | 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ Completa — BMI, Humana, Confiamed, SaludSA, Pro, VB y Salud genérica con tarifa real (7/8); solo Bupa 100% manual, sin tabla en el Excel (§2.3 de `EXCEL-AUDIT.md`) |
-| 3 | Cartera, comisiones, siniestros, KPIs, ARCO | Pendiente |
+| 3 | Cartera, comisiones, siniestros, KPIs, ARCO | 🟡 Cartera/comisiones/siniestros completos (emitir póliza desde una cotización cotizada, cuotas, comisión automática al emitir, siniestros) — falta KPIs (dashboard) y ARCO (derechos LOPDP del titular, §9) |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |
 | 5 | Despliegue, capacitación, entrega | Pendiente |
 

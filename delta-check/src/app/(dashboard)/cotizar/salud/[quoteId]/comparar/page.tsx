@@ -34,6 +34,7 @@ export default async function CompararSaludPage({
               <th className="px-4 py-3">Plan</th>
               <th className="px-4 py-3">Estado</th>
               <th className="px-4 py-3 text-right">Prima total (grupo)</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -60,6 +61,16 @@ export default async function CompararSaludPage({
                     </span>
                   ) : (
                     <HealthManualPremiumForm quoteOptionId={row.quoteOptionId} quoteId={quoteId} />
+                  )}
+                </td>
+                <td className="px-4 py-3 text-right">
+                  {row.totalPremiumCents != null && (
+                    <a
+                      href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
+                      className="whitespace-nowrap text-xs font-semibold text-delta-navy underline"
+                    >
+                      Emitir póliza
+                    </a>
                   )}
                 </td>
               </tr>

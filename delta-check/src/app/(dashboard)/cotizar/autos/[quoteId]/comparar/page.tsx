@@ -66,6 +66,7 @@ function AnnualComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quote
             <th className="px-4 py-3">Estado</th>
             <th className="px-4 py-3">Tasa</th>
             <th className="px-4 py-3 text-right">Prima total</th>
+            <th className="px-4 py-3"></th>
           </tr>
         </thead>
         <tbody>
@@ -94,6 +95,16 @@ function AnnualComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quote
                   </span>
                 ) : (
                   <ManualPremiumForm quoteOptionId={row.quoteOptionId} quoteId={quoteId} />
+                )}
+              </td>
+              <td className="px-4 py-3 text-right">
+                {row.totalPremiumCents != null && (
+                  <a
+                    href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
+                    className="whitespace-nowrap text-xs font-semibold text-delta-navy underline"
+                  >
+                    Emitir póliza
+                  </a>
                 )}
               </td>
             </tr>

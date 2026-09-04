@@ -124,7 +124,27 @@ Confirmado en `INFO GENERAL`: IVA `15%` (`E37`), Superintendencia de Bancos `3.5
 
 ---
 
-## 4. Pendiente (no resuelto en esta auditoría)
+## 4. Cartera, comisiones y siniestros (Fase 3) — columnas reales, estados sin definir
+
+Las 5 hojas de back-office (`BASE EMISIONES`, `BASE PENDIENTE`, `BASE COMISIONES`, `BASE CANCELADAS`, `BASE SINIESTROS`) son tablas Excel (`ListObject`) reales, con nombre y columnas propias — las leí directamente de la definición de la tabla, no del texto visible en pantalla:
+
+| Hoja | Columnas reales (`ListObject`) |
+|---|---|
+| `BASE_EMISIONES` | REFERENCIA, FECHA EMISION, DOCUMENTO, FUENTE, C.I., NOMBRES, APELLIDOS, RAMO, ASEGURADORA, POLIZA, ANEXO, ESTATUS, PRIMA, DOC, OBSERVACIONES |
+| `BASE_PENDIENTE` (cartera) | REFERENCIA, FECHA EMISION, DOCUMENTO, FUENTE, C.I., NOMBRES, APELLIDOS, RAMO, CIA, ASEGURADORA, ESTATUS, FORMA DE PAGO, CUOTAS, POLIZA, ANEXO, FACTURA, PRIMA, SUPER BCOS, SC, DERECHOS EMISION, IVA, TOTAL, VALOR CUOTA, VALOR PENDIENTE, **1..12** (una columna por cuota mensual), OBSERVACIONES |
+| `BASE_COMISIONES` | REFERENCIA, FECHA EMISION, DOCUMENTO, FUENTE, C.I., NOMBRES, APELLIDOS, POLIZA, RAMO, CIA, ASEGURADORA, CARTERA, PRIMA, % COMISION, ESTATUS, OBSERVACIONES |
+| `BASE_CANCELADAS` | FECHA CANCELACION, C.I., NOMBRES, APELLIDOS, FUENTE, ASEGURADORA, RAMO, POLIZA, PRIMA, ESTATUS, COMISION, OBSERVACIONES |
+| `BASE_SINIESTROS` | FECHA SINIESTRO, FECHA REPORTE, C.I., NOMBRES, APELLIDOS, RAMO, ASEGURADORA, POLIZA, TALLER, ASESOR, CONTACTO, PLACA, MARCA, MODELO, RC, PLACA RC, ESTATUS, VALOR, VALOR RC, OBSERVACIONES |
+
+**Las 5 tablas están vacías** (sin filas de datos, solo encabezado) — no hay histórico real que migrar, coherente con la decisión ya tomada de no migrar histórico del Excel (ARCHITECTURE.md §11.6, se trae de SoftSeguros cuando el tenant lo tenga activado).
+
+**`ESTATUS` es texto libre en las 5 hojas — no hay un vocabulario fijo que extraer.** Revisé: (a) validación de datos de cada hoja — cero listas desplegables sobre la columna ESTATUS (la única lista real encontrada en las 5 hojas es `P14` de `BASE SINIESTROS`, `"SI,NO"`, que corresponde a la columna RC, no a ESTATUS); (b) `DASHBOARD`/`BASE DASHBOARD` — ambas hojas están completamente vacías, sin fórmulas `COUNTIF`/`SUMIF` que referencien literales de estado; (c) el código de las 5 macros `ALTA_EN_BASE_*` — ninguna escribe un valor literal en la columna ESTATUS, solo copian celdas del formulario (y de hecho ni siquiera todas las columnas se copian: `ALTA_EN_BASE_EMISIONES` solo llena 7 de las 15 columnas de su tabla, dejando ASEGURADORA/POLIZA/ANEXO/ESTATUS/PRIMA/DOC/OBSERVACIONES para digitación manual posterior). Conclusión: los valores de los enums de estado (`issue_status`, `payment_status`, `lifecycle_status`, `commission_status`, `claim_status`) en el esquema de Delta Check son una decisión de producto razonable, no un hecho extraído del Excel — a diferencia de los enums de Autos/Salud, que sí vienen de una fórmula o lista de validación real.
+
+**Hallazgo de regla de negocio real, sí confirmado en código:** la macro `ALTA_EN_BASE_PENDIENTE` (botón "Cartera") escribe una fila nueva en `BASE_PENDIENTE` **y**, en el mismo procedimiento, otra fila en `BASE_COMISIONES` con los mismos datos base (referencia, fecha, documento, cliente, aseguradora, prima). Es decir: **registrar una póliza en cartera crea automáticamente su registro de comisión pendiente** — no son dos pasos manuales independientes. Delta Check reproduce esto: `policyService.emitPolicy()` crea la póliza y la comisión (`status: PENDIENTE`, sin `percent`/`amountCents` todavía) en la misma transacción.
+
+---
+
+## 5. Pendiente (no resuelto en esta auditoría)
 
 - ~~Confirmar el bloque exacto de Bupa y Salud (genérica)~~ — resuelto en §2.3, con evidencia de fórmula.
 - ~~Mapear columna por columna (tramo/red/maternidad exactos) de Confiamed, SaludSA, Pro y VB para poder sembrarlos con datos reales~~ — resuelto: los 4 están sembrados con datos reales, verificados contra el Excel.

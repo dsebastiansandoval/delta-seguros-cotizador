@@ -26,6 +26,9 @@ async function seedRoles() {
     "rate:edit",
     "commission:read_own",
     "commission:read_all",
+    "commission:manage", // fijar % comisión, marcar pagada — Fase 3
+    "policy:manage", // emitir/cancelar póliza, cuotas — Fase 3 (EXCEL-AUDIT.md §4)
+    "claim:manage", // registrar/actualizar siniestro — Fase 3
     "client:read_pii",
     "user:manage",
     "org:manage", // PLATFORM_ADMIN
@@ -45,9 +48,19 @@ async function seedRoles() {
       "quote:read_all",
       "commission:read_own",
       "commission:read_all",
+      "commission:manage",
+      "policy:manage",
+      "claim:manage",
       "client:read_pii",
     ],
-    AGENTE: ["quote:create", "quote:read", "commission:read_own", "client:read_pii"],
+    AGENTE: [
+      "quote:create",
+      "quote:read",
+      "commission:read_own",
+      "policy:manage",
+      "claim:manage",
+      "client:read_pii",
+    ],
     LECTOR: ["quote:read"],
   };
 
