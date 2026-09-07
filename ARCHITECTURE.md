@@ -606,7 +606,7 @@ Los permisos se resuelven en BD (`role_permissions`), no hardcodeados: agregar u
 | Fase | Alcance | Estado |
 |---|---|---|
 | 0 | MVP visual | ✅ Entregado |
-| 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — falta login real (Microsoft/Google) |
+| 1 | Auth + RBAC + clientes/vehículos + comparador Autos (13 aseguradoras) + modalidad Auto x Km + carátula PDF | ✅ Completa — login con Microsoft construido (§19), falta que Delta genere las credenciales reales de Entra ID (§11.3); Google sigue sin construir |
 | 2 | Módulo Salud (8 aseguradoras, titular + dependientes) | ✅ Completa — BMI, Humana, Confiamed, SaludSA, Pro, VB y Salud genérica con tarifa real (7/8); solo Bupa 100% manual, sin tabla en el Excel (§2.3 de `EXCEL-AUDIT.md`) |
 | 3 | Cartera, comisiones, siniestros, KPIs, ARCO | ✅ Completa — cartera/comisiones/siniestros (emitir póliza desde una cotización cotizada, cuotas, comisión automática al emitir), dashboard de KPIs (§14) y derechos ARCO (§14) |
 | 4 | Adaptadores API por aseguradora + integración SoftSeguros (push de emisión + backfill de histórico, §5b) | Pendiente |
@@ -645,6 +645,8 @@ Tener cuentas de **Exchange significa que ya tienen Microsoft 365**, y **todo te
 4. Me pasa `Tenant ID`, `Client ID` y genera un `Client Secret` — eso es todo lo que necesito para el login con Microsoft.
 
 Si nadie en Delta tiene ese rol de administrador hoy, es cuestión de pedírselo a quien gestiona la suscripción de M365 (probablemente el mismo proveedor de correo/soporte IT).
+
+El botón "Iniciar sesión con Microsoft" y el filtro de dominio ya están construidos del lado de Delta Check — ver §19. Lo único que falta para que funcione de verdad son esas 3 credenciales.
 
 ### 11.4 Auto x Km — ✅ resuelto: entra en Fase 1
 
@@ -851,3 +853,17 @@ actions/catalog.actions.ts  # listVehicleModelsByBrand() — una sola query, agr
 **Verificación:** `provinceFromCedula` y `calculateAge` con tests unitarios (4 y 5 casos respectivamente, incluido el borde "hoy es el cumpleaños"/"recién nacido"). Los tres flujos completos (provincia persistida en el mensaje de estado, edad calculada y persistida en `insured_members`, catálogo de modelos agrupado por marca) se corrieron además con scripts directos contra Postgres real — incluido el caso de un dependiente recién nacido con `age = 0` (no confundido con "vacío", mismo bug de `""` vs `undefined` que el resto del proyecto). Seed de `vehicle_models` confirmado idempotente (950 filas, sin duplicar en una segunda corrida).
 
 En navegador real (login con el usuario de desarrollo, sesión completa): **fecha de nacimiento → edad se confirmó de punta a punta** — se llenó `1988-05-20` como fecha de nacimiento del titular y se envió el formulario real (`<form action={serverAction}>`, funciona bajo el problema de hidratación de §13 porque usa el *fallback* nativo de POST progresivo, no un `onClick`); la comparativa resultante trajo 78 opciones reales de las 8 aseguradoras de Salud, calculadas con la edad correcta derivada de esa fecha. El catálogo de 66 marcas y el campo Modelo con su `<datalist>` se confirmaron presentes y correctos en el `<select>` real servido. El cascadeo en sí (el `onChange` que repuebla el `<datalist>` al elegir marca) **se probó y no disparó** — mismo `InvariantError: Expected a request ID... self.__next_r` de siempre, reproducido de nuevo en esta sesión, mismo bug de extensión ya reportado dos veces, no una regresión nueva. El botón "Buscar en SRI" (provincia) no se volvió a probar por ser el mismo tipo de control (`onClick`), ya con el mismo resultado documentado en §13.
+
+---
+
+## 19. Login con Microsoft — botón real + filtro de dominio
+
+El provider `MicrosoftEntraID` ya estaba en `auth.ts` desde antes (§11.3), pero solo como *wiring* — sin credenciales configuradas nunca se registraba, y la página de login ni siquiera tenía un botón para lanzarlo. A pedido explícito del usuario se construyó la parte que sí depende de Delta Check, dejando solo las 3 credenciales de Entra ID como lo único externo que falta:
+
+- `src/app/(auth)/login/page.tsx`: un botón real "Iniciar sesión con Microsoft" que llama `signIn("microsoft-entra-id", { redirectTo: "/" })` desde un `<form action={...}>` (Server Action, no `onClick` — funciona bajo el problema de hidratación de §13). El botón **solo se muestra si `AUTH_MICROSOFT_ENTRA_ID_ID`/`_SECRET` ya están configuradas** (mismo criterio que el registro del provider en `auth.ts`: nunca se muestra un control que fallaría al primer clic) — mientras tanto, el texto explica que solo entrarán cuentas `@deltaseguros.com.ec` en cuanto estén.
+- `src/domains/identity/microsoft-domain.ts`: `isAllowedMicrosoftEmail()`, función pura (testeada aparte de NextAuth) que valida el dominio del correo.
+- `auth.ts`: nuevo callback `signIn` — Delta Check es multi-tenant (§1b), así que "cualquier cuenta de Microsoft válida" no basta. Rechaza en dos casos, cada uno con su propio mensaje (en vez del "AccessDenied" genérico de Auth.js):
+  1. El correo no termina en `@deltaseguros.com.ec` → `/login?error=dominio`.
+  2. El correo sí es de Delta pero no existe todavía como fila en `users` → `/login?error=sin-acceso`. **No hay alta automática de cuenta en el primer login** — mismo criterio que el provider de desarrollo (`if (!user) return null`): solo entra quien ya fue sembrado. No existe todavía una pantalla de administración de usuarios que permita invitar/dar de alta una cuenta nueva desde la UI; añadirla es trabajo aparte, no incluido acá.
+
+**Verificación:** 5 tests unitarios de `isAllowedMicrosoftEmail` (dominio exacto, mayúsculas, dominio distinto, dominio parecido pero no igual, `null`/`undefined`/vacío). Confirmado en el navegador real, con y sin credenciales configuradas (`.env.local` temporal, restaurado después): sin credenciales el botón no aparece y el texto explica el estado; con credenciales de prueba, el botón sí aparece. Los dos mensajes de rechazo (`?error=dominio`, `?error=sin-acceso`) confirmados renderizando el texto correcto vía `curl` sobre el HTML servido. El flujo OAuth real contra Azure no se pudo probar — Delta todavía no generó el `Tenant ID`/`Client ID`/`Client Secret` reales (§11.3, sigue siendo lo único pendiente de este lado).

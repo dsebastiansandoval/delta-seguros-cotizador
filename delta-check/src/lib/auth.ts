@@ -6,7 +6,10 @@ import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
 import Google from "next-auth/providers/google";
 import { db } from "@/db";
 import { users } from "@/db/schema/identity";
+import { isAllowedMicrosoftEmail } from "@/domains/identity/microsoft-domain";
 import { env } from "./env";
+
+export { MICROSOFT_ALLOWED_DOMAIN } from "@/domains/identity/microsoft-domain";
 
 /**
  * Providers según ARCHITECTURE.md §1/§11.3: Microsoft Entra ID (Delta ya
@@ -76,8 +79,35 @@ export const {
   session: { strategy: "jwt" },
   pages: {
     signIn: "/login",
+    error: "/login",
   },
   callbacks: {
+    /**
+     * Filtro de dominio para Microsoft — Delta Check es multi-tenant
+     * (ARCHITECTURE.md §1b), así que "cualquier cuenta de Microsoft válida"
+     * no es suficiente: solo @deltaseguros.com.ec puede entrar por acá.
+     * Además, igual que el provider de desarrollo (`if (!user) return
+     * null`, más arriba), solo entra quien ya está sembrado en `users` — no
+     * hay alta automática de cuenta nueva en el primer login, todavía no
+     * existe una pantalla de administración de usuarios que la respalde.
+     * Cada rechazo redirige a /login con un motivo distinto en vez del
+     * "AccessDenied" genérico de Auth.js.
+     */
+    async signIn({ user, account }) {
+      if (account?.provider !== "microsoft-entra-id") return true;
+
+      if (!isAllowedMicrosoftEmail(user.email)) {
+        return "/login?error=dominio";
+      }
+
+      const email = user.email!.toLowerCase();
+      const [dbUser] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+      if (!dbUser) {
+        return "/login?error=sin-acceso";
+      }
+
+      return true;
+    },
     /**
      * organizationId viaja en el JWT para que withOrganization() y
      * requirePermission() lo lean sin volver a golpear la base en cada
