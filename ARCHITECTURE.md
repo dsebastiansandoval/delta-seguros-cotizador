@@ -536,16 +536,18 @@ export async function createQuote(formData: FormData) {
 
 ## 7. Identidad visual
 
-Colores extraídos del sitio real (`deltaseguros.com.ec`), ya aplicados en el MVP visual:
+Colores extraídos del sitio real (`deltaseguros.com.ec`), ya aplicados en el MVP visual — **re-verificados en vivo** (no de memoria) contra `deltaseguros.com.ec` navegando el sitio y leyendo `getComputedStyle()` de sus propios elementos (botón "COTIZAR"/"COTIZA AHORA", header, texto): los 4 valores son un match exacto, pixel a pixel, sin necesidad de ajustar nada:
 
 ```css
---delta-navy: #152a52;   /* institucional */
+--delta-navy: #152a52;   /* institucional — header, fondo del botón "COTIZAR" del sitio real */
 --delta-navy-2: #1b325f;
---delta-blue: #01579e;   /* acento / CTA */
---delta-gray: #797c7f;
+--delta-blue: #01579e;   /* acento / CTA — botón "COTIZA AHORA" del sitio real */
+--delta-gray: #797c7f;   /* color de texto secundario del sitio real */
 ```
 
-Logo: `Delta_Logocolor.png` (fondo claro) / `Delta_Logoblanco.png` (fondo oscuro).
+Logo: `Delta_Logocolor.png` (fondo claro) / `Delta_Logoblanco.png` (fondo oscuro) — nombres de archivo confirmados contra los `<img src>` reales del sitio (`Delta_Logocolor.png` / `Delta_Logoblanco_blanco.png`).
+
+**Modo oscuro/claro** — ver §20 para el toggle; los tokens de fondo/texto/superficie de cada modo (`--background`, `--foreground`, `--surface`, `--border`, `--muted`) son diseño propio de Delta Check, no extraídos de ningún lado: el sitio de marketing de Delta Seguros es solo claro, sin variante oscura que copiar.
 
 ---
 
@@ -867,3 +869,15 @@ El provider `MicrosoftEntraID` ya estaba en `auth.ts` desde antes (§11.3), pero
   2. El correo sí es de Delta pero no existe todavía como fila en `users` → `/login?error=sin-acceso`. **No hay alta automática de cuenta en el primer login** — mismo criterio que el provider de desarrollo (`if (!user) return null`): solo entra quien ya fue sembrado. No existe todavía una pantalla de administración de usuarios que permita invitar/dar de alta una cuenta nueva desde la UI; añadirla es trabajo aparte, no incluido acá.
 
 **Verificación:** 5 tests unitarios de `isAllowedMicrosoftEmail` (dominio exacto, mayúsculas, dominio distinto, dominio parecido pero no igual, `null`/`undefined`/vacío). Confirmado en el navegador real, con y sin credenciales configuradas (`.env.local` temporal, restaurado después): sin credenciales el botón no aparece y el texto explica el estado; con credenciales de prueba, el botón sí aparece. Los dos mensajes de rechazo (`?error=dominio`, `?error=sin-acceso`) confirmados renderizando el texto correcto vía `curl` sobre el HTML servido. El flujo OAuth real contra Azure no se pudo probar — Delta todavía no generó el `Tenant ID`/`Client ID`/`Client Secret` reales (§11.3, sigue siendo lo único pendiente de este lado).
+
+---
+
+## 20. Modo oscuro/claro — toggle manual
+
+Los tokens de color para modo oscuro (`@media (prefers-color-scheme: dark)` + override `:root[data-theme]`) ya existían en `globals.css` desde antes de este cambio — el sitio ya respetaba el tema del sistema operativo automáticamente. Lo que faltaba, a pedido del usuario, era un control para forzarlo a mano y que se recuerde.
+
+- `domains/shared/theme.ts`: `parseThemeValue()`/`nextTheme()` — funciones puras, testeadas aparte de React/DOM.
+- `components/shared/ThemeToggle.tsx`: botón flotante (arriba a la derecha, en todas las páginas vía `layout.tsx`) que cicla **Sistema → Claro → Oscuro → Sistema**. "Sistema" es el default real y no guarda nada en `localStorage` — quien nunca toca el botón sigue el tema del SO tal cual, nunca queda "congelado" en lo que haya sido el tema del sistema la primera vez que abrió la página. Usa `useSyncExternalStore` (no `useState`+`useEffect`) para leer `localStorage`: es la herramienta correcta de React para sincronizarse con algo externo al render, y evita tanto el parpadeo de hidratación como el antipatrón de `setState` síncrono dentro de un efecto (que el linter del proyecto sí marca como error).
+- `app/layout.tsx`: script que aplica el tema guardado **antes del primer paint** (si no, se ve un parpadeo del tema equivocado en cada carga, porque el HTML del servidor no puede saber qué hay en el `localStorage` del navegador). Tiene que ir como `<Script strategy="beforeInteractive">` de `next/script` — **no** un `<script>` a mano dentro de un `<head>` propio: se probó primero así y, aunque el HTML servido sí lo trae (confirmado por `curl`), el navegador nunca lo ejecuta bajo este App Router/Turbopack. `beforeInteractive` es la forma oficialmente soportada de garantizar código antes de la hidratación (`node_modules/next/dist/docs/.../script.md`).
+
+**Verificación:** 4 tests unitarios de `theme.ts` (ciclo completo, valores basura caen a "system" sin lanzar). `npm run typecheck`/`lint`/`test`/`build` limpios. Confirmado en el navegador que el toggle server-rendered aparece correctamente y que forzar `data-theme="light"`/`"dark"` directamente en el DOM cambia instantáneamente los colores computados al token correcto (`getComputedStyle` confirmado pixel a pixel contra los valores de §7). **El clic del botón en sí no se pudo confirmar en vivo** — mismo problema de hidratación de §13, reproducido de nuevo, esta vez con evidencia nueva y más severa: probado tanto en `next dev` como en un build de producción real (`next build && next start`, no solo modo desarrollo), el mismo `InvariantError: self.__next_r` aparece en los dos, y en producción además aparece un segundo error de hidratación de React (`Minified React error #412`) que no se ve en dev. Esto confirma que el problema no es exclusivo del modo desarrollo — es el mismo bug de la extensión de automatización ya reportado dos veces, ahora con alcance más amplio del que se sabía: también rompe `next/script strategy="beforeInteractive"`, no solo los `onClick`.
