@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cedulaToNaturalPersonRuc, isValidCedula, provinceFromCedula } from "./cedula.validator";
+import { cedulaToNaturalPersonRuc, ECUADOR_PROVINCES, isValidCedula, provinceFromCedula } from "./cedula.validator";
 
 describe("isValidCedula", () => {
   it("acepta una cédula con dígito verificador correcto (algoritmo módulo 10)", () => {
@@ -49,5 +49,23 @@ describe("provinceFromCedula", () => {
 
   it("null si el código no mapea a ninguna provincia", () => {
     expect(provinceFromCedula("9901234567")).toBeNull();
+  });
+});
+
+describe("ECUADOR_PROVINCES", () => {
+  it("trae las 24 provincias reales, sin duplicados", () => {
+    expect(ECUADOR_PROVINCES).toHaveLength(24);
+    expect(new Set(ECUADOR_PROVINCES).size).toBe(24);
+  });
+
+  it("incluye provincias reales conocidas", () => {
+    expect(ECUADOR_PROVINCES).toContain("Pichincha");
+    expect(ECUADOR_PROVINCES).toContain("Guayas");
+    expect(ECUADOR_PROVINCES).toContain("Galápagos");
+  });
+
+  it("está ordenada alfabéticamente", () => {
+    const sorted = [...ECUADOR_PROVINCES].sort((a, b) => a.localeCompare(b, "es"));
+    expect(ECUADOR_PROVINCES).toEqual(sorted);
   });
 });

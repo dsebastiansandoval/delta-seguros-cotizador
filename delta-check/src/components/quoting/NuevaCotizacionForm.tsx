@@ -5,6 +5,7 @@ import { createAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
+import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -39,6 +40,7 @@ export function NuevaCotizacionForm({
   const extrasValueRef = useRef<HTMLInputElement>(null);
   const hasTrackerRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
+  const vehicleProvinceRef = useRef<HTMLSelectElement>(null);
   const operationTypeRef = useRef<HTMLSelectElement>(null);
   const previousInsurerIdRef = useRef<HTMLInputElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
@@ -139,6 +141,7 @@ export function NuevaCotizacionForm({
             extrasValueRef={extrasValueRef}
             hasTrackerRef={hasTrackerRef}
             cityRef={cityRef}
+            provinceRef={vehicleProvinceRef}
             operationTypeRef={operationTypeRef}
             previousInsurerIdRef={previousInsurerIdRef}
             previousPolicyNumberRef={previousPolicyNumberRef}
@@ -291,6 +294,23 @@ export function NuevaCotizacionForm({
             defaultValue={0}
             className="rounded-lg border border-border bg-background px-3 py-2"
           />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          Provincia
+          <select
+            ref={vehicleProvinceRef}
+            name="province"
+            defaultValue=""
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
+            <option value="">Selecciona una provincia</option>
+            {ECUADOR_PROVINCES.map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label className="flex flex-col gap-1 text-sm">

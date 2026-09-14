@@ -902,3 +902,23 @@ Los tokens de color para modo oscuro (`@media (prefers-color-scheme: dark)` + ov
 **Verificado:** confirmado con `curl` que el nonce del header `Content-Security-Policy` de una respuesta coincide exactamente con el atributo `nonce="..."` de los 26 `<script>` que trae esa misma respuesta (antes, cero de esos scripts tenía nonce y todos violaban la CSP). `npm run typecheck`/`lint`/`test`/`build` limpios — el build ahora marca todas las rutas como dinámicas (`ƒ`), esperado: un nonce distinto por request es incompatible con generación estática (el propio doc de Next.js lo advierte).
 
 **Pendiente de re-verificar con esto arreglado** (todo lo que antes decía "no se pudo confirmar por el problema de hidratación" en §13, §15, §16, §17, §18, §19, §20 de este documento): Buscar en SRI, cascada de marca→modelo, el link de PatioTuerca, Buscar cotización anterior, el toggle de tema, y el botón de login con Microsoft en cuanto haya credenciales. Es la prioridad antes de la demo — ver el checklist que se le pasó al usuario en el chat.
+
+---
+
+## 21. Provincia del vehículo — selector real (Autos)
+
+A pedido del usuario, que había encontrado `ecuadorapi.com` (API paga, real, con medición de uso — no un mockup) y quería usar su catálogo de provincias/cantones/parroquias. Investigación honesta antes de integrar nada: se leyó el `/api/schema/` completo (OpenAPI), no solo la lista de URLs de marketing — **ese catálogo geográfico no existe como endpoint consultable**, pese a que la descripción del servicio lo menciona. "Provincia"/"cantón"/"parroquia" solo aparecen como campos sueltos dentro de otras consultas (lugar de nacimiento por cédula, estado de vías por incidente), nunca como una lista propia.
+
+Aparte: revisando el resto del catálogo de esa API (cédulas → domicilio, madre, padre, defunción, puntos de licencia; placas → dueños, multas de 4 organismos, fotos) se decidió **no** integrarla para nada de PII — mismo criterio que ANT/PatioTuerca en §13: no hay ninguna indicación de qué autorización tiene para redistribuir datos tan sensibles (dirección de domicilio, nombres de padres) de cualquier ciudadano, y usar eso socavaría el propio marco de cumplimiento LOPDP que tiene Delta Check (§9, §14.2).
+
+**Lo que sí se construyó:** ya existían las 24 provincias reales de Ecuador (catálogo INEC) desde "Provincia según cédula" (§18) — se exportó como `ECUADOR_PROVINCES` (ordenadas alfabéticamente) y se agregó un selector real de Provincia en "Nueva cotización — Autos", junto a Ciudad (que sigue siendo texto libre — no hay catálogo de cantones/ciudades confiable que ofrecer). Es dato del vehículo, no del cliente (`vehicles.province`, igual que `vehicles.city` — mismo patrón que el Excel real, "DATOS VH").
+
+```
+domains/lookup/cedula.validator.ts   # ECUADOR_PROVINCES — misma fuente que provinceFromCedula
+db/schema/clients.ts                 # vehicles.province
+db/migrations/0007_giant_energizer.sql
+```
+
+También se conectó al flujo de "Buscar cotización anterior" (§17): si el vehículo anterior tenía provincia guardada, se precarga igual que la ciudad.
+
+**Verificación:** 3 tests unitarios de `ECUADOR_PROVINCES` (24 sin duplicados, provincias reales conocidas presentes, orden alfabético). Script directo contra Postgres real: crea un vehículo con `province: "Pichincha"` a través de `clientService.createClientWithVehicle` (el mismo camino que usa la Server Action) y confirma que se persiste tal cual. `npm run typecheck`/`lint`/`test`/`build` limpios.

@@ -21,6 +21,7 @@ export type RenewalLookupResult =
         extrasValueCents: number;
         hasTracker: boolean;
         city: string | null;
+        province: string | null;
       };
       previousInsurerId: string | null;
       previousInsurerName: string | null;
@@ -69,6 +70,7 @@ export async function findRenewalData(documentNumber: string): Promise<RenewalLo
         extrasValueCents: vehicle.extrasValueCents,
         hasTracker: vehicle.hasTracker,
         city: vehicle.city,
+        province: vehicle.province,
       },
       previousInsurerId: previousPolicy?.policy.insurerId ?? null,
       previousInsurerName: previousPolicy?.insurerName ?? null,

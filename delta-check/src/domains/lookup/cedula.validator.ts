@@ -77,3 +77,14 @@ export function provinceFromCedula(cedula: string): string | null {
   if (!/^\d{10}$/.test(cedula)) return null;
   return PROVINCE_BY_CODE[cedula.slice(0, 2)] ?? null;
 }
+
+/**
+ * Las 24 provincias reales de Ecuador, para un selector — misma fuente que
+ * `provinceFromCedula`, ordenadas alfabéticamente (el código INEC no es un
+ * orden útil para elegir en un `<select>`). No se sacó de EcuadorAPI.com
+ * ni de ningún tercero: no tiene un catálogo de provincias consultable
+ * pese a mencionarlo en su descripción (confirmado leyendo su
+ * `/api/schema/` completo, no solo la lista de URLs de marketing) — esta
+ * lista ya la teníamos, del propio INEC vía el prefijo de cédula.
+ */
+export const ECUADOR_PROVINCES: string[] = Object.values(PROVINCE_BY_CODE).sort((a, b) => a.localeCompare(b, "es"));

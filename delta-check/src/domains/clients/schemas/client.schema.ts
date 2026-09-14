@@ -54,6 +54,7 @@ export const newClientVehicleSchema = z.object({
   extrasValueDollars: z.coerce.number().min(0).default(0),
   hasTracker: z.coerce.boolean().default(false),
   city: optionalText(),
+  province: optionalText(),
 });
 
 export type NewClientVehicleInput = z.infer<typeof newClientVehicleSchema>;

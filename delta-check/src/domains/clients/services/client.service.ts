@@ -46,6 +46,7 @@ export const clientService = {
       extrasValueCents: dollarsToCents(input.extrasValueDollars),
       hasTracker: input.hasTracker,
       city: input.city,
+      province: input.province,
     });
 
     return { client, vehicle };

@@ -44,6 +44,11 @@ export const vehicles = pgTable("vehicles", {
   extrasValueCents: bigint("extras_value_cents", { mode: "number" }).notNull().default(0),
   hasTracker: boolean("has_tracker").notNull().default(false), // afecta deducible de robo
   city: text("city"),
+  // 24 provincias reales de Ecuador (catálogo INEC, ver
+  // domains/lookup/cedula.validator.ts) — selector, no texto libre como
+  // `city`, porque a diferencia de la ciudad sí hay una lista cerrada y
+  // estable que vale la pena ofrecer.
+  province: text("province"),
   ...timestamps,
 });
 

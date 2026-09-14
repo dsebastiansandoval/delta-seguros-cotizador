@@ -16,6 +16,7 @@ type Refs = {
   extrasValueRef: RefObject<HTMLInputElement | null>;
   hasTrackerRef: RefObject<HTMLInputElement | null>;
   cityRef: RefObject<HTMLInputElement | null>;
+  provinceRef: RefObject<HTMLSelectElement | null>;
   operationTypeRef: RefObject<HTMLSelectElement | null>;
   previousInsurerIdRef: RefObject<HTMLInputElement | null>;
   previousPolicyNumberRef: RefObject<HTMLInputElement | null>;
@@ -68,6 +69,7 @@ export function RenewalLookupButton(refs: Refs) {
       }
       if (refs.hasTrackerRef.current) refs.hasTrackerRef.current.checked = vehicle.hasTracker;
       if (refs.cityRef.current) refs.cityRef.current.value = vehicle.city ?? "";
+      if (refs.provinceRef.current) refs.provinceRef.current.value = vehicle.province ?? "";
       if (refs.operationTypeRef.current) refs.operationTypeRef.current.value = "RENOVACION";
       if (refs.previousInsurerIdRef.current) refs.previousInsurerIdRef.current.value = result.previousInsurerId ?? "";
       if (refs.previousPolicyNumberRef.current) {
