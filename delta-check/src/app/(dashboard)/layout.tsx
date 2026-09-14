@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAppSession, signOut } from "@/lib/auth";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { AccountMenu } from "@/components/shared/AccountMenu";
 
 const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard" },
@@ -37,7 +37,7 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
             Delta Check
           </Link>
 
-          <nav className="flex flex-wrap items-center gap-1 text-sm">
+          <nav className="ml-auto flex flex-wrap items-center gap-1 text-sm">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -48,25 +48,18 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
               </Link>
             ))}
           </nav>
-
-          <div className="ml-auto flex items-center gap-3 text-xs text-muted">
-            <ThemeToggle variant="inline" />
-            <span>{session.email}</span>
-            <form
-              action={async () => {
-                "use server";
-                await signOut({ redirectTo: "/login" });
-              }}
-            >
-              <button type="submit" className="rounded-md border border-border px-2.5 py-1.5 font-medium hover:bg-background">
-                Cerrar sesión
-              </button>
-            </form>
-          </div>
         </div>
       </header>
 
       {children}
+
+      <AccountMenu
+        email={session.email}
+        signOutAction={async () => {
+          "use server";
+          await signOut({ redirectTo: "/login" });
+        }}
+      />
     </div>
   );
 }
