@@ -64,8 +64,14 @@ function applyToDocument(pref: ThemePreference) {
  * primer render vacío. El script `beforeInteractive` en layout.tsx ya
  * aplicó el tema guardado antes del primer paint — este hook solo hace
  * que el ícono del botón coincida con lo que ya se aplicó.
+ *
+ * `variant="floating"` (default) es para páginas sin su propio header
+ * (hoy, /login) — flota arriba a la derecha. `variant="inline"` es para
+ * meterlo dentro de un header que ya existe (el nav de (dashboard)/layout.tsx),
+ * como un botón más de la fila — floating ahí se encimaría con "Cerrar
+ * sesión", que vive en esa misma esquina.
  */
-export function ThemeToggle() {
+export function ThemeToggle({ variant = "floating" }: { variant?: "floating" | "inline" }) {
   const pref = useSyncExternalStore(subscribe, readPreference, getServerSnapshot);
 
   function cycle() {
@@ -85,7 +91,11 @@ export function ThemeToggle() {
       type="button"
       onClick={cycle}
       title={`Tema: ${LABELS[pref]} — clic para cambiar`}
-      className="fixed right-4 top-4 z-50 flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground shadow-sm hover:bg-background"
+      className={
+        variant === "floating"
+          ? "fixed right-4 top-4 z-50 flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground shadow-sm hover:bg-background"
+          : "flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-xs font-medium text-foreground hover:bg-background"
+      }
     >
       <span aria-hidden="true">{ICONS[pref]}</span>
       {LABELS[pref]}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAppSession, signOut } from "@/lib/auth";
+import { ThemeToggle } from "@/components/shared/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/dashboard", label: "Dashboard" },
@@ -49,6 +50,7 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
           </nav>
 
           <div className="ml-auto flex items-center gap-3 text-xs text-muted">
+            <ThemeToggle variant="inline" />
             <span>{session.email}</span>
             <form
               action={async () => {
