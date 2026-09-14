@@ -922,3 +922,18 @@ db/migrations/0007_giant_energizer.sql
 También se conectó al flujo de "Buscar cotización anterior" (§17): si el vehículo anterior tenía provincia guardada, se precarga igual que la ciudad.
 
 **Verificación:** 3 tests unitarios de `ECUADOR_PROVINCES` (24 sin duplicados, provincias reales conocidas presentes, orden alfabético). Script directo contra Postgres real: crea un vehículo con `province: "Pichincha"` a través de `clientService.createClientWithVehicle` (el mismo camino que usa la Server Action) y confirma que se persiste tal cual. `npm run typecheck`/`lint`/`test`/`build` limpios.
+
+---
+
+## 22. Carátula comparativa — elegir varias aseguradoras (Autos)
+
+Antes, "Descargar carátula PDF" siempre agarraba automático la más barata ya cotizada (equivalente a la hoja `CARATULA` del Excel, que también era de una sola aseguradora — "la recomendada"). A pedido del usuario: ahora se puede tildar varias aseguradoras `COTIZADO` en el comparador y el PDF trae una página completa por cada una elegida, mismo formato detallado que ya existía (no una tabla apretada) — decisión explícita del usuario entre las dos opciones posibles. Sin tildar nada, se mantiene el comportamiento de siempre.
+
+- `caratula.service.ts`: `getCaratulaData(tx, quoteId, quoteOptionIds?)` — devuelve `{ ..., offers: CaratulaOffer[] }` en vez de una sola oferta. Sin `quoteOptionIds`, sigue el default (la más barata, `offers.length === 1`). Con la lista, trae exactamente esas opciones (filtradas a las de este riesgo y con prima calculada — nunca se incluye una `PENDIENTE_MANUAL`).
+- `CaratulaDocument.tsx`: una `<Page>` por oferta en `data.offers`. El texto de saludo/encabezado cambia singular↔plural según `offers.length > 1` — "nuestra mejor oferta" + "ASEGURADORA RECOMENDADA" cuando es una sola, "las siguientes opciones cotizadas... para que usted elija" + "ASEGURADORA — {nombre}" (sin "recomendada", no tiene sentido cuando hay varias) cuando son varias.
+- `api/quotes/[quoteId]/caratula/route.ts`: lee `?quoteOptionId=A&quoteOptionId=B` (repetible) de la query string; el nombre del archivo descargado cambia a `caratula-comparativa-{código}.pdf` cuando hay más de una.
+- `components/quoting/AutosComparisonView.tsx`: componente cliente nuevo (antes la tabla vivía directo en el Server Component de la página) — tilda casillas solo en filas `COTIZADO` (no se puede comparar una `PENDIENTE_MANUAL` sin prima), arma el link de descarga con los `quoteOptionId` tildados, y el texto del botón cambia a "Descargar carátula comparativa (N)" cuando hay más de uno elegido.
+
+**Verificación:** el `tsx` con el que corro scripts directos no puede importar `@react-pdf/renderer` (`ERR_PACKAGE_PATH_NOT_EXPORTED` en `@react-pdf/hyphenate` — incompatibilidad de resolución de módulos ESM de Node con ese paquete específico, no del código de este proyecto; el bundler real de Next.js sí lo resuelve bien). Se verificó entonces por el camino real: un script crea una cotización de Autos real contra Postgres, y se pidió el PDF por HTTP real (con sesión real, no simulada) en los dos modos — sin selección (`GET .../caratula`) y con las 2 opciones reales con prima (Latina + Cóndor, `?quoteOptionId=...&quoteOptionId=...`). Confirmado con `pdfinfo`/`pdftotext`: el PDF sin selección trae 1 aseguradora con el texto singular; el comparativo trae **las dos** aseguradoras correctas, cada una con su propio encabezado y el texto plural. `npm run typecheck`/`lint`/`test`/`build` limpios.
+
+Nota aparte, no relacionada con este cambio: el PDF de una sola aseguradora ya ocupaba 2 páginas físicas antes de este cambio (el bloque ACLARATORIO se corre a una segunda hoja por desborde de contenido en A4) — comportamiento preexistente, no una regresión de esto.
