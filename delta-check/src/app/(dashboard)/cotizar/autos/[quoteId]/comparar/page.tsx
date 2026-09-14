@@ -89,7 +89,7 @@ function AnnualComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quote
               </td>
               <td className="px-4 py-3 text-right font-semibold tabular-nums">
                 {row.totalPremiumCents != null ? (
-                  <span className={row.insurerId === best?.insurerId ? "text-delta-blue" : ""}>
+                  <span className={row.insurerId === best?.insurerId ? "text-highlight" : ""}>
                     {formatUSD(row.totalPremiumCents)}
                     {row.insurerId === best?.insurerId && " ★"}
                   </span>
@@ -101,7 +101,7 @@ function AnnualComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quote
                 {row.totalPremiumCents != null && (
                   <a
                     href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
-                    className="whitespace-nowrap text-xs font-semibold text-delta-navy underline"
+                    className="whitespace-nowrap text-xs font-semibold text-link underline"
                   >
                     Emitir póliza
                   </a>

@@ -22,7 +22,7 @@ export default async function EmitirPolizaPage({
         <h1 className="text-xl font-bold tracking-tight">Emitir póliza</h1>
         <p className="mt-1 text-sm text-muted">
           {summary.insurerName} {summary.planCode && `— ${summary.planCode}`} · {clientName} ·{" "}
-          <span className="font-semibold text-delta-blue">{formatUSD(summary.totalPremiumCents)}</span>
+          <span className="font-semibold text-highlight">{formatUSD(summary.totalPremiumCents)}</span>
         </p>
       </header>
 

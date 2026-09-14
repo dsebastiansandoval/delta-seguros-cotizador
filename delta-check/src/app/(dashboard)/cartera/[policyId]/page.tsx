@@ -79,7 +79,7 @@ export default async function PolicyDetailPage({
           <div className="mt-4 flex flex-wrap items-center gap-4 border-t border-border pt-4">
             {!policy.policyNumber && <SetPolicyNumberForm policyId={policy.id} />}
             {policy.paymentStatus === "PENDIENTE" && <MarkPolicyPaidButton policyId={policy.id} />}
-            <a href={`/siniestros/nuevo?policyId=${policy.id}`} className="text-xs font-semibold text-delta-navy underline">
+            <a href={`/siniestros/nuevo?policyId=${policy.id}`} className="text-xs font-semibold text-link underline">
               Reportar siniestro
             </a>
           </div>

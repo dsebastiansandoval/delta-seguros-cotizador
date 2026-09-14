@@ -47,7 +47,7 @@ export default async function ComisionesPage() {
               return (
                 <tr key={c.id} className="border-b border-border last:border-0">
                   <td className="px-4 py-3">
-                    <a href={`/cartera/${c.policyId}`} className="text-delta-navy underline">
+                    <a href={`/cartera/${c.policyId}`} className="text-link underline">
                       {c.policyNumber || "(sin número)"}
                     </a>
                   </td>

@@ -49,7 +49,7 @@ export default async function CumplimientoPage() {
               return (
                 <tr key={r.id} className="border-b border-border last:border-0 hover:bg-background">
                   <td className="px-4 py-3">
-                    <Link href={`/cumplimiento/${r.id}`} className="font-medium text-delta-navy underline">
+                    <Link href={`/cumplimiento/${r.id}`} className="font-medium text-link underline">
                       {clientName || r.clientDocumentNumber} ({r.clientDocumentNumber})
                     </Link>
                   </td>

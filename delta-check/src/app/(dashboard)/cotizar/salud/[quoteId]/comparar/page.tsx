@@ -55,7 +55,7 @@ export default async function CompararSaludPage({
                 </td>
                 <td className="px-4 py-3 text-right font-semibold tabular-nums">
                   {row.totalPremiumCents != null ? (
-                    <span className={row.quoteOptionId === best?.quoteOptionId ? "text-delta-blue" : ""}>
+                    <span className={row.quoteOptionId === best?.quoteOptionId ? "text-highlight" : ""}>
                       {formatUSD(row.totalPremiumCents)}
                       {row.quoteOptionId === best?.quoteOptionId && " ★"}
                     </span>
@@ -67,7 +67,7 @@ export default async function CompararSaludPage({
                   {row.totalPremiumCents != null && (
                     <a
                       href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
-                      className="whitespace-nowrap text-xs font-semibold text-delta-navy underline"
+                      className="whitespace-nowrap text-xs font-semibold text-link underline"
                     >
                       Emitir póliza
                     </a>

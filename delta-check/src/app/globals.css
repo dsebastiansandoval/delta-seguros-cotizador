@@ -16,6 +16,16 @@
   --surface: #ffffff;
   --border: #dfe1e6;
   --muted: #6b6f76;
+  /* Color de links (tablas, listas) — separado de --color-delta-navy a
+     propósito: ese es el navy fijo de marca (botones, logo), este cambia
+     según el tema. Navy de marca como texto sobre fondo oscuro casi no se
+     distingue (#152a52 contra #0b1220) — bug real reportado por el
+     usuario ("Emitir póliza" invisible en modo oscuro). */
+  --link: #152a52;
+  /* Mismo problema que --link, pero para el acento que resalta el mejor
+     precio (★) en las tablas de comparación — --color-delta-blue fijo
+     también pierde casi todo el contraste contra fondo oscuro. */
+  --highlight: #01579e;
 }
 
 @theme inline {
@@ -24,6 +34,8 @@
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-muted: var(--muted);
+  --color-link: var(--link);
+  --color-highlight: var(--highlight);
 
   --color-delta-navy: var(--color-delta-navy);
   --color-delta-navy-2: var(--color-delta-navy-2);
@@ -41,6 +53,8 @@
     --surface: #111a2c;
     --border: #26324a;
     --muted: #9aa3b5;
+    --link: #7fb0e8;
+    --highlight: #4da3e0;
   }
 }
 
@@ -50,6 +64,8 @@
   --surface: #111a2c;
   --border: #26324a;
   --muted: #9aa3b5;
+  --link: #7fb0e8;
+  --highlight: #4da3e0;
 }
 
 body {

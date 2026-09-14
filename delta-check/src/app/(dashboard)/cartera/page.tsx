@@ -24,13 +24,13 @@ export default async function CarteraPage({
         <h1 className="text-xl font-bold tracking-tight">Cartera</h1>
         <p className="mt-1 text-sm text-muted">{policies.length} pólizas</p>
         <nav className="mt-3 flex gap-4 text-sm">
-          <Link href="/cartera" className={!estado ? "font-semibold text-delta-navy" : "text-muted"}>
+          <Link href="/cartera" className={!estado ? "font-semibold text-link" : "text-muted"}>
             Todas
           </Link>
-          <Link href="/cartera?estado=vigentes" className={estado === "vigentes" ? "font-semibold text-delta-navy" : "text-muted"}>
+          <Link href="/cartera?estado=vigentes" className={estado === "vigentes" ? "font-semibold text-link" : "text-muted"}>
             Vigentes
           </Link>
-          <Link href="/cartera?estado=canceladas" className={estado === "canceladas" ? "font-semibold text-delta-navy" : "text-muted"}>
+          <Link href="/cartera?estado=canceladas" className={estado === "canceladas" ? "font-semibold text-link" : "text-muted"}>
             Canceladas
           </Link>
         </nav>
@@ -56,7 +56,7 @@ export default async function CarteraPage({
               return (
                 <tr key={p.id} className="border-b border-border last:border-0 hover:bg-background">
                   <td className="px-4 py-3">
-                    <a href={`/cartera/${p.id}`} className="font-medium text-delta-navy underline">
+                    <a href={`/cartera/${p.id}`} className="font-medium text-link underline">
                       {p.policyNumber || "(sin número)"}
                     </a>
                   </td>
