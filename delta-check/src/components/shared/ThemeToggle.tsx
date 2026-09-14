@@ -93,7 +93,7 @@ export function ThemeToggle({ variant = "floating" }: { variant?: "floating" | "
       title={`Tema: ${LABELS[pref]} — clic para cambiar`}
       className={
         variant === "floating"
-          ? "fixed right-4 top-4 z-50 flex items-center gap-1.5 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-foreground shadow-sm hover:bg-background"
+          ? "fixed right-4 top-4 z-50 flex items-center gap-1.5 rounded-full border border-delta-navy-2 bg-delta-navy px-3 py-1.5 text-xs font-medium text-white shadow-md hover:bg-delta-navy-2"
           : "flex items-center gap-1.5 rounded-full border border-border px-2.5 py-1 text-xs font-medium text-foreground hover:bg-background"
       }
     >
