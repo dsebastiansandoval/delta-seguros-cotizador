@@ -46,11 +46,17 @@ async function seedDevUser(organizationId: string) {
         .returning()
     )[0];
 
-  const [agenteRole] = await db.select().from(roles).where(eq(roles.code, "AGENTE"));
-  if (agenteRole) {
+  // ADMIN, no AGENTE — este es el único usuario de login local (demos,
+  // pruebas manuales), y un AGENTE no tiene quote:read_all/commission:read_all/
+  // etc., así que se queda afuera del dashboard y de cartera/comisiones de
+  // otros agentes. No hay todavía una pantalla para crear más usuarios ni
+  // asignar roles, así que un solo login con acceso completo es lo único
+  // práctico hasta que exista esa pantalla.
+  const [adminRole] = await db.select().from(roles).where(eq(roles.code, "ADMIN"));
+  if (adminRole) {
     await db
       .insert(userRoles)
-      .values({ organizationId, userId: user.id, roleId: agenteRole.id })
+      .values({ organizationId, userId: user.id, roleId: adminRole.id })
       .onConflictDoNothing();
   }
 
