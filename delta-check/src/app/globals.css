@@ -26,6 +26,18 @@
      precio (★) en las tablas de comparación — --color-delta-blue fijo
      también pierde casi todo el contraste contra fondo oscuro. */
   --highlight: #01579e;
+
+  /* Tokens del mockup (Cotizador-Delta-MVP-visual.html) que no
+     existían acá — mismos valores exactos, no reinventados. */
+  --accent-500: #1f74bd;
+  --accent-100: #e4eef8;
+  --border-strong: #c6c9d1;
+  --good: #157a4f;
+  --good-bg: #e5f5ee;
+  --warn: #9a6b0c;
+  --warn-bg: #fbf1de;
+  --bad: #af3a26;
+  --bad-bg: #fbe9e5;
 }
 
 @theme inline {
@@ -36,6 +48,15 @@
   --color-muted: var(--muted);
   --color-link: var(--link);
   --color-highlight: var(--highlight);
+  --color-accent-500: var(--accent-500);
+  --color-accent-100: var(--accent-100);
+  --color-border-strong: var(--border-strong);
+  --color-good: var(--good);
+  --color-good-bg: var(--good-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-bad: var(--bad);
+  --color-bad-bg: var(--bad-bg);
 
   --color-delta-navy: var(--color-delta-navy);
   --color-delta-navy-2: var(--color-delta-navy-2);
@@ -55,6 +76,15 @@
     --muted: #9aa3b5;
     --link: #7fb0e8;
     --highlight: #4da3e0;
+    --accent-500: #5da3e0;
+    --accent-100: #132a44;
+    --border-strong: #374561;
+    --good: #3fbf8c;
+    --good-bg: #0f2a22;
+    --warn: #e0ab4c;
+    --warn-bg: #2c2311;
+    --bad: #e2695a;
+    --bad-bg: #301917;
   }
 }
 
@@ -66,6 +96,15 @@
   --muted: #9aa3b5;
   --link: #7fb0e8;
   --highlight: #4da3e0;
+  --accent-500: #5da3e0;
+  --accent-100: #132a44;
+  --border-strong: #374561;
+  --good: #3fbf8c;
+  --good-bg: #0f2a22;
+  --warn: #e0ab4c;
+  --warn-bg: #2c2311;
+  --bad: #e2695a;
+  --bad-bg: #301917;
 }
 
 body {

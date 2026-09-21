@@ -44,11 +44,11 @@ export default async function CompararSaludPage({
                 <td className="px-4 py-3 text-muted">{row.planCode ?? "—"}</td>
                 <td className="px-4 py-3">
                   {row.status === "COTIZADO" ? (
-                    <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800">
+                    <span className="rounded-full bg-good-bg px-2 py-0.5 text-xs font-semibold text-good">
                       Cotizado
                     </span>
                   ) : (
-                    <span className="rounded-full bg-amber-100 px-2 py-0.5 text-xs font-semibold text-amber-800">
+                    <span className="rounded-full bg-warn-bg px-2 py-0.5 text-xs font-semibold text-warn">
                       Pendiente — digitar
                     </span>
                   )}

@@ -9,10 +9,10 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 const STATUS_STYLE: Record<string, string> = {
-  RECIBIDA: "bg-amber-100 text-amber-800",
-  EN_PROCESO: "bg-blue-100 text-blue-800",
-  COMPLETADA: "bg-green-100 text-green-800",
-  RECHAZADA: "bg-red-100 text-red-800",
+  RECIBIDA: "bg-warn-bg text-warn",
+  EN_PROCESO: "bg-accent-100 text-highlight",
+  COMPLETADA: "bg-good-bg text-good",
+  RECHAZADA: "bg-bad-bg text-bad",
 };
 
 export default async function CumplimientoPage() {

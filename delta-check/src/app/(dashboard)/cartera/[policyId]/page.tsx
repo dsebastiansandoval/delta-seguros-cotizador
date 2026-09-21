@@ -36,11 +36,11 @@ export default async function PolicyDetailPage({
           </p>
         </div>
         {isCancelled ? (
-          <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-800">
+          <span className="rounded-full bg-bad-bg px-3 py-1 text-xs font-semibold text-bad">
             Cancelada — {policy.cancellationReason}
           </span>
         ) : (
-          <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-800">
+          <span className="rounded-full bg-good-bg px-3 py-1 text-xs font-semibold text-good">
             Vigente
           </span>
         )}

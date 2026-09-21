@@ -67,11 +67,11 @@ export default async function CarteraPage({
                   <td className="px-4 py-3">{PAYMENT_LABEL[p.paymentStatus]}</td>
                   <td className="px-4 py-3">
                     {p.lifecycleStatus === "CANCELADA" ? (
-                      <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-800">
+                      <span className="rounded-full bg-bad-bg px-2 py-0.5 text-xs font-semibold text-bad">
                         Cancelada
                       </span>
                     ) : (
-                      <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-semibold text-green-800">
+                      <span className="rounded-full bg-good-bg px-2 py-0.5 text-xs font-semibold text-good">
                         Vigente
                       </span>
                     )}
