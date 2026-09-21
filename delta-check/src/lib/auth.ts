@@ -136,7 +136,7 @@ export const {
   },
 });
 
-export type AppSession = { userId: string; organizationId: string | null; email: string };
+export type AppSession = { userId: string; organizationId: string | null; email: string; fullName: string | null };
 
 /**
  * Auth.js v5 re-exporta `Session` con `export type {...} from
@@ -153,10 +153,11 @@ export type AppSession = { userId: string; organizationId: string | null; email:
 export async function getAppSession(): Promise<AppSession | null> {
   const session = await auth();
   if (!session?.user?.email) return null;
-  const user = session.user as { email: string; organizationId?: string | null; id?: string };
+  const user = session.user as { email: string; organizationId?: string | null; id?: string; name?: string | null };
   return {
     userId: user.id ?? user.email,
     organizationId: user.organizationId ?? null,
     email: user.email,
+    fullName: user.name ?? null,
   };
 }

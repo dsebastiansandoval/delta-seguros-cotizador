@@ -2,25 +2,49 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAppSession, signOut } from "@/lib/auth";
 import { AccountMenu } from "@/components/shared/AccountMenu";
+import { TopNavLinks, SidebarNav, type NavLink, type NavGroup } from "@/components/shared/DashboardNav";
 
-const NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/cotizar/autos/nueva", label: "Cotizar Autos" },
-  { href: "/cotizar/salud/nueva", label: "Cotizar Salud" },
-  { href: "/cartera", label: "Cartera" },
-  { href: "/comisiones", label: "Comisiones" },
-  { href: "/siniestros", label: "Siniestros" },
-  { href: "/cumplimiento", label: "Cumplimiento" },
+const TOPBAR_LINKS: NavLink[] = [
+  { href: "/dashboard", label: "Resumen" },
+  { href: "/cotizar/autos/nueva", label: "Autos", activePrefix: "/cotizar/autos" },
+  { href: "/cotizar/salud/nueva", label: "Salud", activePrefix: "/cotizar/salud" },
+];
+
+const SIDEBAR_GROUPS: NavGroup[] = [
+  {
+    label: "Cotizador",
+    links: [
+      { href: "/cotizar/autos/nueva", label: "Nueva cotización — Autos", activePrefix: "/cotizar/autos" },
+      { href: "/cotizar/salud/nueva", label: "Nueva cotización — Salud", activePrefix: "/cotizar/salud" },
+    ],
+  },
+  {
+    label: "Gestión",
+    links: [
+      { href: "/cartera", label: "Cartera" },
+      { href: "/comisiones", label: "Comisiones" },
+      { href: "/siniestros", label: "Siniestros" },
+    ],
+  },
+  {
+    label: "Cumplimiento",
+    links: [{ href: "/cumplimiento", label: "Derechos ARCO" }],
+  },
 ];
 
 /**
- * Shell de navegación para todas las páginas autenticadas — hasta ahora
- * cada página vivía sola, sin ningún link a las demás (se llegaba
- * escribiendo la URL a mano). El guard de sesión también vivía solo
- * implícito en cada Server Action (`requirePermission()` lanza
- * `UnauthenticatedError`) — acá se hace explícito una vez, con un
- * redirect a /login en vez de una página de error cruda si alguien
- * navega directo sin sesión.
+ * Shell de navegación para todas las páginas autenticadas — adaptado de
+ * Cotizador-Delta-MVP-visual.html (el diseño original aprobado, a pedido
+ * del usuario), con topbar + sidebar en vez del solo-topbar de antes.
+ * Los links son los reales del sistema, no el listado completo del mockup
+ * — se dejaron afuera "Vida & Patrimonio", "Emisiones"/"Renovaciones" como
+ * páginas propias, "Ejecutivos" y "Configuración": no existe esa pantalla
+ * todavía, y un link muerto es peor que un sidebar más corto pero real.
+ *
+ * También hace explícito el guard de sesión (redirect a /login) que antes
+ * solo existía implícito en cada Server Action — `proxy.ts` (el middleware
+ * renombrado en Next 16) ya cubre esto a nivel global, así que este guard
+ * es defensa en profundidad, no el único lugar donde se resuelve.
  */
 export default async function DashboardLayout({ children }: LayoutProps<"/">) {
   const session = await getAppSession();
@@ -28,38 +52,34 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="border-b border-border bg-surface">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-8 py-3">
-          <Link href="/dashboard" className="flex items-center gap-2 text-sm font-bold tracking-tight">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-delta-navy font-mono text-xs font-bold text-white">
-              DC
-            </span>
-            Delta Check
-          </Link>
+      <header className="sticky top-0 z-20 border-b border-border bg-surface">
+        <div className="flex items-center justify-between gap-5 px-7 py-3.5">
+          <div className="flex items-center gap-6">
+            <Link href="/dashboard" className="flex items-center">
+              {/* eslint-disable-next-line @next/next/no-img-element -- logo chico y fijo, no vale la pena next/image acá */}
+              <img src="/delta-logo.png" alt="Delta Seguros" className="h-7 w-auto rounded bg-white p-1" />
+            </Link>
+            <TopNavLinks links={TOPBAR_LINKS} />
+          </div>
 
-          <nav className="ml-auto flex flex-wrap items-center gap-1 text-sm">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-2.5 py-1.5 font-medium text-muted hover:bg-background hover:text-foreground"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+          <AccountMenu
+            email={session.email}
+            fullName={session.fullName}
+            signOutAction={async () => {
+              "use server";
+              await signOut({ redirectTo: "/login" });
+            }}
+          />
         </div>
       </header>
 
-      {children}
+      <div className="mx-auto flex w-full max-w-[1320px] flex-1">
+        <aside className="hidden w-56 shrink-0 flex-col p-5 md:flex">
+          <SidebarNav groups={SIDEBAR_GROUPS} />
+        </aside>
 
-      <AccountMenu
-        email={session.email}
-        signOutAction={async () => {
-          "use server";
-          await signOut({ redirectTo: "/login" });
-        }}
-      />
+        <div className="min-w-0 flex-1">{children}</div>
+      </div>
     </div>
   );
 }

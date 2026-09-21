@@ -108,8 +108,10 @@ function AnnualComparisonTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row) => (
-            <tr key={row.insurerId} className="border-b border-border last:border-0">
+          {rows.map((row) => {
+            const isBest = row.insurerId === best?.insurerId;
+            return (
+            <tr key={row.insurerId} className={`border-b border-border last:border-0 ${isBest ? "bg-accent-100" : ""}`}>
               <td className="px-4 py-3">
                 {row.totalPremiumCents != null && (
                   <input
@@ -137,10 +139,14 @@ function AnnualComparisonTable({
               </td>
               <td className="px-4 py-3 text-right font-semibold tabular-nums">
                 {row.totalPremiumCents != null ? (
-                  <span className={row.insurerId === best?.insurerId ? "text-highlight" : ""}>
-                    {formatUSD(row.totalPremiumCents)}
-                    {row.insurerId === best?.insurerId && " ★"}
-                  </span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className={isBest ? "text-highlight" : ""}>{formatUSD(row.totalPremiumCents)}</span>
+                    {isBest && (
+                      <span className="inline-flex items-center gap-1 rounded-md bg-delta-navy px-2 py-0.5 text-[10.5px] font-bold tracking-wide text-white">
+                        ★ Mejor opción
+                      </span>
+                    )}
+                  </div>
                 ) : (
                   <ManualPremiumForm quoteOptionId={row.quoteOptionId} quoteId={quoteId} />
                 )}
@@ -156,7 +162,8 @@ function AnnualComparisonTable({
                 )}
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

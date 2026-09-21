@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { parseThemeValue, type ThemePreference } from "@/domains/shared/theme";
+import { initialsFrom } from "@/domains/shared/initials";
 
 const STORAGE_KEY = "delta-check-theme";
 const CHANGE_EVENT = "delta-check-theme-change";
@@ -54,17 +55,25 @@ function applyTheme(pref: ThemePreference) {
 }
 
 /**
- * Menú flotante abajo a la derecha (mismo lugar donde vivía el indicador
- * de Next.js, ahora apagado en next.config.ts) — junta lo que antes eran
- * 3 controles sueltos en el header (tema, correo, cerrar sesión) en un
- * solo ícono de engranaje, a pedido del usuario.
+ * Avatar del topbar (mismo lugar/estilo del mockup — círculo navy con 2
+ * iniciales, arriba a la derecha) que abre un menú con tema/correo/cerrar
+ * sesión — antes vivía como un ícono de engranaje flotante abajo a la
+ * derecha; ahora que hay topbar de verdad, este es su lugar natural.
  *
  * `signOutAction` viaja como prop desde el Server Component — un Server
  * Action ("use server") puede pasarse como prop a un Client Component,
  * React/Next lo serializa como referencia; acá se usa igual que si
  * estuviera declarado en este mismo archivo.
  */
-export function AccountMenu({ email, signOutAction }: { email: string; signOutAction: () => Promise<void> }) {
+export function AccountMenu({
+  email,
+  fullName,
+  signOutAction,
+}: {
+  email: string;
+  fullName: string | null;
+  signOutAction: () => Promise<void>;
+}) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const pref = useSyncExternalStore(subscribe, readPreference, getServerSnapshot);
@@ -81,12 +90,26 @@ export function AccountMenu({ email, signOutAction }: { email: string; signOutAc
   }, [open]);
 
   return (
-    <div ref={containerRef} className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        title={fullName ?? email}
+        className="flex h-8 w-8 items-center justify-center rounded-full bg-delta-navy text-xs font-bold text-white hover:bg-delta-navy-2"
+      >
+        {initialsFrom(fullName, email)}
+      </button>
+
       {open && (
-        <div className="w-60 rounded-xl border border-border bg-surface p-3 text-sm shadow-lg">
-          <p className="truncate text-xs text-muted" title={email}>
-            {email}
+        <div className="absolute right-0 top-full z-30 mt-2 w-60 rounded-xl border border-border bg-surface p-3 text-sm shadow-lg">
+          <p className="truncate text-xs font-semibold text-foreground" title={fullName ?? email}>
+            {fullName ?? email}
           </p>
+          {fullName && (
+            <p className="truncate text-xs text-muted" title={email}>
+              {email}
+            </p>
+          )}
 
           <p className="mb-1 mt-3 text-xs font-semibold uppercase tracking-wide text-muted">Tema</p>
           <div className="flex flex-col gap-0.5">
@@ -115,15 +138,6 @@ export function AccountMenu({ email, signOutAction }: { email: string; signOutAc
           </form>
         </div>
       )}
-
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        title="Configuración"
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-delta-navy text-lg text-white shadow-md hover:bg-delta-navy-2"
-      >
-        ⚙️
-      </button>
     </div>
   );
 }
