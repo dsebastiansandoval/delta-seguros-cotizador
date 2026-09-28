@@ -996,6 +996,29 @@ Tres pendientes puntuales de la lista de 12 observaciones del usuario ("toma 9, 
 
 **Verificación:** creado un cliente/vehículo/cotización real contra Postgres (mismos datos del PDF de ejemplo: KARLA ROBLES, JEEP CX-30, FUENTE "DIEGO VIERA"), corrida la comparación real (Latina/Cóndor calculan, el resto queda `PENDIENTE_MANUAL` como siempre), y descargado el PDF por HTTP con una sesión real (`dev-login`) contra el servidor corriendo — confirmado visualmente (renderizado a PNG con `pdftoppm`) que la portada real se ve completa, sin distorsión, con el nombre y la vigencia legibles y sin superponerse a ningún elemento de la imagen; confirmado en el texto del PDF (`pdftotext`) que "Formas de pago" calcula bien 6/9/12 meses. HTML real servido confirma el `<select>` de Fuente con los 29 nombres reales en Autos y en Salud. `npm run typecheck`/`lint`/`test`/`build` limpios.
 
+## 31. Corrección: Salud SÍ aplica 0.5% Seguro Campesino + un cargo fijo ("OTROS CARGOS")
+
+Investigando cómo armar la carátula de Salud (§32), encontré que la conclusión anterior de este documento (§2.4 de `EXCEL-AUDIT.md`: "ninguna hoja de Salud aplica... Seguro Campesino") **es incorrecta**. Esa búsqueda anterior fue por referencias a las celdas compartidas `INFO GENERAL!E37/E38/E39` (el mecanismo de impuestos de Autos) y no encontró nada — pero `OFERTA AM` (la hoja que se imprime junto a `CARATULA AM`, confirmado en la macro real `IMPRIMIR_OFERTA_AM`) tiene el 0.5% escrito **directo en la fórmula** (`=SUBTOTAL*0.5%`), sin pasar por esas celdas compartidas, así que esa búsqueda no lo podía encontrar.
+
+Verificado celda por celda para las ~107 columnas de plan de `OFERTA AM`, con cada fórmula de prima referenciando directo la hoja de la aseguradora real (`=IF(..., BMI!D9, ...)`, `=IF(..., SALUDSA!E8, ...)`, `=IF(..., PRO!C8, ...)`, etc. — nunca una suposición de qué columna correspondía a qué aseguradora):
+
+| Aseguradora | OTROS CARGOS (fijo) | 0.5% Campesino |
+|---|---|---|
+| BMI | $80.00 | Sí |
+| SALUDSA | $28.32 | Sí |
+| SALUD (genérica) | $28.32 | Sí |
+| CONFIAMED | $0.00 | Sí (igual aplica, aunque el cargo sea 0) |
+| HUMANA | $0.00 | Sí |
+| PRO | $36.00 | Sí |
+| VB | $36.00 | Sí |
+| BUPA | — | — (100% manual, `EXCEL-AUDIT.md` §2.3 — no pasa por este motor) |
+
+Fórmula real: `PRIMA TOTAL = (prima_neta + otros_cargos) × 1.005`.
+
+**Corrección aplicada:** `health-comparison.service.ts` ahora calcula `emissionFeeCents` (el cargo fijo — se reusa ese campo del esquema, ya existía sin usar en Salud, mismo concepto que "Derechos de emisión" en Autos) y `campesinoCents` (0.5% del subtotal), y `totalPremiumCents` pasa a ser `neto + cargo + campesino` en vez de solo `neto`. Esto afecta a **toda cotización de Salud existente** en el sistema — cualquier prima ya mostrada estaba entre $0 (Bupa, sin cambio) y ~5% por debajo de la real, según la aseguradora.
+
+**Verificación:** cotización real de un titular de 30 años (Sierra) corrida contra las 7 aseguradoras automáticas — confirmado con aritmética exacta (`neto + cargo + round((neto+cargo)*0.005) === total`) para las 30 combinaciones de plan resultantes, sin un solo error de redondeo. `npm run typecheck`/`lint`/`test`/`build` limpios.
+
 **Pendiente** (de la lista de 12 observaciones del usuario, ya solo queda esto): carátula en PDF para Salud (no existe todavía, solo Autos) — la portada real (`portada-salud.jpg`) ya está copiada al proyecto, lista para cuando se construya.
 
 ## 26. Macro con nombre desactualizado (ítem 12), KPI real del dashboard (ítem 3) y "Vida & Patrimonio" en el sidebar (parte del ítem 4)
