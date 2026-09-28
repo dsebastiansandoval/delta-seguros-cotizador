@@ -1,8 +1,11 @@
 import { and, eq, inArray, isNotNull } from "drizzle-orm";
 import type { Db } from "@/db";
-import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
+import { quoteOptionCoverages, quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients, vehicles } from "@/db/schema/clients";
-import { insurers } from "@/db/schema/catalog";
+import { coverages, insurers } from "@/db/schema/catalog";
+import { formatUSD } from "@/domains/shared/money";
+
+export type CaratulaOfferCoverage = { name: string; display: string };
 
 export type CaratulaOffer = {
   insurerName: string;
@@ -12,6 +15,14 @@ export type CaratulaOffer = {
   emissionFeeCents: number;
   ivaCents: number;
   totalPremiumCents: number;
+  /**
+   * Coberturas reales cargadas a mano para esta oferta puntual (ítem 8,
+   * ARCHITECTURE.md §30, `quote_option_coverages` — pantalla "Coberturas"
+   * del comparador). Vacío si nadie cargó nada todavía para esta
+   * aseguradora — en ese caso el PDF sigue mostrando el párrafo genérico
+   * de coberturas (`COVERAGE_TEXT`), nunca una tabla vacía.
+   */
+  coverages: CaratulaOfferCoverage[];
 };
 
 export type CaratulaData = {
@@ -100,6 +111,7 @@ export async function getCaratulaData(
 
   const baseQuery = tx
     .select({
+      quoteOptionId: quoteOptions.id,
       insurerName: insurers.name,
       netPremiumCents: quoteOptions.netPremiumCents,
       superBancosCents: quoteOptions.superBancosCents,
@@ -126,6 +138,41 @@ export async function getCaratulaData(
         .limit(1);
 
   if (!offersRaw.length) return null;
+
+  // Coberturas reales cargadas a mano (pantalla "Coberturas" del
+  // comparador, §30) — una consulta para todas las ofertas de esta
+  // carátula, agrupada después por quoteOptionId.
+  const coverageRows = await tx
+    .select({
+      quoteOptionId: quoteOptionCoverages.quoteOptionId,
+      valueType: coverages.valueType,
+      name: coverages.name,
+      displayOrder: coverages.displayOrder,
+      granted: quoteOptionCoverages.granted,
+      amountCents: quoteOptionCoverages.amountCents,
+      textValue: quoteOptionCoverages.textValue,
+    })
+    .from(quoteOptionCoverages)
+    .innerJoin(coverages, eq(coverages.id, quoteOptionCoverages.coverageId))
+    .where(
+      inArray(
+        quoteOptionCoverages.quoteOptionId,
+        offersRaw.map((o) => o.quoteOptionId),
+      ),
+    )
+    .orderBy(coverages.displayOrder);
+
+  const coveragesByOption = new Map<string, CaratulaOfferCoverage[]>();
+  for (const row of coverageRows) {
+    let display: string | null = null;
+    if (row.valueType === "BOOLEAN" && row.granted) display = "Sí otorga";
+    else if (row.valueType === "AMOUNT" && row.amountCents != null) display = formatUSD(row.amountCents);
+    else if (row.valueType === "TEXT" && row.textValue) display = row.textValue;
+    if (!display) continue;
+    const list = coveragesByOption.get(row.quoteOptionId) ?? [];
+    list.push({ name: row.name, display });
+    coveragesByOption.set(row.quoteOptionId, list);
+  }
 
   const clientName =
     client.personType === "JURIDICA"
@@ -175,6 +222,7 @@ export async function getCaratulaData(
       emissionFeeCents: o.emissionFeeCents ?? 0,
       ivaCents: o.ivaCents ?? 0,
       totalPremiumCents: o.totalPremiumCents ?? 0,
+      coverages: coveragesByOption.get(o.quoteOptionId) ?? [],
     })),
   };
 }

@@ -230,6 +230,18 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
       <Text style={styles.h2}>COBERTURAS</Text>
       <Text>{COVERAGE_TEXT}</Text>
 
+      {offer.coverages.length > 0 && (
+        <>
+          <Text style={[styles.h2, { marginTop: 10 }]}>DETALLE POR COBERTURA — {offer.insurerName}</Text>
+          {offer.coverages.map((c) => (
+            <View style={styles.row} key={c.name}>
+              <Text style={styles.label}>{c.name}</Text>
+              <Text style={styles.value}>{c.display}</Text>
+            </View>
+          ))}
+        </>
+      )}
+
       <Text style={styles.h2}>CLÁUSULAS ADICIONALES</Text>
       {ADDITIONAL_CLAUSES.map((clause) => (
         <View style={styles.bullet} key={clause}>

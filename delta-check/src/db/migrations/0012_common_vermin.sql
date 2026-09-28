@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "quote_option_coverages_option_coverage_idx" ON "quote_option_coverages" USING btree ("quote_option_id","coverage_id");

@@ -195,12 +195,20 @@ function AnnualComparisonTable({
               </td>
               <td className="px-4 py-3 text-right">
                 {row.totalPremiumCents != null && (
-                  <a
-                    href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
-                    className="whitespace-nowrap text-xs font-semibold text-link underline"
-                  >
-                    Emitir póliza
-                  </a>
+                  <div className="flex flex-col items-end gap-1">
+                    <a
+                      href={`/cotizar/autos/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
+                      className="whitespace-nowrap text-xs font-semibold text-link underline"
+                    >
+                      Coberturas
+                    </a>
+                    <a
+                      href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
+                      className="whitespace-nowrap text-xs font-semibold text-link underline"
+                    >
+                      Emitir póliza
+                    </a>
+                  </div>
                 )}
               </td>
             </tr>

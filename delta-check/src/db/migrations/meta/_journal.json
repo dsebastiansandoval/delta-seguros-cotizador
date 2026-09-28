@@ -85,6 +85,13 @@
       "when": 1790565597688,
       "tag": "0011_pink_medusa",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1790566347246,
+      "tag": "0012_common_vermin",
+      "breakpoints": true
     }
   ]
 }

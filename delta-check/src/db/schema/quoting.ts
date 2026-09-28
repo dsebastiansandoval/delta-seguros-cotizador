@@ -8,6 +8,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
@@ -95,19 +96,23 @@ export const quoteOptions = pgTable("quote_options", {
  * de ARCHITECTURE.md §4.2: si la aseguradora cambia condiciones mañana, la
  * oferta ya enviada sigue siendo reproducible tal cual se emitió.
  */
-export const quoteOptionCoverages = pgTable("quote_option_coverages", {
-  id: id(),
-  organizationId: organizationId(),
-  quoteOptionId: uuid("quote_option_id")
-    .notNull()
-    .references(() => quoteOptions.id),
-  coverageId: uuid("coverage_id")
-    .notNull()
-    .references(() => coverages.id),
-  granted: boolean("granted").notNull(),
-  amountCents: bigint("amount_cents", { mode: "number" }),
-  textValue: text("text_value"),
-});
+export const quoteOptionCoverages = pgTable(
+  "quote_option_coverages",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    quoteOptionId: uuid("quote_option_id")
+      .notNull()
+      .references(() => quoteOptions.id),
+    coverageId: uuid("coverage_id")
+      .notNull()
+      .references(() => coverages.id),
+    granted: boolean("granted").notNull(),
+    amountCents: bigint("amount_cents", { mode: "number" }),
+    textValue: text("text_value"),
+  },
+  (t) => [uniqueIndex("quote_option_coverages_option_coverage_idx").on(t.quoteOptionId, t.coverageId)],
+);
 
 /** 🏢 Contado o tarjeta a 6/9/12 meses, con o sin interés. */
 export const paymentOptions = pgTable("payment_options", {
