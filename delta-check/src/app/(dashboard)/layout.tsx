@@ -73,14 +73,28 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
             <TopNavLinks links={TOPBAR_LINKS} />
           </div>
 
-          <AccountMenu
-            email={session.email}
-            fullName={session.fullName}
-            signOutAction={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}
-          />
+          <div className="flex items-center gap-4">
+            {/* Buscador del topbar (mockup visual, ítem 5 del feedback) —
+                GET nativo a /buscar, sin JS ni Server Action: alcanza para
+                un campo de búsqueda simple. */}
+            <form action="/buscar" method="GET" className="hidden w-56 md:block">
+              <input
+                type="search"
+                name="q"
+                placeholder="🔍 Buscar cliente o placa…"
+                className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              />
+            </form>
+
+            <AccountMenu
+              email={session.email}
+              fullName={session.fullName}
+              signOutAction={async () => {
+                "use server";
+                await signOut({ redirectTo: "/login" });
+              }}
+            />
+          </div>
         </div>
       </header>
 
