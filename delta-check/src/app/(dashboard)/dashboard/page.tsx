@@ -1,6 +1,27 @@
 import { getDashboardSummary } from "@/actions/dashboard.actions";
 import { formatUSD } from "@/domains/shared/money";
 
+/**
+ * Bloque inicial del dashboard — mockup: `.kpi-row`/`.kpi`
+ * (Cotizador-Delta-MVP-visual.html, ARCHITECTURE.md §26). Mismas 4
+ * métricas que la maqueta, con números reales de `dashboardService`
+ * en vez de los datos de ejemplo del mockup — `delta` es `null` cuando
+ * no hay mes anterior contra qué comparar (nunca se fabrica un "0%").
+ */
+function Kpi({ label, value, delta }: { label: string; value: string; delta?: { percent: number | null; note: string } }) {
+  return (
+    <div className="rounded-xl border border-border bg-surface p-5 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted">{label}</p>
+      <p className="mt-1.5 text-2xl font-bold tabular-nums tracking-tight">{value}</p>
+      {delta && (
+        <p className={`mt-1.5 text-xs font-semibold ${delta.percent == null ? "text-muted" : delta.percent >= 0 ? "text-good" : "text-bad"}`}>
+          {delta.percent == null ? delta.note : `${delta.percent >= 0 ? "↑" : "↓"} ${Math.abs(delta.percent)}% ${delta.note}`}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Card({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div className="rounded-xl border border-border bg-surface p-5 shadow-sm">
@@ -47,6 +68,29 @@ export default async function DashboardPage() {
           reproducir (hojas DASHBOARD/BASE DASHBOARD vacías).
         </p>
       </header>
+
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Kpi
+          label="Cotizaciones · este mes"
+          value={String(summary.monthly.quotes.total)}
+          delta={{ percent: summary.monthly.quotes.deltaPercent, note: "vs. mes anterior" }}
+        />
+        <Kpi
+          label="Pólizas emitidas · este mes"
+          value={String(summary.monthly.policiesEmitidas.total)}
+          delta={{ percent: summary.monthly.policiesEmitidas.deltaPercent, note: "vs. mes anterior" }}
+        />
+        <Kpi
+          label="Renovaciones pendientes"
+          value={String(summary.monthly.renovacionesProximas30Dias)}
+          delta={{ percent: null, note: "próximos 30 días" }}
+        />
+        <Kpi
+          label="Comisión generada · este mes"
+          value={formatUSD(summary.monthly.comisionGeneradaCents.total)}
+          delta={{ percent: summary.monthly.comisionGeneradaCents.deltaPercent, note: "vs. mes anterior" }}
+        />
+      </div>
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card label="Cotizaciones" value={String(summary.quotes.total)} />

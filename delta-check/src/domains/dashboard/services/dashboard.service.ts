@@ -1,7 +1,19 @@
-import { count, eq, sum } from "drizzle-orm";
+import { and, count, eq, gte, lt, lte, sum } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
 import { policies, commissions, claims } from "@/db/schema/policies";
+
+const toDateStr = (d: Date) => d.toISOString().slice(0, 10);
+
+/**
+ * % de cambio vs. el mes anterior — `null` (no un 0% fabricado) cuando no
+ * hay línea base (mes anterior en 0), mismo criterio que "nunca fabricar un
+ * dato que no tenemos" del resto del proyecto.
+ */
+function monthOverMonth(current: number, previous: number): number | null {
+  if (previous === 0) return null;
+  return Math.round(((current - previous) / previous) * 100);
+}
 
 /**
  * KPIs — sin equivalente real en el Excel (`DASHBOARD`/`BASE DASHBOARD`
@@ -50,6 +62,79 @@ export const dashboardService = {
       .where(eq(claims.organizationId, organizationId))
       .groupBy(claims.status);
 
+    // Fila de KPI del mockup visual (Cotizador-Delta-MVP-visual.html,
+    // ARCHITECTURE.md §26) — mismas 4 métricas, pero con números reales de
+    // Postgres en vez de los datos de ejemplo de la maqueta. Sin
+    // equivalente en el Excel (ver comentario de arriba), así que el corte
+    // de "mes" es simple calendario, no una noción que venga de ahí.
+    const now = new Date();
+    const startOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const in30Days = new Date(now);
+    in30Days.setDate(in30Days.getDate() + 30);
+
+    const [quotesThisMonth] = await tx
+      .select({ total: count() })
+      .from(quotes)
+      .where(and(eq(quotes.organizationId, organizationId), gte(quotes.createdAt, startOfThisMonth)));
+    const [quotesLastMonth] = await tx
+      .select({ total: count() })
+      .from(quotes)
+      .where(
+        and(
+          eq(quotes.organizationId, organizationId),
+          gte(quotes.createdAt, startOfLastMonth),
+          lt(quotes.createdAt, startOfThisMonth),
+        ),
+      );
+
+    const [policiesThisMonth] = await tx
+      .select({ total: count() })
+      .from(policies)
+      .where(and(eq(policies.organizationId, organizationId), gte(policies.createdAt, startOfThisMonth)));
+    const [policiesLastMonth] = await tx
+      .select({ total: count() })
+      .from(policies)
+      .where(
+        and(
+          eq(policies.organizationId, organizationId),
+          gte(policies.createdAt, startOfLastMonth),
+          lt(policies.createdAt, startOfThisMonth),
+        ),
+      );
+
+    const [renovacionesProximas] = await tx
+      .select({ total: count() })
+      .from(policies)
+      .where(
+        and(
+          eq(policies.organizationId, organizationId),
+          eq(policies.lifecycleStatus, "VIGENTE"),
+          gte(policies.endsAt, toDateStr(now)),
+          lte(policies.endsAt, toDateStr(in30Days)),
+        ),
+      );
+
+    // `commissions` no tiene su propia fecha (EXCEL-AUDIT.md §2.5) — se usa
+    // la fecha de la póliza que la generó, que es cuando en la práctica
+    // nace la comisión.
+    const [comisionThisMonth] = await tx
+      .select({ total: sum(commissions.amountCents) })
+      .from(commissions)
+      .innerJoin(policies, eq(policies.id, commissions.policyId))
+      .where(and(eq(commissions.organizationId, organizationId), gte(policies.createdAt, startOfThisMonth)));
+    const [comisionLastMonth] = await tx
+      .select({ total: sum(commissions.amountCents) })
+      .from(commissions)
+      .innerJoin(policies, eq(policies.id, commissions.policyId))
+      .where(
+        and(
+          eq(commissions.organizationId, organizationId),
+          gte(policies.createdAt, startOfLastMonth),
+          lt(policies.createdAt, startOfThisMonth),
+        ),
+      );
+
     const quotesTotal = quotesByStatus.reduce((sum, r) => sum + r.total, 0);
     // Toda póliza (vigente o cancelada) implica que la cotización llegó a
     // emitirse — la cancelación es un evento posterior, no anula el hecho.
@@ -71,6 +156,18 @@ export const dashboardService = {
       siniestros: {
         byStatus: siniestrosByStatus,
         valorTotalCents: siniestrosByStatus.reduce((sum, r) => sum + Number(r.valorCents ?? 0), 0),
+      },
+      monthly: {
+        quotes: { total: quotesThisMonth.total, deltaPercent: monthOverMonth(quotesThisMonth.total, quotesLastMonth.total) },
+        policiesEmitidas: {
+          total: policiesThisMonth.total,
+          deltaPercent: monthOverMonth(policiesThisMonth.total, policiesLastMonth.total),
+        },
+        renovacionesProximas30Dias: renovacionesProximas.total,
+        comisionGeneradaCents: {
+          total: Number(comisionThisMonth.total ?? 0),
+          deltaPercent: monthOverMonth(Number(comisionThisMonth.total ?? 0), Number(comisionLastMonth.total ?? 0)),
+        },
       },
     };
   },

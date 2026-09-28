@@ -60,6 +60,21 @@ export function SidebarNav({ groups }: { groups: NavGroup[] }) {
           <div className="mb-2 px-3 text-[10.5px] font-bold uppercase tracking-wider text-muted">{group.label}</div>
           <div className="flex flex-col gap-0.5">
             {group.links.map((link) => {
+              if (link.disabled) {
+                return (
+                  <span
+                    key={link.href}
+                    title="Próximamente"
+                    className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-muted opacity-60"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-border-strong" />
+                    {link.label}
+                    <span className="ml-auto rounded bg-background px-1.5 py-0.5 text-[9.5px] font-bold uppercase tracking-wide">
+                      Pronto
+                    </span>
+                  </span>
+                );
+              }
               const active = isActive(pathname, link);
               return (
                 <Link

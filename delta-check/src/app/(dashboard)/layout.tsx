@@ -22,6 +22,11 @@ const SIDEBAR_GROUPS: NavGroup[] = [
       { href: "/cotizar/autos/nueva", label: "Nueva cotización — Autos" },
       { href: "/cotizar/autos", label: "Mis cotizaciones — Autos", exact: true },
       { href: "/cotizar/salud/nueva", label: "Nueva cotización — Salud", activePrefix: "/cotizar/salud" },
+      // Del mockup visual original — sin ninguna macro ni hoja propia en el
+      // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-
+      // AUDIT.md), así que va como "Pronto" (mismo patrón que Back-office)
+      // en vez de fabricar una pantalla sin ramo real que cotizar todavía.
+      { href: "#", label: "Vida & Patrimonio", disabled: true },
     ],
   },
   {
