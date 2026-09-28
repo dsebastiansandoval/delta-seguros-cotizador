@@ -24,7 +24,7 @@ function getLimiter(key: string, limit: number, window: Window): Ratelimit {
     limiter = new Ratelimit({
       redis: redis!,
       limiter: Ratelimit.slidingWindow(limit, window),
-      prefix: `delta-check:${key}`,
+      prefix: `cotizador-delta:${key}`,
     });
     limiters.set(cacheKey, limiter);
   }

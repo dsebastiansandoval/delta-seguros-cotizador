@@ -4,8 +4,8 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { parseThemeValue, type ThemePreference } from "@/domains/shared/theme";
 import { initialsFrom } from "@/domains/shared/initials";
 
-const STORAGE_KEY = "delta-check-theme";
-const CHANGE_EVENT = "delta-check-theme-change";
+const STORAGE_KEY = "cotizador-delta-theme";
+const CHANGE_EVENT = "cotizador-delta-theme-change";
 
 const THEME_OPTIONS: ThemePreference[] = ["system", "light", "dark"];
 

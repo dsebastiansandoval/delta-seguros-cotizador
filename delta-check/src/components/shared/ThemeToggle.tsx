@@ -3,11 +3,11 @@
 import { useSyncExternalStore } from "react";
 import { nextTheme, parseThemeValue, type ThemePreference } from "@/domains/shared/theme";
 
-const STORAGE_KEY = "delta-check-theme";
+const STORAGE_KEY = "cotizador-delta-theme";
 // Evento propio para que el propio botón se entere de un cambio que él
 // mismo acaba de escribir — el evento nativo "storage" solo dispara en
 // OTRAS pestañas, nunca en la que hizo el cambio.
-const CHANGE_EVENT = "delta-check-theme-change";
+const CHANGE_EVENT = "cotizador-delta-theme-change";
 
 const LABELS: Record<ThemePreference, string> = {
   system: "Sistema",

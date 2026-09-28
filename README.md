@@ -44,13 +44,13 @@ Se descartó migrar el Excel: las hojas `BASE *` están vacías salvo 6 registro
 
 ## Documentación técnica
 
-La arquitectura, el esquema de base de datos, las convenciones de código y los requisitos de seguridad viven en **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** — es la guía que se sigue durante el desarrollo. El producto se llama **Delta Check**.
+La arquitectura, el esquema de base de datos, las convenciones de código y los requisitos de seguridad viven en **[`ARCHITECTURE.md`](./ARCHITECTURE.md)** — es la guía que se sigue durante el desarrollo. El producto se llama **Cotizador Delta Seguros**.
 
 La auditoría completa de las 198 macros VBA y las fórmulas de las 30 hojas del Excel original —qué se calcula, dónde, y qué es digitación manual— vive en **[`EXCEL-AUDIT.md`](./EXCEL-AUDIT.md)**, con las tablas de tarifas reales exportadas en [`reference-data/`](./reference-data/).
 
 ## Código
 
-El desarrollo arrancó en **[`delta-check/`](./delta-check/)** — Next.js 16 + Drizzle + PostgreSQL, con el esquema completo de 28 tablas y aislamiento multi-tenant (RLS) ya funcionando y verificado. Ver `delta-check/README.md` para levantarlo en local.
+El desarrollo arrancó en **[`delta-check/`](./delta-check/)** — Next.js 16 + Drizzle + PostgreSQL, con el esquema completo de 28 tablas y aislamiento multi-tenant (RLS) ya funcionando y verificado. Ver `delta-check/README.md` para levantarlo en local. (El directorio sigue llamándose `delta-check/` por razones históricas; el producto se conoce como **Cotizador Delta Seguros**.)
 
 ## Próximos pasos
 

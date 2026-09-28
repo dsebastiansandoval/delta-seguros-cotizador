@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Delta Check",
+  title: "Cotizador Delta Seguros",
   description: "Cotizador comparativo para agentes de seguros",
 };
 
