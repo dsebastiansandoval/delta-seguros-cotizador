@@ -46,6 +46,7 @@ export async function createHealthQuote(
         firstName: input.firstName,
         lastName: input.lastName,
         source: input.source,
+        executive: input.executive,
         assignedAgentId: session.userId,
       }));
 

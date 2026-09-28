@@ -14,7 +14,7 @@ import { organizations } from "./schema/organizations";
 import { roles, userRoles, users } from "./schema/identity";
 import { insurers } from "./schema/catalog";
 import { healthRateRules, rateRules, rateTables } from "./schema/catalog";
-import { quoteSources } from "./schema/clients";
+import { quoteSources, quoteExecutives } from "./schema/clients";
 
 const DEV_USER_EMAIL = "dev@deltaseguros.local";
 
@@ -361,6 +361,20 @@ async function seedQuoteSources(organizationId: string) {
   console.log(`  FUENTE: ${FUENTES.length} nombres sembrados`);
 }
 
+/**
+ * EJECUTIVO real (`INFO GENERAL!Y15:Y19` — la lista de la validación de
+ * datos real de `DATOS VH!D8`). 5 nombres, distinto de FUENTE.
+ */
+const EJECUTIVOS = ["DIEGO VIERA", "FERNANDO CABRERA", "JORGE LAMIÑO", "RICHARD ESCOBAR", "STEFANY LOPEZ"];
+
+async function seedQuoteExecutives(organizationId: string) {
+  await db
+    .insert(quoteExecutives)
+    .values(EJECUTIVOS.map((name, i) => ({ organizationId, name, displayOrder: i })))
+    .onConflictDoNothing();
+  console.log(`  EJECUTIVO: ${EJECUTIVOS.length} nombres sembrados`);
+}
+
 async function main() {
   console.log("Sembrando organización Delta Seguros…");
   const org = await seedDeltaOrganization();
@@ -382,6 +396,9 @@ async function main() {
 
   console.log("Sembrando FUENTE (INFO GENERAL!T15:T43)…");
   await seedQuoteSources(org.id);
+
+  console.log("Sembrando EJECUTIVO (INFO GENERAL!Y15:Y19)…");
+  await seedQuoteExecutives(org.id);
 
   console.log("Listo. Organización:", org.id);
   process.exit(0);

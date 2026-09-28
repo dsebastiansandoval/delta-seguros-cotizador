@@ -20,7 +20,16 @@ export const clientService = {
     agentId: string,
     input: Pick<
       NewAutoQuoteInput,
-      "personType" | "documentType" | "documentNumber" | "firstName" | "lastName" | "businessName" | "email" | "phone" | "source"
+      | "personType"
+      | "documentType"
+      | "documentNumber"
+      | "firstName"
+      | "lastName"
+      | "businessName"
+      | "email"
+      | "phone"
+      | "source"
+      | "executive"
     > & { vehicles: VehicleRiskInput[] },
   ) {
     const existing = await clientRepository.findByDocument(tx, input.documentNumber);
@@ -38,6 +47,7 @@ export const clientService = {
         email: input.email || undefined,
         phone: input.phone,
         source: input.source,
+        executive: input.executive,
         assignedAgentId: agentId,
       }));
 

@@ -1,8 +1,8 @@
-import { listQuoteSources } from "@/actions/catalog.actions";
+import { listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
-  const sources = await listQuoteSources();
+  const [sources, executives] = await Promise.all([listQuoteSources(), listQuoteExecutives()]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -13,7 +13,7 @@ export default async function NuevaCotizacionSaludPage() {
           edad/sexo/región; el resto queda pendiente de digitar.
         </p>
       </header>
-      <NuevaCotizacionSaludForm sources={sources.map((s) => s.name)} />
+      <NuevaCotizacionSaludForm sources={sources.map((s) => s.name)} executives={executives.map((e) => e.name)} />
     </main>
   );
 }

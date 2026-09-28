@@ -78,6 +78,13 @@
       "when": 1790563488967,
       "tag": "0010_unknown_nebula",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1790565597688,
+      "tag": "0011_pink_medusa",
+      "breakpoints": true
     }
   ]
 }

@@ -98,6 +98,9 @@ const baseAutoQuoteSchema = z.object({
   // FUENTE del Excel — lista cerrada de personas (INFO GENERAL!T15:T43),
   // no texto libre; ver ARCHITECTURE.md §24.
   source: optionalText(),
+  // EJECUTIVO del Excel — lista separada de FUENTE (DATOS VH!D8, INFO
+  // GENERAL!Y15:Y19); ver ARCHITECTURE.md §26.
+  executive: optionalText(),
 
   ...riskShape("1"),
   ...riskShape("2"),
@@ -206,6 +209,7 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
       email: data.email,
       phone: data.phone,
       source: data.source,
+      executive: data.executive,
       vehicles,
     };
   });

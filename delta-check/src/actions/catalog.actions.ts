@@ -3,7 +3,7 @@
 import { asc, eq } from "drizzle-orm";
 import { db, withOrganization } from "@/db";
 import { vehicleBrands, vehicleModels } from "@/db/schema/catalog";
-import { quoteSources } from "@/db/schema/clients";
+import { quoteSources, quoteExecutives } from "@/db/schema/clients";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 
 /**
@@ -55,5 +55,20 @@ export async function listQuoteSources() {
       .from(quoteSources)
       .where(eq(quoteSources.isActive, true))
       .orderBy(asc(quoteSources.displayOrder)),
+  );
+}
+
+/**
+ * 🏢 EJECUTIVO del Excel (`DATOS VH!D8`, lista `INFO GENERAL!Y15:Y19`) —
+ * distinto de FUENTE (ARCHITECTURE.md §24/§26), mismo trato tenant-scoped.
+ */
+export async function listQuoteExecutives() {
+  const session = await requirePermission("quote:create");
+  return withOrganization(session.organizationId, (tx) =>
+    tx
+      .select({ id: quoteExecutives.id, name: quoteExecutives.name })
+      .from(quoteExecutives)
+      .where(eq(quoteExecutives.isActive, true))
+      .orderBy(asc(quoteExecutives.displayOrder)),
   );
 }

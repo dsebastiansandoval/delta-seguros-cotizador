@@ -1,11 +1,12 @@
-import { listVehicleBrands, listVehicleModelsByBrand, listQuoteSources } from "@/actions/catalog.actions";
+import { listVehicleBrands, listVehicleModelsByBrand, listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 export default async function NuevaCotizacionAutosPage() {
-  const [brands, modelsByBrand, sources] = await Promise.all([
+  const [brands, modelsByBrand, sources, executives] = await Promise.all([
     listVehicleBrands(),
     listVehicleModelsByBrand(),
     listQuoteSources(),
+    listQuoteExecutives(),
   ]);
 
   return (
@@ -21,6 +22,7 @@ export default async function NuevaCotizacionAutosPage() {
         brands={brands.map((b) => b.name)}
         modelsByBrand={modelsByBrand}
         sources={sources.map((s) => s.name)}
+        executives={executives.map((e) => e.name)}
       />
     </main>
   );

@@ -21,12 +21,15 @@ export function NuevaCotizacionForm({
   brands,
   modelsByBrand,
   sources,
+  executives,
 }: {
   brands: string[];
   /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
   modelsByBrand: Record<string, string[]>;
   /** FUENTE del Excel (INFO GENERAL!T15:T43) — ver listQuoteSources(). */
   sources: string[];
+  /** EJECUTIVO del Excel (INFO GENERAL!Y15:Y19) — ver listQuoteExecutives(). */
+  executives: string[];
 }) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
@@ -51,6 +54,7 @@ export function NuevaCotizacionForm({
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
   const sourceRef = useRef<HTMLInputElement>(null);
+  const executiveRef = useRef<HTMLInputElement>(null);
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
   // a mano — mismos radio buttons "RIESGO 1..4" del Excel (EXCEL-AUDIT.md
@@ -196,6 +200,33 @@ export function NuevaCotizacionForm({
             <option value="__OTRA__">Otra (especificar abajo)</option>
           </select>
           <input ref={sourceRef} name="source" placeholder="Fuente" className="rounded-lg border border-border bg-background px-3 py-2" />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          Ejecutivo
+          <select
+            defaultValue=""
+            onChange={(e) => {
+              if (executiveRef.current) executiveRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
+            }}
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
+            <option value="" disabled>
+              Selecciona un ejecutivo
+            </option>
+            {executives.map((ex) => (
+              <option key={ex} value={ex}>
+                {ex}
+              </option>
+            ))}
+            <option value="__OTRA__">Otra (especificar abajo)</option>
+          </select>
+          <input
+            ref={executiveRef}
+            name="executive"
+            placeholder="Ejecutivo"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          />
         </label>
       </fieldset>
 

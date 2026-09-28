@@ -16,6 +16,10 @@ export const clients = pgTable("clients", {
   email: text("email"),
   phone: text("phone"),
   source: text("source"), // FUENTE del Excel
+  // EJECUTIVO del Excel (DATOS VH!D8, distinto de FUENTE — confirmado en
+  // ARCHITECTURE.md §24/§26) — quién de Delta gestionó la venta, no
+  // necesariamente el mismo agente autenticado que cargó la cotización.
+  executive: text("executive"),
   assignedAgentId: uuid("assigned_agent_id").references(() => users.id),
   // ARCO — Cancelación/Oposición (ARCHITECTURE.md §14). `isAnonymized` no
   // borra la fila (pólizas/siniestros ligados exigen retención legal) — ver
@@ -72,6 +76,25 @@ export const quoteSources = pgTable(
     displayOrder: integer("display_order").notNull().default(0),
   },
   (t) => [uniqueIndex("quote_sources_org_name_idx").on(t.organizationId, t.name)],
+);
+
+/**
+ * 🏢 EJECUTIVO del Excel (`DATOS VH!D8`, lista `INFO GENERAL!$Y$15:$Y$19`)
+ * — distinto de FUENTE (confirmado en ARCHITECTURE.md §24/§26: son dos
+ * dropdowns reales y separados, no uno redundante con el otro). Mismo
+ * criterio que `quoteSources`: tenant-scoped, no un catálogo global.
+ * `clients.executive` se queda como texto libre (soporta "Otra").
+ */
+export const quoteExecutives = pgTable(
+  "quote_executives",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    name: text("name").notNull(),
+    isActive: boolean("is_active").notNull().default(true),
+    displayOrder: integer("display_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("quote_executives_org_name_idx").on(t.organizationId, t.name)],
 );
 
 /** 🏢 Grupo familiar de salud — titular + dependientes. */

@@ -36,6 +36,7 @@ const baseHealthQuoteSchema = z.object({
   firstName: optionalText(),
   lastName: optionalText(),
   source: optionalText(),
+  executive: optionalText(),
 
   region: z.enum(["SIERRA", "COSTA", "AUSTRO"]),
   titularBirthDate: z.string().min(1, "Fecha de nacimiento requerida"),
