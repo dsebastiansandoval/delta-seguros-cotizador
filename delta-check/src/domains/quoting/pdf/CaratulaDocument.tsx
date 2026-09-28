@@ -138,6 +138,14 @@ const DISCLAIMER_NOTES = [
   "En caso de pérdida total, el valor a indemnizar será el valor comercial a la fecha del siniestro, descontando el deducible de pérdida total establecido por la aseguradora.",
 ];
 
+/**
+ * El saludo de "De nuestra consideración" cambia si es renovación — texto
+ * real de la hoja `CARATULA!C14` (`=IF(DATOS VH!$B$4="COTIZACIÓN", INFO
+ * GENERAL!$G$9, INFO GENERAL!$G$12)`), no redactado de nuevo: G9 para
+ * cotización nueva, G12 (con la fecha/aseguradora anterior insertadas) para
+ * renovación. `data.renewal` viene `null` si es NUEVA o si faltan los datos
+ * de la póliza anterior — nunca se arma la frase con un hueco.
+ */
 function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer: CaratulaOffer; isComparison: boolean }) {
   return (
     <Page size="A4" style={styles.page}>
@@ -154,9 +162,12 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
       </Text>
 
       <Text style={{ marginBottom: 12 }}>
-        {isComparison
-          ? "De nuestra consideración: nos permitimos poner en su consideración las siguientes opciones cotizadas en el mercado ecuatoriano, para que usted elija la que mejor se ajuste a sus necesidades."
-          : "De nuestra consideración: nos permitimos poner en su consideración nuestra mejor oferta del mercado ecuatoriano para la cobertura del vehículo de su propiedad."}
+        <Text style={{ fontWeight: 700 }}>De nuestra consideración: </Text>
+        {data.renewal
+          ? `La presente tiene por objeto recordarle que el día ${data.renewal.previousExpiryDate} vence la póliza en ${data.renewal.previousInsurerName} y que otorga cobertura al vehículo de su propiedad, por tal razón nos permitimos poner en su consideración nuestras mejores ofertas del mercado ecuatoriano.`
+          : isComparison
+            ? "nos permitimos poner en su consideración las siguientes opciones cotizadas en el mercado ecuatoriano, para que usted elija la que mejor se ajuste a sus necesidades."
+            : "nos permitimos poner en su consideración nuestra mejor oferta del mercado ecuatoriano para la cobertura del vehículo de su propiedad."}
       </Text>
 
       <Text style={styles.h2}>OBJETO ASEGURADO</Text>

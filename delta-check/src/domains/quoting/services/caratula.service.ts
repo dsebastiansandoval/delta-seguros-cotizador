@@ -43,6 +43,15 @@ export type CaratulaData = {
    * por defecto (nadie eligió nada, se manda la más barata).
    */
   offers: CaratulaOffer[];
+  /**
+   * Matiz de renovación (hoja `CARATULA!C14`, fórmula real: `=IF(DATOS
+   * VH!$B$4="COTIZACIÓN", INFO GENERAL!$G$9, INFO GENERAL!$G$12)`) — el
+   * saludo de la carta es DISTINTO si es una renovación, y menciona la
+   * aseguradora/fecha de vencimiento de la póliza anterior. `null` cuando
+   * `operationType` es NUEVA o cuando faltan los datos de la póliza
+   * anterior (nunca se arma la frase con un hueco).
+   */
+  renewal: { previousInsurerName: string; previousExpiryDate: string } | null;
 };
 
 /**
@@ -129,6 +138,24 @@ export async function getCaratulaData(
   const ddmmyyyy = (d: Date) =>
     `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
 
+  let renewal: CaratulaData["renewal"] = null;
+  if (quote.operationType === "RENOVACION" && quote.previousInsurerId && quote.previousExpiryDate) {
+    const [previousInsurer] = await tx.select().from(insurers).where(eq(insurers.id, quote.previousInsurerId)).limit(1);
+    if (previousInsurer) {
+      renewal = {
+        previousInsurerName: previousInsurer.name,
+        // `previousExpiryDate` es `date` de Postgres (string "AAAA-MM-DD");
+        // se arma la fecha con las partes del string, no con `new Date()`
+        // directo — un `Date` interpreta esa cadena en UTC y puede mostrar
+        // el día anterior según el huso horario del servidor.
+        previousExpiryDate: (() => {
+          const [y, m, d] = quote.previousExpiryDate.split("-").map(Number);
+          return new Date(y, m - 1, d).toLocaleDateString("es-EC", { year: "numeric", month: "long", day: "numeric" });
+        })(),
+      };
+    }
+  }
+
   return {
     quoteCode: quote.code,
     date: new Date().toLocaleDateString("es-EC", { year: "numeric", month: "long", day: "numeric" }),
@@ -139,6 +166,7 @@ export async function getCaratulaData(
     insuredValueCents: risk.insuredValueCents ?? 0,
     extrasValueCents: risk.extrasValueCents ?? 0,
     coverPageValidity: { from: ddmmyyyy(today), to: ddmmyyyy(nextYear) },
+    renewal,
     offers: offersRaw.map((o) => ({
       insurerName: o.insurerName,
       netPremiumCents: o.netPremiumCents ?? 0,
