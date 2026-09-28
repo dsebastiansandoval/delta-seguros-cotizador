@@ -1,30 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { formatUSD } from "@/domains/shared/money";
 import { ManualPremiumForm } from "@/components/quoting/ManualPremiumForm";
 import { KM_BRACKETS, KM_BRACKET_LABELS } from "@/domains/quoting/constants";
+import { runQuoteComparison, type ActionResult } from "@/actions/quote.actions";
 import type { ComparisonRow } from "@/domains/quoting/services/comparison.service";
 
-/**
- * Antes, "Descargar carátula PDF" siempre mandaba la más barata — sin
- * elegir nada. Ahora se puede tildar varias aseguradoras COTIZADO en la
- * tabla y el PDF trae una página completa por cada una elegida (mismo
- * formato que ya existía, repetido) — a pedido del usuario. Sin ninguna
- * tildada, se mantiene el comportamiento de siempre (la más barata).
- */
-export function AutosComparisonView({
-  quoteId,
-  quoteCode,
-  rows,
-  isKm,
-}: {
-  quoteId: string;
-  quoteCode: string;
+export type RiskGroup = {
+  risk: { id: string; riskNumber: number };
+  vehicle: { plate: string; brand: string; model: string; year: number } | null;
   rows: ComparisonRow[];
-  isKm: boolean;
-}) {
+};
+
+const runInitialState: ActionResult | null = null;
+
+/**
+ * Una cotización trae 1-4 riesgos (vehículos, EXCEL-AUDIT.md §5) — cada
+ * uno con su propio comparador y su propia selección para la carátula
+ * (nunca se mezclan aseguradoras de dos vehículos distintos en un mismo
+ * PDF). Un riesgo recién guardado como borrador todavía no tiene filas —
+ * "Generar comparativa" corre el motor de las 13 aseguradoras recién ahí,
+ * sin tener que rehacer el formulario de cero.
+ */
+export function AutosComparisonView({ quoteId, quoteCode, riskGroups }: { quoteId: string; quoteCode: string; riskGroups: RiskGroup[] }) {
+  const [runState, runAction, running] = useActionState(runQuoteComparison, runInitialState);
+  const isKm = riskGroups.some((g) => g.rows.some((r) => r.modality === "POR_KM"));
+  const anyUncompared = riskGroups.some((g) => g.rows.length === 0);
+
+  return (
+    <>
+      <header className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">
+            Comparativa — {quoteCode} {isKm && <span className="text-muted">(Auto x Km)</span>}
+          </h1>
+          <p className="mt-1 text-sm text-muted">
+            {riskGroups.length > 1 ? `${riskGroups.length} riesgos en esta cotización` : "1 riesgo en esta cotización"}
+          </p>
+        </div>
+        {anyUncompared && (
+          <form action={runAction}>
+            <input type="hidden" name="quoteId" value={quoteId} />
+            <button
+              type="submit"
+              disabled={running}
+              className="shrink-0 rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+            >
+              {running ? "Generando…" : "Generar comparativa →"}
+            </button>
+          </form>
+        )}
+      </header>
+      {runState?.ok === false && "form" in runState.errors && (
+        <p className="mb-4 text-sm text-red-600">{runState.errors.form[0]}</p>
+      )}
+
+      <div className="flex flex-col gap-8">
+        {riskGroups.map((group) => (
+          <RiskSection key={group.risk.id} quoteId={quoteId} group={group} showHeading={riskGroups.length > 1} />
+        ))}
+      </div>
+    </>
+  );
+}
+
+function RiskSection({ quoteId, group, showHeading }: { quoteId: string; group: RiskGroup; showHeading: boolean }) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const { risk, vehicle, rows } = group;
+  const isKm = rows[0]?.modality === "POR_KM";
+  const hasCotizado = rows.some((r) => r.status === "COTIZADO");
 
   function toggle(quoteOptionId: string) {
     setSelected((prev) => {
@@ -35,49 +80,46 @@ export function AutosComparisonView({
     });
   }
 
-  const hasCotizado = rows.some((r) => r.status === "COTIZADO");
   const downloadHref =
     selected.size > 0
       ? `/api/quotes/${quoteId}/caratula?${[...selected].map((id) => `quoteOptionId=${id}`).join("&")}`
       : `/api/quotes/${quoteId}/caratula`;
 
   return (
-    <>
-      <header className="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-xl font-bold tracking-tight">
-            Comparativa — {quoteCode} {isKm && <span className="text-muted">(Auto x Km)</span>}
-          </h1>
-          <p className="mt-1 text-sm text-muted">
-            {isKm ? (
-              <>{new Set(rows.map((r) => r.insurerId)).size} aseguradoras · digitación manual por rango de km</>
-            ) : (
-              <>
-                {rows.length} aseguradoras · {rows.filter((r) => r.status === "COTIZADO").length}{" "}
-                con prima calculada, {rows.filter((r) => r.status === "PENDIENTE_MANUAL").length}{" "}
-                pendientes de digitar
-              </>
-            )}
-          </p>
-        </div>
-        {hasCotizado && (
-          <a
-            href={downloadHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white"
-          >
-            {selected.size > 1 ? `Descargar carátula comparativa (${selected.size})` : "Descargar carátula PDF"}
-          </a>
-        )}
-      </header>
-
-      {isKm ? (
-        <KmComparisonTable rows={rows} quoteId={quoteId} />
-      ) : (
-        <AnnualComparisonTable rows={rows} quoteId={quoteId} selected={selected} onToggle={toggle} />
+    <section>
+      {showHeading && (
+        <h2 className="mb-2 text-sm font-bold uppercase tracking-wide text-muted">
+          Riesgo {risk.riskNumber}
+          {vehicle && ` — ${vehicle.brand} ${vehicle.model} ${vehicle.year} (${vehicle.plate})`}
+        </h2>
       )}
-    </>
+
+      {rows.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
+          Todavía no se generó la comparativa para este riesgo — usa &quot;Generar comparativa&quot; arriba.
+        </div>
+      ) : (
+        <>
+          {!isKm && hasCotizado && (
+            <div className="mb-3 flex justify-end">
+              <a
+                href={downloadHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white"
+              >
+                {selected.size > 1 ? `Descargar carátula comparativa (${selected.size})` : "Descargar carátula PDF"}
+              </a>
+            </div>
+          )}
+          {isKm ? (
+            <KmComparisonTable rows={rows} quoteId={quoteId} />
+          ) : (
+            <AnnualComparisonTable rows={rows} quoteId={quoteId} selected={selected} onToggle={toggle} />
+          )}
+        </>
+      )}
+    </section>
   );
 }
 

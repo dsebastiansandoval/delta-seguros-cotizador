@@ -6,15 +6,21 @@ import { TopNavLinks, SidebarNav, type NavLink, type NavGroup } from "@/componen
 
 const TOPBAR_LINKS: NavLink[] = [
   { href: "/dashboard", label: "Resumen" },
-  { href: "/cotizar/autos/nueva", label: "Autos", activePrefix: "/cotizar/autos" },
+  { href: "/cotizar/autos", label: "Autos", activePrefix: "/cotizar/autos" },
   { href: "/cotizar/salud/nueva", label: "Salud", activePrefix: "/cotizar/salud" },
+  // Acceso de administrador (roles/usuarios, plantillas de tasas
+  // multi-tenant) — a pedido del usuario, visible ya pero sin abrir nada
+  // todavía: no existe esa pantalla, y RBAC.md (ARCHITECTURE.md §8.4) no
+  // tiene una noción de "back-office" propia que construir sin diseñarla.
+  { href: "#", label: "Back-office", disabled: true },
 ];
 
 const SIDEBAR_GROUPS: NavGroup[] = [
   {
     label: "Cotizador",
     links: [
-      { href: "/cotizar/autos/nueva", label: "Nueva cotización — Autos", activePrefix: "/cotizar/autos" },
+      { href: "/cotizar/autos/nueva", label: "Nueva cotización — Autos" },
+      { href: "/cotizar/autos", label: "Mis cotizaciones — Autos", exact: true },
       { href: "/cotizar/salud/nueva", label: "Nueva cotización — Salud", activePrefix: "/cotizar/salud" },
     ],
   },

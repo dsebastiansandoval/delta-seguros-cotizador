@@ -11,12 +11,11 @@ export default async function CompararPage({
   const data = await getQuoteComparison(quoteId);
   if (!data) notFound();
 
-  const { quote, rows } = data;
-  const isKm = rows[0]?.modality === "POR_KM";
+  const { quote, riskGroups } = data;
 
   return (
     <main className="mx-auto max-w-5xl p-8">
-      <AutosComparisonView quoteId={quoteId} quoteCode={quote.code} rows={rows} isKm={isKm} />
+      <AutosComparisonView quoteId={quoteId} quoteCode={quote.code} riskGroups={riskGroups} />
     </main>
   );
 }

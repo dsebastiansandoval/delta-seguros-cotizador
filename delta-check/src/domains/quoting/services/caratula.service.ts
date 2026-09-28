@@ -56,7 +56,23 @@ export async function getCaratulaData(
   const [client] = await tx.select().from(clients).where(eq(clients.id, quote.clientId)).limit(1);
   if (!client) return null;
 
-  const [risk] = await tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId)).limit(1);
+  // Una cotización puede traer 1-4 riesgos (vehículos, EXCEL-AUDIT.md §5).
+  // Con selección, la carátula es del riesgo al que pertenecen esas
+  // opciones (join por quote_risk_id) — nunca se asume "el riesgo 1" si el
+  // agente eligió aseguradoras de otro vehículo. Sin selección (el default
+  // de siempre), se mantiene riesgo 1 — el caso normal de una cotización
+  // de un solo vehículo.
+  const risk =
+    quoteOptionIds && quoteOptionIds.length > 0
+      ? (
+          await tx
+            .select({ risk: quoteRisks })
+            .from(quoteOptions)
+            .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
+            .where(and(eq(quoteRisks.quoteId, quoteId), inArray(quoteOptions.id, quoteOptionIds)))
+            .limit(1)
+        )[0]?.risk
+      : (await tx.select().from(quoteRisks).where(and(eq(quoteRisks.quoteId, quoteId), eq(quoteRisks.riskNumber, 1))).limit(1))[0];
   if (!risk || !risk.vehicleId) return null;
 
   const [vehicle] = await tx.select().from(vehicles).where(eq(vehicles.id, risk.vehicleId)).limit(1);

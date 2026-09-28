@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState, useRef } from "react";
-import { createAutoQuote, type ActionResult } from "@/actions/quote.actions";
+import { useActionState, useRef, useState } from "react";
+import { createAutoQuote, saveAutoQuoteDraft, type ActionResult } from "@/actions/quote.actions";
 import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
+import { VehicleRiskFields } from "@/components/quoting/VehicleRiskFields";
 import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
@@ -25,6 +26,7 @@ export function NuevaCotizacionForm({
   modelsByBrand: Record<string, string[]>;
 }) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
+  const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -45,6 +47,17 @@ export function NuevaCotizacionForm({
   const previousInsurerIdRef = useRef<HTMLInputElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
+
+  // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
+  // a mano — mismos radio buttons "RIESGO 1..4" del Excel (EXCEL-AUDIT.md
+  // §5), acá como tabs. `riskCount` cuántos bloques existen, `activeTab`
+  // cuál se ve — los que no están activos siguen montados (con `hidden`,
+  // no desmontados) para no perder lo ya escrito ahí.
+  const [riskCount, setRiskCount] = useState(1);
+  const [activeTab, setActiveTab] = useState(1);
+
+  const errors = state?.ok === false ? state.errors : undefined;
+  const formError = draftState?.ok === false && "form" in draftState.errors ? draftState.errors.form[0] : undefined;
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -106,7 +119,7 @@ export function NuevaCotizacionForm({
             required
             className="rounded-lg border border-border bg-background px-3 py-2"
           />
-          <FieldError errors={state?.ok === false ? state.errors : undefined} name="documentNumber" />
+          <FieldError errors={errors} name="documentNumber" />
         </label>
 
         <div className="flex items-end">
@@ -165,176 +178,220 @@ export function NuevaCotizacionForm({
         </label>
       </fieldset>
 
-      <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <legend className="col-span-full text-sm font-semibold">Vehículo (Riesgo 1)</legend>
+      <fieldset className="flex flex-col gap-4">
+        <legend className="text-sm font-semibold">Vehículo</legend>
 
-        <label className="flex flex-col gap-1 text-sm">
-          Placa
-          <input
-            ref={plateRef}
-            name="plate"
-            required
-            placeholder="PBX-1234"
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-          <FieldError errors={state?.ok === false ? state.errors : undefined} name="plate" />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Marca
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              const brandName = e.target.value === "__OTRA__" ? "" : e.target.value;
-              if (brandRef.current) brandRef.current.value = brandName;
-
-              // Modelo en cascada: repuebla las sugerencias del datalist con
-              // los modelos reales de la marca elegida (no obliga a
-              // escogerlas — el campo Modelo sigue siendo texto libre).
-              if (modelDatalistRef.current) {
-                modelDatalistRef.current.replaceChildren(
-                  ...(modelsByBrand[brandName] ?? []).map((model) => {
-                    const option = document.createElement("option");
-                    option.value = model;
-                    return option;
-                  }),
-                );
-              }
-            }}
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          >
-            <option value="" disabled>
-              Selecciona una marca
-            </option>
-            {brands.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-            <option value="__OTRA__">Otra (especificar abajo)</option>
-          </select>
-          <input
-            ref={brandRef}
-            name="brand"
-            required
-            placeholder="Marca"
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Modelo
-          <input
-            ref={modelRef}
-            name="model"
-            list="model-suggestions"
-            required
-            placeholder="Escribe o elige de la lista al seleccionar marca"
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-          {/* Sugerencias reales por marca (Prodeseg, ver reference-data/vehicle_models.json)
-              — no restringe: si el modelo no aparece, se escribe a mano igual que "Otra" en Marca. */}
-          <datalist ref={modelDatalistRef} id="model-suggestions" />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Año
-          <input
-            ref={yearRef}
-            name="year"
-            type="number"
-            required
-            defaultValue={new Date().getFullYear()}
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Tipo
-          <select
-            ref={bodyTypeRef}
-            name="bodyType"
-            defaultValue="LIVIANO"
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          >
-            <option value="LIVIANO">Liviano</option>
-            <option value="PICKUP">Pickup</option>
-          </select>
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Color
-          <input ref={colorRef} name="color" className="rounded-lg border border-border bg-background px-3 py-2" />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Valor comercial (USD)
-          <input
-            ref={commercialValueRef}
-            name="commercialValueDollars"
-            type="number"
-            step="0.01"
-            required
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-          <FieldError errors={state?.ok === false ? state.errors : undefined} name="commercialValueDollars" />
-        </label>
-
-        <div className="flex items-end">
-          <PatioTuercaReferenceLink brandRef={brandRef} modelRef={modelRef} yearRef={yearRef} />
+        <div className="flex flex-wrap gap-2">
+          {Array.from({ length: riskCount }, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setActiveTab(n)}
+              className={`rounded-lg px-3.5 py-1.5 text-xs font-bold ${
+                activeTab === n ? "bg-delta-navy text-white" : "border border-border bg-background text-muted"
+              }`}
+            >
+              Riesgo {n}
+            </button>
+          ))}
+          {riskCount < 4 && (
+            <button
+              type="button"
+              onClick={() => {
+                const next = riskCount + 1;
+                setRiskCount(next);
+                setActiveTab(next);
+              }}
+              className="rounded-lg border border-dashed border-border-strong px-3.5 py-1.5 text-xs font-bold text-muted hover:bg-background"
+            >
+              + Añadir riesgo
+            </button>
+          )}
         </div>
 
-        <label className="flex flex-col gap-1 text-sm">
-          Extras (USD)
-          <input
-            ref={extrasValueRef}
-            name="extrasValueDollars"
-            type="number"
-            step="0.01"
-            defaultValue={0}
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-        </label>
+        <div hidden={activeTab !== 1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <label className="flex flex-col gap-1 text-sm">
+            Placa
+            <input
+              ref={plateRef}
+              name="plate1"
+              required
+              placeholder="PBX-1234"
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+            <FieldError errors={errors} name="plate1" />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm">
-          Provincia
-          <select
-            ref={vehicleProvinceRef}
-            name="province"
-            defaultValue=""
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          >
-            <option value="">Selecciona una provincia</option>
-            {ECUADOR_PROVINCES.map((p) => (
-              <option key={p} value={p}>
-                {p}
+          <label className="flex flex-col gap-1 text-sm">
+            Marca
+            <select
+              defaultValue=""
+              onChange={(e) => {
+                const brandName = e.target.value === "__OTRA__" ? "" : e.target.value;
+                if (brandRef.current) brandRef.current.value = brandName;
+                if (modelDatalistRef.current) {
+                  modelDatalistRef.current.replaceChildren(
+                    ...(modelsByBrand[brandName] ?? []).map((model) => {
+                      const option = document.createElement("option");
+                      option.value = model;
+                      return option;
+                    }),
+                  );
+                }
+              }}
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            >
+              <option value="" disabled>
+                Selecciona una marca
               </option>
-            ))}
-          </select>
-        </label>
+              {brands.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+              <option value="__OTRA__">Otra (especificar abajo)</option>
+            </select>
+            <input
+              ref={brandRef}
+              name="brand1"
+              required
+              placeholder="Marca"
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+          </label>
 
-        <label className="flex flex-col gap-1 text-sm">
-          Ciudad
-          <input ref={cityRef} name="city" className="rounded-lg border border-border bg-background px-3 py-2" />
-        </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Modelo
+            <input
+              ref={modelRef}
+              name="model1"
+              list="model-suggestions-1"
+              required
+              placeholder="Escribe o elige de la lista al seleccionar marca"
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+            <datalist ref={modelDatalistRef} id="model-suggestions-1" />
+          </label>
 
-        <label className="col-span-full flex items-center gap-2 text-sm">
-          <input ref={hasTrackerRef} name="hasTracker" type="checkbox" value="true" />
-          Tiene dispositivo de rastreo
-        </label>
+          <label className="flex flex-col gap-1 text-sm">
+            Año
+            <input
+              ref={yearRef}
+              name="year1"
+              type="number"
+              required
+              defaultValue={new Date().getFullYear()}
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Tipo
+            <select
+              ref={bodyTypeRef}
+              name="bodyType1"
+              defaultValue="LIVIANO"
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            >
+              <option value="LIVIANO">Liviano</option>
+              <option value="PICKUP">Pickup</option>
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Color
+            <input ref={colorRef} name="color1" className="rounded-lg border border-border bg-background px-3 py-2" />
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Valor comercial (USD)
+            <input
+              ref={commercialValueRef}
+              name="commercialValueDollars1"
+              type="number"
+              step="0.01"
+              required
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+            <FieldError errors={errors} name="commercialValueDollars1" />
+          </label>
+
+          <div className="flex items-end">
+            <PatioTuercaReferenceLink brandRef={brandRef} modelRef={modelRef} yearRef={yearRef} />
+          </div>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Extras (USD)
+            <input
+              ref={extrasValueRef}
+              name="extrasValueDollars1"
+              type="number"
+              step="0.01"
+              defaultValue={0}
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Provincia
+            <select
+              ref={vehicleProvinceRef}
+              name="province1"
+              defaultValue=""
+              className="rounded-lg border border-border bg-background px-3 py-2"
+            >
+              <option value="">Selecciona una provincia</option>
+              {ECUADOR_PROVINCES.map((p) => (
+                <option key={p} value={p}>
+                  {p}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Ciudad
+            <input ref={cityRef} name="city1" className="rounded-lg border border-border bg-background px-3 py-2" />
+          </label>
+
+          <label className="col-span-full flex items-center gap-2 text-sm">
+            <input ref={hasTrackerRef} name="hasTracker1" type="checkbox" value="true" />
+            Tiene dispositivo de rastreo
+          </label>
+        </div>
+
+        {[2, 3, 4].map(
+          (n) =>
+            riskCount >= n && (
+              <div key={n} hidden={activeTab !== n}>
+                <VehicleRiskFields suffix={String(n)} brands={brands} modelsByBrand={modelsByBrand} />
+              </div>
+            ),
+        )}
       </fieldset>
 
+      {formError && <p className="text-sm text-red-600">{formError}</p>}
       {state?.ok === false && "form" in state.errors && (
         <p className="text-sm text-red-600">{state.errors.form[0]}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="self-start rounded-lg bg-delta-navy px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
-      >
-        {pending ? "Comparando…" : "Generar comparativa →"}
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          formAction={draftAction}
+          disabled={draftPending || pending}
+          className="self-start rounded-lg border border-border-strong px-5 py-2.5 text-sm font-semibold text-foreground disabled:opacity-60"
+        >
+          {draftPending ? "Guardando…" : "Guardar borrador"}
+        </button>
+        <button
+          type="submit"
+          disabled={pending || draftPending}
+          className="self-start rounded-lg bg-delta-navy px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+        >
+          {pending ? "Comparando…" : "Generar comparativa →"}
+        </button>
+      </div>
     </form>
   );
 }

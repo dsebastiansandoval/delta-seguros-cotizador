@@ -30,6 +30,11 @@ export const quotes = pgTable("quotes", {
   branch: branchEnum("branch").notNull(),
   operationType: operationTypeEnum("operation_type").notNull(),
   status: quoteStatusEnum("status").notNull().default("BORRADOR"),
+  // ANUAL o POR_KM (solo Autos) — antes solo vivía en cada quote_option, así
+  // que un borrador guardado sin correr el comparador todavía no tenía
+  // dónde recordar cuál había elegido el agente. "Guardar borrador" +
+  // "Generar comparativa" después necesitan saberlo.
+  modality: modalityEnum("modality").notNull().default("ANUAL"),
   previousInsurerId: uuid("previous_insurer_id").references(() => insurers.id),
   previousPolicyNumber: text("previous_policy_number"),
   previousExpiryDate: date("previous_expiry_date"),

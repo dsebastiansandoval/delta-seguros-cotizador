@@ -1,0 +1,1 @@
+ALTER TABLE "quotes" ADD COLUMN "modality" "modality" DEFAULT 'ANUAL' NOT NULL;

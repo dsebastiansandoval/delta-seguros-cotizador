@@ -13,12 +13,66 @@ function optionalText() {
   return z.preprocess((v) => (v === "" ? undefined : v), z.string().min(1).optional());
 }
 
+function optionalNumber() {
+  return z.preprocess((v) => (v === "" || v == null ? undefined : v), z.coerce.number().min(0).optional());
+}
+
+function optionalYear() {
+  return z.preprocess(
+    (v) => (v === "" || v == null ? undefined : v),
+    z.coerce.number().int().min(1980).max(new Date().getFullYear() + 1).optional(),
+  );
+}
+
+function optionalBodyType() {
+  return z.preprocess((v) => (v === "" ? undefined : v), z.enum(["LIVIANO", "PICKUP"]).optional());
+}
+
+/**
+ * Un vehículo (Riesgo N del Excel, EXCEL-AUDIT.md §5 — hasta 4 por
+ * cotización, `quote_risks.risk_number`). Riesgo 2/3/4 son bloques
+ * enteros opcionales (el agente puede no agregarlos) — todos los campos
+ * quedan opcionales a nivel de Zod, mismo espíritu que
+ * `dep1Age`/`dep2Age` en el esquema de Salud: la placa decide si el
+ * bloque "cuenta" o no (`newAutoQuoteSchema.transform()` más abajo).
+ * Se escriben los 4 bloques a mano en vez de generarlos con un loop
+ * sobre claves calculadas — así Zod/TypeScript siguen conociendo cada
+ * campo por su nombre real, no solo por su forma.
+ */
+function riskShape<S extends string>(suffix: S) {
+  return {
+    [`plate${suffix}`]: optionalText(),
+    [`brand${suffix}`]: optionalText(),
+    [`model${suffix}`]: optionalText(),
+    [`year${suffix}`]: optionalYear(),
+    [`bodyType${suffix}`]: optionalBodyType(),
+    [`color${suffix}`]: optionalText(),
+    [`commercialValueDollars${suffix}`]: optionalNumber(),
+    [`extrasValueDollars${suffix}`]: optionalNumber(),
+    [`hasTracker${suffix}`]: z.coerce.boolean().default(false),
+    [`city${suffix}`]: optionalText(),
+    [`province${suffix}`]: optionalText(),
+  } as {
+    [K in `plate${S}` | `brand${S}` | `model${S}`]: z.ZodOptional<z.ZodString>;
+  } & {
+    [K in `year${S}`]: z.ZodOptional<z.ZodNumber>;
+  } & {
+    [K in `bodyType${S}`]: z.ZodOptional<z.ZodEnum<{ LIVIANO: "LIVIANO"; PICKUP: "PICKUP" }>>;
+  } & {
+    [K in `color${S}` | `city${S}` | `province${S}`]: z.ZodOptional<z.ZodString>;
+  } & {
+    [K in `commercialValueDollars${S}` | `extrasValueDollars${S}`]: z.ZodOptional<z.ZodNumber>;
+  } & {
+    [K in `hasTracker${S}`]: z.ZodDefault<z.ZodBoolean>;
+  };
+}
+
 /**
  * Un solo esquema, compartido entre el formulario (cliente) y la Server
  * Action (servidor) — ARCHITECTURE.md §1. Los nombres de campo replican
  * "DATOS VH" del Excel (EXCEL-AUDIT.md), no se inventaron de cero.
  */
-export const newClientVehicleSchema = z.object({
+const baseAutoQuoteSchema = z.object({
   // Modalidad — ANUAL (con motor de tasas para Latina/Cóndor) o POR_KM
   // (100% manual para las 13, EXCEL-AUDIT.md §11.4b).
   modality: z.enum(["ANUAL", "POR_KM"]).default("ANUAL"),
@@ -41,20 +95,120 @@ export const newClientVehicleSchema = z.object({
   businessName: optionalText(),
   email: z.preprocess((v) => (v === "" ? undefined : v), z.email().optional()),
   phone: optionalText(),
+  // FUENTE del Excel — lista cerrada de personas (INFO GENERAL!T15:T43),
+  // no texto libre; ver ARCHITECTURE.md §24.
   source: optionalText(),
 
-  // Vehículo (Riesgo 1)
-  plate: z.string().min(6, "Placa inválida").max(8),
-  brand: z.string().min(1),
-  model: z.string().min(1),
-  year: z.coerce.number().int().min(1980).max(new Date().getFullYear() + 1),
-  bodyType: z.enum(["LIVIANO", "PICKUP"]),
-  color: optionalText(),
-  commercialValueDollars: z.coerce.number().positive("El valor asegurado debe ser mayor a 0"),
-  extrasValueDollars: z.coerce.number().min(0).default(0),
-  hasTracker: z.coerce.boolean().default(false),
-  city: optionalText(),
-  province: optionalText(),
+  ...riskShape("1"),
+  ...riskShape("2"),
+  ...riskShape("3"),
+  ...riskShape("4"),
 });
 
-export type NewClientVehicleInput = z.infer<typeof newClientVehicleSchema>;
+const riskSuffixes = ["1", "2", "3", "4"] as const;
+
+function riskInputFor(data: z.infer<typeof baseAutoQuoteSchema>, n: (typeof riskSuffixes)[number]) {
+  switch (n) {
+    case "1":
+      return {
+        plate: data.plate1,
+        brand: data.brand1,
+        model: data.model1,
+        year: data.year1,
+        bodyType: data.bodyType1,
+        color: data.color1,
+        commercialValueDollars: data.commercialValueDollars1,
+        extrasValueDollars: data.extrasValueDollars1,
+        hasTracker: data.hasTracker1,
+        city: data.city1,
+        province: data.province1,
+      };
+    case "2":
+      return {
+        plate: data.plate2,
+        brand: data.brand2,
+        model: data.model2,
+        year: data.year2,
+        bodyType: data.bodyType2,
+        color: data.color2,
+        commercialValueDollars: data.commercialValueDollars2,
+        extrasValueDollars: data.extrasValueDollars2,
+        hasTracker: data.hasTracker2,
+        city: data.city2,
+        province: data.province2,
+      };
+    case "3":
+      return {
+        plate: data.plate3,
+        brand: data.brand3,
+        model: data.model3,
+        year: data.year3,
+        bodyType: data.bodyType3,
+        color: data.color3,
+        commercialValueDollars: data.commercialValueDollars3,
+        extrasValueDollars: data.extrasValueDollars3,
+        hasTracker: data.hasTracker3,
+        city: data.city3,
+        province: data.province3,
+      };
+    case "4":
+      return {
+        plate: data.plate4,
+        brand: data.brand4,
+        model: data.model4,
+        year: data.year4,
+        bodyType: data.bodyType4,
+        color: data.color4,
+        commercialValueDollars: data.commercialValueDollars4,
+        extrasValueDollars: data.extrasValueDollars4,
+        hasTracker: data.hasTracker4,
+        city: data.city4,
+        province: data.province4,
+      };
+  }
+}
+
+export const newAutoQuoteSchema = baseAutoQuoteSchema
+  .refine((data) => Boolean(data.plate1 && data.brand1 && data.model1 && data.year1 && data.commercialValueDollars1), {
+    message: "Completa los datos del vehículo — Riesgo 1",
+    path: ["plate1"],
+  })
+  .transform((data) => {
+    const vehicles = riskSuffixes
+      .map((n) => riskInputFor(data, n))
+      .filter((v): v is typeof v & { plate: string; brand: string; model: string; year: number } => Boolean(v.plate))
+      .map((v) => ({
+        plate: v.plate.toUpperCase(),
+        brand: v.brand ?? "",
+        model: v.model ?? "",
+        year: v.year ?? new Date().getFullYear(),
+        bodyType: v.bodyType ?? ("LIVIANO" as const),
+        color: v.color,
+        commercialValueDollars: v.commercialValueDollars ?? 0,
+        extrasValueDollars: v.extrasValueDollars ?? 0,
+        hasTracker: v.hasTracker,
+        city: v.city,
+        province: v.province,
+      }));
+
+    return {
+      modality: data.modality,
+      operationType: data.operationType,
+      previousInsurerId: data.previousInsurerId,
+      previousPolicyNumber: data.previousPolicyNumber,
+      previousExpiryDate: data.previousExpiryDate,
+      personType: data.personType,
+      documentType: data.documentType,
+      documentNumber: data.documentNumber,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      businessName: data.businessName,
+      email: data.email,
+      phone: data.phone,
+      source: data.source,
+      vehicles,
+    };
+  });
+
+export type NewAutoQuoteInput = z.infer<typeof newAutoQuoteSchema>;
+export type VehicleRiskInput = NewAutoQuoteInput["vehicles"][number];

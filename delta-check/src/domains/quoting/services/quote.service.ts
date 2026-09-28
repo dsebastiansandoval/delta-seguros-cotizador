@@ -15,15 +15,21 @@ function generateQuoteCode(): string {
 }
 
 export const quoteService = {
+  /**
+   * `risks` trae 1 a 4 entradas — Riesgo 1..4 del Excel (EXCEL-AUDIT.md §5).
+   * Cada una se guarda como su propia fila en `quote_risks` con
+   * `riskNumber` 1-indexado en el orden recibido — el comparador
+   * (`comparisonService.runComparisonForRisk`) corre una vez por cada
+   * riesgo, nunca junto.
+   */
   async createAutoQuote(
     tx: Db,
     params: {
       organizationId: string;
       agentId: string;
       clientId: string;
-      vehicleId: string;
-      insuredValueCents: number;
-      extrasValueCents: number;
+      risks: Array<{ vehicleId: string; insuredValueCents: number; extrasValueCents: number }>;
+      modality: "ANUAL" | "POR_KM";
       operationType: "NUEVA" | "RENOVACION";
       // Solo RENOVACION — traídos de la póliza/cotización anterior del
       // mismo vehículo (EXCEL-AUDIT.md §5, macro BUSCAR_BASE_VEHICULOS:
@@ -43,29 +49,39 @@ export const quoteService = {
         branch: "AUTOS",
         operationType: params.operationType,
         status: "BORRADOR",
+        modality: params.modality,
         previousInsurerId: params.previousInsurerId,
         previousPolicyNumber: params.previousPolicyNumber,
         previousExpiryDate: params.previousExpiryDate,
       })
       .returning();
 
-    const [risk] = await tx
-      .insert(quoteRisks)
-      .values({
-        organizationId: params.organizationId,
-        quoteId: quote.id,
-        riskNumber: 1,
-        vehicleId: params.vehicleId,
-        insuredValueCents: params.insuredValueCents,
-        extrasValueCents: params.extrasValueCents,
-      })
-      .returning();
+    const risks = [];
+    for (let i = 0; i < params.risks.length; i++) {
+      const r = params.risks[i];
+      const [risk] = await tx
+        .insert(quoteRisks)
+        .values({
+          organizationId: params.organizationId,
+          quoteId: quote.id,
+          riskNumber: i + 1,
+          vehicleId: r.vehicleId,
+          insuredValueCents: r.insuredValueCents,
+          extrasValueCents: r.extrasValueCents,
+        })
+        .returning();
+      risks.push(risk);
+    }
 
-    return { quote, risk };
+    return { quote, risks };
   },
 
   async findById(tx: Db, quoteId: string) {
     const [quote] = await tx.select().from(quotes).where(eq(quotes.id, quoteId)).limit(1);
     return quote ?? null;
+  },
+
+  async findRisksByQuote(tx: Db, quoteId: string) {
+    return tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId)).orderBy(quoteRisks.riskNumber);
   },
 };
