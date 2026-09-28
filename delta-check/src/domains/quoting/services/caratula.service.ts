@@ -24,6 +24,17 @@ export type CaratulaData = {
   insuredValueCents: number;
   extrasValueCents: number;
   /**
+   * Vigencia proyectada para la portada (hoy → hoy + 1 año), no una fecha
+   * de póliza confirmada — eso solo existe recién en Emisión
+   * (`policies.startsAt`/`endsAt`, ver EmitPolicyForm). Se calcula acá
+   * porque el pedido explícito del usuario fue usar la portada real del
+   * Excel (item 10/11 del feedback), que sí muestra un rango de fechas —
+   * mostrar "1 año desde hoy" es una proyección razonable para una
+   * cotización ANUAL (el caso normal), no un dato inventado sobre el
+   * cliente. Formato `DD/MM/AAAA` igual al ejemplo real (WhatsApp).
+   */
+  coverPageValidity: { from: string; to: string };
+  /**
    * Una o varias aseguradoras — el pedido original del Excel (hoja
    * `CARATULA`) siempre fue una sola, "la recomendada" (la más barata ya
    * COTIZADA). A pedido del usuario, ahora también se puede armar con
@@ -112,6 +123,12 @@ export async function getCaratulaData(
       ? (client.businessName ?? "-")
       : `${client.firstName ?? ""} ${client.lastName ?? ""}`.trim() || "-";
 
+  const today = new Date();
+  const nextYear = new Date(today);
+  nextYear.setFullYear(nextYear.getFullYear() + 1);
+  const ddmmyyyy = (d: Date) =>
+    `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
+
   return {
     quoteCode: quote.code,
     date: new Date().toLocaleDateString("es-EC", { year: "numeric", month: "long", day: "numeric" }),
@@ -121,6 +138,7 @@ export async function getCaratulaData(
     vehicleLabel: `${vehicle.brand} ${vehicle.model} ${vehicle.year}`,
     insuredValueCents: risk.insuredValueCents ?? 0,
     extrasValueCents: risk.extrasValueCents ?? 0,
+    coverPageValidity: { from: ddmmyyyy(today), to: ddmmyyyy(nextYear) },
     offers: offersRaw.map((o) => ({
       insurerName: o.insurerName,
       netPremiumCents: o.netPremiumCents ?? 0,

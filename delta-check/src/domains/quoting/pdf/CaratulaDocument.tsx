@@ -1,6 +1,68 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { CaratulaData, CaratulaOffer } from "../services/caratula.service";
 import { formatUSD } from "@/domains/shared/money";
+
+/**
+ * Portada real de Delta (`xl/media/image28.jpeg` dentro de
+ * COTIZADOR DELTA-1.xlsm — la misma que ya usan en el PDF que le mandan al
+ * cliente por WhatsApp, no un diseño nuevo). Se lee una sola vez a un
+ * Buffer al cargar el módulo — más simple y más seguro para el tracing de
+ * archivos de Next.js en producción que pasarle una ruta a <Image> en cada
+ * request. 1766×2795px a 220dpi → 578×915pt (72pt/in), de ahí el tamaño de
+ * página custom de PortadaPage (no A4 — se respeta el aspect ratio real de
+ * la imagen para que quede a sangre completa, sin franjas).
+ */
+const PORTADA_AUTOS = readFileSync(join(process.cwd(), "src/domains/quoting/pdf/assets/portada-autos.jpg"));
+const PORTADA_SIZE: [number, number] = [578, 915];
+
+const portadaStyles = StyleSheet.create({
+  page: { padding: 0 },
+  image: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%" },
+  clientName: {
+    position: "absolute",
+    top: 300,
+    left: 40,
+    right: 40,
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#ffffff",
+    textTransform: "uppercase",
+  },
+  validity: {
+    position: "absolute",
+    top: 675,
+    left: 40,
+    right: 40,
+    textAlign: "center",
+    fontSize: 12,
+    fontWeight: 700,
+    color: "#ffffff",
+  },
+});
+
+/**
+ * Página 0 — la portada de marca que pedía el usuario ("en 10, sí usa las
+ * portadas"). Nombre y vigencia superpuestos sobre los espacios en blanco
+ * reales de la plantilla (entre el eslogan y la camioneta, y entre la
+ * camioneta y los íconos sociales) — coordenadas estimadas a partir del
+ * PDF real que Delta ya manda por WhatsApp, no medidas exactas de diseño;
+ * un ajuste fino queda pendiente si al verlo no cae perfecto.
+ */
+function PortadaPage({ data }: { data: CaratulaData }) {
+  return (
+    <Page size={PORTADA_SIZE} style={portadaStyles.page}>
+      {/* eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`. */}
+      <Image src={PORTADA_AUTOS} style={portadaStyles.image} />
+      <Text style={portadaStyles.clientName}>{data.clientName}</Text>
+      <Text style={portadaStyles.validity}>
+        {data.coverPageValidity.from} — {data.coverPageValidity.to}
+      </Text>
+    </Page>
+  );
+}
 
 /**
  * Equivalente a la hoja `CARATULA` del Excel (EXCEL-AUDIT.md) — el texto de
@@ -37,7 +99,21 @@ const styles = StyleSheet.create({
   bulletMark: { width: 10 },
   bulletText: { flex: 1 },
   footer: { marginTop: 28, color: "#6b6f76" },
+  paymentRow: { flexDirection: "row", justifyContent: "space-between" },
+  paymentCol: { flex: 1, alignItems: "center" },
+  paymentTerm: { color: "#6b6f76", fontSize: 9, marginBottom: 2 },
+  paymentValue: { fontWeight: 700 },
 });
+
+/**
+ * 6/9/12 meses con tarjeta, sin interés — mismo cálculo que el PDF real de
+ * ejemplo (WhatsApp): prima total del contado dividida en cuotas iguales,
+ * sin ningún recargo. `payment_options`/`quote_option_coverages` ya existen
+ * en el esquema para el día que alguna aseguradora sí cobre interés por
+ * cuotas (dato que hoy no tenemos, así que no se inventa) — mientras tanto
+ * esto es una cuenta, no un dato que dependa de tabla.
+ */
+const INSTALLMENT_TERMS = [6, 9, 12] as const;
 
 const COVERAGE_TEXT =
   "Choque y/o volcadura, incendio y/o rayo, explosión, robo total y parcial, hurto, daños " +
@@ -125,6 +201,21 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
         <Text style={styles.totalValue}>{formatUSD(offer.totalPremiumCents)}</Text>
       </View>
 
+      <Text style={styles.h2}>FORMAS DE PAGO</Text>
+      <View style={styles.row}>
+        <Text style={styles.label}>Efectivo o transferencia</Text>
+        <Text style={styles.value}>{formatUSD(offer.totalPremiumCents)}</Text>
+      </View>
+      <Text style={[styles.label, { marginTop: 6, marginBottom: 2 }]}>Tarjeta de crédito, sin interés</Text>
+      <View style={styles.paymentRow}>
+        {INSTALLMENT_TERMS.map((n) => (
+          <View style={styles.paymentCol} key={n}>
+            <Text style={styles.paymentTerm}>{n} meses</Text>
+            <Text style={styles.paymentValue}>{formatUSD(Math.round(offer.totalPremiumCents / n))}</Text>
+          </View>
+        ))}
+      </View>
+
       <Text style={styles.h2}>COBERTURAS</Text>
       <Text>{COVERAGE_TEXT}</Text>
 
@@ -159,6 +250,7 @@ export function CaratulaDocument({ data }: { data: CaratulaData }) {
   const isComparison = data.offers.length > 1;
   return (
     <Document title={`Oferta ${data.quoteCode}`}>
+      <PortadaPage data={data} />
       {data.offers.map((offer, i) => (
         <CaratulaPage key={`${offer.insurerName}-${i}`} data={data} offer={offer} isComparison={isComparison} />
       ))}

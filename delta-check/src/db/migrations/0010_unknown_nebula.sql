@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "quote_sources_org_name_idx" ON "quote_sources" USING btree ("organization_id","name");

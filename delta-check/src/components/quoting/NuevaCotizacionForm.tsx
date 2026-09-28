@@ -20,10 +20,13 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
 export function NuevaCotizacionForm({
   brands,
   modelsByBrand,
+  sources,
 }: {
   brands: string[];
   /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
   modelsByBrand: Record<string, string[]>;
+  /** FUENTE del Excel (INFO GENERAL!T15:T43) — ver listQuoteSources(). */
+  sources: string[];
 }) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
@@ -47,6 +50,7 @@ export function NuevaCotizacionForm({
   const previousInsurerIdRef = useRef<HTMLInputElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
+  const sourceRef = useRef<HTMLInputElement>(null);
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
   // a mano — mismos radio buttons "RIESGO 1..4" del Excel (EXCEL-AUDIT.md
@@ -174,7 +178,24 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Fuente
-          <input name="source" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <select
+            defaultValue=""
+            onChange={(e) => {
+              if (sourceRef.current) sourceRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
+            }}
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
+            <option value="" disabled>
+              Selecciona una fuente
+            </option>
+            {sources.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+            <option value="__OTRA__">Otra (especificar abajo)</option>
+          </select>
+          <input ref={sourceRef} name="source" placeholder="Fuente" className="rounded-lg border border-border bg-background px-3 py-2" />
         </label>
       </fieldset>
 

@@ -14,6 +14,7 @@ import { organizations } from "./schema/organizations";
 import { roles, userRoles, users } from "./schema/identity";
 import { insurers } from "./schema/catalog";
 import { healthRateRules, rateRules, rateTables } from "./schema/catalog";
+import { quoteSources } from "./schema/clients";
 
 const DEV_USER_EMAIL = "dev@deltaseguros.local";
 
@@ -314,6 +315,52 @@ async function seedSaludGenerica(organizationId: string) {
   console.log(`  SALUD (genérica): ${rows.length} reglas de tarifa sembradas`);
 }
 
+/**
+ * FUENTE real (`INFO GENERAL!T15:T43` de COTIZADOR DELTA.xlsm — verificado
+ * como el rango exacto de la validación de datos de `DATOS VH!H14`, no el
+ * segundo bloque `T50:T62` con el mismo encabezado que ninguna validación
+ * usa). 29 nombres, orden tal cual el Excel.
+ */
+const FUENTES = [
+  "CATALINA ALVEAR",
+  "CRISTIAN ESCOBAR",
+  "DANIEL REINOSO",
+  "DIANA FLORES",
+  "DIEGO ENDARA",
+  "DIEGO VIERA",
+  "FERNANDO CABRERA",
+  "FERNANDO LEON",
+  "FRANCISCO VILLASIS",
+  "GABRIELA HIDALGO",
+  "ISAAC GUACHAMIN",
+  "JEAN HERRERA",
+  "JENNY AGUIRRE",
+  "JORGE LAMIÑO",
+  "JOSE CORDOVA",
+  "JOSE LUIS PADILLA",
+  "JOSE LUIS RUIZ",
+  "JOSEFINA REGATO",
+  "JUAN CARLOS MONTENEGRO",
+  "LEADS FERNANDO CABRERA",
+  "LEADS RICHARD ESCOBAR",
+  "LEADS STEFY",
+  "MANUEL LLUMIQUINGA",
+  "NICOLAS MALDONADO",
+  "PABLO MARTINEZ",
+  "PAOLA MORA",
+  "PATY QUIROZ",
+  "RICHARD ESCOBAR",
+  "SARITA GALLEGOS",
+];
+
+async function seedQuoteSources(organizationId: string) {
+  await db
+    .insert(quoteSources)
+    .values(FUENTES.map((name, i) => ({ organizationId, name, displayOrder: i })))
+    .onConflictDoNothing();
+  console.log(`  FUENTE: ${FUENTES.length} nombres sembrados`);
+}
+
 async function main() {
   console.log("Sembrando organización Delta Seguros…");
   const org = await seedDeltaOrganization();
@@ -332,6 +379,9 @@ async function main() {
 
   console.log("Sembrando tarifas reales de Salud (genérica)…");
   await seedSaludGenerica(org.id);
+
+  console.log("Sembrando FUENTE (INFO GENERAL!T15:T43)…");
+  await seedQuoteSources(org.id);
 
   console.log("Listo. Organización:", org.id);
   process.exit(0);

@@ -64,6 +64,20 @@
       "when": 1790561790265,
       "tag": "0008_careless_tana_nile",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790563395381,
+      "tag": "0009_past_skin",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1790563488967,
+      "tag": "0010_unknown_nebula",
+      "breakpoints": true
     }
   ]
 }

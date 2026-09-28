@@ -1,4 +1,4 @@
-import { bigint, boolean, date, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { bigint, boolean, date, integer, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
 import { documentTypeEnum, genderEnum, insuredRelationEnum, personTypeEnum, regionEnum } from "./enums";
 import { users } from "./identity";
@@ -51,6 +51,28 @@ export const vehicles = pgTable("vehicles", {
   province: text("province"),
   ...timestamps,
 });
+
+/**
+ * 🏢 FUENTE del Excel (`INFO GENERAL!T15:T43`, confirmado como el rango
+ * real de la validación de datos de `DATOS VH!H14` — no el segundo bloque
+ * `T50:T62`, que tiene el mismo encabezado pero ninguna validación lo usa)
+ * — quién trajo al cliente. Es tenant-scoped y no un catálogo 🌐 como
+ * `vehicleBrands`: es la nómina propia de Delta, no algo que otro tenant
+ * de Delta Check deba ver. `clients.source` se queda como texto libre
+ * (soporta "Otra") — esta tabla es solo el catálogo cerrado que alimenta
+ * el selector, igual que `vehicleBrands` alimenta el de Marca.
+ */
+export const quoteSources = pgTable(
+  "quote_sources",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    name: text("name").notNull(),
+    isActive: boolean("is_active").notNull().default(true),
+    displayOrder: integer("display_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("quote_sources_org_name_idx").on(t.organizationId, t.name)],
+);
 
 /** 🏢 Grupo familiar de salud — titular + dependientes. */
 export const insuredGroups = pgTable("insured_groups", {

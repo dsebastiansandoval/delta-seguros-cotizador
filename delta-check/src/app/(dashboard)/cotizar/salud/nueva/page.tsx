@@ -1,6 +1,9 @@
+import { listQuoteSources } from "@/actions/catalog.actions";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
-export default function NuevaCotizacionSaludPage() {
+export default async function NuevaCotizacionSaludPage() {
+  const sources = await listQuoteSources();
+
   return (
     <main className="mx-auto max-w-3xl p-8">
       <header className="mb-6">
@@ -10,7 +13,7 @@ export default function NuevaCotizacionSaludPage() {
           edad/sexo/región; el resto queda pendiente de digitar.
         </p>
       </header>
-      <NuevaCotizacionSaludForm />
+      <NuevaCotizacionSaludForm sources={sources.map((s) => s.name)} />
     </main>
   );
 }

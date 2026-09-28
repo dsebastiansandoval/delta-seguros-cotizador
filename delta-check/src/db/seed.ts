@@ -127,6 +127,13 @@ async function seedCatalog() {
     { code: "AMPARO_PATRIMONIAL", name: "Amparo Patrimonial", valueType: "BOOLEAN" },
     { code: "ASISTENCIA_EXEQUIAL", name: "Asistencia exequial", valueType: "BOOLEAN" },
     { code: "CONDUCTOR_ELEGIDO", name: "Conductor elegido", valueType: "BOOLEAN" },
+    // Las 4 que faltaban para llegar a las 18 filas reales de la
+    // comparativa (EXCEL-AUDIT.md, PDF de ejemplo real vía WhatsApp) — se
+    // habían quedado afuera de la primera pasada.
+    { code: "CONCESIONARIOS", name: "Concesionarios", valueType: "TEXT" }, // "2 años", "No otorga"...
+    { code: "AIRBAG", name: "Air-bag", valueType: "TEXT" }, // "100%" en todas las aseguradoras del ejemplo real
+    { code: "LICENCIA_CADUCADA", name: "Licencia caducada", valueType: "TEXT" }, // "30 días", "90 días", "No otorga"
+    { code: "PACTO_ANDINO", name: "Cobertura pacto Andino", valueType: "BOOLEAN" },
   ];
 
   await db
