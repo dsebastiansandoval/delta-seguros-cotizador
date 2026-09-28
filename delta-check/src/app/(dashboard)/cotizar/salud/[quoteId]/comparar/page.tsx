@@ -65,12 +65,22 @@ export default async function CompararSaludPage({
                 </td>
                 <td className="px-4 py-3 text-right">
                   {row.totalPremiumCents != null && (
-                    <a
-                      href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
-                      className="whitespace-nowrap text-xs font-semibold text-link underline"
-                    >
-                      Emitir póliza
-                    </a>
+                    <div className="flex flex-col items-end gap-1">
+                      <a
+                        href={`/api/quotes/${quoteId}/caratula-am?quoteOptionId=${row.quoteOptionId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="whitespace-nowrap text-xs font-semibold text-link underline"
+                      >
+                        Descargar carátula
+                      </a>
+                      <a
+                        href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
+                        className="whitespace-nowrap text-xs font-semibold text-link underline"
+                      >
+                        Emitir póliza
+                      </a>
+                    </div>
                   )}
                 </td>
               </tr>
