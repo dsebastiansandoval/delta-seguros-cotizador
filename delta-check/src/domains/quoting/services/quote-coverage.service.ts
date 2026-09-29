@@ -19,6 +19,8 @@ export type QuoteOptionContext = {
   quoteCode: string;
   insurerName: string;
   vehicleLabel: string;
+  planCode?: string;
+  branch: "AUTOS" | "SALUD";
 };
 
 /**
@@ -37,6 +39,8 @@ export const quoteCoverageService = {
         quoteId: quotes.id,
         quoteCode: quotes.code,
         insurerName: insurers.name,
+        branch: quotes.branch,
+        planCode: quoteOptions.planCode,
         brand: vehicles.brand,
         model: vehicles.model,
         year: vehicles.year,
@@ -53,15 +57,17 @@ export const quoteCoverageService = {
       quoteId: row.quoteId,
       quoteCode: row.quoteCode,
       insurerName: row.insurerName,
+      branch: row.branch,
+      planCode: row.planCode ?? undefined,
       vehicleLabel: `${row.brand} ${row.model} ${row.year}`,
     };
   },
 
-  async listForOption(tx: Db, quoteOptionId: string): Promise<CoverageRow[]> {
+  async listForOption(tx: Db, quoteOptionId: string, branch: "AUTOS" | "SALUD"): Promise<CoverageRow[]> {
     const catalog = await tx
       .select()
       .from(coverages)
-      .where(eq(coverages.branch, "AUTOS"))
+      .where(eq(coverages.branch, branch))
       .orderBy(asc(coverages.displayOrder));
 
     const existing = await tx

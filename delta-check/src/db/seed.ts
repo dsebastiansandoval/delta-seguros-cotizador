@@ -136,11 +136,18 @@ async function seedCatalog() {
     { code: "PACTO_ANDINO", name: "Cobertura pacto Andino", valueType: "BOOLEAN" },
   ];
 
+  const healthCoverages: Array<{ code: string; name: string; valueType: "BOOLEAN" | "AMOUNT" | "TEXT" }> = [
+    { code: "COPAGO", name: "Copago", valueType: "AMOUNT" },
+    { code: "SUBLIMITE", name: "Sublímite", valueType: "AMOUNT" },
+    { code: "CARENCIA", name: "Carencia", valueType: "TEXT" },
+  ];
+
   await db
     .insert(coverages)
-    .values(
-      autoCoverages.map((c, i) => ({ ...c, branch: "AUTOS" as const, displayOrder: i })),
-    )
+    .values([
+      ...autoCoverages.map((c, i) => ({ ...c, branch: "AUTOS" as const, displayOrder: i })),
+      ...healthCoverages.map((c, i) => ({ ...c, branch: "SALUD" as const, displayOrder: i })),
+    ])
     .onConflictDoNothing({ target: coverages.code });
 }
 

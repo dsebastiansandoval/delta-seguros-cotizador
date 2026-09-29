@@ -67,6 +67,12 @@ export default async function CompararSaludPage({
                   {row.totalPremiumCents != null && (
                     <div className="flex flex-col items-end gap-1">
                       <a
+                        href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
+                        className="whitespace-nowrap text-xs font-semibold text-link underline"
+                      >
+                        Detalles del plan
+                      </a>
+                      <a
                         href={`/api/quotes/${quoteId}/caratula-am?quoteOptionId=${row.quoteOptionId}`}
                         target="_blank"
                         rel="noopener noreferrer"

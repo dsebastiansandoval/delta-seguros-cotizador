@@ -21,7 +21,7 @@ export async function getQuoteOptionCoverages(quoteOptionId: string) {
   return withOrganization(session.organizationId, async (tx) => {
     const context = await quoteCoverageService.getContext(tx, quoteOptionId);
     if (!context) return null;
-    const coverages = await quoteCoverageService.listForOption(tx, quoteOptionId);
+    const coverages = await quoteCoverageService.listForOption(tx, quoteOptionId, context.branch);
     return { context, coverages };
   });
 }
@@ -51,7 +51,7 @@ export async function saveQuoteOptionCoverages(
     const ctx = await quoteCoverageService.getContext(tx, quoteOptionId);
     if (!ctx) return null;
 
-    const catalogRows = await quoteCoverageService.listForOption(tx, quoteOptionId);
+    const catalogRows = await quoteCoverageService.listForOption(tx, quoteOptionId, ctx.branch);
     const entries = catalogRows.map((row) => {
       if (row.valueType === "BOOLEAN") {
         return { coverageId: row.coverageId, granted: formData.get(`granted_${row.coverageId}`) === "on", amountCents: null, textValue: null };
