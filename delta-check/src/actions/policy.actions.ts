@@ -221,6 +221,7 @@ export async function getQuoteOptionSummary(quoteOptionId: string) {
         quoteOptionId: quoteOptions.id,
         totalPremiumCents: quoteOptions.totalPremiumCents,
         planCode: quoteOptions.planCode,
+        kmBracket: quoteOptions.kmBracket,
         branch: quotes.branch,
         insurerName: insurers.name,
         clientFirstName: clients.firstName,

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getQuoteOptionSummary } from "@/actions/policy.actions";
 import { formatUSD } from "@/domains/shared/money";
 import { EmitPolicyForm } from "@/components/policies/EmitPolicyForm";
+import { KM_BRACKET_LABELS, type KmBracket } from "@/domains/quoting/constants";
 
 export default async function EmitirPolizaPage({
   searchParams,
@@ -15,13 +16,16 @@ export default async function EmitirPolizaPage({
   if (!summary || summary.totalPremiumCents == null) notFound();
 
   const clientName = summary.clientBusinessName || `${summary.clientFirstName ?? ""} ${summary.clientLastName ?? ""}`.trim();
+  const kmLabel =
+    summary.kmBracket != null ? KM_BRACKET_LABELS[summary.kmBracket as KmBracket] : null;
 
   return (
     <main className="mx-auto max-w-2xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Emitir póliza</h1>
         <p className="mt-1 text-sm text-muted">
-          {summary.insurerName} {summary.planCode && `— ${summary.planCode}`} · {clientName} ·{" "}
+          {summary.insurerName} {summary.planCode && `— ${summary.planCode}`}
+          {kmLabel && ` — ${kmLabel}`} · {clientName} ·{" "}
           <span className="font-semibold text-highlight">{formatUSD(summary.totalPremiumCents)}</span>
         </p>
       </header>

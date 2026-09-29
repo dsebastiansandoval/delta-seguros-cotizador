@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { CaratulaData, CaratulaOffer } from "../services/caratula.service";
 import { formatUSD } from "@/domains/shared/money";
+import { KM_BRACKET_LABELS } from "../constants";
 
 /**
  * Portada real de Delta (`xl/media/image28.jpeg` dentro de
@@ -146,6 +147,18 @@ const DISCLAIMER_NOTES = [
  * renovación. `data.renewal` viene `null` si es NUEVA o si faltan los datos
  * de la póliza anterior — nunca se arma la frase con un hueco.
  */
+/**
+ * Auto x Km: una misma aseguradora (hoy solo AIG) puede aparecer varias
+ * veces en una carátula comparativa, una por rango de km — sin el rango en
+ * el encabezado, el PDF diría "AIG" repetido sin forma de distinguir cuál
+ * oferta es cuál.
+ */
+function offerHeading(offer: CaratulaOffer): string {
+  if (offer.kmBracket == null) return offer.insurerName;
+  const label = KM_BRACKET_LABELS[offer.kmBracket as keyof typeof KM_BRACKET_LABELS];
+  return label ? `${offer.insurerName} — ${label}` : offer.insurerName;
+}
+
 function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer: CaratulaOffer; isComparison: boolean }) {
   return (
     <Page size="A4" style={styles.page}>
@@ -186,7 +199,7 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
         </Text>
       </View>
 
-      <Text style={styles.h2}>{isComparison ? `ASEGURADORA — ${offer.insurerName}` : `ASEGURADORA RECOMENDADA — ${offer.insurerName}`}</Text>
+      <Text style={styles.h2}>{isComparison ? `ASEGURADORA — ${offerHeading(offer)}` : `ASEGURADORA RECOMENDADA — ${offerHeading(offer)}`}</Text>
       <View style={styles.row}>
         <Text style={styles.label}>Prima neta</Text>
         <Text style={styles.value}>{formatUSD(offer.netPremiumCents)}</Text>
@@ -232,7 +245,7 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
 
       {offer.coverages.length > 0 && (
         <>
-          <Text style={[styles.h2, { marginTop: 10 }]}>DETALLE POR COBERTURA — {offer.insurerName}</Text>
+          <Text style={[styles.h2, { marginTop: 10 }]}>DETALLE POR COBERTURA — {offerHeading(offer)}</Text>
           {offer.coverages.map((c) => (
             <View style={styles.row} key={c.name}>
               <Text style={styles.label}>{c.name}</Text>

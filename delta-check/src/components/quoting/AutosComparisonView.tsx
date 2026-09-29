@@ -100,7 +100,7 @@ function RiskSection({ quoteId, group, showHeading }: { quoteId: string; group: 
         </div>
       ) : (
         <>
-          {!isKm && hasCotizado && (
+          {hasCotizado && (
             <div className="mb-3 flex justify-end">
               <a
                 href={downloadHref}
@@ -113,7 +113,7 @@ function RiskSection({ quoteId, group, showHeading }: { quoteId: string; group: 
             </div>
           )}
           {isKm ? (
-            <KmComparisonTable rows={rows} quoteId={quoteId} />
+            <KmComparisonTable rows={rows} quoteId={quoteId} selected={selected} onToggle={toggle} />
           ) : (
             <AnnualComparisonTable rows={rows} quoteId={quoteId} selected={selected} onToggle={toggle} />
           )}
@@ -221,7 +221,17 @@ function AnnualComparisonTable({
 }
 
 /** Grilla aseguradora × rango de km — cada celda es su propio quote_option, todas PENDIENTE_MANUAL (§11.4b). */
-function KmComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quoteId: string }) {
+function KmComparisonTable({
+  rows,
+  quoteId,
+  selected,
+  onToggle,
+}: {
+  rows: ComparisonRow[];
+  quoteId: string;
+  selected: Set<string>;
+  onToggle: (quoteOptionId: string) => void;
+}) {
   const byInsurer = new Map<string, { name: string; byBracket: Map<number, ComparisonRow> }>();
   for (const row of rows) {
     if (!byInsurer.has(row.insurerId)) {
@@ -252,7 +262,29 @@ function KmComparisonTable({ rows, quoteId }: { rows: ComparisonRow[]; quoteId: 
                 return (
                   <td key={km} className="px-4 py-3 text-right">
                     {cell?.totalPremiumCents != null ? (
-                      <span className="font-semibold tabular-nums">{formatUSD(cell.totalPremiumCents)}</span>
+                      <div className="flex flex-col items-end gap-1">
+                        <label className="flex items-center gap-1.5">
+                          <input
+                            type="checkbox"
+                            checked={selected.has(cell.quoteOptionId)}
+                            onChange={() => onToggle(cell.quoteOptionId)}
+                            title="Incluir en la carátula comparativa"
+                          />
+                          <span className="font-semibold tabular-nums">{formatUSD(cell.totalPremiumCents)}</span>
+                        </label>
+                        <a
+                          href={`/cotizar/autos/${quoteId}/opciones/${cell.quoteOptionId}/coberturas`}
+                          className="whitespace-nowrap text-[11px] font-semibold text-link underline"
+                        >
+                          Coberturas
+                        </a>
+                        <a
+                          href={`/cartera/emitir?quoteOptionId=${cell.quoteOptionId}`}
+                          className="whitespace-nowrap text-[11px] font-semibold text-link underline"
+                        >
+                          Emitir póliza
+                        </a>
+                      </div>
                     ) : cell ? (
                       <ManualPremiumForm quoteOptionId={cell.quoteOptionId} quoteId={quoteId} />
                     ) : (
