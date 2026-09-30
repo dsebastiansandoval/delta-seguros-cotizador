@@ -282,14 +282,244 @@ function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer
   );
 }
 
+/**
+ * Carta genérica para el caso de comparación (varias aseguradoras) — la
+ * versión real que Delta manda (PDF de ejemplo, SRA ROBLES) no repite el
+ * saludo/cláusulas/aclaratorio una vez por aseguradora; manda una sola carta
+ * seguida de la tabla comparativa apaisada (`OfertaComparisonPage`). El
+ * bloque de detalle por aseguradora (prima, formas de pago, coberturas)
+ * vive únicamente en esa tabla en este caso — nunca en las dos partes a la
+ * vez, para no duplicar cifras.
+ */
+function CaratulaLetterPage({ data }: { data: CaratulaData }) {
+  return (
+    <Page size="A4" style={styles.page}>
+      <Text style={styles.brand}>DELTA SEGUROS</Text>
+      <Text style={styles.brandSub}>Cía. Ltda.</Text>
+      <Text style={styles.date}>Quito, {data.date}</Text>
+
+      <Text>Señores</Text>
+      <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
+      <Text style={{ marginBottom: 12 }}>Presente.-</Text>
+
+      <Text style={{ marginBottom: 12 }}>
+        REFERENCIA: Póliza de Vehículos — {data.vehicleLabel} (placa {data.vehiclePlate})
+      </Text>
+
+      <Text style={{ marginBottom: 12 }}>
+        <Text style={{ fontWeight: 700 }}>De nuestra consideración: </Text>
+        {data.renewal
+          ? `La presente tiene por objeto recordarle que el día ${data.renewal.previousExpiryDate} vence la póliza en ${data.renewal.previousInsurerName} y que otorga cobertura al vehículo de su propiedad, por tal razón nos permitimos poner en su consideración nuestras mejores ofertas del mercado ecuatoriano.`
+          : "nos permitimos poner en su consideración las siguientes opciones cotizadas en el mercado ecuatoriano, para que usted elija la que mejor se ajuste a sus necesidades."}
+      </Text>
+
+      <Text style={styles.h2}>OBJETO ASEGURADO</Text>
+      <View style={styles.row}>
+        <Text style={styles.label}>Vehículo</Text>
+        <Text style={styles.value}>{data.vehicleLabel}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Valor asegurado</Text>
+        <Text style={styles.value}>{formatUSD(data.insuredValueCents)}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Valor extras</Text>
+        <Text style={styles.value}>
+          {data.extrasValueCents > 0 ? formatUSD(data.extrasValueCents) : "Sin extras"}
+        </Text>
+      </View>
+
+      <Text style={styles.h2}>COBERTURAS</Text>
+      <Text>{COVERAGE_TEXT}</Text>
+
+      <Text style={styles.h2}>CLÁUSULAS ADICIONALES</Text>
+      {ADDITIONAL_CLAUSES.map((clause) => (
+        <View style={styles.bullet} key={clause}>
+          <Text style={styles.bulletMark}>·</Text>
+          <Text style={styles.bulletText}>{clause}</Text>
+        </View>
+      ))}
+
+      <Text style={styles.h2}>ACLARATORIO</Text>
+      {DISCLAIMER_NOTES.map((note) => (
+        <View style={styles.bullet} key={note}>
+          <Text style={styles.bulletMark}>·</Text>
+          <Text style={styles.bulletText}>{note}</Text>
+        </View>
+      ))}
+
+      <Text style={styles.footer}>
+        Por la favorable atención que se sirva dar a la presente, anticipo mis agradecimientos.
+      </Text>
+      <Text style={styles.footer}>Cordialmente,</Text>
+      <Text style={{ marginTop: 16, fontWeight: 700, color: "#152a52" }}>DELTASEGUROS CÍA. LTDA.</Text>
+    </Page>
+  );
+}
+
+const tableStyles = StyleSheet.create({
+  page: { padding: 24, fontSize: 7.5, fontFamily: "Helvetica", color: "#182338" },
+  table: { borderWidth: 1, borderColor: "#dfe1e6" },
+  row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#dfe1e6" },
+  sectionRow: { flexDirection: "row", backgroundColor: "#152a52" },
+  labelCell: { width: 130, padding: 4, fontWeight: 700, color: "#182338" },
+  sectionLabelCell: { width: 130, padding: 4, fontWeight: 700, color: "#ffffff" },
+  dataCell: { flex: 1, padding: 4, textAlign: "center", borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
+  headerCell: {
+    flex: 1,
+    padding: 4,
+    textAlign: "center",
+    fontWeight: 700,
+    color: "#ffffff",
+    borderLeftWidth: 1,
+    borderLeftColor: "#38456e",
+  },
+  totalsRow: { flexDirection: "row", backgroundColor: "#fef3e0" },
+  totalsLabelCell: { width: 130, padding: 4, fontWeight: 700 },
+  totalsDataCell: {
+    flex: 1,
+    padding: 4,
+    textAlign: "center",
+    fontWeight: 700,
+    color: "#01579e",
+    borderLeftWidth: 1,
+    borderLeftColor: "#dfe1e6",
+  },
+});
+
+const MAIN_COVERAGES = ["Pérdida Parcial por Daño", "Pérdida Total por Daño", "Robo Parcial", "Robo Total"];
+
+/**
+ * Tabla ancha con las aseguradoras como columnas — equivalente a imprimir
+ * directo la hoja `OFERTA` del Excel (macro `IMPRIMIR_OFERTA_VH`), que es lo
+ * que Delta manda hoy al cliente (PDF real, SRA ROBLES) en vez de una carta
+ * por aseguradora. Las 4 coberturas principales son fijas ("Sí otorga" en
+ * las 13 aseguradoras, confirmado en el Excel real, nunca condicionadas) —
+ * el resto viene de `quote_option_coverages` (pantalla "Coberturas"), con
+ * "—" cuando nadie cargó el dato todavía, nunca un valor inventado.
+ */
+function OfertaComparisonPage({ data }: { data: CaratulaData }) {
+  const coverageValue = (offer: CaratulaOffer, name: string) => offer.coverages.find((c) => c.name === name)?.display ?? "—";
+
+  return (
+    <Page size="A4" orientation="landscape" style={tableStyles.page}>
+      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
+        Comparativa de ofertas — {data.vehicleLabel} (placa {data.vehiclePlate})
+      </Text>
+
+      <View style={tableStyles.table}>
+        <View style={tableStyles.sectionRow}>
+          <Text style={tableStyles.sectionLabelCell}> </Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.headerCell}>
+              {offerHeading(o)}
+            </Text>
+          ))}
+        </View>
+
+        {MAIN_COVERAGES.map((name) => (
+          <View style={tableStyles.row} key={name}>
+            <Text style={tableStyles.labelCell}>{name}</Text>
+            {data.offers.map((_, i) => (
+              <Text key={i} style={tableStyles.dataCell}>
+                Sí otorga
+              </Text>
+            ))}
+          </View>
+        ))}
+
+        {
+          // Unión de nombres de cobertura entre TODAS las ofertas (no solo la
+          // primera) — una aseguradora puede tener cargado un dato que otra
+          // no. Sin duplicados, excluyendo las 4 coberturas principales fijas.
+          [...new Set(data.offers.flatMap((o) => o.coverages.map((c) => c.name)))]
+            .filter((name) => !MAIN_COVERAGES.includes(name))
+            .map((name) => (
+            <View style={tableStyles.row} key={name}>
+              <Text style={tableStyles.labelCell}>{name}</Text>
+              {data.offers.map((o, i) => (
+                <Text key={i} style={tableStyles.dataCell}>
+                  {coverageValue(o, name)}
+                </Text>
+              ))}
+            </View>
+          ))}
+
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Tasa aplicada</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {o.ratePercentApplied ? `${(Number(o.ratePercentApplied) * 100).toFixed(3)}%` : "—"}
+            </Text>
+          ))}
+        </View>
+
+        {(
+          [
+            ["Prima neta", (o: CaratulaOffer) => formatUSD(o.netPremiumCents)],
+            ["3.50% Superintendencia de Bancos", (o: CaratulaOffer) => formatUSD(o.superBancosCents)],
+            ["0.50% Seguro Campesino", (o: CaratulaOffer) => formatUSD(o.campesinoCents)],
+            ["Derechos de emisión", (o: CaratulaOffer) => formatUSD(o.emissionFeeCents)],
+            ["15% IVA", (o: CaratulaOffer) => formatUSD(o.ivaCents)],
+          ] as const
+        ).map(([label, fmt]) => (
+          <View style={tableStyles.row} key={label}>
+            <Text style={tableStyles.labelCell}>{label}</Text>
+            {data.offers.map((o, i) => (
+              <Text key={i} style={tableStyles.dataCell}>
+                {fmt(o)}
+              </Text>
+            ))}
+          </View>
+        ))}
+
+        <View style={tableStyles.totalsRow}>
+          <Text style={tableStyles.totalsLabelCell}>PRIMA TOTAL</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.totalsDataCell}>
+              {formatUSD(o.totalPremiumCents)}
+            </Text>
+          ))}
+        </View>
+
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Efectivo o transferencia</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.totalPremiumCents)}
+            </Text>
+          ))}
+        </View>
+        {INSTALLMENT_TERMS.map((n) => (
+          <View style={tableStyles.row} key={n}>
+            <Text style={tableStyles.labelCell}>Tarjeta {n} meses</Text>
+            {data.offers.map((o, i) => (
+              <Text key={i} style={tableStyles.dataCell}>
+                {formatUSD(Math.round(o.totalPremiumCents / n))}
+              </Text>
+            ))}
+          </View>
+        ))}
+      </View>
+    </Page>
+  );
+}
+
 export function CaratulaDocument({ data }: { data: CaratulaData }) {
   const isComparison = data.offers.length > 1;
   return (
     <Document title={`Oferta ${data.quoteCode}`}>
       <PortadaPage data={data} />
-      {data.offers.map((offer, i) => (
-        <CaratulaPage key={`${offer.insurerName}-${i}`} data={data} offer={offer} isComparison={isComparison} />
-      ))}
+      {isComparison ? (
+        <>
+          <CaratulaLetterPage data={data} />
+          <OfertaComparisonPage data={data} />
+        </>
+      ) : (
+        data.offers.map((offer, i) => (
+          <CaratulaPage key={`${offer.insurerName}-${i}`} data={data} offer={offer} isComparison={isComparison} />
+        ))
+      )}
     </Document>
   );
 }

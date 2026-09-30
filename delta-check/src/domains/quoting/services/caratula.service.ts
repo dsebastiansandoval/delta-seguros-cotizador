@@ -10,6 +10,7 @@ export type CaratulaOfferCoverage = { name: string; display: string };
 export type CaratulaOffer = {
   insurerName: string;
   kmBracket: number | null;
+  ratePercentApplied: string | null;
   netPremiumCents: number;
   superBancosCents: number;
   campesinoCents: number;
@@ -115,6 +116,7 @@ export async function getCaratulaData(
       quoteOptionId: quoteOptions.id,
       insurerName: insurers.name,
       kmBracket: quoteOptions.kmBracket,
+      ratePercentApplied: quoteOptions.ratePercentApplied,
       netPremiumCents: quoteOptions.netPremiumCents,
       superBancosCents: quoteOptions.superBancosCents,
       campesinoCents: quoteOptions.campesinoCents,
@@ -219,6 +221,7 @@ export async function getCaratulaData(
     offers: offersRaw.map((o) => ({
       insurerName: o.insurerName,
       kmBracket: o.kmBracket,
+      ratePercentApplied: o.ratePercentApplied,
       netPremiumCents: o.netPremiumCents ?? 0,
       superBancosCents: o.superBancosCents ?? 0,
       campesinoCents: o.campesinoCents ?? 0,

@@ -134,6 +134,11 @@ async function seedCatalog() {
     { code: "AIRBAG", name: "Air-bag", valueType: "TEXT" }, // "100%" en todas las aseguradoras del ejemplo real
     { code: "LICENCIA_CADUCADA", name: "Licencia caducada", valueType: "TEXT" }, // "30 días", "90 días", "No otorga"
     { code: "PACTO_ANDINO", name: "Cobertura pacto Andino", valueType: "BOOLEAN" },
+    // Sección DEDUCIBLES de la hoja OFERTA (filas 33-34) — texto descriptivo
+    // por aseguradora, ej. "10% VS, 1% VA, mínimo USD 200 (el que sea
+    // mayor)". Confirmado en el PDF real de comparativa (SRA ROBLES).
+    { code: "DEDUCIBLE_PARCIAL", name: "Deducible — Pérdidas Parciales", valueType: "TEXT" },
+    { code: "DEDUCIBLE_TOTAL", name: "Deducible — Pérdida Total", valueType: "TEXT" },
   ];
 
   const healthCoverages: Array<{ code: string; name: string; valueType: "BOOLEAN" | "AMOUNT" | "TEXT" }> = [
