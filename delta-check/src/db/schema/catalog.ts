@@ -177,6 +177,34 @@ export const healthRateRules = pgTable("health_rate_rules", {
   premiumCents: bigint("premium_cents", { mode: "number" }).notNull(),
 });
 
+/**
+ * 🌐 Grilla de sublímites/copago/carencia por plan de Salud — equivalente a
+ * la hoja `OFERTA AM` del Excel (la que imprime la macro `IMPRIMIR_OFERTA_AM`
+ * y es lo que Delta manda hoy al cliente, no `CARATULA AM`). Son valores
+ * FIJOS por plan (SIGMA 150 siempre tiene el mismo deducible, no varía por
+ * cliente) — por eso van como catálogo, igual que `healthRateRules`, no
+ * como captura manual repetida en cada cotización (eso sigue existiendo en
+ * `quote_option_coverages` para cuando el ejecutivo necesite anotar algo
+ * puntual). `planCode` es el mismo valor que `quoteOptions.planCode`.
+ * `copago`/`carencia` quedan null para las aseguradoras cuyo Excel solo
+ * trae un valor de "SUB LIMITES" sin desglosar (confirmado celda por celda:
+ * BMI y Confiamed sí traen las 3 columnas separadas; SaludSA/Humana/Salud
+ * genérico/Pro/VB solo traen una).
+ */
+export const healthPlanCoverages = pgTable("health_plan_coverages", {
+  id: id(),
+  insurerId: uuid("insurer_id")
+    .notNull()
+    .references(() => insurers.id),
+  planCode: text("plan_code").notNull(),
+  section: text("section").notNull(), // "COBERTURAS" | "MATERNIDAD" | "TOPE_CONSULTA" | "PERIODOS_CARENCIA"
+  label: text("label").notNull(),
+  displayOrder: integer("display_order").notNull(),
+  copago: text("copago"),
+  sublimite: text("sublimite"),
+  carencia: text("carencia"),
+});
+
 /** 🏢 Deducibles por pérdida parcial/total, con o sin dispositivo de rastreo. */
 export const deductibleRules = pgTable("deductible_rules", {
   id: id(),

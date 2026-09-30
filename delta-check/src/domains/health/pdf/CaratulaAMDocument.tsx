@@ -89,6 +89,27 @@ const styles = StyleSheet.create({
 
 const INSTALLMENT_TERMS = [6, 9, 12] as const;
 
+/**
+ * `OFERTA AM` guarda los porcentajes de coparticipación/coaseguro como
+ * decimales puros (0.8 = 80%, 1 = 100%) — se muestran como % para que
+ * coincida con el PDF real ("80%", no "0.8"). El resto de valores (montos,
+ * textos, "Sí otorga") se muestran tal cual, sin tocar.
+ */
+function formatCoverageField(value: string | null): string | null {
+  if (!value) return value;
+  const n = Number(value);
+  if (!Number.isNaN(n) && value.trim() === String(n) && n >= 0 && n <= 1) {
+    return `${Math.round(n * 100)}%`;
+  }
+  return value;
+}
+
+function formatCoverageValue(row: { copago: string | null; sublimite: string | null; carencia: string | null }): string {
+  return [formatCoverageField(row.copago), formatCoverageField(row.sublimite), formatCoverageField(row.carencia)]
+    .filter(Boolean)
+    .join(" · ") || "—";
+}
+
 const REGION_LABEL: Record<CaratulaAMData["region"], string> = {
   SIERRA: "Sierra",
   COSTA: "Costa",
@@ -156,6 +177,22 @@ function CaratulaAMPage({ data, offer, isComparison }: { data: CaratulaAMData; o
 
       <Text style={styles.h2}>FORMAS DE PAGO</Text>
       <View style={styles.row}>
+        <Text style={styles.label}>Total sin descuento (cuota mensual)</Text>
+        <Text style={styles.value}>{formatUSD(offer.sinDescuentoCents)}</Text>
+      </View>
+      {offer.conDescuentoEspecialCents != null && (
+        <View style={styles.row}>
+          <Text style={styles.label}>Total con descuento especial (cuota mensual)</Text>
+          <Text style={styles.value}>{formatUSD(offer.conDescuentoEspecialCents)}</Text>
+        </View>
+      )}
+      {offer.conDescuentoContadoCents != null && (
+        <View style={styles.row}>
+          <Text style={styles.label}>Total con descuento de contado (cuota mensual)</Text>
+          <Text style={styles.value}>{formatUSD(offer.conDescuentoContadoCents)}</Text>
+        </View>
+      )}
+      <View style={[styles.row, { marginTop: 4 }]}>
         <Text style={styles.label}>Efectivo o transferencia</Text>
         <Text style={styles.value}>{formatUSD(offer.totalPremiumCents)}</Text>
       </View>
@@ -169,12 +206,78 @@ function CaratulaAMPage({ data, offer, isComparison }: { data: CaratulaAMData; o
         ))}
       </View>
 
+      {offer.coverages.length > 0 ? (
+        <>
+          <Text style={styles.h2}>DETALLE DE COBERTURAS — {offer.planCode}</Text>
+          {offer.coverages.map((c) => (
+            <View style={styles.row} key={c.label}>
+              <Text style={styles.label}>{c.label}</Text>
+              <Text style={styles.value}>{formatCoverageValue(c)}</Text>
+            </View>
+          ))}
+        </>
+      ) : (
+        <>
+          <Text style={styles.h2}>ACLARATORIO</Text>
+          <Text>
+            Este documento no es una póliza de seguros, ni otorga cobertura médica. El pago de la póliza debe
+            hacerse por los canales autorizados por las compañías de seguros. Las coberturas, copagos,
+            sublímites y períodos de carencia específicos de cada plan se detallan en las condiciones
+            particulares que entrega la aseguradora al momento de la emisión.
+          </Text>
+        </>
+      )}
+
+      <Text style={styles.footer}>
+        Por la favorable atención que se sirva dar a la presente, anticipo mis agradecimientos.
+      </Text>
+      <Text style={styles.footer}>Cordialmente,</Text>
+      <Text style={{ marginTop: 10, fontWeight: 700, color: "#152a52" }}>DELTASEGUROS CÍA. LTDA.</Text>
+    </Page>
+  );
+}
+
+/**
+ * Carta genérica para el caso de comparación (varias aseguradoras) — el PDF
+ * real que Delta manda (COTIZACION 30K+50 HUMANA.pdf) no tiene una carta de
+ * saludo en absoluto: va directo de la portada a la grilla comparativa. Se
+ * mantiene una carta corta acá (no existe en el Excel real, redactada con
+ * el mismo tono que la de Autos) solo para no perder el saludo/aclaratorio
+ * — el detalle de aseguradora/precio vive únicamente en las tablas anchas
+ * que siguen, nunca repetido en los dos lugares.
+ */
+function CaratulaAMLetterPage({ data }: { data: CaratulaAMData }) {
+  const labels = memberLabels(data.members);
+  return (
+    <Page size="A4" style={styles.page}>
+      <Text style={styles.brand}>DELTA SEGUROS</Text>
+      <Text style={styles.brandSub}>Cía. Ltda.</Text>
+      <Text style={styles.date}>Quito, {data.date}</Text>
+
+      <Text>Señores</Text>
+      <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
+      <Text style={{ marginBottom: 8 }}>Presente.-</Text>
+
+      <Text style={{ marginBottom: 8 }}>REFERENCIA: Cotización Seguro Médico — {REGION_LABEL[data.region]}</Text>
+
+      <Text style={{ marginBottom: 8 }}>
+        <Text style={{ fontWeight: 700 }}>De nuestra consideración: </Text>
+        nos permitimos poner en su consideración las siguientes opciones de seguro médico cotizadas en el
+        mercado ecuatoriano, para que usted elija la que mejor se ajuste a las necesidades de su grupo
+        familiar.
+      </Text>
+
+      <Text style={styles.h2}>GRUPO ASEGURADO</Text>
+      {labels.map((label, i) => (
+        <View style={styles.row} key={i}>
+          <Text style={styles.label}>{label}</Text>
+        </View>
+      ))}
+
       <Text style={styles.h2}>ACLARATORIO</Text>
       <Text>
         Este documento no es una póliza de seguros, ni otorga cobertura médica. El pago de la póliza debe
-        hacerse por los canales autorizados por las compañías de seguros. Las coberturas, copagos,
-        sublímites y períodos de carencia específicos de cada plan se detallan en las condiciones
-        particulares que entrega la aseguradora al momento de la emisión.
+        hacerse por los canales autorizados por las compañías de seguros.
       </Text>
 
       <Text style={styles.footer}>
@@ -186,14 +289,220 @@ function CaratulaAMPage({ data, offer, isComparison }: { data: CaratulaAMData; o
   );
 }
 
+const tableStyles = StyleSheet.create({
+  page: { padding: 24, fontSize: 7.5, fontFamily: "Helvetica", color: "#182338" },
+  table: { borderWidth: 1, borderColor: "#dfe1e6" },
+  row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#dfe1e6" },
+  sectionRow: { flexDirection: "row", backgroundColor: "#152a52" },
+  labelCell: { width: 140, padding: 4, fontWeight: 700, color: "#182338" },
+  sectionLabelCell: { width: 140, padding: 4, fontWeight: 700, color: "#ffffff" },
+  dataCell: { flex: 1, padding: 4, textAlign: "center", borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
+  headerCell: {
+    flex: 1,
+    padding: 4,
+    textAlign: "center",
+    fontWeight: 700,
+    color: "#ffffff",
+    borderLeftWidth: 1,
+    borderLeftColor: "#38456e",
+  },
+  totalsRow: { flexDirection: "row", backgroundColor: "#fef3e0" },
+  totalsLabelCell: { width: 140, padding: 4, fontWeight: 700 },
+  totalsDataCell: {
+    flex: 1,
+    padding: 4,
+    textAlign: "center",
+    fontWeight: 700,
+    color: "#01579e",
+    borderLeftWidth: 1,
+    borderLeftColor: "#dfe1e6",
+  },
+});
+
+/**
+ * Grilla ancha de coberturas — equivalente a imprimir directo la sección
+ * COBERTURAS/MATERNIDAD/TOPE CONSULTA/PERIODOS DE CARENCIA de `OFERTA AM`
+ * (macro `IMPRIMIR_OFERTA_AM`). Une los labels de TODAS las ofertas (no
+ * solo la primera) por si un plan trae una fila que otro no, ordenados por
+ * el mismo `displayOrder` real del Excel — "—" cuando el plan no tiene esa
+ * fila sembrada, nunca un valor inventado.
+ */
+function CoverageGridPage({ data }: { data: CaratulaAMData }) {
+  const byLabel = new Map<string, { section: string; displayOrder: number }>();
+  for (const offer of data.offers) {
+    for (const c of offer.coverages) {
+      if (!byLabel.has(c.label)) byLabel.set(c.label, { section: c.section, displayOrder: c.displayOrder });
+    }
+  }
+  const orderedLabels = [...byLabel.entries()].sort((a, b) => a[1].displayOrder - b[1].displayOrder);
+
+  const valueFor = (offer: CaratulaAMOffer, label: string): string => {
+    const row = offer.coverages.find((c) => c.label === label);
+    if (!row) return "—";
+    return formatCoverageValue(row);
+  };
+
+  if (orderedLabels.length === 0) return null;
+
+  const rowsWithHeaders = orderedLabels.map(([label, { section }], i) => ({
+    label,
+    section,
+    showSectionHeader: i === 0 || section !== orderedLabels[i - 1][1].section,
+  }));
+
+  return (
+    <Page size="A4" orientation="landscape" style={tableStyles.page}>
+      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
+        Coberturas por plan — {data.clientName}
+      </Text>
+      <View style={tableStyles.table}>
+        <View style={tableStyles.sectionRow}>
+          <Text style={tableStyles.sectionLabelCell}> </Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.headerCell}>
+              {o.insurerName} — {o.planCode}
+            </Text>
+          ))}
+        </View>
+        {rowsWithHeaders.map(({ label, section, showSectionHeader }) => {
+          return (
+            <View key={label}>
+              {showSectionHeader && (
+                <View style={tableStyles.sectionRow}>
+                  <Text style={[tableStyles.sectionLabelCell, { width: "100%" }]}>{section.replace(/_/g, " ")}</Text>
+                </View>
+              )}
+              <View style={tableStyles.row}>
+                <Text style={tableStyles.labelCell}>{label}</Text>
+                {data.offers.map((o, i) => (
+                  <Text key={i} style={tableStyles.dataCell}>
+                    {valueFor(o, label)}
+                  </Text>
+                ))}
+              </View>
+            </View>
+          );
+        })}
+      </View>
+    </Page>
+  );
+}
+
+/** Tabla ancha de precios/descuentos — equivalente a la sección TITULAR-DEPENDIENTES/PRIMA de `OFERTA AM`. */
+function PricingTablePage({ data }: { data: CaratulaAMData }) {
+  const labels = memberLabels(data.members);
+  return (
+    <Page size="A4" orientation="landscape" style={tableStyles.page}>
+      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
+        Comparativa de primas — {data.clientName}
+      </Text>
+      <Text style={{ fontSize: 8, color: "#6b6f76", marginBottom: 6 }}>
+        Grupo: {labels.join(" · ")}
+      </Text>
+      <View style={tableStyles.table}>
+        <View style={tableStyles.sectionRow}>
+          <Text style={tableStyles.sectionLabelCell}> </Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.headerCell}>
+              {o.insurerName} — {o.planCode}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Prima neta (grupo)</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.netPremiumCents)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Otros cargos</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.emissionFeeCents)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>0.50% Seguro Campesino</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.campesinoCents)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.totalsRow}>
+          <Text style={tableStyles.totalsLabelCell}>PRIMA TOTAL</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.totalsDataCell}>
+              {formatUSD(o.totalPremiumCents)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Total sin descuento</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.sinDescuentoCents)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Total con descuento especial</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {o.conDescuentoEspecialCents != null ? formatUSD(o.conDescuentoEspecialCents) : "N/A"}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Total con descuento de contado</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {o.conDescuentoContadoCents != null ? formatUSD(o.conDescuentoContadoCents) : "N/A"}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.row}>
+          <Text style={tableStyles.labelCell}>Efectivo o transferencia</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.dataCell}>
+              {formatUSD(o.totalPremiumCents)}
+            </Text>
+          ))}
+        </View>
+        {INSTALLMENT_TERMS.map((n) => (
+          <View style={tableStyles.row} key={n}>
+            <Text style={tableStyles.labelCell}>Tarjeta {n} meses</Text>
+            {data.offers.map((o, i) => (
+              <Text key={i} style={tableStyles.dataCell}>
+                {formatUSD(Math.round(o.totalPremiumCents / n))}
+              </Text>
+            ))}
+          </View>
+        ))}
+      </View>
+    </Page>
+  );
+}
+
 export function CaratulaAMDocument({ data }: { data: CaratulaAMData }) {
   const isComparison = data.offers.length > 1;
   return (
     <Document title={`Oferta ${data.quoteCode}`}>
       <PortadaAMPage data={data} />
-      {data.offers.map((offer, i) => (
-        <CaratulaAMPage key={`${offer.insurerName}-${offer.planCode}-${i}`} data={data} offer={offer} isComparison={isComparison} />
-      ))}
+      {isComparison ? (
+        <>
+          <CaratulaAMLetterPage data={data} />
+          <CoverageGridPage data={data} />
+          <PricingTablePage data={data} />
+        </>
+      ) : (
+        data.offers.map((offer, i) => (
+          <CaratulaAMPage key={`${offer.insurerName}-${offer.planCode}-${i}`} data={data} offer={offer} isComparison={isComparison} />
+        ))
+      )}
     </Document>
   );
 }

@@ -1083,3 +1083,32 @@ Equivalente de Salud a la carátula de Autos (§22/§29/§30) — con una difere
 **Verificación:** cotización real de un grupo (titular 35 años femenino + dependiente 8 años masculino, Sierra) corrida contra las 7 aseguradoras automáticas, descargada la carátula por HTTP con sesión real — confirmado que la portada se ve completa y legible (nombre y vigencia sin superponerse a ningún elemento), que la página de oferta trae el desglose real (CONFIAMED, prima neta $105,36 + $0 cargo + $0,53 campesino = $105,89, cuadra exacto), y que el documento entra en 2 páginas sin desborde. `npm run typecheck`/`lint`/`test`/`build` limpios.
 
 **Con esto se completan las 12 observaciones originales del usuario.**
+
+## 33. Carátula real: tabla ancha comparativa (Autos) + grilla completa y descuentos (Salud)
+
+El usuario compartió dos PDFs reales que Delta manda hoy a sus clientes (`COTIZACION 30K+50 HUMANA.pdf`, `SRA ROBLES ENRIQUEZ KARLA...pdf`) y confirmó que **los genera la macro del Excel base** (`IMPRIMIR_OFERTA_VH`/`IMPRIMIR_OFERTA_AM`, que imprime directo `OFERTA`/`OFERTA AM`), no `CARATULA`/`CARATULA AM` que se usó como base en §22/§32. Esto reveló 3 brechas grandes contra lo ya construido:
+
+1. **Autos** es una tabla ancha con N aseguradoras como columnas (18 coberturas + 2 deducibles + tasa + impuestos + formas de pago), no una página por aseguradora.
+2. **Salud** trae la grilla completa de sublímites/copago/carencia (~25 filas: coberturas, maternidad, terapias, períodos de carencia) por plan — la grilla real de `OFERTA AM` que §32 dejó explícitamente fuera de alcance.
+3. **Salud** trae 3 filas de precio con descuento (`TOTAL SIN DESCUENTO`/`CON DESCUENTO ESPECIAL`/`CON DESCUENTO DE CONTADO`) que no existían en el sistema.
+
+**Autos — 2 coberturas nuevas** (`DEDUCIBLE_PARCIAL`/`DEDUCIBLE_TOTAL`, TEXT) completan las 20 filas reales de `OFERTA`. `CaratulaDocument.tsx`: cuando hay >1 oferta, reemplaza las N páginas por 1 carta genérica + 1 página apaisada con las aseguradoras como columnas — coberturas principales fijas ("Sí otorga", reales del Excel), el resto vía `quote_option_coverages` (§30) ya existente, `ratePercentApplied` agregado a `CaratulaOffer`.
+
+**Salud — mecanismo de descuento verificado celda por celda** (`OFERTA AM` + `BASES ASEGURADORAS AM`): `TOTAL SIN DESCUENTO` = `PRIMA TOTAL / 12` (confirmado exacto: $3.652,19/12 = $304,35). El descuento especial/de contado depende de la aseguradora y a veces de la línea de plan y del tamaño del grupo:
+
+| Aseguradora / línea | Descuento especial | Descuento contado |
+|---|---|---|
+| BMI (SIGMA*/INNOVA*/GMM*) | 5% fijo | 9.09% fijo |
+| SALUD genérico (STAR*/SKY*/PRO 150*/PRO 500*) | por # miembros: 1→0%,2→3%,3→5%,4+→7% (solo si >1) | N/A |
+| SALUDSA (UNICO*/ESENCIAL*/PRACTICO*/IDEAL*/ELITE*/PRIVILEGIO*) | por # miembros: siempre 0% | N/A |
+| CONFIAMED | N/A siempre | N/A |
+| HUMANA — 4 líneas (PRACTIHUMANA 15/30/50K, METROHUMANA) | 4 tablas reales distintas por # miembros | N/A |
+| PRO, VB, BUPA | N/A siempre | N/A |
+
+Nuevo módulo `domains/health/services/health-discount.calculator.ts` — sin cambios de esquema, se calcula al vuelo con `groupSize = memberRows.length`, igual que `HEALTH_OTROS_CARGOS_CENTS` (§31).
+
+**Salud — grilla de coberturas**: nueva tabla 🌐 `health_plan_coverages` (`insurerId`, `planCode`, `section`, `label`, `displayOrder`, `copago`/`sublimite`/`carencia`, todo texto libre) — valores **fijos por plan**, por eso van como catálogo y no como captura manual repetida (a diferencia de las 18 coberturas de Autos, que sí son negociadas por cotización). Extraída con script Python (celda por celda, `reference-data/salud_oferta_am_coberturas_RAW.csv`, 1919 filas / 77 planes) usando el mapeo real planCode↔columna ya establecido en §31/`health-comparison.service.ts`/los JSON de `healthRateRules` — no una heurística nueva. Detalle del patrón de columnas real, verificado antes de extraer: BMI y Confiamed traen 3 columnas separadas (COPAGO/SUBLÍMITE/CARENCIA); SaludSA/Humana/Salud genérico/Pro/VB traen una sola ("SUB LIMITES"). Los porcentajes de coparticipación se guardan como decimales puros en el Excel (0.8 = 80%) — `CaratulaAMDocument.tsx` los formatea de vuelta a "80%" al mostrar.
+
+`caratula-am.service.ts` extendido: cada oferta trae ahora `coverages` (join por `insurerId`+`planCode`) y los 3 totales de descuento. `CaratulaAMDocument.tsx`: mismo patrón que Autos — comparación (>1 oferta) reemplaza las N páginas por 1 carta genérica + 1 página de grilla apaisada + 1 página de precios/descuentos apaisada; sin comparación (1 oferta), la página existente ahora muestra la grilla real (si el plan la tiene sembrada) en vez del texto genérico de respaldo, más las 3 filas de descuento.
+
+**Verificación:** contra Postgres real — grupo titular 61a + dependiente 41a, 3 ofertas reales (CONFIAMED 30K_RED1_CON_MATERNIDAD, HUMANA METROHUMANA_50, SALUDSA PRACTICO_30K_3D) — coinciden exacto con el PDF real compartido por el usuario en cada valor revisado (deducibles, copagos, sublímites, carencias, y los 3 descuentos: Humana 15%→$27,65, SaludSA 0%→igual a sin descuento, Confiamed N/A). Sesión HTTP real (`dev-login`) confirma el PDF de 5 páginas con el layout correcto. Autos verificado igual: SESA prima neta $834,75 y cuotas $166,97/$111,31/$83,48 exactas contra el PDF real de Karla Robles. `npm run typecheck`/`lint`/`build` limpios.

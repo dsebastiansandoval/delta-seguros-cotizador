@@ -10,7 +10,52 @@ import { join } from "node:path";
 import { eq } from "drizzle-orm";
 import { db } from "./index";
 import { roles, permissions, rolePermissions } from "./schema/identity";
-import { insurers, coverages, vehicleBrands, vehicleModels } from "./schema/catalog";
+import { insurers, coverages, healthPlanCoverages, vehicleBrands, vehicleModels } from "./schema/catalog";
+
+/**
+ * Parser CSV mínimo (RFC4180: comillas para escapar comas/saltos de línea,
+ * `""` para una comilla literal) — suficiente para el CSV de
+ * `salud_oferta_am_coberturas_RAW.csv` sin sumar una dependencia nueva solo
+ * para esto.
+ */
+function parseCsv(raw: string): Record<string, string>[] {
+  const rows: string[][] = [];
+  let field = "";
+  let row: string[] = [];
+  let inQuotes = false;
+  for (let i = 0; i < raw.length; i++) {
+    const c = raw[i];
+    if (inQuotes) {
+      if (c === '"' && raw[i + 1] === '"') {
+        field += '"';
+        i++;
+      } else if (c === '"') {
+        inQuotes = false;
+      } else {
+        field += c;
+      }
+    } else if (c === '"') {
+      inQuotes = true;
+    } else if (c === ",") {
+      row.push(field);
+      field = "";
+    } else if (c === "\n" || c === "\r") {
+      if (c === "\r" && raw[i + 1] === "\n") i++;
+      row.push(field);
+      field = "";
+      if (row.length > 1 || row[0] !== "") rows.push(row);
+      row = [];
+    } else {
+      field += c;
+    }
+  }
+  if (field !== "" || row.length > 0) {
+    row.push(field);
+    rows.push(row);
+  }
+  const [header, ...dataRows] = rows;
+  return dataRows.map((r) => Object.fromEntries(header.map((h, i) => [h, r[i] ?? ""])));
+}
 
 async function seedRoles() {
   const roleRows = [
@@ -234,6 +279,69 @@ async function seedVehicleModels() {
   console.log(`  ${total} modelos de vehículo sembrados (${Object.keys(modelsByBrand).length} marcas)`);
 }
 
+/**
+ * Grilla de sublímites/copago/carencia por plan de Salud — extraída celda
+ * por celda de `OFERTA AM` (script Python, ver comentario en
+ * `reference-data/salud_oferta_am_coberturas_RAW.csv`), verificada contra
+ * 2 PDFs reales de cotizaciones que Delta ya envió a clientes (coincide
+ * exacto: $150 deducible Confiamed Red1-30K, 90% de $60 tope consulta
+ * MetroHumana 50K, etc.). `insurerCode` en el CSV es el código real del
+ * catálogo (`insurers.code`); `planCode` es el mismo valor que ya usa
+ * `quoteOptions.planCode` (sembrado desde los JSON de tarifas reales) — el
+ * join en `caratula-am.service.ts` es directo, sin tabla de traducción.
+ */
+async function seedHealthPlanCoverages() {
+  const referenceDataDir = join(process.cwd(), "..", "reference-data");
+  const raw = readFileSync(join(referenceDataDir, "salud_oferta_am_coberturas_RAW.csv"), "utf-8");
+  const rows = parseCsv(raw);
+
+  const allInsurers = await db.select().from(insurers);
+  const insurerByCode = new Map(allInsurers.map((i) => [i.code, i]));
+
+  const values: Array<{
+    insurerId: string;
+    planCode: string;
+    section: string;
+    label: string;
+    displayOrder: number;
+    copago: string | null;
+    sublimite: string | null;
+    carencia: string | null;
+  }> = [];
+
+  const missingInsurers = new Set<string>();
+  for (const r of rows) {
+    const insurer = insurerByCode.get(r.insurerCode);
+    if (!insurer) {
+      missingInsurers.add(r.insurerCode);
+      continue;
+    }
+    values.push({
+      insurerId: insurer.id,
+      planCode: r.planCode,
+      section: r.section,
+      label: r.label,
+      displayOrder: Number(r.displayOrder),
+      copago: r.copago || null,
+      sublimite: r.sublimite || null,
+      carencia: r.carencia || null,
+    });
+  }
+  if (missingInsurers.size > 0) {
+    console.warn(`  ⚠️  Aseguradoras no encontradas en el catálogo: ${[...missingInsurers].join(", ")}`);
+  }
+
+  // Idempotente: se borra y se vuelve a insertar completo en cada corrida —
+  // más simple que un onConflict con 3 columnas variables, y este catálogo
+  // no tiene datos de negocio del tenant que proteger (es 🌐 global).
+  await db.delete(healthPlanCoverages);
+  const BATCH = 500;
+  for (let i = 0; i < values.length; i += BATCH) {
+    await db.insert(healthPlanCoverages).values(values.slice(i, i + BATCH));
+  }
+  console.log(`  ${values.length} filas de cobertura sembradas (${new Set(values.map((v) => v.planCode)).size} planes)`);
+}
+
 async function main() {
   console.log("Sembrando roles y permisos…");
   await seedRoles();
@@ -243,6 +351,8 @@ async function main() {
   await seedVehicleBrands();
   console.log("Sembrando catálogo de modelos de vehículo…");
   await seedVehicleModels();
+  console.log("Sembrando grilla de coberturas de Salud (OFERTA AM)…");
+  await seedHealthPlanCoverages();
   console.log("Listo.");
   process.exit(0);
 }

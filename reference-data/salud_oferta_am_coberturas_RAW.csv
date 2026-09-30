@@ -1,0 +1,2316 @@
+insurerCode,planCode,section,label,displayOrder,copago,sublimite,carencia
+BMI,SIGMA_I150,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_I150,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+BMI,SIGMA_I150,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_I150,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_I150,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_I150,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_I150,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_I150,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_I150,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_I150,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_I150,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_I150,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_I150,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_I150,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_I150,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_I150,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_I150,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_I150,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_I150,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_I150,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_I150,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_I150,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_I150,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_I150,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_I150,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+BMI,SIGMA_D150,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_D150,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+BMI,SIGMA_D150,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_D150,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_D150,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_D150,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_D150,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D150,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_D150,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_D150,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_D150,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D150,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_D150,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_D150,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_D150,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_D150,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_D150,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_D150,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D150,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D150,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_D150,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_D150,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_D150,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_D150,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_D150,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+BMI,SIGMA_D250,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_D250,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,250,
+BMI,SIGMA_D250,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_D250,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_D250,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_D250,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_D250,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D250,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_D250,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_D250,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_D250,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D250,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_D250,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_D250,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_D250,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_D250,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_D250,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_D250,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D250,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D250,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_D250,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_D250,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_D250,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_D250,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_D250,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+BMI,SIGMA_D500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_D500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,500,
+BMI,SIGMA_D500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_D500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_D500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_D500,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_D500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_D500,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_D500,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_D500,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_D500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_D500,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_D500,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_D500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_D500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_D500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D500,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_D500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_D500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_D500,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_D500,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_D500,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+BMI,SIGMA_D1000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_D1000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,1000,
+BMI,SIGMA_D1000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_D1000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_D1000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_D1000,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_D1000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D1000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_D1000,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_D1000,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_D1000,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D1000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_D1000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_D1000,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_D1000,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_D1000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_D1000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_D1000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D1000,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D1000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_D1000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_D1000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_D1000,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_D1000,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_D1000,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+BMI,SIGMA_D2000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+BMI,SIGMA_D2000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,2000,
+BMI,SIGMA_D2000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+BMI,SIGMA_D2000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+BMI,SIGMA_D2000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+BMI,SIGMA_D2000,COBERTURAS,Tope de Consulta,17,,63.42,
+BMI,SIGMA_D2000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D2000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,80 / 20 %,Monto total de cobertura,90 Días
+BMI,SIGMA_D2000,COBERTURAS,Cuarto y alimento diario,20,100 / 0 %,$ 200 / 240 Días,90 Días
+BMI,SIGMA_D2000,COBERTURAS,Terapia intensiva por días,21,100 / 0 %,Monto total de cobertura / 240 días,90 Días
+BMI,SIGMA_D2000,COBERTURAS,Medicina ambulatoria al,22,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D2000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,50000,
+BMI,SIGMA_D2000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+BMI,SIGMA_D2000,COBERTURAS,Médico a domicilio,25,,No otorga,
+BMI,SIGMA_D2000,COBERTURAS,Asistencia Exequial,26,,Sí otorga,
+BMI,SIGMA_D2000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,100 / 0 %,2000,60 Días
+BMI,SIGMA_D2000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,80 / 20 %,25000,60 Días
+BMI,SIGMA_D2000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D2000,TOPE_CONSULTA,Tope de terapias,39,80 / 20 %,Monto total de cobertura,30 Días
+BMI,SIGMA_D2000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+BMI,SIGMA_D2000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+BMI,SIGMA_D2000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,80 / 20 %,20 SBU,24 Meses
+BMI,SIGMA_D2000,PERIODOS_CARENCIA,Emergencia,44,80 / 20 %,500,24 Horas
+BMI,SIGMA_D2000,PERIODOS_CARENCIA,Ambulatoria,45,80 / 20 %,500,24 Horas
+BMI,SIGMA_D2000,PERIODOS_CARENCIA,Hospitalaria,46,,No otorga,
+SALUD,STAR_15_70,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+SALUD,STAR_15_70,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,70,
+SALUD,STAR_15_70,COBERTURAS,Deducible anual por persona (Hospitalario),14,,70,
+SALUD,STAR_15_70,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_15_70,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_15_70,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_15_70,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,COBERTURAS,Cuarto y alimento diario,20,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,COBERTURAS,Terapia intensiva por días,21,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,COBERTURAS,Medicina ambulatoria al,22,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_15_70,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_15_70,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_15_70,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_15_70,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,1000,
+SALUD,STAR_15_70,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,500,
+SALUD,STAR_15_70,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_15_70,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_15_70,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_15_70,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_15_70,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 400
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_15_70,PERIODOS_CARENCIA,Emergencia,44,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,PERIODOS_CARENCIA,Ambulatoria,45,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70,PERIODOS_CARENCIA,Hospitalaria,46,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+SALUD,STAR_15_70_1500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,70,
+SALUD,STAR_15_70_1500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,1500,
+SALUD,STAR_15_70_1500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_15_70_1500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_15_70_1500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_15_70_1500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Cuarto y alimento diario,20,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Terapia intensiva por días,21,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Medicina ambulatoria al,22,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_15_70_1500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_15_70_1500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_15_70_1500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_15_70_1500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,1000,
+SALUD,STAR_15_70_1500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,500,
+SALUD,STAR_15_70_1500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_15_70_1500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_15_70_1500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_15_70_1500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_15_70_1500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 400
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_15_70_1500,PERIODOS_CARENCIA,Emergencia,44,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_1500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+SALUD,STAR_15_70_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,70,
+SALUD,STAR_15_70_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,STAR_15_70_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_15_70_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_15_70_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_15_70_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Cuarto y alimento diario,20,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Terapia intensiva por días,21,,"*90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_15_70_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_15_70_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_15_70_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_15_70_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,1000,
+SALUD,STAR_15_70_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,500,
+SALUD,STAR_15_70_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_15_70_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_15_70_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_15_70_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_15_70_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 400
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_15_70_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 70% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_15_70_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 90% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUD,STAR_30_90,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUD,STAR_30_90,COBERTURAS,Deducible anual por persona (Hospitalario),14,,90,
+SALUD,STAR_30_90,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_30_90,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_30_90,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_30_90,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_30_90,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_30_90,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_30_90,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_30_90,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,2500,
+SALUD,STAR_30_90,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,1000,
+SALUD,STAR_30_90,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_30_90,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_30_90,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_30_90,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_30_90,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 600
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_30_90,PERIODOS_CARENCIA,Emergencia,44,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUD,STAR_30_90_1500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUD,STAR_30_90_1500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,1500,
+SALUD,STAR_30_90_1500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_30_90_1500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_30_90_1500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_30_90_1500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_30_90_1500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_30_90_1500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_30_90_1500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_30_90_1500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,2500,
+SALUD,STAR_30_90_1500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,1000,
+SALUD,STAR_30_90_1500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_30_90_1500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_30_90_1500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_30_90_1500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_30_90_1500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 600
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_30_90_1500,PERIODOS_CARENCIA,Emergencia,44,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_1500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUD,STAR_30_90_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUD,STAR_30_90_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,STAR_30_90_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_30_90_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_30_90_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_30_90_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_30_90_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_30_90_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_30_90_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_30_90_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,2500,
+SALUD,STAR_30_90_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,1000,
+SALUD,STAR_30_90_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_30_90_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_30_90_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_30_90_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_30_90_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 600
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_30_90_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUD,STAR_30_90_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUD,STAR_30_90_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,STAR_30_90_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,STAR_30_90_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,STAR_30_90_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,STAR_30_90_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,STAR_30_90_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,STAR_30_90_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,STAR_30_90_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,STAR_30_90_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,2500,
+SALUD,STAR_30_90_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,1000,
+SALUD,STAR_30_90_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,STAR_30_90_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,STAR_30_90_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,STAR_30_90_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,STAR_30_90_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 600
+* Mes 25 hasta 20 SBU",
+SALUD,STAR_30_90_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* No aplica Red libre elección",
+SALUD,STAR_30_90_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* No aplica Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,100,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Deducible anual por persona (Hospitalario),14,,100,
+SALUD,SKY_70_PLUS_100,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_100,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_100,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_100,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_100,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_100,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_100,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_100,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_100,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_100,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,100,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,1500,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_100_1500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_100_1500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_100_1500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_100_1500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_100_1500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_100_1500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_100_1500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_100_1500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_100_1500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_1500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,100,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_100_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_100_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_100_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_100_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_100_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_100_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_100_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_100_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_100_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,100,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_100_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_100_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_100_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_100_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_100_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_100_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_100_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_100_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_100_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_100_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Deducible anual por persona (Hospitalario),14,,200,
+SALUD,SKY_70_PLUS_200,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_200,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_200,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_200,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_200,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_200,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_200,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_200,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_200,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_200,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,1500,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_200_1500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_200_1500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_200_1500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_200_1500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_200_1500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_200_1500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_200_1500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_200_1500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_200_1500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_1500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_200_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_200_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_200_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_200_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_200_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_200_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_200_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_200_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_200_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_200_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_200_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_200_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_200_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_200_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_200_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_200_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_200_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_200_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_200_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,500,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,500,
+SALUD,SKY_70_PLUS_500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,500,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,1500,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_500_1500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_500_1500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_500_1500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_500_1500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_500_1500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_500_1500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_500_1500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_500_1500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_500_1500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_1500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,500,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_500_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_500_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_500_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_500_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_500_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_500_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_500_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_500_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_500_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,70000,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,500,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,SKY_70_PLUS_500_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,SKY_70_PLUS_500_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3000,
+SALUD,SKY_70_PLUS_500_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2000,
+SALUD,SKY_70_PLUS_500_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,SKY_70_PLUS_500_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,SKY_70_PLUS_500_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,SKY_70_PLUS_500_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,SKY_70_PLUS_500_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 700
+* Mes 25 hasta 20 SBU",
+SALUD,SKY_70_PLUS_500_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,SKY_70_PLUS_500_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_150,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+SALUD,PRO_150_150,COBERTURAS,Deducible anual por persona (Hospitalario),14,,150,
+SALUD,PRO_150_150,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_150,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_150,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_150,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_150,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_150,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_150,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_150,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_150,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_150,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_150,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_150,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_150,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_150,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_150,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_150,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_150_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+SALUD,PRO_150_150_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,PRO_150_150_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_150_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_150_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_150_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_150_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_150_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_150_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_150_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_150_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_150_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_150_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_150_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_150_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_150_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_150_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_150_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_150_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+SALUD,PRO_150_150_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,PRO_150_150_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_150_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_150_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_150_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_150_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_150_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_150_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_150_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_150_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_150_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_150_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_150_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_150_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_150_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_150_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_150_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_150_10000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+SALUD,PRO_150_150_10000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,10000,
+SALUD,PRO_150_150_10000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_150_10000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_150_10000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_150_10000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_150_10000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_150_10000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_150_10000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_150_10000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_150_10000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_150_10000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_150_10000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_150_10000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_150_10000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_150_10000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_150_10000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_150_10000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_150_10000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_300,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,300,
+SALUD,PRO_150_300,COBERTURAS,Deducible anual por persona (Hospitalario),14,,300,
+SALUD,PRO_150_300,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_300,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_300,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_300,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_300,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_300,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_300,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_300,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_300,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_300,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_300,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_300,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_300,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_300,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_300,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_300,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_300_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,300,
+SALUD,PRO_150_300_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,PRO_150_300_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_300_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_300_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_300_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_300_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_300_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_300_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_300_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_300_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_300_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_300_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_300_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_300_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_300_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_300_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_300_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_300_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,300,
+SALUD,PRO_150_300_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,PRO_150_300_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_300_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_300_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_300_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_300_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_300_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_300_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_300_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_300_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_300_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_300_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_300_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_300_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_300_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_300_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_300_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+SALUD,PRO_150_300_10000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,300,
+SALUD,PRO_150_300_10000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,10000,
+SALUD,PRO_150_300_10000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_150_300_10000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_150_300_10000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_150_300_10000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_150_300_10000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_150_300_10000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_150_300_10000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_150_300_10000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_150_300_10000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_150_300_10000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_150_300_10000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_150_300_10000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_150_300_10000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_150_300_10000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_150_300_10000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 800
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_150_300_10000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_150_300_10000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_200,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,PRO_500_200,COBERTURAS,Deducible anual por persona (Hospitalario),14,,200,
+SALUD,PRO_500_200,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_200,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_200,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_200,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_200,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_200,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_200,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_200,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_200,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_200,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_200,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_200,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_200,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_200,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_200,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_200,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_200_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,PRO_500_200_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,PRO_500_200_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_200_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_200_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_200_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_200_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_200_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_200_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_200_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_200_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_200_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_200_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_200_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_200_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_200_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_200_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_200_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_200_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,PRO_500_200_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,PRO_500_200_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_200_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_200_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_200_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_200_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_200_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_200_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_200_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_200_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_200_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_200_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_200_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_200_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_200_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_200_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_200_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_200_10000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUD,PRO_500_200_10000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,10000,
+SALUD,PRO_500_200_10000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_200_10000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_200_10000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_200_10000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_200_10000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_200_10000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_200_10000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_200_10000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_200_10000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_200_10000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_200_10000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_200_10000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_200_10000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_200_10000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_200_10000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_200_10000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_200_10000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_200_10000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_400,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,400,
+SALUD,PRO_500_400,COBERTURAS,Deducible anual por persona (Hospitalario),14,,400,
+SALUD,PRO_500_400,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_400,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_400,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_400,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_400,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_400,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_400,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_400,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_400,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_400,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_400,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_400,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_400,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_400,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_400,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_400,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_400_2500,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,400,
+SALUD,PRO_500_400_2500,COBERTURAS,Deducible anual por persona (Hospitalario),14,,2500,
+SALUD,PRO_500_400_2500,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_400_2500,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_400_2500,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_400_2500,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_400_2500,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_400_2500,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_400_2500,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_400_2500,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_400_2500,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_400_2500,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_400_2500,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_400_2500,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_400_2500,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_400_2500,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_400_2500,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_400_2500,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_2500,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_2500,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_400_5000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,400,
+SALUD,PRO_500_400_5000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,5000,
+SALUD,PRO_500_400_5000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_400_5000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_400_5000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_400_5000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_400_5000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_400_5000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_400_5000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_400_5000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_400_5000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_400_5000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_400_5000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_400_5000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_400_5000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_400_5000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_400_5000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_400_5000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_5000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_5000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,500000,
+SALUD,PRO_500_400_10000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,400,
+SALUD,PRO_500_400_10000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,10000,
+SALUD,PRO_500_400_10000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUD,PRO_500_400_10000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUD,PRO_500_400_10000,COBERTURAS,Tope de Consulta,17,,De acuerdo Red,
+SALUD,PRO_500_400_10000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Terapia intensiva por días,21,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Medicina ambulatoria al,22,,"* 80% Red convenio
+* 70% Red libre elección",
+SALUD,PRO_500_400_10000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+SALUD,PRO_500_400_10000,COBERTURAS,Cuidado Dental,24,,Sí otorga,
+SALUD,PRO_500_400_10000,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+SALUD,PRO_500_400_10000,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUD,PRO_500_400_10000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUD,PRO_500_400_10000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,20000,
+SALUD,PRO_500_400_10000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,30 Sesiones de cada tipo,
+SALUD,PRO_500_400_10000,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+SALUD,PRO_500_400_10000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUD,PRO_500_400_10000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUD,PRO_500_400_10000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 hasta $ 900
+* Mes 25 hasta 20 SBU",
+SALUD,PRO_500_400_10000,PERIODOS_CARENCIA,Emergencia,44,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUD,PRO_500_400_10000,PERIODOS_CARENCIA,Ambulatoria,45,,"* 90% Red convenio
+* 80% Red libre elección",
+SALUD,PRO_500_400_10000,PERIODOS_CARENCIA,Hospitalaria,46,,"* 100% Red convenio
+* 90% Red libre elección",
+SALUDSA,UNICO_7K,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,7000,
+SALUDSA,UNICO_7K,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUDSA,UNICO_7K,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,UNICO_7K,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,UNICO_7K,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,UNICO_7K,COBERTURAS,Tope de Consulta,17,,Direccionado,
+SALUDSA,UNICO_7K,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.7,
+SALUDSA,UNICO_7K,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.7,
+SALUDSA,UNICO_7K,COBERTURAS,Cuarto y alimento diario,20,,0.7,
+SALUDSA,UNICO_7K,COBERTURAS,Terapia intensiva por días,21,,0.7,
+SALUDSA,UNICO_7K,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,UNICO_7K,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,UNICO_7K,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,UNICO_7K,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,UNICO_7K,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,0,
+SALUDSA,UNICO_7K,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,0,
+SALUDSA,UNICO_7K,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,10 Sesiones de cada tipo,
+SALUDSA,UNICO_7K,TOPE_CONSULTA,Tope de terapias,39,,10 Sesiones,
+SALUDSA,UNICO_7K,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,UNICO_7K,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,UNICO_7K,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 25 Ambulatorio 50%, Hospitalario 50% hasta 20 SBU (Red Saludsa care)",
+SALUDSA,UNICO_7K,PERIODOS_CARENCIA,Emergencia,44,,0.7,
+SALUDSA,UNICO_7K,PERIODOS_CARENCIA,Ambulatoria,45,,0.7,
+SALUDSA,UNICO_7K,PERIODOS_CARENCIA,Hospitalaria,46,,0.7,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,ESENCIAL_15K,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Tope de Consulta,17,,25.62,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.7,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.9,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Cuarto y alimento diario,20,,0.9,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Terapia intensiva por días,21,,0.9,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,ESENCIAL_15K,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,ESENCIAL_15K,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,ESENCIAL_15K,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,900,
+SALUDSA,ESENCIAL_15K,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 90% hasta $ 1000,
+SALUDSA,ESENCIAL_15K,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,10 Sesiones de cada tipo,
+SALUDSA,ESENCIAL_15K,TOPE_CONSULTA,Tope de terapias,39,,10 Sesiones,
+SALUDSA,ESENCIAL_15K,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,ESENCIAL_15K,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,ESENCIAL_15K,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 70%, Hospitalario 90%, Hasta $600
+* Mes 25 Ambulatorio 70%, Hospitalario 90% hasta $ 1000
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,ESENCIAL_15K,PERIODOS_CARENCIA,Emergencia,44,,0.9,
+SALUDSA,ESENCIAL_15K,PERIODOS_CARENCIA,Ambulatoria,45,,0.7,
+SALUDSA,ESENCIAL_15K,PERIODOS_CARENCIA,Hospitalaria,46,,0.9,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Tope de Consulta,17,,25.62,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,PRACTICO_30K_3,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,PRACTICO_30K_3,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,30000,
+SALUDSA,PRACTICO_30K_3,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 30000,
+SALUDSA,PRACTICO_30K_3,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,PRACTICO_30K_3,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,PRACTICO_30K_3,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,PRACTICO_30K_3,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,PRACTICO_30K_3,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $800
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1400
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,PRACTICO_30K_3,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,PRACTICO_30K_3,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,PRACTICO_30K_3,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,90,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Tope de Consulta,17,,25.62,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,PRACTICO_30K_3D,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,PRACTICO_30K_3D,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,900,
+SALUDSA,PRACTICO_30K_3D,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 1500,
+SALUDSA,PRACTICO_30K_3D,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,PRACTICO_30K_3D,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,PRACTICO_30K_3D,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,PRACTICO_30K_3D,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,PRACTICO_30K_3D,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $800
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1400
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,PRACTICO_30K_3D,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,PRACTICO_30K_3D,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,PRACTICO_30K_3D,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,45000,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,IDEAL_45K_4,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Tope de Consulta,17,,31.97,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,IDEAL_45K_4,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,IDEAL_45K_4,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,IDEAL_45K_4,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,45000,
+SALUDSA,IDEAL_45K_4,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 45000,
+SALUDSA,IDEAL_45K_4,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,IDEAL_45K_4,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,IDEAL_45K_4,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,IDEAL_45K_4,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,IDEAL_45K_4,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $800
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1400
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,IDEAL_45K_4,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,IDEAL_45K_4,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,IDEAL_45K_4,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,45000,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,100,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Tope de Consulta,17,,31.97,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,IDEAL_45K_4D,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,IDEAL_45K_4D,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,1200,
+SALUDSA,IDEAL_45K_4D,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 2000,
+SALUDSA,IDEAL_45K_4D,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,IDEAL_45K_4D,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,IDEAL_45K_4D,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,IDEAL_45K_4D,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,IDEAL_45K_4D,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $800
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1400
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,IDEAL_45K_4D,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,IDEAL_45K_4D,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,IDEAL_45K_4D,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,ELITE_100K_5,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,100000,
+SALUDSA,ELITE_100K_5,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+SALUDSA,ELITE_100K_5,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,ELITE_100K_5,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,ELITE_100K_5,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,ELITE_100K_5,COBERTURAS,Tope de Consulta,17,,40,
+SALUDSA,ELITE_100K_5,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,ELITE_100K_5,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,ELITE_100K_5,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,ELITE_100K_5,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,ELITE_100K_5,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,ELITE_100K_5,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,ELITE_100K_5,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,ELITE_100K_5,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,ELITE_100K_5,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,100000,
+SALUDSA,ELITE_100K_5,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 100000,
+SALUDSA,ELITE_100K_5,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,ELITE_100K_5,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,ELITE_100K_5,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,ELITE_100K_5,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,ELITE_100K_5,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $900
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1500
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,ELITE_100K_5,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,ELITE_100K_5,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,ELITE_100K_5,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,100000,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,ELITE_100K_5D,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Tope de Consulta,17,,40,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,ELITE_100K_5D,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,ELITE_100K_5D,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,ELITE_100K_5D,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,2200,
+SALUDSA,ELITE_100K_5D,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 12000,
+SALUDSA,ELITE_100K_5D,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,ELITE_100K_5D,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,ELITE_100K_5D,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,ELITE_100K_5D,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,ELITE_100K_5D,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $900
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1500
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,ELITE_100K_5D,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,ELITE_100K_5D,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,ELITE_100K_5D,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,1000000,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Tope de Consulta,17,,62.49,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,1000000,
+SALUDSA,PRIVILEGIO_1M_7,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 1000000,
+SALUDSA,PRIVILEGIO_1M_7,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,PRIVILEGIO_1M_7,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,PRIVILEGIO_1M_7,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $900
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1500
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,PRIVILEGIO_1M_7,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,PRIVILEGIO_1M_7,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,PRIVILEGIO_1M_7,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,1000000,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Tope de Consulta,17,,62.49,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7D,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7D,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,3500,
+SALUDSA,PRIVILEGIO_1M_7D,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 20000,
+SALUDSA,PRIVILEGIO_1M_7D,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,PRIVILEGIO_1M_7D,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,PRIVILEGIO_1M_7D,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7D,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,PRIVILEGIO_1M_7D,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $900
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 1500
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,PRIVILEGIO_1M_7D,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,PRIVILEGIO_1M_7D,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,PRIVILEGIO_1M_7D,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,1000000,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Deducible anual por persona (Hospitalario),14,,0,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Tope de Consulta,17,,80,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,1,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Cuarto y alimento diario,20,,1,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Terapia intensiva por días,21,,1,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Medicina ambulatoria al,22,,"* 60% M / 80% G Red Salud
+* 30% M / 40% G Libre elección",
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Cuidado Dental,24,,No otorga,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Médico a domicilio,25,,No otorga,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,COBERTURAS,Asistencia Exequial,26,,No otorga,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,4000,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,* 100% hasta $ 25000,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,20 Sesiones de cada tipo,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,TOPE_CONSULTA,Tope de terapias,39,,20 Sesiones,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"* Mes 13 Ambulatorio 80%, Hospitalario 100%, Hasta $1200
+* Mes 25 Ambulatorio 80%, Hospitalario 100% hasta $ 2000
+* Hasta 20 SBU (Red Saludsa care)",
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,PERIODOS_CARENCIA,Emergencia,44,,1,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,PERIODOS_CARENCIA,Ambulatoria,45,,0.8,
+SALUDSA,PRIVILEGIO_PLUS_1M_8D,PERIODOS_CARENCIA,Hospitalaria,46,,1,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,50,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,Sí otorga,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Tope de Consulta,17,,80% de $25,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.8,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Cuarto y alimento diario,20,,Máximo $ 160 diarios,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Terapia intensiva por días,21,,0.9,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Medicina ambulatoria al,22,,0.5,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Cuidado Dental,24,,No aplica,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+HUMANA,PRACTIHUMANA_15,COBERTURAS,Asistencia Exequial,26,,No aplica,
+HUMANA,PRACTIHUMANA_15,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,100,
+HUMANA,PRACTIHUMANA_15,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,750,
+HUMANA,PRACTIHUMANA_15,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,1125,
+HUMANA,PRACTIHUMANA_15,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+HUMANA,PRACTIHUMANA_15,TOPE_CONSULTA,Tope de terapias,39,,15,
+HUMANA,PRACTIHUMANA_15,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+HUMANA,PRACTIHUMANA_15,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+HUMANA,PRACTIHUMANA_15,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"Mes 13 has $ 1.200
+Mes 25 hasta 20 SBU",
+HUMANA,PRACTIHUMANA_15,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+HUMANA,PRACTIHUMANA_15,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+HUMANA,PRACTIHUMANA_15,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,60,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,Sí otorga,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Tope de Consulta,17,,80% de $30,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.8,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Cuarto y alimento diario,20,,Máximo $ 160 diarios,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Terapia intensiva por días,21,,0.9,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Medicina ambulatoria al,22,,0.5,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Cuidado Dental,24,,No aplica,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+HUMANA,PRACTIHUMANA_30,COBERTURAS,Asistencia Exequial,26,,No aplica,
+HUMANA,PRACTIHUMANA_30,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,100,
+HUMANA,PRACTIHUMANA_30,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,1500,
+HUMANA,PRACTIHUMANA_30,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,2250,
+HUMANA,PRACTIHUMANA_30,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+HUMANA,PRACTIHUMANA_30,TOPE_CONSULTA,Tope de terapias,39,,15,
+HUMANA,PRACTIHUMANA_30,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,3 consultas $ 30.00 al 80%,
+HUMANA,PRACTIHUMANA_30,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,6 consultas $ 30.00 al 80%,
+HUMANA,PRACTIHUMANA_30,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"Mes 13 has $ 1.200
+Mes 25 hasta 20 SBU",
+HUMANA,PRACTIHUMANA_30,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+HUMANA,PRACTIHUMANA_30,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+HUMANA,PRACTIHUMANA_30,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+HUMANA,METROHUMANA_50,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,50000,
+HUMANA,METROHUMANA_50,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,80,
+HUMANA,METROHUMANA_50,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+HUMANA,METROHUMANA_50,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,Sí otorga,
+HUMANA,METROHUMANA_50,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+HUMANA,METROHUMANA_50,COBERTURAS,Tope de Consulta,17,,90% de $60,
+HUMANA,METROHUMANA_50,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+HUMANA,METROHUMANA_50,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.8,
+HUMANA,METROHUMANA_50,COBERTURAS,Cuarto y alimento diario,20,,Máximo $ 160 diarios,
+HUMANA,METROHUMANA_50,COBERTURAS,Terapia intensiva por días,21,,0.9,
+HUMANA,METROHUMANA_50,COBERTURAS,Medicina ambulatoria al,22,,0.7,
+HUMANA,METROHUMANA_50,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,15 días al año,
+HUMANA,METROHUMANA_50,COBERTURAS,Cuidado Dental,24,,No aplica,
+HUMANA,METROHUMANA_50,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+HUMANA,METROHUMANA_50,COBERTURAS,Asistencia Exequial,26,,No aplica,
+HUMANA,METROHUMANA_50,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,300,
+HUMANA,METROHUMANA_50,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,2500,
+HUMANA,METROHUMANA_50,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,3750,
+HUMANA,METROHUMANA_50,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+HUMANA,METROHUMANA_50,TOPE_CONSULTA,Tope de terapias,39,,15,
+HUMANA,METROHUMANA_50,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,6 consultas $ 40.00 al 80%,
+HUMANA,METROHUMANA_50,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,12 consultas $ 40.00 al 80%,
+HUMANA,METROHUMANA_50,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"Mes 7 hasta $ 480
+Mes 13 has $ 1.200
+Mes 25 hasta 20 SBU",
+HUMANA,METROHUMANA_50,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+HUMANA,METROHUMANA_50,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+HUMANA,METROHUMANA_50,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+HUMANA,METROHUMANA_80,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,80000,
+HUMANA,METROHUMANA_80,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+HUMANA,METROHUMANA_80,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+HUMANA,METROHUMANA_80,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,Sí otorga,
+HUMANA,METROHUMANA_80,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+HUMANA,METROHUMANA_80,COBERTURAS,Tope de Consulta,17,,80% de $70,
+HUMANA,METROHUMANA_80,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.8,
+HUMANA,METROHUMANA_80,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.8,
+HUMANA,METROHUMANA_80,COBERTURAS,Cuarto y alimento diario,20,,Máximo $ 160 diarios,
+HUMANA,METROHUMANA_80,COBERTURAS,Terapia intensiva por días,21,,0.8,
+HUMANA,METROHUMANA_80,COBERTURAS,Medicina ambulatoria al,22,,0.6,
+HUMANA,METROHUMANA_80,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,15 días al año,
+HUMANA,METROHUMANA_80,COBERTURAS,Cuidado Dental,24,,No aplica,
+HUMANA,METROHUMANA_80,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+HUMANA,METROHUMANA_80,COBERTURAS,Asistencia Exequial,26,,No aplica,
+HUMANA,METROHUMANA_80,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,N/A,
+HUMANA,METROHUMANA_80,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,4000,
+HUMANA,METROHUMANA_80,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,4000,
+HUMANA,METROHUMANA_80,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+HUMANA,METROHUMANA_80,TOPE_CONSULTA,Tope de terapias,39,,25,
+HUMANA,METROHUMANA_80,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,6 consultas $ 60.00 al 80%,
+HUMANA,METROHUMANA_80,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,12 consultas $ 60.00 al 80%,
+HUMANA,METROHUMANA_80,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"Mes 7 hasta $ 540
+Mes 13 has $ 1.350
+Mes 25 hasta 20 SBU",
+HUMANA,METROHUMANA_80,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+HUMANA,METROHUMANA_80,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+HUMANA,METROHUMANA_80,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+HUMANA,METROHUMANA_150,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,150000,
+HUMANA,METROHUMANA_150,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+HUMANA,METROHUMANA_150,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+HUMANA,METROHUMANA_150,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,Sí otorga,
+HUMANA,METROHUMANA_150,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+HUMANA,METROHUMANA_150,COBERTURAS,Tope de Consulta,17,,90% de $80,
+HUMANA,METROHUMANA_150,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,0.9,
+HUMANA,METROHUMANA_150,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,0.9,
+HUMANA,METROHUMANA_150,COBERTURAS,Cuarto y alimento diario,20,,Máximo $ 200 diarios,
+HUMANA,METROHUMANA_150,COBERTURAS,Terapia intensiva por días,21,,0.9,
+HUMANA,METROHUMANA_150,COBERTURAS,Medicina ambulatoria al,22,,0.7,
+HUMANA,METROHUMANA_150,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,30 días al año,
+HUMANA,METROHUMANA_150,COBERTURAS,Cuidado Dental,24,,No aplica,
+HUMANA,METROHUMANA_150,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+HUMANA,METROHUMANA_150,COBERTURAS,Asistencia Exequial,26,,No aplica,
+HUMANA,METROHUMANA_150,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,700,
+HUMANA,METROHUMANA_150,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,7500,
+HUMANA,METROHUMANA_150,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,11250,
+HUMANA,METROHUMANA_150,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+HUMANA,METROHUMANA_150,TOPE_CONSULTA,Tope de terapias,39,,30 Sesiones,
+HUMANA,METROHUMANA_150,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,6 consultas $ 66.00 al 80%,
+HUMANA,METROHUMANA_150,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,12 consultas $ 65.00 al 80%,
+HUMANA,METROHUMANA_150,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"Mes 7 hasta $ 540
+Mes 13 has $ 1.350
+Mes 25 hasta 20 SBU",
+HUMANA,METROHUMANA_150,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+HUMANA,METROHUMANA_150,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+HUMANA,METROHUMANA_150,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+PRO,PLAN_10000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,10000,
+PRO,PLAN_10000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+PRO,PLAN_10000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+PRO,PLAN_10000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+PRO,PLAN_10000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+PRO,PLAN_10000,COBERTURAS,Tope de Consulta,17,,60,
+PRO,PLAN_10000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* $60 por consulta  
+y cobertura al 90% dentro de la red
+
+* $50 por consulta 
+ y cobertura al 70% fuera de la red",
+PRO,PLAN_10000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_10000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% dentro de la red hasta 120 diarios
+* 70% fuera de la red hasta $ 120 diarios",
+PRO,PLAN_10000,COBERTURAS,Terapia intensiva por días,21,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_10000,COBERTURAS,Medicina ambulatoria al,22,,"* Medicamentos 70% dentro de la red
+* Medicamentos 60% fuera de la red",
+PRO,PLAN_10000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+PRO,PLAN_10000,COBERTURAS,Cuidado Dental,24,,No aplica,
+PRO,PLAN_10000,COBERTURAS,Médico a domicilio,25,,No aplica,
+PRO,PLAN_10000,COBERTURAS,Asistencia Exequial,26,,No aplica,
+PRO,PLAN_10000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,"* 100% dentro de la red hasta $ 1,500
+*100% fuera de la red hasta $ 1,500",
+PRO,PLAN_10000,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,"* 100% dentro de la red hasta $ 1,500
+*100% fuera de la red hasta $ 1,500",
+PRO,PLAN_10000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_10000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+PRO,PLAN_10000,TOPE_CONSULTA,Tope de terapias,39,,"* 12 Sesiones al 90% dentro de la red hasta $ 20
+* 12 Sesiones al 70% dentro de la red hasta $ 20",
+PRO,PLAN_10000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+PRO,PLAN_10000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+PRO,PLAN_10000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"24 Meses 20 SBU
+12 Meses  hast $700",
+PRO,PLAN_10000,PERIODOS_CARENCIA,Emergencia,44,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_10000,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+PRO,PLAN_10000,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+PRO,PLAN_15000,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,15000,
+PRO,PLAN_15000,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+PRO,PLAN_15000,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+PRO,PLAN_15000,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+PRO,PLAN_15000,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+PRO,PLAN_15000,COBERTURAS,Tope de Consulta,17,,70,
+PRO,PLAN_15000,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* $70 por consulta  
+y cobertura al 90% dentro de la red
+
+* $60 por consulta 
+ y cobertura al 70% fuera de la red",
+PRO,PLAN_15000,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_15000,COBERTURAS,Cuarto y alimento diario,20,,"* 100% dentro de la red hasta 150 diarios
+* 70% fuera de la red hasta $ 150 diarios",
+PRO,PLAN_15000,COBERTURAS,Terapia intensiva por días,21,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_15000,COBERTURAS,Medicina ambulatoria al,22,,"* Medicamentos 70% dentro de la red
+* Medicamentos 60% fuera de la red",
+PRO,PLAN_15000,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+PRO,PLAN_15000,COBERTURAS,Cuidado Dental,24,,No aplica,
+PRO,PLAN_15000,COBERTURAS,Médico a domicilio,25,,No aplica,
+PRO,PLAN_15000,COBERTURAS,Asistencia Exequial,26,,No aplica,
+PRO,PLAN_15000,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,,"* 100% dentro de la red hasta $ 1,500
+*100% fuera de la red hasta $ 1,500",
+PRO,PLAN_15000,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,"* 100% dentro de la red hasta $ 1,500
+*100% fuera de la red hasta $ 1,500",
+PRO,PLAN_15000,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_15000,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+PRO,PLAN_15000,TOPE_CONSULTA,Tope de terapias,39,,"* 12 Sesiones al 90% dentro de la red hasta $ 20
+* 12 Sesiones al 70% dentro de la red hasta $ 20",
+PRO,PLAN_15000,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+PRO,PLAN_15000,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+PRO,PLAN_15000,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"24 Meses 20 SBU
+12 Meses  hast $700",
+PRO,PLAN_15000,PERIODOS_CARENCIA,Emergencia,44,,"* 90% dentro de la red
+* 70% fuera de la red",
+PRO,PLAN_15000,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+PRO,PLAN_15000,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,20000,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Período de presentación de reclamos,16,,60 Días,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Tope de Consulta,17,,50,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* $50 por consulta  
+y cobertura al 80% dentro de la red
+
+* $50 por consulta 
+ y cobertura al 70% fuera de la red",
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 80% dentro de la red
+* 70% fuera de la red",
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Cuarto y alimento diario,20,,* Hasta 160 diarios,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Terapia intensiva por días,21,,* Hasta el monto máximo contratado,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Medicina ambulatoria al,22,,"* 60% Marca
+* 70% Genéricos ",
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Cuidado Dental,24,,Sí aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Médico a domicilio,25,,No aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,COBERTURAS,Asistencia Exequial,26,,No aplica,
+VB,PREDILECTO_20K_DENTAL_BASICO,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,"* Hasta USD 1,800",
+VB,PREDILECTO_20K_DENTAL_BASICO,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+VB,PREDILECTO_20K_DENTAL_BASICO,TOPE_CONSULTA,Tope de terapias,39,,* 15 sesiones de cada tipo hasta $ 25 C/U,
+VB,PREDILECTO_20K_DENTAL_BASICO,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+VB,PREDILECTO_20K_DENTAL_BASICO,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+VB,PREDILECTO_20K_DENTAL_BASICO,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"24 Meses 20 SBU
+12 Meses  10 SBU",
+VB,PREDILECTO_20K_DENTAL_BASICO,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+VB,PREDILECTO_20K_DENTAL_BASICO,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+VB,PREDILECTO_20K_DENTAL_BASICO,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,20000,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,0,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Período de presentación de reclamos,16,,60 Días,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Tope de Consulta,17,,50,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,,"* $50 por consulta  
+y cobertura al 80% dentro de la red
+
+* $50 por consulta 
+ y cobertura al 70% fuera de la red",
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,,"* 80% dentro de la red
+* 70% fuera de la red",
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Cuarto y alimento diario,20,,* Hasta 160 diarios,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Terapia intensiva por días,21,,* Hasta el monto máximo contratado,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Medicina ambulatoria al,22,,"* 60% Marca
+* 70% Genéricos ",
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,No aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Cuidado Dental,24,,Sí aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Médico a domicilio,25,,No aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,COBERTURAS,Asistencia Exequial,26,,No aplica,
+VB,PREDILECTO_20K_DENTAL_PLUS,MATERNIDAD,"Parto normal, cesárea o aborto no provocado",35,,"* Hasta USD 1,800",
+VB,PREDILECTO_20K_DENTAL_PLUS,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+VB,PREDILECTO_20K_DENTAL_PLUS,TOPE_CONSULTA,Tope de terapias,39,,* 15 sesiones de cada tipo hasta $ 25 C/U,
+VB,PREDILECTO_20K_DENTAL_PLUS,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+VB,PREDILECTO_20K_DENTAL_PLUS,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+VB,PREDILECTO_20K_DENTAL_PLUS,PERIODOS_CARENCIA,Cobertura de preexistencias,43,,"24 Meses 20 SBU
+12 Meses  10 SBU",
+VB,PREDILECTO_20K_DENTAL_PLUS,PERIODOS_CARENCIA,Emergencia,44,,24 Horas,
+VB,PREDILECTO_20K_DENTAL_PLUS,PERIODOS_CARENCIA,Ambulatoria,45,,30 Días,
+VB,PREDILECTO_20K_DENTAL_PLUS,PERIODOS_CARENCIA,Hospitalaria,46,,90 Días,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,10000,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 45 por consulta hasta $ 10,000",30 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,10000,30 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,10000,90 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,150,90 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,10000,90 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,10000,30 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,800,60 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,10K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,10K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,10000,24 Horas
+CONFIAMED,10K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,10000,30 Días
+CONFIAMED,10K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,10000,90 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,10000,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 45 por consulta hasta $ 10,000",30 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,10000,30 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,10000,90 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,150,90 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,10000,90 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,10000,30 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,800,60 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,10000,24 Horas
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,10000,30 Días
+CONFIAMED,10K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,10000,90 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,10000,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 45 por consulta hasta $ 10,000",30 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,10000,30 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,10000,90 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,150,90 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,10000,90 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,10000,30 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,800,60 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,10K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,10K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,10000,24 Horas
+CONFIAMED,10K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,10000,30 Días
+CONFIAMED,10K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,10000,90 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,10000,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,120,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 45 por consulta hasta $ 10,000",30 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,10000,30 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,10000,90 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,150,90 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,10000,90 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,10000,30 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,800,60 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,10000,24 Horas
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,10000,30 Días
+CONFIAMED,10K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,10000,90 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 50 por consulta hasta $ 30,000",30 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,30000,30 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,30000,90 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,30000,90 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,30000,30 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1000,60 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,30K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,30K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,30000,24 Horas
+CONFIAMED,30K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,30000,30 Días
+CONFIAMED,30K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,30000,90 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 50 por consulta hasta $ 30,000",30 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,30000,30 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,30000,90 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,30000,90 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,30000,30 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1000,60 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,30000,24 Horas
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,30000,30 Días
+CONFIAMED,30K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,30000,90 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 50 por consulta hasta $ 30,000",30 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,30000,30 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,30000,90 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,30000,90 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,30000,30 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1000,60 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,30K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,30K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,30000,24 Horas
+CONFIAMED,30K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,30000,30 Días
+CONFIAMED,30K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,30000,90 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,30000,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,150,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 50 por consulta hasta $ 30,000",30 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,30000,30 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,30000,90 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,30000,90 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,30000,30 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1000,60 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,30000,24 Horas
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,30000,30 Días
+CONFIAMED,30K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,30000,90 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,60000,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 60 por consulta hasta $ 60,000",30 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,60000,30 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,60000,90 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,60000,90 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,60000,30 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1500,60 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,60K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,60K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,60000,24 Horas
+CONFIAMED,60K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,60000,30 Días
+CONFIAMED,60K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,60000,90 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,60000,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 60 por consulta hasta $ 60,000",30 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,60000,30 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,60000,90 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,60000,90 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,60000,30 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1500,60 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,60000,24 Horas
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,60000,30 Días
+CONFIAMED,60K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,60000,90 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,60000,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 60 por consulta hasta $ 60,000",30 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,60000,30 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,60000,90 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,60000,90 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,60000,30 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1500,60 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,60K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,60K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,60000,24 Horas
+CONFIAMED,60K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,60000,30 Días
+CONFIAMED,60K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,60000,90 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,60000,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,200,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 60 por consulta hasta $ 60,000",30 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,60000,30 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,60000,90 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,180,90 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,60000,90 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,60000,30 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,1500,60 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,60000,24 Horas
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,60000,30 Días
+CONFIAMED,60K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,60000,90 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,110000,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,250,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 70 por consulta hasta $ 110,000",30 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,110000,30 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,110000,90 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,250,90 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,110000,90 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,110000,30 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,2000,60 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,110K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,110K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,110000,24 Horas
+CONFIAMED,110K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,110000,30 Días
+CONFIAMED,110K_RED1_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,110000,90 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,110000,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,250,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 70 por consulta hasta $ 110,000",30 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,110000,30 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,110000,90 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,250,90 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,110000,90 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,110000,30 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,2000,60 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,110000,24 Horas
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,110000,30 Días
+CONFIAMED,110K_RED1_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,110000,90 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,110000,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,250,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 70 por consulta hasta $ 110,000",30 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,110000,30 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,110000,90 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,250,90 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,110000,90 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,110000,30 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,2000,60 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,110K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,110K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,110000,24 Horas
+CONFIAMED,110K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,110000,30 Días
+CONFIAMED,110K_RED2_CON_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,110000,90 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Monto Máximo de Cobertura Anual Nacional por enfermedad excepto HUMANA,12,,110000,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Ambulatorio),13,,250,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Deducible anual por persona (Hospitalario),14,,No aplica,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,"Seguro de Vida, incluido en la póliza (personas de 18 años hasta 65 años)",15,,No aplica,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Período de presentación de reclamos,16,,90 Días,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Tope de Consulta,17,0.2,"$ 70 por consulta hasta $ 110,000",30 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura ambulatoria (Coparticipación ambulatoria),18,0.2,110000,30 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura hospitalaria (Coparticipación hospitalaria),19,0.2,110000,90 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuarto y alimento diario,20,0,250,90 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Terapia intensiva por días,21,0.2,110000,90 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Medicina ambulatoria al,22,0.2,110000,30 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Cobertura por emergencia o accidente en el exterior,23,,Sí otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Cuidado Dental,24,0,200,30 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Médico a domicilio,25,,Sí otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,COBERTURAS,Asistencia Exequial,26,,No otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,MATERNIDAD,Atención prenatal que incluye consultas médicas y exámenes de diagnóstico.,34,0,2000,60 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,MATERNIDAD,Complicaciones del parto y del recién nacido,36,,No otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,"Terapias de Rehabilitación (Lenguaje, cardíaca, física, dolor, ondas de choque y respiratoria)",38,,Sí otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Tope de terapias,39,,Sí otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consultas especialidad Nutricional (Máximo 6 consultas al año),40,,No otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,TOPE_CONSULTA,Consulta especialidad Psicología (Máximo 12 consultas al año),41,,No otorga,
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Cobertura de preexistencias,43,0.2,20 SBU,24 Meses
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Emergencia,44,0.2,110000,24 Horas
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Ambulatoria,45,0.2,110000,30 Días
+CONFIAMED,110K_RED2_SIN_MATERNIDAD,PERIODOS_CARENCIA,Hospitalaria,46,0.2,110000,90 Días
