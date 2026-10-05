@@ -4,5 +4,11 @@ COTIZADOR DELTA.xlsm
 # sistema
 .DS_Store
 
+# secretos sueltos en la raíz (el real vive en delta-check/.env.local, que
+# ya tiene su propio .gitignore) — nunca deberían llegar a git
+.env
+.env.*
+!.env.example
+
 # delta-check/ tiene su propio .gitignore (generado por create-next-app,
 # node_modules/.next/.env* etc.) — no se duplica acá.

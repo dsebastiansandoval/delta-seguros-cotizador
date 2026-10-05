@@ -35,6 +35,24 @@ export function cedulaToNaturalPersonRuc(cedula: string): string {
 }
 
 /**
+ * Validación de formato básico de RUC (13 dígitos, prefijo de provincia
+ * válido) — sin el checksum completo de RUC de sociedad (módulo 11,
+ * coeficientes propios, distinto del de cédula): el SRI mismo devuelve
+ * "no encontrado" si está mal, y esa consulta no cuesta nada. Alcanza para
+ * no gastar una llamada en algo que claramente no tiene el formato de RUC.
+ */
+export function isValidRuc(value: string): boolean {
+  if (!/^\d{13}$/.test(value)) return false;
+  const province = Number(value.slice(0, 2));
+  return province >= 1 && province <= 24;
+}
+
+/** Tercer dígito del RUC: 0-5 persona natural, 6 entidad pública, 9 sociedad privada/extranjera. */
+export function isNaturalPersonRuc(ruc: string): boolean {
+  return Number(ruc[2]) <= 5;
+}
+
+/**
  * Los 2 primeros dígitos de la cédula son el código de provincia oficial
  * del INEC — el mismo que usa el Registro Civil para emitirla. Es dato
  * real, no un truco: se puede sugerir la provincia sin ninguna llamada

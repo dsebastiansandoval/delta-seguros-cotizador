@@ -2,7 +2,8 @@
 
 import { useActionState, useRef, useState } from "react";
 import { createAutoQuote, saveAutoQuoteDraft, type ActionResult } from "@/actions/quote.actions";
-import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
+import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
+import { usePlateLookup } from "@/components/shared/usePlateLookup";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
 import { VehicleRiskFields } from "@/components/quoting/VehicleRiskFields";
@@ -34,6 +35,7 @@ export function NuevaCotizacionForm({
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
   const documentNumberRef = useRef<HTMLInputElement>(null);
+  const documentTypeRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
@@ -55,6 +57,8 @@ export function NuevaCotizacionForm({
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
   const sourceRef = useRef<HTMLInputElement>(null);
   const executiveRef = useRef<HTMLInputElement>(null);
+  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
+  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef });
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
   // a mano — mismos radio buttons "RIESGO 1..4" del Excel (EXCEL-AUDIT.md
@@ -112,7 +116,12 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Tipo de documento
-          <select name="documentType" defaultValue="CEDULA" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select
+            ref={documentTypeRef}
+            name="documentType"
+            defaultValue="CEDULA"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
             <option value="PASAPORTE">Pasaporte</option>
@@ -125,19 +134,17 @@ export function NuevaCotizacionForm({
             ref={documentNumberRef}
             name="documentNumber"
             required
+            onBlur={documentLookup.onBlur}
             className="rounded-lg border border-border bg-background px-3 py-2"
           />
           <FieldError errors={errors} name="documentNumber" />
+          {documentLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
+          {documentLookup.message && (
+            <p className={`text-xs ${documentLookup.message.kind === "ok" ? "text-green-700" : "text-amber-700"}`}>
+              {documentLookup.message.text}
+            </p>
+          )}
         </label>
-
-        <div className="flex items-end">
-          <CedulaLookupButton
-            documentNumberRef={documentNumberRef}
-            firstNameRef={firstNameRef}
-            lastNameRef={lastNameRef}
-            provinceRef={provinceRef}
-          />
-        </div>
 
         <label className="flex flex-col gap-1 text-sm">
           Provincia (según cédula)
@@ -269,9 +276,16 @@ export function NuevaCotizacionForm({
               name="plate1"
               required
               placeholder="PBX-1234"
+              onBlur={plateLookup.onBlur}
               className="rounded-lg border border-border bg-background px-3 py-2"
             />
             <FieldError errors={errors} name="plate1" />
+            {plateLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
+            {plateLookup.message && (
+              <p className={`text-xs ${plateLookup.message.kind === "ok" ? "text-green-700" : "text-amber-700"}`}>
+                {plateLookup.message.text}
+              </p>
+            )}
           </label>
 
           <label className="flex flex-col gap-1 text-sm">

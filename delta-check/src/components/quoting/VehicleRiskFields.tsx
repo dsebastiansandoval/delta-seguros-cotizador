@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
+import { usePlateLookup } from "@/components/shared/usePlateLookup";
 import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
 
 /**
@@ -25,8 +26,11 @@ export function VehicleRiskFields({
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
+  const colorRef = useRef<HTMLInputElement>(null);
+  const bodyTypeRef = useRef<HTMLSelectElement>(null);
   const modelDatalistRef = useRef<HTMLDataListElement>(null);
   const modelListId = `model-suggestions-${suffix}`;
+  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef });
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -35,8 +39,15 @@ export function VehicleRiskFields({
         <input
           name={`plate${suffix}`}
           placeholder="PBX-1234"
+          onBlur={plateLookup.onBlur}
           className="rounded-lg border border-border bg-background px-3 py-2"
         />
+        {plateLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
+        {plateLookup.message && (
+          <p className={`text-xs ${plateLookup.message.kind === "ok" ? "text-green-700" : "text-amber-700"}`}>
+            {plateLookup.message.text}
+          </p>
+        )}
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
@@ -101,7 +112,12 @@ export function VehicleRiskFields({
 
       <label className="flex flex-col gap-1 text-sm">
         Tipo
-        <select name={`bodyType${suffix}`} defaultValue="LIVIANO" className="rounded-lg border border-border bg-background px-3 py-2">
+        <select
+          ref={bodyTypeRef}
+          name={`bodyType${suffix}`}
+          defaultValue="LIVIANO"
+          className="rounded-lg border border-border bg-background px-3 py-2"
+        >
           <option value="LIVIANO">Liviano</option>
           <option value="PICKUP">Pickup</option>
         </select>
@@ -109,7 +125,7 @@ export function VehicleRiskFields({
 
       <label className="flex flex-col gap-1 text-sm">
         Color
-        <input name={`color${suffix}`} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input ref={colorRef} name={`color${suffix}`} className="rounded-lg border border-border bg-background px-3 py-2" />
       </label>
 
       <label className="flex flex-col gap-1 text-sm">

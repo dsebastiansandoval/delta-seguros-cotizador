@@ -26,6 +26,11 @@ const envSchema = z.object({
 
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
+
+  // Lookup de placa (EcuadorAPI, $0.02/consulta) — opcional: sin esto, el
+  // autocompletado de vehículo por placa queda deshabilitado (ERROR), no
+  // rompe el arranque. Cédula/RUC no la necesitan, van directo al SRI gratis.
+  ECUADOR_API_KEY: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

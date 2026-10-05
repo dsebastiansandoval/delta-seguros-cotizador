@@ -3,7 +3,7 @@
 import { useActionState, useRef } from "react";
 import { createHealthQuote } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
-import { CedulaLookupButton } from "@/components/shared/CedulaLookupButton";
+import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -29,12 +29,13 @@ function DependentFields({ n }: { n: 1 | 2 | 3 }) {
 
 export function NuevaCotizacionSaludForm({ sources, executives }: { sources: string[]; executives: string[] }) {
   const [state, formAction, pending] = useActionState(createHealthQuote, initialState);
-  const documentNumberRef = useRef<HTMLInputElement>(null);
+  const documentTypeRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
   const sourceRef = useRef<HTMLInputElement>(null);
   const executiveRef = useRef<HTMLInputElement>(null);
+  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -49,7 +50,12 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Tipo de documento
-          <select name="documentType" defaultValue="CEDULA" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select
+            ref={documentTypeRef}
+            name="documentType"
+            defaultValue="CEDULA"
+            className="rounded-lg border border-border bg-background px-3 py-2"
+          >
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
             <option value="PASAPORTE">Pasaporte</option>
@@ -58,20 +64,18 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         <label className="flex flex-col gap-1 text-sm">
           Documento
           <input
-            ref={documentNumberRef}
             name="documentNumber"
             required
+            onBlur={documentLookup.onBlur}
             className="rounded-lg border border-border bg-background px-3 py-2"
           />
+          {documentLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
+          {documentLookup.message && (
+            <p className={`text-xs ${documentLookup.message.kind === "ok" ? "text-green-700" : "text-amber-700"}`}>
+              {documentLookup.message.text}
+            </p>
+          )}
         </label>
-        <div className="flex items-end">
-          <CedulaLookupButton
-            documentNumberRef={documentNumberRef}
-            firstNameRef={firstNameRef}
-            lastNameRef={lastNameRef}
-            provinceRef={provinceRef}
-          />
-        </div>
         <label className="flex flex-col gap-1 text-sm">
           Provincia (según cédula)
           <input
