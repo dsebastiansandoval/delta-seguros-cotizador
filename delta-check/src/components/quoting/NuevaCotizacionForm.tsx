@@ -271,14 +271,17 @@ export function NuevaCotizacionForm({
 
           <label className="flex flex-col gap-1 text-sm">
             Marca
-            <select
-              defaultValue=""
+            <input
+              ref={brandRef}
+              name="brand1"
+              list="brand-suggestions-1"
+              required
+              placeholder="Escribe o elige de la lista"
+              autoComplete="off"
               onChange={(e) => {
-                const brandName = e.target.value === "__OTRA__" ? "" : e.target.value;
-                if (brandRef.current) brandRef.current.value = brandName;
                 if (modelDatalistRef.current) {
                   modelDatalistRef.current.replaceChildren(
-                    ...(modelsByBrand[brandName] ?? []).map((model) => {
+                    ...(modelsByBrand[e.target.value] ?? []).map((model) => {
                       const option = document.createElement("option");
                       option.value = model;
                       return option;
@@ -287,24 +290,12 @@ export function NuevaCotizacionForm({
                 }
               }}
               className="rounded-lg border border-border bg-background px-3 py-2"
-            >
-              <option value="" disabled>
-                Selecciona una marca
-              </option>
-              {brands.map((b) => (
-                <option key={b} value={b}>
-                  {b}
-                </option>
-              ))}
-              <option value="__OTRA__">Otra (especificar abajo)</option>
-            </select>
-            <input
-              ref={brandRef}
-              name="brand1"
-              required
-              placeholder="Marca"
-              className="rounded-lg border border-border bg-background px-3 py-2"
             />
+            <datalist id="brand-suggestions-1">
+              {brands.map((b) => (
+                <option key={b} value={b} />
+              ))}
+            </datalist>
           </label>
 
           <label className="flex flex-col gap-1 text-sm">
