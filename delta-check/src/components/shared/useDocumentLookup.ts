@@ -2,7 +2,7 @@
 
 import { useState, useTransition, type FocusEvent, type RefObject } from "react";
 import { lookupPersonByDocument } from "@/actions/lookup.actions";
-import { isValidCedula, isValidRuc } from "@/domains/lookup/cedula.validator";
+import { isNaturalPersonRuc, isValidCedula, isValidRuc, provinceFromCedula } from "@/domains/lookup/cedula.validator";
 
 /**
  * Autocompletado automático de Nombres/Apellidos/Provincia al salir del
@@ -10,6 +10,12 @@ import { isValidCedula, isValidRuc } from "@/domains/lookup/cedula.validator";
  * antes (`CedulaLookupButton`, borrado). Dispara solo si el valor pasa la
  * validación local de formato (cédula o RUC según el select "Tipo de
  * documento") — nunca en cada tecla, nunca con un Pasaporte (sin fuente).
+ *
+ * La provincia se calcula local e instantáneamente (los 2 primeros dígitos
+ * de la cédula son el código INEC de provincia, `provinceFromCedula`) —
+ * no espera la respuesta del SRI, que solo hace falta para Nombres/
+ * Apellidos. Así no depende de que el SRI esté arriba ni de la latencia de
+ * esa consulta.
  */
 export function useDocumentLookup({
   documentTypeRef,
@@ -32,6 +38,14 @@ export function useDocumentLookup({
     if (!value || (documentType !== "CEDULA" && documentType !== "RUC")) return;
     if (documentType === "CEDULA" && !isValidCedula(value)) return;
     if (documentType === "RUC" && !isValidRuc(value)) return;
+
+    // Provincia: local, instantánea, sin esperar al SRI — los 2 primeros
+    // dígitos ya la determinan. Para RUC de sociedad no aplica (no hay
+    // cédula detrás), queda como estaba.
+    if (provinceRef?.current) {
+      const cedulaDigits = documentType === "CEDULA" ? value : isNaturalPersonRuc(value) ? value.slice(0, 10) : null;
+      provinceRef.current.value = cedulaDigits ? (provinceFromCedula(cedulaDigits) ?? "") : "";
+    }
 
     startTransition(async () => {
       const result = await lookupPersonByDocument(value, documentType);
