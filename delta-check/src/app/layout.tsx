@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 // del "problema de hidratación" documentado en este proyecto — no era la
 // herramienta de automatización, era nuestra propia CSP bloqueando en
 // silencio los scripts de arranque de Next.js).
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("delta-check-theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;}}catch(e){}})();`;
+const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("cotizador-delta-theme");if(t==="light"||t==="dark"){document.documentElement.dataset.theme=t;}}catch(e){}})();`;
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const nonce = (await headers()).get("x-nonce") ?? undefined;
