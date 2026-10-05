@@ -30,4 +30,22 @@ describe("buildPatioTuercaUrl", () => {
     expect(buildPatioTuercaUrl("Toyota", "Corolla", "20")).toBeNull();
     expect(buildPatioTuercaUrl("Toyota", "Corolla", "abcd")).toBeNull();
   });
+
+  it("usa el código base del catálogo cuando el modelo trae la ficha técnica completa (caso real reportado: Peugeot 301)", () => {
+    expect(
+      buildPatioTuercaUrl("Peugeot", "301 ALL 1.6E B5 AC 1.6 4P 4X2 TM", "2020", ["301"]),
+    ).toBe("https://ecuador.patiotuerca.com/precio/autos/peugeot/301/2020");
+  });
+
+  it("prefiere el match más largo del catálogo (CX30 no se recorta a CX3)", () => {
+    expect(buildPatioTuercaUrl("Mazda", "CX30 2.5L AT", "2020", ["CX3", "CX30"])).toBe(
+      "https://ecuador.patiotuerca.com/precio/autos/mazda/cx30/2020",
+    );
+  });
+
+  it("sin match en el catálogo, usa el texto tal cual (comportamiento de siempre)", () => {
+    expect(buildPatioTuercaUrl("Mazda", "CX30 2.5L AT", "2020", ["CX5"])).toBe(
+      "https://ecuador.patiotuerca.com/precio/autos/mazda/cx30+2+5l+at/2020",
+    );
+  });
 });

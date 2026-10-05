@@ -12,18 +12,23 @@ export function PatioTuercaReferenceLink({
   brandRef,
   modelRef,
   yearRef,
+  modelsByBrand,
 }: {
   brandRef: RefObject<HTMLInputElement | null>;
   modelRef: RefObject<HTMLInputElement | null>;
   yearRef: RefObject<HTMLInputElement | null>;
+  /** Catálogo real (el mismo que llena el datalist de "Modelo") — para reconocer el código base del modelo dentro de un texto más largo. */
+  modelsByBrand?: Record<string, string[]>;
 }) {
   const [message, setMessage] = useState<string | null>(null);
 
   function handleClick() {
+    const brand = brandRef.current?.value ?? "";
     const url = buildPatioTuercaUrl(
-      brandRef.current?.value ?? "",
+      brand,
       modelRef.current?.value ?? "",
       yearRef.current?.value ?? "",
+      modelsByBrand?.[brand] ?? [],
     );
     if (!url) {
       setMessage("Completa marca, modelo y año primero");

@@ -355,7 +355,7 @@ export function NuevaCotizacionForm({
           </label>
 
           <div className="flex items-end">
-            <PatioTuercaReferenceLink brandRef={brandRef} modelRef={modelRef} yearRef={yearRef} />
+            <PatioTuercaReferenceLink brandRef={brandRef} modelRef={modelRef} yearRef={yearRef} modelsByBrand={modelsByBrand} />
           </div>
 
           <label className="flex flex-col gap-1 text-sm">
