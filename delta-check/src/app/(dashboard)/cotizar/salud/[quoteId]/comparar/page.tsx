@@ -16,7 +16,7 @@ export default async function CompararSaludPage({
   const best = rows.find((r) => r.status === "COTIZADO");
 
   return (
-    <main className="mx-auto max-w-4xl p-8">
+    <main className="mx-auto max-w-6xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Comparativa Salud — {quote.code}</h1>
         <p className="mt-1 text-sm text-muted">
