@@ -18,7 +18,7 @@ const SIDEBAR_GROUPS: NavGroup[] = [
     links: [{ href: "/dashboard", label: "Dashboard" }],
   },
   {
-    label: "Cotizador",
+    label: "Portafolio",
     links: [
       // "Autos" y "Salud AM" apuntan a su lista ("Mis cotizaciones"), no al
       // formulario de nueva cotización — cada lista trae su propio botón
