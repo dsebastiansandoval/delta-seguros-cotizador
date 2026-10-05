@@ -18,7 +18,8 @@ export type QuoteOptionContext = {
   quoteId: string;
   quoteCode: string;
   insurerName: string;
-  vehicleLabel: string;
+  /** Solo Autos — undefined en Salud (el riesgo no tiene vehículo, usa insuredGroupId). */
+  vehicleLabel?: string;
   planCode?: string;
   branch: "AUTOS" | "SALUD";
 };
@@ -49,7 +50,10 @@ export const quoteCoverageService = {
       .innerJoin(insurers, eq(insurers.id, quoteOptions.insurerId))
       .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
       .innerJoin(quotes, eq(quotes.id, quoteRisks.quoteId))
-      .innerJoin(vehicles, eq(vehicles.id, quoteRisks.vehicleId))
+      // LEFT JOIN — en Salud el riesgo no tiene vehículo (usa insuredGroupId
+      // en cambio, vehicleId queda null); un INNER JOIN acá descartaba la
+      // fila entera y la página de coberturas de Salud siempre daba 404.
+      .leftJoin(vehicles, eq(vehicles.id, quoteRisks.vehicleId))
       .where(eq(quoteOptions.id, quoteOptionId))
       .limit(1);
     if (!row) return null;
@@ -59,7 +63,7 @@ export const quoteCoverageService = {
       insurerName: row.insurerName,
       branch: row.branch,
       planCode: row.planCode ?? undefined,
-      vehicleLabel: `${row.brand} ${row.model} ${row.year}`,
+      vehicleLabel: row.brand ? `${row.brand} ${row.model} ${row.year}` : undefined,
     };
   },
 

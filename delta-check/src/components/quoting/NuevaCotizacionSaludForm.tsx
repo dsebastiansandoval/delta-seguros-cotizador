@@ -20,14 +20,17 @@ const initialState: ActionResult<{ quoteId: string }> | null = null;
 function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRemove?: () => void }) {
   return (
     <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 border-t border-border pt-4">
-      <legend className="col-span-full flex items-center justify-between text-sm font-semibold">
-        Dependiente {fieldNumber}
+      {/* `<legend>` no respeta `display:flex` de forma consistente entre
+          navegadores — el botón "Quitar" vive afuera, en un div normal, para
+          que `justify-between` sí lo mande al final de la línea siempre. */}
+      <div className="col-span-full flex items-center justify-between">
+        <legend className="text-sm font-semibold">Dependiente {fieldNumber}</legend>
         {onRemove && (
           <button type="button" onClick={onRemove} className="text-xs font-semibold text-link underline">
             Quitar
           </button>
         )}
-      </legend>
+      </div>
       <AgeOrBirthDateField namePrefix={`dep${fieldNumber}`} />
       <label className="flex flex-col gap-1 text-sm">
         Sexo

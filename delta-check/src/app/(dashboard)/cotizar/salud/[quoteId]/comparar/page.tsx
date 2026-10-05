@@ -27,21 +27,21 @@ export default async function CompararSaludPage({
       </header>
 
       <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[820px] text-sm">
           <thead>
             <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
               <th className="px-4 py-3">Aseguradora</th>
               <th className="px-4 py-3">Plan</th>
               <th className="px-4 py-3">Estado</th>
               <th className="px-4 py-3 text-right">Prima total (grupo)</th>
-              <th className="px-4 py-3"></th>
+              <th className="min-w-[140px] px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
               <tr key={row.quoteOptionId} className="border-b border-border last:border-0">
-                <td className="px-4 py-3 font-medium">{row.insurerName}</td>
-                <td className="px-4 py-3 text-muted">{row.planCode ?? "—"}</td>
+                <td className="whitespace-nowrap px-4 py-3 font-medium">{row.insurerName}</td>
+                <td className="whitespace-nowrap px-4 py-3 text-muted">{row.planCode ?? "—"}</td>
                 <td className="px-4 py-3">
                   {row.status === "COTIZADO" ? (
                     <span className="rounded-full bg-good-bg px-2 py-0.5 text-xs font-semibold text-good">
