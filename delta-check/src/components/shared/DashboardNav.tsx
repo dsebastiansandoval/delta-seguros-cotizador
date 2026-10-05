@@ -48,7 +48,7 @@ export function TopNavLinks({ links }: { links: NavLink[] }) {
   );
 }
 
-export type NavGroup = { label: string; links: NavLink[] };
+export type NavGroup = { label?: string; links: NavLink[] };
 
 /** Sidebar agrupado — mockup: `.side-section`/`.side-link.active` (navy sólido, no el tinte claro del topbar). */
 export function SidebarNav({ groups }: { groups: NavGroup[] }) {
@@ -56,8 +56,10 @@ export function SidebarNav({ groups }: { groups: NavGroup[] }) {
   return (
     <>
       {groups.map((group) => (
-        <div key={group.label} className="mb-5">
-          <div className="mb-2 px-3 text-[10.5px] font-bold uppercase tracking-wider text-muted">{group.label}</div>
+        <div key={group.label ?? group.links[0]?.href} className="mb-5">
+          {group.label && (
+            <div className="mb-2 px-3 text-[10.5px] font-bold uppercase tracking-wider text-muted">{group.label}</div>
+          )}
           <div className="flex flex-col gap-0.5">
             {group.links.map((link) => {
               if (link.disabled) {

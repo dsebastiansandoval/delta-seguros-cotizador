@@ -14,7 +14,6 @@ import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
  */
 const SIDEBAR_GROUPS: NavGroup[] = [
   {
-    label: "General",
     links: [{ href: "/dashboard", label: "Dashboard" }],
   },
   {
