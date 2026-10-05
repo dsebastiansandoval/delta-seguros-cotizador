@@ -23,7 +23,7 @@ export function TopNavLinks({ links }: { links: NavLink[] }) {
       {links.map((link) =>
         link.disabled ? (
           <span
-            key={link.href}
+            key={link.label}
             title="Próximamente"
             className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold text-muted opacity-60"
           >
@@ -34,7 +34,7 @@ export function TopNavLinks({ links }: { links: NavLink[] }) {
           </span>
         ) : (
           <Link
-            key={link.href}
+            key={link.label}
             href={link.href}
             className={`rounded-lg px-3 py-2 text-sm font-semibold no-underline ${
               isActive(pathname, link) ? "bg-accent-100 text-link" : "text-muted hover:bg-background hover:text-foreground"
@@ -65,7 +65,7 @@ export function SidebarNav({ groups }: { groups: NavGroup[] }) {
               if (link.disabled) {
                 return (
                   <span
-                    key={link.href}
+                    key={link.label}
                     title="Próximamente"
                     className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-muted opacity-60"
                   >
@@ -80,7 +80,7 @@ export function SidebarNav({ groups }: { groups: NavGroup[] }) {
               const active = isActive(pathname, link);
               return (
                 <Link
-                  key={link.href}
+                  key={link.label}
                   href={link.href}
                   className={`flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold no-underline ${
                     active ? "bg-delta-navy text-white" : "text-foreground hover:bg-background"
