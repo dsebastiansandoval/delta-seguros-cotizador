@@ -55,8 +55,6 @@ export function NuevaCotizacionForm({
   const previousInsurerIdRef = useRef<HTMLInputElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
-  const sourceRef = useRef<HTMLInputElement>(null);
-  const executiveRef = useRef<HTMLInputElement>(null);
   const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
   const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef });
 
@@ -189,51 +187,34 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Fuente
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              if (sourceRef.current) sourceRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
-            }}
+          <input
+            name="source"
+            list="sources-datalist"
+            placeholder="Escribe o elige de la lista"
+            autoComplete="off"
             className="rounded-lg border border-border bg-background px-3 py-2"
-          >
-            <option value="" disabled>
-              Selecciona una fuente
-            </option>
+          />
+          <datalist id="sources-datalist">
             {sources.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
+              <option key={s} value={s} />
             ))}
-            <option value="__OTRA__">Otra (especificar abajo)</option>
-          </select>
-          <input ref={sourceRef} name="source" placeholder="Fuente" className="rounded-lg border border-border bg-background px-3 py-2" />
+          </datalist>
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Ejecutivo
-          <select
-            defaultValue=""
-            onChange={(e) => {
-              if (executiveRef.current) executiveRef.current.value = e.target.value === "__OTRA__" ? "" : e.target.value;
-            }}
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          >
-            <option value="" disabled>
-              Selecciona un ejecutivo
-            </option>
-            {executives.map((ex) => (
-              <option key={ex} value={ex}>
-                {ex}
-              </option>
-            ))}
-            <option value="__OTRA__">Otra (especificar abajo)</option>
-          </select>
           <input
-            ref={executiveRef}
             name="executive"
-            placeholder="Ejecutivo"
+            list="executives-datalist"
+            placeholder="Escribe o elige de la lista"
+            autoComplete="off"
             className="rounded-lg border border-border bg-background px-3 py-2"
           />
+          <datalist id="executives-datalist">
+            {executives.map((ex) => (
+              <option key={ex} value={ex} />
+            ))}
+          </datalist>
         </label>
       </fieldset>
 
