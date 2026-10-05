@@ -11,10 +11,10 @@
   --color-delta-blue: #01579e;
   --color-delta-gray: #797c7f;
 
-  --background: #f5f6f9;
+  --background: #eef0f5;
   --foreground: #182338;
   --surface: #ffffff;
-  --border: #dfe1e6;
+  --border: #d4d7df;
   --muted: #6b6f76;
   /* Color de links (tablas, listas) — separado de --color-delta-navy a
      propósito: ese es el navy fijo de marca (botones, logo), este cambia
@@ -30,14 +30,14 @@
   /* Tokens del mockup (Cotizador-Delta-MVP-visual.html) que no
      existían acá — mismos valores exactos, no reinventados. */
   --accent-500: #1f74bd;
-  --accent-100: #e4eef8;
+  --accent-100: #d6e7f7;
   --border-strong: #c6c9d1;
   --good: #157a4f;
-  --good-bg: #e5f5ee;
+  --good-bg: #d7f0e4;
   --warn: #9a6b0c;
-  --warn-bg: #fbf1de;
+  --warn-bg: #f7e8c5;
   --bad: #af3a26;
-  --bad-bg: #fbe9e5;
+  --bad-bg: #f6ddd6;
 }
 
 @theme inline {
