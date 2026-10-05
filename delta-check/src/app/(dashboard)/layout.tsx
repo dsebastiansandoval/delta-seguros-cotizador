@@ -15,17 +15,18 @@ import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
 const SIDEBAR_GROUPS: NavGroup[] = [
   {
     label: "General",
-    links: [{ href: "/dashboard", label: "Resumen" }],
+    links: [{ href: "/dashboard", label: "Dashboard" }],
   },
   {
     label: "Cotizador",
     links: [
-      { href: "/cotizar/autos/nueva", label: "Autos" },
-      // Antes iba directo al formulario de nueva cotización — ahora a la
-      // lista ("Mis cotizaciones — Salud", mismo patrón que Autos), con
-      // su propio botón "+ Nueva" adentro. A pedido explícito del usuario.
+      // "Autos" y "Salud AM" apuntan a su lista ("Mis cotizaciones"), no al
+      // formulario de nueva cotización — cada lista trae su propio botón
+      // "+ Nueva" adentro. A pedido explícito del usuario (antes "Autos"
+      // iba directo al formulario y "Mis cotizaciones" era una entrada
+      // aparte).
+      { href: "/cotizar/autos", label: "Autos", exact: true },
       { href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" },
-      { href: "/cotizar/autos", label: "Mis cotizaciones", exact: true },
       // Del mockup visual original — sin ninguna macro ni hoja propia en el
       // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-
       // AUDIT.md), así que va como "Pronto" (mismo patrón que Back-office)

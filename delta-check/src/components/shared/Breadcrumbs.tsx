@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SEGMENT_LABELS: Record<string, string> = {
-  dashboard: "Resumen",
+  dashboard: "Dashboard",
   cotizar: "Cotizador",
   autos: "Autos",
   salud: "Salud AM",
