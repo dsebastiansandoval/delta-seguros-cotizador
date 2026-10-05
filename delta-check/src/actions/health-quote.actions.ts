@@ -1,11 +1,11 @@
 "use server";
 
 import { z } from "zod";
-import { eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
-import { quoteRisks } from "@/db/schema/quoting";
+import { quoteRisks, quotes } from "@/db/schema/quoting";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { clientRepository } from "@/domains/clients/repositories/client.repository";
 import { newHealthQuoteSchema } from "@/domains/health/schemas/health-quote.schema";
@@ -107,6 +107,31 @@ export async function setManualHealthPremium(
 
   revalidatePath(`/cotizar/salud/${quoteId}/comparar`);
   return { ok: true, value: undefined };
+}
+
+/**
+ * "Mis cotizaciones" de Salud — mismo patrón exacto que
+ * `listMyAutoQuotes()` (quote.actions.ts): lista de trabajo personal del
+ * agente (filtra por `agentId`, no toda la organización), no un reporte
+ * gerencial.
+ */
+export async function listMyHealthQuotes() {
+  const session = await requirePermission("quote:read");
+
+  return withOrganization(session.organizationId, (tx) =>
+    tx
+      .select({
+        id: quotes.id,
+        code: quotes.code,
+        status: quotes.status,
+        operationType: quotes.operationType,
+        createdAt: quotes.createdAt,
+      })
+      .from(quotes)
+      .where(and(eq(quotes.agentId, session.userId), eq(quotes.branch, "SALUD")))
+      .orderBy(desc(quotes.createdAt))
+      .limit(50),
+  );
 }
 
 export async function getHealthQuoteComparison(quoteId: string) {

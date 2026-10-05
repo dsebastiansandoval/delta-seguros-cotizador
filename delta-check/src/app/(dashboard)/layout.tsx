@@ -2,26 +2,30 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getAppSession, signOut } from "@/lib/auth";
 import { AccountMenu } from "@/components/shared/AccountMenu";
-import { TopNavLinks, SidebarNav, type NavLink, type NavGroup } from "@/components/shared/DashboardNav";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+import { NuevaCotizacionMenu } from "@/components/shared/NuevaCotizacionMenu";
+import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
 
-const TOPBAR_LINKS: NavLink[] = [
-  { href: "/dashboard", label: "Resumen" },
-  { href: "/cotizar/autos", label: "Autos", activePrefix: "/cotizar/autos" },
-  { href: "/cotizar/salud/nueva", label: "Salud", activePrefix: "/cotizar/salud" },
-  // Acceso de administrador (roles/usuarios, plantillas de tasas
-  // multi-tenant) — a pedido del usuario, visible ya pero sin abrir nada
-  // todavía: no existe esa pantalla, y RBAC.md (ARCHITECTURE.md §8.4) no
-  // tiene una noción de "back-office" propia que construir sin diseñarla.
-  { href: "#", label: "Back-office", disabled: true },
-];
-
+/**
+ * Reorganización de navegación (propuesta del usuario): el sidebar pasa a
+ * ser el eje principal, el topbar queda solo para utilidades de contexto
+ * (breadcrumbs, buscador, perfil) — antes también tenía los mismos links
+ * de ramo duplicados del sidebar.
+ */
 const SIDEBAR_GROUPS: NavGroup[] = [
+  {
+    label: "General",
+    links: [{ href: "/dashboard", label: "Resumen" }],
+  },
   {
     label: "Cotizador",
     links: [
-      { href: "/cotizar/autos/nueva", label: "Nueva cotización — Autos" },
-      { href: "/cotizar/autos", label: "Mis cotizaciones — Autos", exact: true },
-      { href: "/cotizar/salud/nueva", label: "Nueva cotización — Salud", activePrefix: "/cotizar/salud" },
+      { href: "/cotizar/autos/nueva", label: "Autos" },
+      // Antes iba directo al formulario de nueva cotización — ahora a la
+      // lista ("Mis cotizaciones — Salud", mismo patrón que Autos), con
+      // su propio botón "+ Nueva" adentro. A pedido explícito del usuario.
+      { href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" },
+      { href: "/cotizar/autos", label: "Mis cotizaciones", exact: true },
       // Del mockup visual original — sin ninguna macro ni hoja propia en el
       // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-
       // AUDIT.md), así que va como "Pronto" (mismo patrón que Back-office)
@@ -41,16 +45,30 @@ const SIDEBAR_GROUPS: NavGroup[] = [
     label: "Cumplimiento",
     links: [{ href: "/cumplimiento", label: "Derechos ARCO" }],
   },
+  {
+    label: "Administración",
+    links: [
+      // Ninguna tiene pantalla propia todavía — "Pronto", mismo criterio
+      // que "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
+      { href: "#", label: "Ejecutivos", disabled: true },
+      { href: "#", label: "Configuración", disabled: true },
+      { href: "#", label: "Back-office", disabled: true },
+    ],
+  },
 ];
 
 /**
  * Shell de navegación para todas las páginas autenticadas — adaptado de
  * Cotizador-Delta-MVP-visual.html (el diseño original aprobado, a pedido
  * del usuario), con topbar + sidebar en vez del solo-topbar de antes.
- * Los links son los reales del sistema, no el listado completo del mockup
- * — se dejaron afuera "Vida & Patrimonio", "Emisiones"/"Renovaciones" como
- * páginas propias, "Ejecutivos" y "Configuración": no existe esa pantalla
- * todavía, y un link muerto es peor que un sidebar más corto pero real.
+ * Reorganizado después a pedido del usuario: el sidebar es el eje
+ * principal de navegación (grupo "General" con Resumen, CTA "+ Nueva
+ * cotización" arriba), y el topbar queda solo para utilidades de contexto
+ * (breadcrumbs, buscador, perfil) — ya no duplica los links de ramo.
+ * "Vida & Patrimonio", "Ejecutivos", "Configuración" y "Back-office"
+ * aparecen como "Pronto" (deshabilitados) — ninguno tiene pantalla propia
+ * todavía; un link muerto es peor que uno deshabilitado, pero un sidebar
+ * que no refleja el mapa real del producto es peor todavía.
  *
  * También hace explícito el guard de sesión (redirect a /login) que antes
  * solo existía implícito en cada Server Action — `proxy.ts` (el middleware
@@ -70,7 +88,7 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
               {/* eslint-disable-next-line @next/next/no-img-element -- logo chico y fijo, no vale la pena next/image acá */}
               <img src="/delta-logo.png" alt="Delta Seguros" className="h-7 w-auto rounded bg-white p-1" />
             </Link>
-            <TopNavLinks links={TOPBAR_LINKS} />
+            <Breadcrumbs />
           </div>
 
           <div className="flex items-center gap-4">
@@ -100,6 +118,7 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
 
       <div className="mx-auto flex w-full max-w-[1320px] flex-1">
         <aside className="hidden w-56 shrink-0 flex-col p-5 md:flex">
+          <NuevaCotizacionMenu />
           <SidebarNav groups={SIDEBAR_GROUPS} />
         </aside>
 
