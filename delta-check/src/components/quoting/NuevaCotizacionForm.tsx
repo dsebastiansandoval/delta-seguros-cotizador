@@ -56,7 +56,7 @@ export function NuevaCotizacionForm({
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
   const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
-  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef });
+  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef, provinceRef: vehicleProvinceRef });
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
   // a mano — mismos radio buttons "RIESGO 1..4" del Excel (EXCEL-AUDIT.md

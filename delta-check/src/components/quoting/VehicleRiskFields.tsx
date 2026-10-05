@@ -28,10 +28,11 @@ export function VehicleRiskFields({
   const yearRef = useRef<HTMLInputElement>(null);
   const colorRef = useRef<HTMLInputElement>(null);
   const bodyTypeRef = useRef<HTMLSelectElement>(null);
+  const provinceRef = useRef<HTMLSelectElement>(null);
   const modelDatalistRef = useRef<HTMLDataListElement>(null);
   const modelListId = `model-suggestions-${suffix}`;
   const brandListId = `brand-suggestions-${suffix}`;
-  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef });
+  const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef, provinceRef });
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -147,7 +148,12 @@ export function VehicleRiskFields({
 
       <label className="flex flex-col gap-1 text-sm">
         Provincia
-        <select name={`province${suffix}`} defaultValue="" className="rounded-lg border border-border bg-background px-3 py-2">
+        <select
+          ref={provinceRef}
+          name={`province${suffix}`}
+          defaultValue=""
+          className="rounded-lg border border-border bg-background px-3 py-2"
+        >
           <option value="">Selecciona una provincia</option>
           {ECUADOR_PROVINCES.map((p) => (
             <option key={p} value={p}>

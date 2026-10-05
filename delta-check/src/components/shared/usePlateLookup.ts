@@ -2,6 +2,7 @@
 
 import { useState, useTransition, type FocusEvent, type RefObject } from "react";
 import { lookupVehicleByPlate } from "@/actions/lookup.actions";
+import { provinceFromPlate } from "@/domains/lookup/plate-province";
 
 const PLATE_FORMAT = /^[A-Za-z]{2,3}[\s-]?\d{3,4}$/;
 
@@ -9,6 +10,11 @@ const PLATE_FORMAT = /^[A-Za-z]{2,3}[\s-]?\d{3,4}$/;
  * Autocompletado automático de Marca/Modelo/Año/Color/Tipo al salir del
  * campo "Placa" (EcuadorAPI). Dispara solo si el valor tiene pinta de placa
  * ecuatoriana — nunca en cada tecla.
+ *
+ * La provincia (dónde se matriculó el vehículo) se calcula local e
+ * instantáneamente desde la primera letra de la placa
+ * (`provinceFromPlate`) — no espera la respuesta de EcuadorAPI, igual
+ * criterio que la provincia por cédula (`useDocumentLookup.ts`).
  */
 export function usePlateLookup({
   brandRef,
@@ -16,12 +22,14 @@ export function usePlateLookup({
   yearRef,
   colorRef,
   bodyTypeRef,
+  provinceRef,
 }: {
   brandRef: RefObject<HTMLInputElement | null>;
   modelRef: RefObject<HTMLInputElement | null>;
   yearRef: RefObject<HTMLInputElement | null>;
   colorRef?: RefObject<HTMLInputElement | null>;
   bodyTypeRef?: RefObject<HTMLSelectElement | null>;
+  provinceRef?: RefObject<HTMLSelectElement | null>;
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
@@ -30,6 +38,11 @@ export function usePlateLookup({
     const value = event.target.value.trim();
     setMessage(null);
     if (!value || !PLATE_FORMAT.test(value)) return;
+
+    if (provinceRef?.current) {
+      const province = provinceFromPlate(value);
+      if (province) provinceRef.current.value = province;
+    }
 
     startTransition(async () => {
       const result = await lookupVehicleByPlate(value);
