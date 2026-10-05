@@ -19,15 +19,38 @@ function optionalGender() {
 }
 
 /**
- * Titular + hasta 3 dependientes — "NUMERO DE RIESGOS" / "DATOS AM" del
+ * Hasta 8 dependientes — antes el formulario traía 3 bloques fijos
+ * (Dependiente 1/2/3); ahora el usuario puede ir agregando de a uno con
+ * "+ Agregar dependiente" (ver NuevaCotizacionSaludForm.tsx), sin un tope
+ * real de uso — 8 ya cubre cualquier grupo familiar real que se cotice acá.
+ */
+export const MAX_DEPENDENTS = 8;
+type DependentIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+
+function dependentShape(n: number) {
+  return {
+    [`dep${n}BirthDate`]: optionalDate(),
+    [`dep${n}AgeInput`]: optionalText(),
+    [`dep${n}Gender`]: optionalGender(),
+  };
+}
+
+const dependentsShape = Object.assign(
+  {},
+  ...Array.from({ length: MAX_DEPENDENTS }, (_, i) => dependentShape(i + 1)),
+) as Record<string, ReturnType<typeof optionalDate> | ReturnType<typeof optionalText> | ReturnType<typeof optionalGender>>;
+
+/**
+ * Titular + hasta 8 dependientes — "NUMERO DE RIESGOS" / "DATOS AM" del
  * Excel (EXCEL-AUDIT.md). Cada dependiente es opcional; si no se llena
- * fecha de nacimiento, no se cuenta como miembro del grupo.
+ * fecha de nacimiento ni edad, no se cuenta como miembro del grupo.
  *
- * Se pide fecha de nacimiento, no edad suelta — `insured_members.birth_date`
- * ya existía en el esquema desde Fase 2 sin usarse. La edad se calcula acá
- * (calculateAge, domains/shared/age.ts) y queda expuesta como
- * `titularAge`/`depNAge` para no tocar el resto del dominio (health-rate
- * sigue filtrando por edad, igual que siempre).
+ * Cada persona (titular o dependiente) acepta fecha de nacimiento O edad
+ * directa, nunca ambas a la vez en el formulario (el checkbox "Edad" las
+ * alterna) — a veces el agente no tiene la fecha exacta a mano, solo la
+ * edad que le dio el cliente. `insured_members.age` (NOT NULL) sigue
+ * siendo lo que persiste el dominio; si vino por fecha, se calcula acá
+ * (calculateAge); si vino directa, se usa tal cual.
  */
 const baseHealthQuoteSchema = z.object({
   personType: z.enum(["NATURAL", "JURIDICA"]),
@@ -39,23 +62,41 @@ const baseHealthQuoteSchema = z.object({
   executive: optionalText(),
 
   region: z.enum(["SIERRA", "COSTA", "AUSTRO"]),
-  titularBirthDate: z.string().min(1, "Fecha de nacimiento requerida"),
+  titularBirthDate: optionalDate(),
+  titularAgeInput: optionalText(),
   titularGender: z.enum(["MASCULINO", "FEMENINO"]),
 
-  dep1BirthDate: optionalDate(),
-  dep1Gender: optionalGender(),
-  dep2BirthDate: optionalDate(),
-  dep2Gender: optionalGender(),
-  dep3BirthDate: optionalDate(),
-  dep3Gender: optionalGender(),
+  ...dependentsShape,
 });
 
-export const newHealthQuoteSchema = baseHealthQuoteSchema.transform((data) => ({
-  ...data,
-  titularAge: calculateAge(data.titularBirthDate),
-  dep1Age: data.dep1BirthDate ? calculateAge(data.dep1BirthDate) : undefined,
-  dep2Age: data.dep2BirthDate ? calculateAge(data.dep2BirthDate) : undefined,
-  dep3Age: data.dep3BirthDate ? calculateAge(data.dep3BirthDate) : undefined,
-}));
+/** `ageInput` gana si está presente (edad digitada directa); si no, se calcula desde `birthDate`. */
+function resolveAge(birthDate: string | undefined, ageInput: string | undefined): number | undefined {
+  if (ageInput != null) {
+    const n = Number(ageInput);
+    return Number.isFinite(n) && n >= 0 ? n : undefined;
+  }
+  if (birthDate) return calculateAge(birthDate);
+  return undefined;
+}
+
+export const newHealthQuoteSchema = baseHealthQuoteSchema
+  .refine((data) => resolveAge(data.titularBirthDate, data.titularAgeInput) != null, {
+    message: "Fecha de nacimiento o edad del titular requerida",
+    path: ["titularBirthDate"],
+  })
+  .transform((data) => {
+    const result = {
+      ...data,
+      titularAge: resolveAge(data.titularBirthDate, data.titularAgeInput)!,
+    } as typeof data & { titularAge: number } & Record<string, unknown>;
+
+    for (let i = 1; i <= MAX_DEPENDENTS; i++) {
+      const birthDate = data[`dep${i}BirthDate` as keyof typeof data] as string | undefined;
+      const ageInput = data[`dep${i}AgeInput` as keyof typeof data] as string | undefined;
+      result[`dep${i}Age`] = resolveAge(birthDate, ageInput);
+    }
+
+    return result as typeof data & { titularAge: number } & Record<`dep${DependentIndex}Age`, number | undefined>;
+  });
 
 export type NewHealthQuoteInput = z.infer<typeof newHealthQuoteSchema>;

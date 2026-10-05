@@ -1,23 +1,37 @@
 "use client";
 
-import { useActionState, useRef } from "react";
+import { useActionState, useRef, useState } from "react";
 import { createHealthQuote } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
+import { AgeOrBirthDateField } from "@/components/shared/AgeOrBirthDateField";
+import { MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
-function DependentFields({ n }: { n: 1 | 2 | 3 }) {
+/**
+ * `fieldNumber` es la posición actual (1-based, sin huecos) — determina el
+ * `name` de los campos del formulario, que el schema solo reconoce de
+ * dep1 a dep{MAX_DEPENDENTS} consecutivos. Es distinto de la `key` de
+ * React que usa el padre (un id estable que nunca se reutiliza) — si no,
+ * agregar y quitar varias veces podría correr el número de campo más allá
+ * de MAX_DEPENDENTS aunque haya pocos dependientes visibles.
+ */
+function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRemove?: () => void }) {
   return (
     <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 border-t border-border pt-4">
-      <legend className="col-span-full text-sm font-semibold">Dependiente {n}</legend>
-      <label className="flex flex-col gap-1 text-sm">
-        Fecha de nacimiento
-        <input name={`dep${n}BirthDate`} type="date" className="rounded-lg border border-border bg-background px-3 py-2" />
-      </label>
+      <legend className="col-span-full flex items-center justify-between text-sm font-semibold">
+        Dependiente {fieldNumber}
+        {onRemove && (
+          <button type="button" onClick={onRemove} className="text-xs font-semibold text-link underline">
+            Quitar
+          </button>
+        )}
+      </legend>
+      <AgeOrBirthDateField namePrefix={`dep${fieldNumber}`} />
       <label className="flex flex-col gap-1 text-sm">
         Sexo
-        <select name={`dep${n}Gender`} defaultValue="" className="rounded-lg border border-border bg-background px-3 py-2">
+        <select name={`dep${fieldNumber}Gender`} defaultValue="" className="rounded-lg border border-border bg-background px-3 py-2">
           <option value="">—</option>
           <option value="MASCULINO">Masculino</option>
           <option value="FEMENINO">Femenino</option>
@@ -34,6 +48,12 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
   const lastNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
   const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
+
+  // IDs estables para React (nunca se reutilizan, aunque se agregue y
+  // quite varias veces) — distintos del número de campo (ver
+  // DependentFields), que sí se recalcula por posición en cada render.
+  const [dependentIds, setDependentIds] = useState<number[]>([1]);
+  const nextDependentId = useRef(2);
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
@@ -133,15 +153,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
 
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <legend className="col-span-full text-sm font-semibold">Titular</legend>
-        <label className="flex flex-col gap-1 text-sm">
-          Fecha de nacimiento
-          <input
-            name="titularBirthDate"
-            type="date"
-            required
-            className="rounded-lg border border-border bg-background px-3 py-2"
-          />
-        </label>
+        <AgeOrBirthDateField namePrefix="titular" required />
         <label className="flex flex-col gap-1 text-sm">
           Sexo
           <select name="titularGender" defaultValue="MASCULINO" className="rounded-lg border border-border bg-background px-3 py-2">
@@ -151,9 +163,23 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         </label>
       </fieldset>
 
-      <DependentFields n={1} />
-      <DependentFields n={2} />
-      <DependentFields n={3} />
+      {dependentIds.map((id, index) => (
+        <DependentFields
+          key={id}
+          fieldNumber={index + 1}
+          onRemove={() => setDependentIds((ids) => ids.filter((existing) => existing !== id))}
+        />
+      ))}
+
+      {dependentIds.length < MAX_DEPENDENTS && (
+        <button
+          type="button"
+          onClick={() => setDependentIds((ids) => [...ids, nextDependentId.current++])}
+          className="self-start rounded-lg border border-dashed border-border-strong px-3.5 py-1.5 text-xs font-bold text-muted hover:bg-background"
+        >
+          + Agregar dependiente
+        </button>
+      )}
 
       {state?.ok === false && "form" in state.errors && (
         <p className="text-sm text-red-600">{state.errors.form[0]}</p>

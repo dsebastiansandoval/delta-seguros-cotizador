@@ -8,7 +8,7 @@ import { withOrganization } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { clientRepository } from "@/domains/clients/repositories/client.repository";
-import { newHealthQuoteSchema } from "@/domains/health/schemas/health-quote.schema";
+import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
 import { healthComparisonService } from "@/domains/health/services/health-comparison.service";
 import { audit } from "@/domains/shared/audit";
@@ -30,9 +30,11 @@ export async function createHealthQuote(
   const input = parsed.data;
 
   const members: NewMemberInput[] = [{ relation: "TITULAR", age: input.titularAge, gender: input.titularGender }];
-  if (input.dep1Age != null && input.dep1Gender) members.push({ relation: "DEPENDIENTE", age: input.dep1Age, gender: input.dep1Gender });
-  if (input.dep2Age != null && input.dep2Gender) members.push({ relation: "DEPENDIENTE", age: input.dep2Age, gender: input.dep2Gender });
-  if (input.dep3Age != null && input.dep3Gender) members.push({ relation: "DEPENDIENTE", age: input.dep3Age, gender: input.dep3Gender });
+  for (let i = 1; i <= MAX_DEPENDENTS; i++) {
+    const age = input[`dep${i}Age` as keyof typeof input] as number | undefined;
+    const gender = input[`dep${i}Gender` as keyof typeof input] as "MASCULINO" | "FEMENINO" | undefined;
+    if (age != null && gender) members.push({ relation: "DEPENDIENTE", age, gender });
+  }
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
     const existing = await clientRepository.findByDocument(tx, input.documentNumber);
