@@ -17,11 +17,14 @@ export class ForbiddenError extends Error {
   }
 }
 
+export type Branch = "AUTOS" | "SALUD";
+
 export type AuthorizedSession = {
   userId: string;
   organizationId: string;
   email: string;
   permissions: Set<string>;
+  branches: Set<Branch>;
 };
 
 /**
@@ -35,15 +38,40 @@ export type AuthorizedSession = {
  * solo resuelve usuarios dentro de una organización.
  */
 export async function requirePermission(permission: string): Promise<AuthorizedSession> {
+  const grants = await loadGrants();
+  if (!grants) throw new UnauthenticatedError();
+  if (!grants.permissions.has(permission)) throw new ForbiddenError(permission);
+  return grants;
+}
+
+/**
+ * Ramos que ve cada usuario (users.branches, fijado en /admin/usuarios).
+ * Se valida en el servidor en cada acción del ramo — ocultar el link del
+ * sidebar es solo comodidad.
+ */
+export function requireBranch(session: AuthorizedSession, branch: Branch) {
+  if (!session.branches.has(branch)) throw new ForbiddenError(`branch:${branch}`);
+}
+
+/** Para armar la navegación: null si no hay sesión válida, sin lanzar. */
+export async function getAccess(): Promise<AuthorizedSession | null> {
+  return loadGrants();
+}
+
+/**
+ * Un usuario desactivado pierde el acceso en su siguiente request, aunque
+ * su JWT siga vigente — por eso isActive se revisa acá y no solo al login.
+ */
+async function loadGrants(): Promise<AuthorizedSession | null> {
   const session = await getAppSession();
-  if (!session?.organizationId) throw new UnauthenticatedError();
+  if (!session?.organizationId) return null;
 
   const organizationId = session.organizationId;
   const email = session.email;
 
   const grants = await withOrganization(organizationId, async (tx) => {
     const [user] = await tx.select().from(users).where(eq(users.email, email)).limit(1);
-    if (!user) return null;
+    if (!user || !user.isActive) return null;
 
     const rows = await tx
       .select({ code: permissions.code })
@@ -53,13 +81,16 @@ export async function requirePermission(permission: string): Promise<AuthorizedS
       .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
       .where(eq(userRoles.userId, user.id));
 
-    return { userId: user.id, codes: rows.map((r) => r.code) };
+    return { userId: user.id, codes: rows.map((r) => r.code), branches: user.branches };
   });
 
-  if (!grants) throw new UnauthenticatedError();
+  if (!grants) return null;
 
-  const grantedCodes = new Set(grants.codes);
-  if (!grantedCodes.has(permission)) throw new ForbiddenError(permission);
-
-  return { userId: grants.userId, organizationId, email, permissions: grantedCodes };
+  return {
+    userId: grants.userId,
+    organizationId,
+    email,
+    permissions: new Set(grants.codes),
+    branches: new Set(grants.branches),
+  };
 }

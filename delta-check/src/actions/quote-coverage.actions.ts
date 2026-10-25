@@ -20,7 +20,7 @@ export async function getQuoteOptionCoverages(quoteOptionId: string) {
   const session = await requirePermission("quote:read");
   return withOrganization(session.organizationId, async (tx) => {
     const context = await quoteCoverageService.getContext(tx, quoteOptionId);
-    if (!context) return null;
+    if (!context || !session.branches.has(context.branch)) return null;
     const coverages = await quoteCoverageService.listForOption(tx, quoteOptionId, context.branch);
     return { context, coverages };
   });
@@ -49,7 +49,7 @@ export async function saveQuoteOptionCoverages(
 
   const context = await withOrganization(session.organizationId, async (tx) => {
     const ctx = await quoteCoverageService.getContext(tx, quoteOptionId);
-    if (!ctx) return null;
+    if (!ctx || !session.branches.has(ctx.branch)) return null;
 
     const catalogRows = await quoteCoverageService.listForOption(tx, quoteOptionId, ctx.branch);
     const entries = catalogRows.map((row) => {

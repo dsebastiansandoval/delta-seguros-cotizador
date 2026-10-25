@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const OPTIONS: Array<{ href: string; label: string; disabled?: boolean }> = [
-  { href: "/cotizar/autos/nueva", label: "Autos" },
-  { href: "/cotizar/salud/nueva", label: "Salud AM" },
+const OPTIONS: Array<{ href: string; label: string; branch?: "AUTOS" | "SALUD"; disabled?: boolean }> = [
+  { href: "/cotizar/autos/nueva", label: "Autos", branch: "AUTOS" },
+  { href: "/cotizar/salud/nueva", label: "Salud AM", branch: "SALUD" },
   { href: "#", label: "Vida & Patrimonio", disabled: true },
 ];
 
@@ -15,7 +15,8 @@ const OPTIONS: Array<{ href: string; label: string; disabled?: boolean }> = [
  * sabe adónde va). Mismo patrón de dropdown que AccountMenu.tsx
  * (useState + click-outside), no una librería de modal nueva.
  */
-export function NuevaCotizacionMenu() {
+/** `branches`: ramos habilitados del usuario — solo esos aparecen como opción. */
+export function NuevaCotizacionMenu({ branches }: { branches: Array<"AUTOS" | "SALUD"> }) {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -42,7 +43,7 @@ export function NuevaCotizacionMenu() {
 
       {open && (
         <div className="absolute left-0 top-full z-30 mt-1.5 w-full rounded-xl border border-border bg-surface p-1.5 text-sm shadow-lg">
-          {OPTIONS.map((option) =>
+          {OPTIONS.filter((o) => !o.branch || branches.includes(o.branch)).map((option) =>
             option.disabled ? (
               <span
                 key={option.label}

@@ -1,4 +1,4 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { policies, policyEvents, policyInstallments, commissions } from "@/db/schema/policies";
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
@@ -304,10 +304,15 @@ export const policyService = {
   },
 
   /** Cartera — lista completa o filtrada por vigencia (pendientes vs. canceladas), con datos para mostrar en tabla. */
-  async list(tx: Db, filters?: { lifecycleStatus?: "VIGENTE" | "CANCELACION_PENDIENTE" | "CANCELADA" }) {
-    const conditions = filters?.lifecycleStatus
-      ? [eq(policies.lifecycleStatus, filters.lifecycleStatus)]
-      : [];
+  async list(
+    tx: Db,
+    filters: {
+      branches: Array<"AUTOS" | "SALUD">;
+      lifecycleStatus?: "VIGENTE" | "CANCELACION_PENDIENTE" | "CANCELADA";
+    },
+  ) {
+    const conditions = [inArray(policies.branch, filters.branches)];
+    if (filters.lifecycleStatus) conditions.push(eq(policies.lifecycleStatus, filters.lifecycleStatus));
     return tx
       .select({
         id: policies.id,
@@ -328,7 +333,7 @@ export const policyService = {
       .from(policies)
       .innerJoin(insurers, eq(insurers.id, policies.insurerId))
       .innerJoin(clients, eq(clients.id, policies.clientId))
-      .where(conditions.length ? and(...conditions) : undefined)
+      .where(and(...conditions))
       .orderBy(desc(policies.createdAt));
   },
 };

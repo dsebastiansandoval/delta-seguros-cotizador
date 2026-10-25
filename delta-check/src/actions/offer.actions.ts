@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
-import { requirePermission } from "@/domains/identity/services/rbac.service";
+import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
 import {
   OfferConfigurationError,
   offerService,
@@ -17,11 +17,13 @@ import type { ActionResult } from "./quote.actions";
 
 export async function getOfferConfiguration(quoteId: string) {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "AUTOS");
   return withOrganization(session.organizationId, (tx) => offerService.getConfiguration(tx, quoteId));
 }
 
 export async function getOfferSheet(quoteId: string) {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "AUTOS");
   return withOrganization(session.organizationId, (tx) => offerService.getOfferSheet(tx, quoteId));
 }
 
@@ -76,6 +78,7 @@ export async function saveOfferConfiguration(
   formData: FormData,
 ): Promise<ActionResult> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const quoteId = uuid.safeParse(formData.get("quoteId"));

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
-import { requirePermission } from "@/domains/identity/services/rbac.service";
+import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService } from "@/domains/quoting/services/quote.service";
@@ -122,6 +122,7 @@ export async function createAutoQuote(
   formData: FormData,
 ): Promise<ActionResult<{ quoteId: string }>> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const result = await createQuoteFromForm(formData, session, true);
@@ -141,6 +142,7 @@ export async function saveAutoQuoteDraft(
   formData: FormData,
 ): Promise<ActionResult<{ quoteId: string }>> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const result = await createQuoteFromForm(formData, session, false);
@@ -160,6 +162,7 @@ export async function runQuoteComparison(
   formData: FormData,
 ): Promise<ActionResult> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const quoteId = formData.get("quoteId");
@@ -198,6 +201,7 @@ export async function runQuoteComparison(
  */
 export async function listMyAutoQuotes() {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "AUTOS");
 
   return withOrganization(session.organizationId, (tx) =>
     tx

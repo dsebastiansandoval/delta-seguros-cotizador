@@ -62,7 +62,7 @@ if (process.env.NODE_ENV === "development") {
         const email = typeof credentials?.email === "string" ? credentials.email : null;
         if (!email) return null;
         const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-        if (!user) return null;
+        if (!user || !user.isActive) return null;
         return { id: user.id, email: user.email, name: user.fullName };
       },
     }),
@@ -87,9 +87,9 @@ export const {
      * (ARCHITECTURE.md §1b), así que "cualquier cuenta de Microsoft válida"
      * no es suficiente: solo @deltaseguros.com.ec puede entrar por acá.
      * Además, igual que el provider de desarrollo (`if (!user) return
-     * null`, más arriba), solo entra quien ya está sembrado en `users` — no
-     * hay alta automática de cuenta nueva en el primer login, todavía no
-     * existe una pantalla de administración de usuarios que la respalde.
+     * null`, más arriba), solo entra quien ya existe y está activo en
+     * `users` — no hay alta automática en el primer login; el ADMIN da de
+     * alta la cuenta en /admin/usuarios.
      * Cada rechazo redirige a /login con un motivo distinto en vez del
      * "AccessDenied" genérico de Auth.js.
      */
@@ -102,7 +102,7 @@ export const {
 
       const email = user.email!.toLowerCase();
       const [dbUser] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-      if (!dbUser) {
+      if (!dbUser || !dbUser.isActive) {
         return "/login?error=sin-acceso";
       }
 
@@ -124,6 +124,8 @@ export const {
       if (user?.email) {
         const [dbUser] = await db.select().from(users).where(eq(users.email, user.email)).limit(1);
         token.organizationId = dbUser?.organizationId ?? null;
+        // `user` solo viene en el login, no en cada request — se muestra en /admin/usuarios.
+        if (dbUser) await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, dbUser.id));
       }
       return token;
     },

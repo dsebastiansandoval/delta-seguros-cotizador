@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import { NextResponse } from "next/server";
 import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { withOrganization } from "@/db";
-import { requirePermission } from "@/domains/identity/services/rbac.service";
+import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
 import { getCaratulaData } from "@/domains/quoting/services/caratula.service";
 import { CaratulaDocument } from "@/domains/quoting/pdf/CaratulaDocument";
 import { audit } from "@/domains/shared/audit";
@@ -14,6 +14,7 @@ export async function GET(
 ) {
   const { quoteId } = await params;
   const session = await requirePermission("quote:read");
+  requireBranch(session, "AUTOS");
 
   const data = await withOrganization(session.organizationId, async (tx) => {
     const caratula = await getCaratulaData(tx, quoteId);

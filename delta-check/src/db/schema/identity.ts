@@ -1,6 +1,6 @@
 import { boolean, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
-import { authProviderEnum, roleCodeEnum } from "./enums";
+import { authProviderEnum, branchEnum, roleCodeEnum } from "./enums";
 import { organizations } from "./organizations";
 
 /**
@@ -15,6 +15,8 @@ export const users = pgTable("users", {
   provider: authProviderEnum("provider").notNull(),
   providerAccountId: text("provider_account_id"),
   isActive: boolean("is_active").notNull().default(true),
+  // Ramos que el usuario puede cotizar y ver (Autos, Salud AM) — lo fija el ADMIN en /admin/usuarios.
+  branches: branchEnum("branches").array().notNull().default(["AUTOS", "SALUD"]),
   lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
   ...timestamps,
 });

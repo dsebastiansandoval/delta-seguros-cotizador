@@ -276,14 +276,18 @@ export async function markInstallmentPaid(
   return { ok: true, value: undefined };
 }
 
+/** Solo las pólizas de los ramos que el usuario tiene habilitados. */
 export async function listPolicies(filters?: { lifecycleStatus?: "VIGENTE" | "CANCELACION_PENDIENTE" | "CANCELADA" }) {
   const session = await requirePermission("quote:read");
-  return withOrganization(session.organizationId, (tx) => policyService.list(tx, filters));
+  return withOrganization(session.organizationId, (tx) =>
+    policyService.list(tx, { ...filters, branches: [...session.branches] }),
+  );
 }
 
 export async function getPolicyDetail(policyId: string) {
   const session = await requirePermission("quote:read");
-  return withOrganization(session.organizationId, (tx) => policyService.getDetail(tx, policyId));
+  const detail = await withOrganization(session.organizationId, (tx) => policyService.getDetail(tx, policyId));
+  return detail && session.branches.has(detail.policy.branch) ? detail : null;
 }
 
 /** Contexto para el formulario de emisión — de qué cotización/cliente/aseguradora nace la póliza. */

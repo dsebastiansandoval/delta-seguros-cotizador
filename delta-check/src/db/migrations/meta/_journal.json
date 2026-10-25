@@ -141,6 +141,13 @@
       "when": 1792930462739,
       "tag": "0019_policy_cancellation_inspection",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1792932249960,
+      "tag": "0020_user_branches",
+      "breakpoints": true
     }
   ]
 }

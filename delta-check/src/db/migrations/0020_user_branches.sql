@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "branches" "branch"[] DEFAULT '{"AUTOS","SALUD"}' NOT NULL;

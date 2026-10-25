@@ -5,6 +5,7 @@ import { AccountMenu } from "@/components/shared/AccountMenu";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { NuevaCotizacionMenu } from "@/components/shared/NuevaCotizacionMenu";
 import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
+import { getAccess, type AuthorizedSession } from "@/domains/identity/services/rbac.service";
 
 /**
  * Reorganización de navegación (propuesta del usuario): el sidebar pasa a
@@ -12,7 +13,9 @@ import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
  * (breadcrumbs, buscador, perfil) — antes también tenía los mismos links
  * de ramo duplicados del sidebar.
  */
-const SIDEBAR_GROUPS: NavGroup[] = [
+function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
+  const branches = access?.branches ?? new Set();
+  return [
   {
     links: [{ href: "/dashboard", label: "Dashboard" }],
   },
@@ -24,8 +27,9 @@ const SIDEBAR_GROUPS: NavGroup[] = [
       // "+ Nueva" adentro. A pedido explícito del usuario (antes "Autos"
       // iba directo al formulario y "Mis cotizaciones" era una entrada
       // aparte).
-      { href: "/cotizar/autos", label: "Autos", activePrefix: "/cotizar/autos" },
-      { href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" },
+      // Solo los ramos habilitados para el usuario (users.branches).
+      ...(branches.has("AUTOS") ? [{ href: "/cotizar/autos", label: "Autos", activePrefix: "/cotizar/autos" }] : []),
+      ...(branches.has("SALUD") ? [{ href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" }] : []),
       // Del mockup visual original — sin ninguna macro ni hoja propia en el
       // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-
       // AUDIT.md), así que va como "Pronto" (mismo patrón que Back-office)
@@ -48,14 +52,17 @@ const SIDEBAR_GROUPS: NavGroup[] = [
   {
     label: "Administración",
     links: [
-      // Ninguna tiene pantalla propia todavía — "Pronto", mismo criterio
-      // que "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
-      { href: "#", label: "Ejecutivos", disabled: true },
+      // Configuración y Back-office no tienen pantalla propia todavía — "Pronto",
+      // mismo criterio que "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
+      access?.permissions.has("user:manage")
+        ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
+        : { href: "#", label: "Usuarios", disabled: true },
       { href: "#", label: "Configuración", disabled: true },
       { href: "#", label: "Back-office", disabled: true },
     ],
   },
-];
+  ];
+}
 
 /**
  * Shell de navegación para todas las páginas autenticadas — adaptado de
@@ -78,6 +85,7 @@ const SIDEBAR_GROUPS: NavGroup[] = [
 export default async function DashboardLayout({ children }: LayoutProps<"/">) {
   const session = await getAppSession();
   if (!session) redirect("/login");
+  const access = await getAccess();
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -118,8 +126,8 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
 
       <div className="mx-auto flex w-full max-w-[1320px] flex-1">
         <aside className="hidden w-56 shrink-0 flex-col p-5 md:flex">
-          <NuevaCotizacionMenu />
-          <SidebarNav groups={SIDEBAR_GROUPS} />
+          <NuevaCotizacionMenu branches={[...(access?.branches ?? [])]} />
+          <SidebarNav groups={sidebarGroups(access)} />
         </aside>
 
         <div className="min-w-0 flex-1">{children}</div>
