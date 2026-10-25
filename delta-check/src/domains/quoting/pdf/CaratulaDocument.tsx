@@ -1,7 +1,10 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import type { CaratulaData, CaratulaOffer } from "../services/caratula.service";
+import type { CaratulaData } from "../services/caratula.service";
+import type { OfferSheet } from "../offer/offer.service";
+import { INSTALLMENT_TERMS, installmentCents } from "../offer/offer-sheet";
+import { ADDITIONAL_ROWS, PREMIUM_ROWS, PRINCIPAL_ROWS, formatMoney, formatOfferCell, formatRate } from "../offer/offer-format";
 import { formatUSD } from "@/domains/shared/money";
 import { KM_BRACKET_LABELS } from "../constants";
 
@@ -66,55 +69,24 @@ function PortadaPage({ data }: { data: CaratulaData }) {
 }
 
 /**
- * Equivalente a la hoja `CARATULA` del Excel (EXCEL-AUDIT.md) — el texto de
- * coberturas, cláusulas adicionales y aclaratorio es el mismo texto real que
- * ya usa Delta (extraído celda por celda), no se redactó de nuevo.
- *
- * Una página por aseguradora en `data.offers` — por defecto (nadie eligió
- * nada en el comparador) es una sola, "la recomendada", igual que el
- * Excel original. Si el usuario elige varias a mano, cada una repite el
- * mismo formato completo en su propia página, a pedido explícito (no una
- * tabla comparativa apretada — más fácil de leer, y de construir).
+ * Hoja CARATULA del Excel — la carta. Textos de coberturas, cláusulas y
+ * aclaratorio extraídos celda por celda de BASE EMISIONES/CARATULA, no
+ * redactados de nuevo.
  */
 const styles = StyleSheet.create({
-  page: { padding: 48, fontSize: 10.5, fontFamily: "Helvetica", color: "#182338", lineHeight: 1.5 },
+  page: { paddingVertical: 36, paddingHorizontal: 48, fontSize: 10, fontFamily: "Helvetica", color: "#182338", lineHeight: 1.35 },
   brand: { fontSize: 16, fontWeight: 700, color: "#152a52", marginBottom: 2 },
-  brandSub: { fontSize: 8.5, color: "#6b6f76", marginBottom: 24 },
-  date: { textAlign: "right", marginBottom: 16, color: "#6b6f76" },
-  h2: { fontSize: 11, fontWeight: 700, color: "#152a52", marginTop: 16, marginBottom: 6 },
+  brandSub: { fontSize: 8.5, color: "#6b6f76", marginBottom: 14 },
+  date: { textAlign: "right", marginBottom: 10, color: "#6b6f76" },
+  h2: { fontSize: 10.5, fontWeight: 700, color: "#152a52", marginTop: 10, marginBottom: 4 },
   row: { flexDirection: "row", justifyContent: "space-between", marginBottom: 3 },
   label: { color: "#6b6f76" },
   value: { fontWeight: 700 },
-  totalRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 8,
-    paddingTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: "#dfe1e6",
-    borderTopStyle: "dashed",
-  },
-  totalLabel: { fontSize: 12, fontWeight: 700 },
-  totalValue: { fontSize: 14, fontWeight: 700, color: "#01579e" },
   bullet: { flexDirection: "row", marginBottom: 4 },
   bulletMark: { width: 10 },
   bulletText: { flex: 1 },
-  footer: { marginTop: 28, color: "#6b6f76" },
-  paymentRow: { flexDirection: "row", justifyContent: "space-between" },
-  paymentCol: { flex: 1, alignItems: "center" },
-  paymentTerm: { color: "#6b6f76", fontSize: 9, marginBottom: 2 },
-  paymentValue: { fontWeight: 700 },
+  footer: { marginTop: 14, color: "#6b6f76" },
 });
-
-/**
- * 6/9/12 meses con tarjeta, sin interés — mismo cálculo que el PDF real de
- * ejemplo (WhatsApp): prima total del contado dividida en cuotas iguales,
- * sin ningún recargo. `payment_options`/`quote_option_coverages` ya existen
- * en el esquema para el día que alguna aseguradora sí cobre interés por
- * cuotas (dato que hoy no tenemos, así que no se inventa) — mientras tanto
- * esto es una cuenta, no un dato que dependa de tabla.
- */
-const INSTALLMENT_TERMS = [6, 9, 12] as const;
 
 const COVERAGE_TEXT =
   "Choque y/o volcadura, incendio y/o rayo, explosión, robo total y parcial, hurto, daños " +
@@ -139,159 +111,9 @@ const DISCLAIMER_NOTES = [
   "En caso de pérdida total, el valor a indemnizar será el valor comercial a la fecha del siniestro, descontando el deducible de pérdida total establecido por la aseguradora.",
 ];
 
-/**
- * El saludo de "De nuestra consideración" cambia si es renovación — texto
- * real de la hoja `CARATULA!C14` (`=IF(DATOS VH!$B$4="COTIZACIÓN", INFO
- * GENERAL!$G$9, INFO GENERAL!$G$12)`), no redactado de nuevo: G9 para
- * cotización nueva, G12 (con la fecha/aseguradora anterior insertadas) para
- * renovación. `data.renewal` viene `null` si es NUEVA o si faltan los datos
- * de la póliza anterior — nunca se arma la frase con un hueco.
- */
-/**
- * Auto x Km: una misma aseguradora (hoy solo AIG) puede aparecer varias
- * veces en una carátula comparativa, una por rango de km — sin el rango en
- * el encabezado, el PDF diría "AIG" repetido sin forma de distinguir cuál
- * oferta es cuál.
- */
-function offerHeading(offer: CaratulaOffer): string {
-  if (offer.kmBracket == null) return offer.insurerName;
-  const label = KM_BRACKET_LABELS[offer.kmBracket as keyof typeof KM_BRACKET_LABELS];
-  return label ? `${offer.insurerName} — ${label}` : offer.insurerName;
-}
-
-function CaratulaPage({ data, offer, isComparison }: { data: CaratulaData; offer: CaratulaOffer; isComparison: boolean }) {
-  return (
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.brand}>DELTA SEGUROS</Text>
-      <Text style={styles.brandSub}>Cía. Ltda.</Text>
-      <Text style={styles.date}>Quito, {data.date}</Text>
-
-      <Text>Señores</Text>
-      <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
-      <Text style={{ marginBottom: 12 }}>Presente.-</Text>
-
-      <Text style={{ marginBottom: 12 }}>
-        REFERENCIA: Póliza de Vehículos — {data.vehicleLabel} (placa {data.vehiclePlate})
-      </Text>
-
-      <Text style={{ marginBottom: 12 }}>
-        <Text style={{ fontWeight: 700 }}>De nuestra consideración: </Text>
-        {data.renewal
-          ? `La presente tiene por objeto recordarle que el día ${data.renewal.previousExpiryDate} vence la póliza en ${data.renewal.previousInsurerName} y que otorga cobertura al vehículo de su propiedad, por tal razón nos permitimos poner en su consideración nuestras mejores ofertas del mercado ecuatoriano.`
-          : isComparison
-            ? "nos permitimos poner en su consideración las siguientes opciones cotizadas en el mercado ecuatoriano, para que usted elija la que mejor se ajuste a sus necesidades."
-            : "nos permitimos poner en su consideración nuestra mejor oferta del mercado ecuatoriano para la cobertura del vehículo de su propiedad."}
-      </Text>
-
-      <Text style={styles.h2}>OBJETO ASEGURADO</Text>
-      <View style={styles.row}>
-        <Text style={styles.label}>Vehículo</Text>
-        <Text style={styles.value}>{data.vehicleLabel}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Valor asegurado</Text>
-        <Text style={styles.value}>{formatUSD(data.insuredValueCents)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Valor extras</Text>
-        <Text style={styles.value}>
-          {data.extrasValueCents > 0 ? formatUSD(data.extrasValueCents) : "Sin extras"}
-        </Text>
-      </View>
-
-      <Text style={styles.h2}>{isComparison ? `ASEGURADORA — ${offerHeading(offer)}` : `ASEGURADORA RECOMENDADA — ${offerHeading(offer)}`}</Text>
-      <View style={styles.row}>
-        <Text style={styles.label}>Prima neta</Text>
-        <Text style={styles.value}>{formatUSD(offer.netPremiumCents)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>3.50% Superintendencia de Bancos</Text>
-        <Text style={styles.value}>{formatUSD(offer.superBancosCents)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>0.50% Seguro Campesino</Text>
-        <Text style={styles.value}>{formatUSD(offer.campesinoCents)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>Derechos de emisión</Text>
-        <Text style={styles.value}>{formatUSD(offer.emissionFeeCents)}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text style={styles.label}>15% IVA</Text>
-        <Text style={styles.value}>{formatUSD(offer.ivaCents)}</Text>
-      </View>
-      <View style={styles.totalRow}>
-        <Text style={styles.totalLabel}>PRIMA TOTAL</Text>
-        <Text style={styles.totalValue}>{formatUSD(offer.totalPremiumCents)}</Text>
-      </View>
-
-      <Text style={styles.h2}>FORMAS DE PAGO</Text>
-      <View style={styles.row}>
-        <Text style={styles.label}>Efectivo o transferencia</Text>
-        <Text style={styles.value}>{formatUSD(offer.totalPremiumCents)}</Text>
-      </View>
-      <Text style={[styles.label, { marginTop: 6, marginBottom: 2 }]}>Tarjeta de crédito, sin interés</Text>
-      <View style={styles.paymentRow}>
-        {INSTALLMENT_TERMS.map((n) => (
-          <View style={styles.paymentCol} key={n}>
-            <Text style={styles.paymentTerm}>{n} meses</Text>
-            <Text style={styles.paymentValue}>{formatUSD(Math.round(offer.totalPremiumCents / n))}</Text>
-          </View>
-        ))}
-      </View>
-
-      <Text style={styles.h2}>COBERTURAS</Text>
-      <Text>{COVERAGE_TEXT}</Text>
-
-      {offer.coverages.length > 0 && (
-        <>
-          <Text style={[styles.h2, { marginTop: 10 }]}>DETALLE POR COBERTURA — {offerHeading(offer)}</Text>
-          {offer.coverages.map((c) => (
-            <View style={styles.row} key={c.name}>
-              <Text style={styles.label}>{c.name}</Text>
-              <Text style={styles.value}>{c.display}</Text>
-            </View>
-          ))}
-        </>
-      )}
-
-      <Text style={styles.h2}>CLÁUSULAS ADICIONALES</Text>
-      {ADDITIONAL_CLAUSES.map((clause) => (
-        <View style={styles.bullet} key={clause}>
-          <Text style={styles.bulletMark}>·</Text>
-          <Text style={styles.bulletText}>{clause}</Text>
-        </View>
-      ))}
-
-      <Text style={styles.h2}>ACLARATORIO</Text>
-      {DISCLAIMER_NOTES.map((note) => (
-        <View style={styles.bullet} key={note}>
-          <Text style={styles.bulletMark}>·</Text>
-          <Text style={styles.bulletText}>{note}</Text>
-        </View>
-      ))}
-
-      <Text style={styles.footer}>
-        Por la favorable atención que se sirva dar a la presente, anticipo mis agradecimientos.
-      </Text>
-      <Text style={styles.footer}>Cordialmente,</Text>
-      <Text style={{ marginTop: 16, fontWeight: 700, color: "#152a52" }}>
-        DELTASEGUROS CÍA. LTDA.
-      </Text>
-    </Page>
-  );
-}
-
-/**
- * Carta genérica para el caso de comparación (varias aseguradoras) — la
- * versión real que Delta manda (PDF de ejemplo, SRA ROBLES) no repite el
- * saludo/cláusulas/aclaratorio una vez por aseguradora; manda una sola carta
- * seguida de la tabla comparativa apaisada (`OfertaComparisonPage`). El
- * bloque de detalle por aseguradora (prima, formas de pago, coberturas)
- * vive únicamente en esa tabla en este caso — nunca en las dos partes a la
- * vez, para no duplicar cifras.
- */
 function CaratulaLetterPage({ data }: { data: CaratulaData }) {
+  const insured = data.vehicles.reduce((sum, v) => sum + v.insuredValueCents, 0);
+  const extras = data.vehicles.reduce((sum, v) => sum + v.extrasValueCents, 0);
   return (
     <Page size="A4" style={styles.page}>
       <Text style={styles.brand}>DELTA SEGUROS</Text>
@@ -302,9 +124,7 @@ function CaratulaLetterPage({ data }: { data: CaratulaData }) {
       <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
       <Text style={{ marginBottom: 12 }}>Presente.-</Text>
 
-      <Text style={{ marginBottom: 12 }}>
-        REFERENCIA: Póliza de Vehículos — {data.vehicleLabel} (placa {data.vehiclePlate})
-      </Text>
+      <Text style={{ marginBottom: 12 }}>REFERENCIA: Póliza de Vehículos</Text>
 
       <Text style={{ marginBottom: 12 }}>
         <Text style={{ fontWeight: 700 }}>De nuestra consideración: </Text>
@@ -314,19 +134,22 @@ function CaratulaLetterPage({ data }: { data: CaratulaData }) {
       </Text>
 
       <Text style={styles.h2}>OBJETO ASEGURADO</Text>
-      <View style={styles.row}>
-        <Text style={styles.label}>Vehículo</Text>
-        <Text style={styles.value}>{data.vehicleLabel}</Text>
-      </View>
-      <View style={styles.row}>
+      {data.vehicles.map((v) => (
+        <Text key={v.label} style={styles.value}>
+          {v.label}
+        </Text>
+      ))}
+      <View style={[styles.row, { marginTop: 6 }]}>
         <Text style={styles.label}>Valor asegurado</Text>
-        <Text style={styles.value}>{formatUSD(data.insuredValueCents)}</Text>
+        <Text style={styles.value}>{formatUSD(insured)}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Valor extras</Text>
-        <Text style={styles.value}>
-          {data.extrasValueCents > 0 ? formatUSD(data.extrasValueCents) : "Sin extras"}
-        </Text>
+        <Text style={styles.value}>{extras > 0 ? formatUSD(extras) : "Sin extras"}</Text>
+      </View>
+      <View style={styles.row}>
+        <Text style={styles.label}>Total</Text>
+        <Text style={styles.value}>{formatUSD(insured + extras)}</Text>
       </View>
 
       <Text style={styles.h2}>COBERTURAS</Text>
@@ -348,178 +171,171 @@ function CaratulaLetterPage({ data }: { data: CaratulaData }) {
         </View>
       ))}
 
-      <Text style={styles.footer}>
-        Por la favorable atención que se sirva dar a la presente, anticipo mis agradecimientos.
-      </Text>
+      <Text style={styles.footer}>Por la favorable atención que se sirva dar a la presente, anticipo mis agradecimientos.</Text>
       <Text style={styles.footer}>Cordialmente,</Text>
       <Text style={{ marginTop: 16, fontWeight: 700, color: "#152a52" }}>DELTASEGUROS CÍA. LTDA.</Text>
     </Page>
   );
 }
 
-const tableStyles = StyleSheet.create({
-  page: { padding: 24, fontSize: 7.5, fontFamily: "Helvetica", color: "#182338" },
+const t = StyleSheet.create({
+  page: { padding: 16, fontSize: 6, fontFamily: "Helvetica", color: "#182338" },
+  title: { fontSize: 10, fontWeight: 700, color: "#152a52", marginBottom: 6 },
   table: { borderWidth: 1, borderColor: "#dfe1e6" },
   row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#dfe1e6" },
-  sectionRow: { flexDirection: "row", backgroundColor: "#152a52" },
-  labelCell: { width: 130, padding: 4, fontWeight: 700, color: "#182338" },
-  sectionLabelCell: { width: 130, padding: 4, fontWeight: 700, color: "#ffffff" },
-  dataCell: { flex: 1, padding: 4, textAlign: "center", borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
-  headerCell: {
-    flex: 1,
-    padding: 4,
-    textAlign: "center",
-    fontWeight: 700,
-    color: "#ffffff",
-    borderLeftWidth: 1,
-    borderLeftColor: "#38456e",
-  },
-  totalsRow: { flexDirection: "row", backgroundColor: "#fef3e0" },
-  totalsLabelCell: { width: 130, padding: 4, fontWeight: 700 },
-  totalsDataCell: {
-    flex: 1,
-    padding: 4,
-    textAlign: "center",
-    fontWeight: 700,
-    color: "#01579e",
-    borderLeftWidth: 1,
-    borderLeftColor: "#dfe1e6",
-  },
+  section: { flexDirection: "row", backgroundColor: "#152a52" },
+  sectionText: { paddingHorizontal: 3, paddingVertical: 1.5, fontWeight: 700, color: "#ffffff" },
+  label: { width: 120, paddingHorizontal: 3, paddingVertical: 1.5, fontWeight: 700 },
+  cell: { flex: 1, paddingHorizontal: 3, paddingVertical: 1.5, textAlign: "center", borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
+  head: { flex: 1, paddingHorizontal: 3, paddingVertical: 2, textAlign: "center", fontWeight: 700, color: "#ffffff", borderLeftWidth: 1, borderLeftColor: "#38456e" },
+  total: { flexDirection: "row", backgroundColor: "#fef3e0", borderBottomWidth: 1, borderBottomColor: "#dfe1e6" },
+  totalCell: { flex: 1, paddingHorizontal: 3, paddingVertical: 2, textAlign: "center", fontWeight: 700, color: "#01579e", borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
 });
 
-const MAIN_COVERAGES = ["Pérdida Parcial por Daño", "Pérdida Total por Daño", "Robo Parcial", "Robo Total"];
-
-/**
- * Tabla ancha con las aseguradoras como columnas — equivalente a imprimir
- * directo la hoja `OFERTA` del Excel (macro `IMPRIMIR_OFERTA_VH`), que es lo
- * que Delta manda hoy al cliente (PDF real, SRA ROBLES) en vez de una carta
- * por aseguradora. Las 4 coberturas principales son fijas ("Sí otorga" en
- * las 13 aseguradoras, confirmado en el Excel real, nunca condicionadas) —
- * el resto viene de `quote_option_coverages` (pantalla "Coberturas"), con
- * "—" cuando nadie cargó el dato todavía, nunca un valor inventado.
- */
-function OfertaComparisonPage({ data }: { data: CaratulaData }) {
-  const coverageValue = (offer: CaratulaOffer, name: string) => offer.coverages.find((c) => c.name === name)?.display ?? "—";
-
+function SectionRow({ title }: { title: string }) {
   return (
-    <Page size="A4" orientation="landscape" style={tableStyles.page}>
-      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
-        Comparativa de ofertas — {data.vehicleLabel} (placa {data.vehiclePlate})
-      </Text>
+    <View style={t.section}>
+      <Text style={t.sectionText}>{title}</Text>
+    </View>
+  );
+}
 
-      <View style={tableStyles.table}>
-        <View style={tableStyles.sectionRow}>
-          <Text style={tableStyles.sectionLabelCell}> </Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.headerCell}>
-              {offerHeading(o)}
+function DataRow({ label, values, wrap = false }: { label: string; values: string[]; wrap?: boolean }) {
+  return (
+    <View style={t.row} wrap={wrap}>
+      <Text style={t.label}>{label}</Text>
+      {values.map((v, i) => (
+        <Text key={i} style={t.cell}>
+          {v}
+        </Text>
+      ))}
+    </View>
+  );
+}
+
+/** Hoja OFERTA: una columna por aseguradora marcada "Mostrar", todos los riesgos sumados. */
+function OfertaPage({ sheet }: { sheet: Extract<OfferSheet, { kind: "ANUAL" }> }) {
+  const cols = sheet.columns;
+  return (
+    <Page size="A4" orientation="landscape" style={t.page}>
+      <Text style={t.title}>OFERTA — MODALIDAD ANUAL</Text>
+      <View style={t.table}>
+        <View style={t.section}>
+          <Text style={t.label}> </Text>
+          {cols.map((c) => (
+            <Text key={c.insurerId} style={t.head}>
+              {c.insurerName}
             </Text>
           ))}
         </View>
-
-        {MAIN_COVERAGES.map((name) => (
-          <View style={tableStyles.row} key={name}>
-            <Text style={tableStyles.labelCell}>{name}</Text>
-            {data.offers.map((_, i) => (
-              <Text key={i} style={tableStyles.dataCell}>
-                Sí otorga
-              </Text>
-            ))}
-          </View>
+        <SectionRow title="COBERTURAS PRINCIPALES" />
+        {PRINCIPAL_ROWS.map((r) => (
+          <DataRow key={r.key} label={r.label} values={cols.map((c) => formatOfferCell(c.cells[r.key]))} />
         ))}
-
-        {
-          // Unión de nombres de cobertura entre TODAS las ofertas (no solo la
-          // primera) — una aseguradora puede tener cargado un dato que otra
-          // no. Sin duplicados, excluyendo las 4 coberturas principales fijas.
-          [...new Set(data.offers.flatMap((o) => o.coverages.map((c) => c.name)))]
-            .filter((name) => !MAIN_COVERAGES.includes(name))
-            .map((name) => (
-            <View style={tableStyles.row} key={name}>
-              <Text style={tableStyles.labelCell}>{name}</Text>
-              {data.offers.map((o, i) => (
-                <Text key={i} style={tableStyles.dataCell}>
-                  {coverageValue(o, name)}
-                </Text>
-              ))}
-            </View>
-          ))}
-
-        <View style={tableStyles.row}>
-          <Text style={tableStyles.labelCell}>Tasa aplicada</Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.dataCell}>
-              {o.ratePercentApplied ? `${(Number(o.ratePercentApplied) * 100).toFixed(3)}%` : "—"}
-            </Text>
-          ))}
-        </View>
-
-        {(
-          [
-            ["Prima neta", (o: CaratulaOffer) => formatUSD(o.netPremiumCents)],
-            ["3.50% Superintendencia de Bancos", (o: CaratulaOffer) => formatUSD(o.superBancosCents)],
-            ["0.50% Seguro Campesino", (o: CaratulaOffer) => formatUSD(o.campesinoCents)],
-            ["Derechos de emisión", (o: CaratulaOffer) => formatUSD(o.emissionFeeCents)],
-            ["15% IVA", (o: CaratulaOffer) => formatUSD(o.ivaCents)],
-          ] as const
-        ).map(([label, fmt]) => (
-          <View style={tableStyles.row} key={label}>
-            <Text style={tableStyles.labelCell}>{label}</Text>
-            {data.offers.map((o, i) => (
-              <Text key={i} style={tableStyles.dataCell}>
-                {fmt(o)}
-              </Text>
-            ))}
-          </View>
+        <SectionRow title="COBERTURAS ADICIONALES" />
+        {ADDITIONAL_ROWS.map((r) => (
+          <DataRow key={r.key} label={r.label} values={cols.map((c) => formatOfferCell(c.cells[r.key]))} />
         ))}
-
-        <View style={tableStyles.totalsRow}>
-          <Text style={tableStyles.totalsLabelCell}>PRIMA TOTAL</Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.totalsDataCell}>
-              {formatUSD(o.totalPremiumCents)}
+        <SectionRow title="DEDUCIBLES" />
+        <DataRow label="Pérdidas Parciales" values={cols.map((c) => c.partialDeductible)} />
+        <DataRow label="Pérdida Total" values={cols.map((c) => c.totalLossDeductible)} />
+        <SectionRow title="RIESGOS" />
+        {sheet.risks.map((risk) => (
+          <DataRow
+            key={risk.id}
+            label={risk.label}
+            values={cols.map((c) => formatRate(c.risks.find((r) => r.riskNumber === risk.riskNumber)?.ratePercentApplied ?? null))}
+          />
+        ))}
+        {PREMIUM_ROWS.map(([label, field]) => (
+          <DataRow key={field} label={label} values={cols.map((c) => formatMoney(c.totals?.[field]))} />
+        ))}
+        <View style={t.total}>
+          <Text style={t.label}>PRIMA TOTAL</Text>
+          {cols.map((c) => (
+            <Text key={c.insurerId} style={t.totalCell}>
+              {formatMoney(c.totals?.totalPremiumCents)}
             </Text>
           ))}
         </View>
-
-        <View style={tableStyles.row}>
-          <Text style={tableStyles.labelCell}>Efectivo o transferencia</Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.dataCell}>
-              {formatUSD(o.totalPremiumCents)}
-            </Text>
-          ))}
-        </View>
-        {INSTALLMENT_TERMS.map((n) => (
-          <View style={tableStyles.row} key={n}>
-            <Text style={tableStyles.labelCell}>Tarjeta {n} meses</Text>
-            {data.offers.map((o, i) => (
-              <Text key={i} style={tableStyles.dataCell}>
-                {formatUSD(Math.round(o.totalPremiumCents / n))}
-              </Text>
-            ))}
-          </View>
+        <SectionRow title="FORMAS DE PAGO" />
+        <DataRow label="EFECTIVO O TRANSFERENCIA" values={cols.map((c) => formatMoney(c.totals?.totalPremiumCents))} />
+        {INSTALLMENT_TERMS.map((months) => (
+          <DataRow
+            key={months}
+            label={`TARJETA DE CRÉDITO ${months} MESES`}
+            values={cols.map((c) => (c.totals ? formatUSD(installmentCents(c.totals.totalPremiumCents, months)) : ""))}
+          />
         ))}
       </View>
     </Page>
   );
 }
 
+/** Hoja OFERTA KM: una tabla por riesgo, una columna por rango de km. */
+function OfertaKmPage({ sheet }: { sheet: Extract<OfferSheet, { kind: "KM" }> }) {
+  const km = sheet.km;
+  if (!km) return null;
+  return (
+    <>
+      {sheet.risks.map((risk) => {
+        const brackets = km.brackets.filter((b) => b.riskNumber === risk.riskNumber);
+        const fixed = (value: string) => brackets.map((_, i) => (i === 0 ? value : ""));
+        return (
+          <Page key={risk.id} size="A4" orientation="landscape" style={t.page}>
+            <Text style={t.title}>
+              {km.insurerName} — MODALIDAD AUTO POR KILÓMETRO — {risk.label}
+            </Text>
+            <View style={t.table}>
+              <View style={t.section}>
+                <Text style={t.label}> </Text>
+                {brackets.map((b) => (
+                  <Text key={b.quoteOptionId} style={t.head}>
+                    {KM_BRACKET_LABELS[b.kmBracket as keyof typeof KM_BRACKET_LABELS]}
+                  </Text>
+                ))}
+              </View>
+              <SectionRow title="COBERTURAS" />
+              {km.rows.map((row) => (
+                <DataRow
+                  key={row.key}
+                  label={row.label}
+                  values={fixed(
+                    row.key === "RC"
+                      ? formatOfferCell({ amount: (km.rcAmountCents ?? 0) / 100 })
+                      : formatOfferCell("amount" in row ? { amount: row.amount } : { text: row.text }),
+                  )}
+                />
+              ))}
+              <SectionRow title="DEDUCIBLES" />
+              <DataRow label="Pérdidas Parciales" values={fixed(km.partialDeductible)} />
+              <DataRow label="Pérdida Total" values={fixed(km.totalLossDeductible)} />
+              <DataRow label="TASA" values={brackets.map((b) => formatRate(b.ratePercentApplied))} />
+              {PREMIUM_ROWS.map(([label, field]) => (
+                <DataRow key={field} label={label} values={brackets.map((b) => formatMoney(b.totals?.[field]))} />
+              ))}
+              <View style={t.total}>
+                <Text style={t.label}>PRIMA TOTAL</Text>
+                {brackets.map((b) => (
+                  <Text key={b.quoteOptionId} style={t.totalCell}>
+                    {formatMoney(b.totals?.totalPremiumCents)}
+                  </Text>
+                ))}
+              </View>
+            </View>
+          </Page>
+        );
+      })}
+    </>
+  );
+}
+
 export function CaratulaDocument({ data }: { data: CaratulaData }) {
-  const isComparison = data.offers.length > 1;
   return (
     <Document title={`Oferta ${data.quoteCode}`}>
       <PortadaPage data={data} />
-      {isComparison ? (
-        <>
-          <CaratulaLetterPage data={data} />
-          <OfertaComparisonPage data={data} />
-        </>
-      ) : (
-        data.offers.map((offer, i) => (
-          <CaratulaPage key={`${offer.insurerName}-${i}`} data={data} offer={offer} isComparison={isComparison} />
-        ))
-      )}
+      <CaratulaLetterPage data={data} />
+      {data.sheet.kind === "KM" ? <OfertaKmPage sheet={data.sheet} /> : <OfertaPage sheet={data.sheet} />}
     </Document>
   );
 }

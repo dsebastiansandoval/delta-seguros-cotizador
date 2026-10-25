@@ -99,6 +99,41 @@
       "when": 1790741248416,
       "tag": "0013_nebulous_mathemanic",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792898207477,
+      "tag": "0014_insurer_supports_km",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1792898824617,
+      "tag": "0015_quote_insurer_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792899702830,
+      "tag": "0016_client_personal_data",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1792899945008,
+      "tag": "0017_health_offer_selection",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1792900617196,
+      "tag": "0018_health_rate_relation",
+      "breakpoints": true
     }
   ]
 }

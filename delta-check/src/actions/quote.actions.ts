@@ -1,17 +1,16 @@
 "use server";
 
-import { z } from "zod";
 import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { withOrganization } from "@/db";
+import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
-import { vehicles } from "@/db/schema/clients";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService } from "@/domains/quoting/services/quote.service";
 import { comparisonService } from "@/domains/quoting/services/comparison.service";
+import { offerService } from "@/domains/quoting/offer/offer.service";
 import { dollarsToCents } from "@/domains/shared/money";
 import { audit } from "@/domains/shared/audit";
 import { rateLimit } from "@/lib/rate-limit";
@@ -19,6 +18,31 @@ import { rateLimit } from "@/lib/rate-limit";
 export type ActionResult<T = void> =
   | { ok: true; value: T }
   | { ok: false; errors: Record<string, string[]> | { form: string[] } };
+
+/**
+ * Filas por aseguradora × riesgo para los riesgos que todavía no las tienen,
+ * configuración inicial de DATOS OFERTA y precios de Latina/Cóndor. Saltar
+ * riesgos ya generados lo hace seguro de repetir desde un borrador.
+ */
+async function generateComparison(
+  tx: Db,
+  organizationId: string,
+  quoteId: string,
+  modality: "ANUAL" | "POR_KM",
+  risks: Array<{ id: string }>,
+) {
+  for (const risk of risks) {
+    if (await comparisonService.hasOptions(tx, risk.id)) continue;
+    if (modality === "POR_KM") {
+      await comparisonService.runKmComparisonForRisk(tx, organizationId, risk.id);
+    } else {
+      await comparisonService.createOptionsForRisk(tx, organizationId, risk.id);
+    }
+  }
+  await offerService.ensureSettings(tx, organizationId, quoteId);
+  await comparisonService.repriceEngines(tx, quoteId);
+  await offerService.includePricedInsurers(tx, quoteId);
+}
 
 /**
  * Crea cliente + vehículo(s) + cotización — común a "Guardar borrador" y
@@ -59,19 +83,18 @@ async function createQuoteFromForm(
       }),
       modality: input.modality,
       operationType: input.operationType,
-      previousInsurerId: input.previousInsurerId,
-      previousPolicyNumber: input.previousPolicyNumber,
-      previousExpiryDate: input.previousExpiryDate,
+      ...(input.operationType === "RENOVACION" && {
+        previousInsurerId: input.previousInsurerId,
+        previousPolicyNumber: input.previousPolicyNumber,
+        previousStartDate: input.previousStartDate,
+        previousExpiryDate: input.previousExpiryDate,
+        previousPremiumCents:
+          input.previousPremiumDollars != null ? dollarsToCents(input.previousPremiumDollars) : undefined,
+      }),
     });
 
     if (runComparison) {
-      for (const risk of risks) {
-        if (input.modality === "POR_KM") {
-          await comparisonService.runKmComparisonForRisk(tx, session.organizationId, risk.id);
-        } else {
-          await comparisonService.runComparisonForRisk(tx, session.organizationId, risk.id);
-        }
-      }
+      await generateComparison(tx, session.organizationId, quote.id, input.modality, risks);
     }
 
     await audit(tx, {
@@ -105,7 +128,7 @@ export async function createAutoQuote(
   if (!result.ok) return result;
 
   revalidatePath("/cotizar/autos");
-  redirect(`/cotizar/autos/${result.value.quoteId}/comparar`);
+  redirect(`/cotizar/autos/${result.value.quoteId}/configurar`);
 }
 
 /**
@@ -128,12 +151,9 @@ export async function saveAutoQuoteDraft(
 }
 
 /**
- * "Generar comparativa" desde un borrador ya guardado (sin correr el
- * comparador al crearse) — retoma exactamente el paso que faltaba, sin
- * pedirle al agente que vuelva a escribir todo el formulario. Nunca
- * vuelve a correr un riesgo que ya tiene opciones — `runComparisonForRisk`
- * no es idempotente (insertaría filas duplicadas), así que se salta
- * cualquier riesgo con `rows.length > 0`.
+ * "Generar comparativa" desde un borrador ya guardado — retoma el paso que
+ * faltaba sin pedirle al agente que vuelva a escribir el formulario, y lo
+ * lleva a configurar la oferta.
  */
 export async function runQuoteComparison(
   _prevState: ActionResult | null,
@@ -147,21 +167,12 @@ export async function runQuoteComparison(
     return { ok: false, errors: { form: ["Cotización inválida"] } };
   }
 
-  await withOrganization(session.organizationId, async (tx) => {
+  const found = await withOrganization(session.organizationId, async (tx) => {
     const quote = await quoteService.findById(tx, quoteId);
-    if (!quote) return;
+    if (!quote) return false;
 
     const risks = await quoteService.findRisksByQuote(tx, quoteId);
-    for (const risk of risks) {
-      const existing = await comparisonService.getComparisonForRisk(tx, risk.id);
-      if (existing.length > 0) continue;
-
-      if (quote.modality === "POR_KM") {
-        await comparisonService.runKmComparisonForRisk(tx, session.organizationId, risk.id);
-      } else {
-        await comparisonService.runComparisonForRisk(tx, session.organizationId, risk.id);
-      }
-    }
+    await generateComparison(tx, session.organizationId, quoteId, quote.modality, risks);
 
     await audit(tx, {
       organizationId: session.organizationId,
@@ -170,81 +181,11 @@ export async function runQuoteComparison(
       entityType: "quotes",
       entityId: quoteId,
     });
+    return true;
   });
+  if (!found) return { ok: false, errors: { form: ["Cotización no encontrada"] } };
 
-  revalidatePath(`/cotizar/autos/${quoteId}/comparar`);
-  return { ok: true, value: undefined };
-}
-
-const manualPremiumSchema = z.object({
-  quoteOptionId: z.uuid(),
-  quoteId: z.uuid(),
-  netPremiumDollars: z.coerce.number().positive("La prima debe ser mayor a 0"),
-});
-
-/**
- * El ejecutivo digita la prima que le pasó la aseguradora — el mismo paso
- * manual de siempre, ver comparisonService.setManualPremium.
- */
-export async function setManualPremium(
-  _prevState: ActionResult | null,
-  formData: FormData,
-): Promise<ActionResult> {
-  const session = await requirePermission("quote:create");
-  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
-
-  const parsed = manualPremiumSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) {
-    return { ok: false, errors: parsed.error.flatten().fieldErrors };
-  }
-  const { quoteOptionId, quoteId, netPremiumDollars } = parsed.data;
-
-  await withOrganization(session.organizationId, async (tx) => {
-    await comparisonService.setManualPremium(
-      tx,
-      quoteOptionId,
-      dollarsToCents(netPremiumDollars),
-    );
-    await audit(tx, {
-      organizationId: session.organizationId,
-      userId: session.userId,
-      action: "quote_option.manual_premium_set",
-      entityType: "quote_options",
-      entityId: quoteOptionId,
-    });
-  });
-
-  revalidatePath(`/cotizar/autos/${quoteId}/comparar`);
-  return { ok: true, value: undefined };
-}
-
-/**
- * Una cotización puede traer 1 a 4 riesgos (vehículos) — se devuelve un
- * bloque de filas por cada uno, ya no una sola tabla plana. Si todavía no
- * se corrió el comparador (un borrador recién guardado), `rows` viene
- * vacío para ese riesgo — la página lo muestra como "sin cotizar todavía".
- */
-export async function getQuoteComparison(quoteId: string) {
-  const session = await requirePermission("quote:read");
-
-  return withOrganization(session.organizationId, async (tx) => {
-    const quote = await quoteService.findById(tx, quoteId);
-    if (!quote) return null;
-
-    const risks = await quoteService.findRisksByQuote(tx, quoteId);
-    if (!risks.length) return null;
-
-    const riskGroups = [];
-    for (const risk of risks) {
-      const [vehicle] = risk.vehicleId
-        ? await tx.select().from(vehicles).where(eq(vehicles.id, risk.vehicleId))
-        : [];
-      const rows = await comparisonService.getComparisonForRisk(tx, risk.id);
-      riskGroups.push({ risk, vehicle: vehicle ?? null, rows });
-    }
-
-    return { quote, riskGroups };
-  });
+  redirect(`/cotizar/autos/${quoteId}/configurar`);
 }
 
 /**

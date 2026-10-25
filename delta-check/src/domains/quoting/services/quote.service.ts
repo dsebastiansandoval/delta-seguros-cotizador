@@ -37,6 +37,8 @@ export const quoteService = {
       previousInsurerId?: string;
       previousPolicyNumber?: string;
       previousExpiryDate?: string;
+      previousStartDate?: string;
+      previousPremiumCents?: number;
     },
   ) {
     const [quote] = await tx
@@ -53,6 +55,8 @@ export const quoteService = {
         previousInsurerId: params.previousInsurerId,
         previousPolicyNumber: params.previousPolicyNumber,
         previousExpiryDate: params.previousExpiryDate,
+        previousStartDate: params.previousStartDate,
+        previousPremiumCents: params.previousPremiumCents,
       })
       .returning();
 

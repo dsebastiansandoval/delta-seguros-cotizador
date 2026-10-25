@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculatePremium, emissionFeeForNetPremium } from "./premium.calculator";
+import { calculatePremium, emissionFeeForNetPremium, premiumFromTotal } from "./premium.calculator";
 
 describe("calculatePremium", () => {
   it("reproduce la fórmula real de OFERTA!I42:I47 del Excel", () => {
@@ -36,5 +36,34 @@ describe("emissionFeeForNetPremium", () => {
     expect(emissionFeeForNetPremium(30000)).toBe(100); // $300 → tramo 251-500
     expect(emissionFeeForNetPremium(150000)).toBe(500); // $1500 → tramo 1001-2000
     expect(emissionFeeForNetPremium(1000000)).toBe(900); // $10000 → tramo 4001+
+  });
+
+  it("una neta con centavos entre tramos cae en el tramo anterior, como el VLOOKUP del Excel", () => {
+    expect(emissionFeeForNetPremium(25050)).toBe(50); // $250.50 → sigue en 0-250
+    expect(emissionFeeForNetPremium(100050)).toBe(300); // $1000.50 → sigue en 501-1000
+    expect(emissionFeeForNetPremium(400000)).toBe(900); // $4000 → la hoja dice DESDE 4000
+  });
+});
+
+describe("premiumFromTotal", () => {
+  it("despeja la neta de Auto x Km igual que OFERTA KM!H37 cuando el derecho es $0.50", () => {
+    // PT digitado $239.78 → neta Excel = (239.78 - 0.5*1.15) / 1.196 = 200.00
+    const result = premiumFromTotal(23978);
+    expect(result.netPremiumCents).toBe(20000);
+    expect(result.emissionFeeCents).toBe(50);
+    expect(result.totalPremiumCents).toBe(23978);
+  });
+
+  it("usa el derecho del tramo real cuando la neta despejada pasa de $250", () => {
+    const fromNet = calculatePremium(76000, emissionFeeForNetPremium(76000)); // total 912.41
+    const result = premiumFromTotal(fromNet.totalPremiumCents);
+    expect(result.netPremiumCents).toBe(76000);
+    expect(result.emissionFeeCents).toBe(300);
+  });
+
+  it("siempre queda a lo más a un centavo del total digitado", () => {
+    for (const total of [5000, 12345, 48999, 99999, 250001, 777777]) {
+      expect(Math.abs(premiumFromTotal(total).totalPremiumCents - total)).toBeLessThanOrEqual(1);
+    }
   });
 });

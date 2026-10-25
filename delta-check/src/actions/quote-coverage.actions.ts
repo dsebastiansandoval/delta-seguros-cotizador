@@ -81,7 +81,8 @@ export async function saveQuoteOptionCoverages(
 
   if (!context) return { ok: false, errors: { form: ["No se encontró la opción de cotización"] } };
 
-  revalidatePath(`/cotizar/autos/${context.quoteId}/opciones/${quoteOptionId}/coberturas`);
-  revalidatePath(`/cotizar/autos/${context.quoteId}/comparar`);
+  const branchPath = context.branch === "SALUD" ? "salud" : "autos";
+  revalidatePath(`/cotizar/${branchPath}/${context.quoteId}/opciones/${quoteOptionId}/coberturas`);
+  revalidatePath(`/cotizar/${branchPath}/${context.quoteId}/comparar`);
   return { ok: true, value: undefined };
 }

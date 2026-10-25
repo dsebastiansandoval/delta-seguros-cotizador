@@ -1,0 +1,1 @@
+ALTER TABLE "health_rate_rules" ADD COLUMN "relation" "insured_relation";

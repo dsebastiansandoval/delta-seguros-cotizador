@@ -1,109 +1,72 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
-import { quoteOptions, quoteRisks } from "@/db/schema/quoting";
+import { quoteInsurerSettings, quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { vehicles } from "@/db/schema/clients";
-import { RateTableAdapter } from "../gateways/rate-table.adapter";
-import { calculatePremium, emissionFeeForNetPremium } from "./premium.calculator";
+import { engineQuote } from "../offer/excel-rates";
+import { breakdownForNet, premiumFromTotal, type PremiumBreakdown } from "./premium.calculator";
 import { KM_BRACKETS } from "../constants";
 
-export type ComparisonRow = {
-  quoteOptionId: string;
-  insurerId: string;
-  insurerCode: string;
-  insurerName: string;
-  modality: "ANUAL" | "POR_KM";
-  kmBracket: number | null;
-  status: "COTIZADO" | "PENDIENTE_MANUAL";
-  netPremiumCents: number | null;
-  totalPremiumCents: number | null;
-  ratePercentApplied: string | null;
+const EMPTY_PREMIUM = {
+  netPremiumCents: null,
+  superBancosCents: null,
+  campesinoCents: null,
+  emissionFeeCents: null,
+  ivaCents: null,
+  totalPremiumCents: null,
+  ratePercentApplied: null,
 };
 
+function premiumColumns(breakdown: PremiumBreakdown, rate: number) {
+  return {
+    netPremiumCents: breakdown.netPremiumCents,
+    superBancosCents: breakdown.superBancosCents,
+    campesinoCents: breakdown.campesinoCents,
+    emissionFeeCents: breakdown.emissionFeeCents,
+    ivaCents: breakdown.ivaCents,
+    totalPremiumCents: breakdown.totalPremiumCents,
+    ratePercentApplied: rate.toFixed(5),
+  };
+}
+
 /**
- * Cotiza contra todas las aseguradoras activas de Autos y persiste el
- * resultado — reemplaza copiar y pegar entre 13 hojas del Excel
- * (EXCEL-AUDIT.md). Las aseguradoras sin tabla real quedan en
- * PENDIENTE_MANUAL, el mismo estado en que ya están hoy — no se fabrica una
- * cifra que nadie escribió.
+ * Filas de la comparativa: una por aseguradora × riesgo (DATOS OFERTA
+ * columnas C..O, filas 31/35/39/43 del Excel). Latina y Cóndor se calculan
+ * con su motor; el resto queda vacío hasta que el ejecutivo digite la prima.
  */
 export const comparisonService = {
-  async runComparisonForRisk(tx: Db, organizationId: string, quoteRiskId: string) {
-    const [risk] = await tx
-      .select()
-      .from(quoteRisks)
-      .where(eq(quoteRisks.id, quoteRiskId))
-      .limit(1);
-    if (!risk || !risk.vehicleId) throw new Error("Riesgo sin vehículo asociado");
-
-    const [vehicle] = await tx.select().from(vehicles).where(eq(vehicles.id, risk.vehicleId));
-    if (!vehicle) throw new Error("Vehículo no encontrado");
-
+  async createOptionsForRisk(tx: Db, organizationId: string, quoteRiskId: string) {
     const activeInsurers = await tx
-      .select()
+      .select({ id: insurers.id })
       .from(insurers)
       .where(and(eq(insurers.branch, "AUTOS"), eq(insurers.isActive, true)));
 
-    const gateway = new RateTableAdapter(tx);
-    const insuredValueCents = risk.insuredValueCents ?? 0;
-
-    for (const insurer of activeInsurers) {
-      const result = await gateway.quote({
-        insurerId: insurer.id,
-        bodyType: vehicle.bodyType,
-        vehicleYear: vehicle.year,
-        insuredValueCents,
-      });
-
-      if (result.status === "NO_COTIZA") continue; // no se crea fila — no aplica para este riesgo
-
-      if (result.status === "PENDIENTE_MANUAL") {
-        await tx.insert(quoteOptions).values({
+    if (activeInsurers.length) {
+      await tx.insert(quoteOptions).values(
+        activeInsurers.map((insurer) => ({
           organizationId,
           quoteRiskId,
           insurerId: insurer.id,
-          modality: "ANUAL",
-          source: "MANUAL", // pendiente de que el ejecutivo digite la prima neta
-        });
-        continue;
-      }
-
-      const emissionFeeCents = emissionFeeForNetPremium(result.netPremiumCents);
-      const breakdown = calculatePremium(result.netPremiumCents, emissionFeeCents);
-
-      await tx.insert(quoteOptions).values({
-        organizationId,
-        quoteRiskId,
-        insurerId: insurer.id,
-        modality: "ANUAL",
-        netPremiumCents: breakdown.netPremiumCents,
-        superBancosCents: breakdown.superBancosCents,
-        campesinoCents: breakdown.campesinoCents,
-        emissionFeeCents: breakdown.emissionFeeCents,
-        ivaCents: breakdown.ivaCents,
-        totalPremiumCents: breakdown.totalPremiumCents,
-        ratePercentApplied: result.ratePercentApplied,
-        // "MANUAL" acá significa "no vino de una API externa real" —
-        // sigue siendo así hasta Fase 4, aunque el número lo calculó el
-        // motor de tasas y no un ejecutivo. Ver domains/quoting/gateways/insurer.gateway.ts.
-        source: "MANUAL",
-      });
+          modality: "ANUAL" as const,
+          source: "MANUAL" as const,
+        })),
+      );
     }
   },
 
   /**
-   * Auto x Km — 100% manual, confirmado en EXCEL-AUDIT.md §11.4b: no hay
-   * tabla de tasas para esta modalidad en ninguna aseguradora, ni siquiera
-   * Latina/Cóndor. Se crea una fila PENDIENTE_MANUAL por aseguradora × rango
-   * de km — 6 rangos, igual que `DATOS OFERTA X KM` en el Excel.
+   * Auto x Km — una fila por rango (DATOS OFERTA X KM E7:J7) para cada
+   * aseguradora que vende la modalidad (`insurers.supportsKm`, hoy solo AIG).
    */
   async runKmComparisonForRisk(tx: Db, organizationId: string, quoteRiskId: string) {
-    const activeInsurers = await tx
-      .select()
+    const kmInsurers = await tx
+      .select({ id: insurers.id })
       .from(insurers)
-      .where(and(eq(insurers.branch, "AUTOS"), eq(insurers.isActive, true)));
+      .where(
+        and(eq(insurers.branch, "AUTOS"), eq(insurers.isActive, true), eq(insurers.supportsKm, true)),
+      );
 
-    const rows = activeInsurers.flatMap((insurer) =>
+    const rows = kmInsurers.flatMap((insurer) =>
       KM_BRACKETS.map((kmBracket) => ({
         organizationId,
         quoteRiskId,
@@ -113,69 +76,102 @@ export const comparisonService = {
         source: "MANUAL" as const,
       })),
     );
-
     if (rows.length) await tx.insert(quoteOptions).values(rows);
   },
 
-  async getComparisonForRisk(tx: Db, quoteRiskId: string): Promise<ComparisonRow[]> {
+  async hasOptions(tx: Db, quoteRiskId: string): Promise<boolean> {
+    const [row] = await tx
+      .select({ id: quoteOptions.id })
+      .from(quoteOptions)
+      .where(eq(quoteOptions.quoteRiskId, quoteRiskId))
+      .limit(1);
+    return Boolean(row);
+  },
+
+  /**
+   * Recalcula Latina y Cóndor en todos los riesgos — se llama al crear la
+   * cotización y cada vez que cambia la configuración, porque "Solo pérdida
+   * total" cambia la tasa de Latina (DATOS OFERTA!L33).
+   */
+  async repriceEngines(tx: Db, quoteId: string, currentYear = new Date().getFullYear()) {
     const rows = await tx
       .select({
         quoteOptionId: quoteOptions.id,
         insurerId: insurers.id,
         insurerCode: insurers.code,
-        insurerName: insurers.name,
-        modality: quoteOptions.modality,
-        kmBracket: quoteOptions.kmBracket,
-        netPremiumCents: quoteOptions.netPremiumCents,
-        totalPremiumCents: quoteOptions.totalPremiumCents,
-        ratePercentApplied: quoteOptions.ratePercentApplied,
+        bodyType: vehicles.bodyType,
+        vehicleYear: vehicles.year,
+        insuredValueCents: quoteRisks.insuredValueCents,
+        extrasValueCents: quoteRisks.extrasValueCents,
       })
       .from(quoteOptions)
       .innerJoin(insurers, eq(insurers.id, quoteOptions.insurerId))
-      .where(eq(quoteOptions.quoteRiskId, quoteRiskId));
-
-    const withStatus = rows.map((r) => ({
-      ...r,
-      status: (r.totalPremiumCents == null ? "PENDIENTE_MANUAL" : "COTIZADO") as
-        | "COTIZADO"
-        | "PENDIENTE_MANUAL",
-    }));
-
-    // ANUAL: una fila por aseguradora — ordena por precio, la más barata primero.
-    // POR_KM: varias filas por aseguradora (una por rango) — ordena por
-    // aseguradora y luego por rango, para que la UI las agrupe en una grilla.
-    if (withStatus[0]?.modality === "POR_KM") {
-      return withStatus.sort(
-        (a, b) =>
-          a.insurerName.localeCompare(b.insurerName) || (a.kmBracket ?? 0) - (b.kmBracket ?? 0),
+      .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
+      .innerJoin(vehicles, eq(vehicles.id, quoteRisks.vehicleId))
+      .where(
+        and(
+          eq(quoteRisks.quoteId, quoteId),
+          eq(quoteOptions.modality, "ANUAL"),
+          inArray(insurers.code, ["LATINA", "CONDOR"]),
+        ),
       );
+    if (!rows.length) return;
+
+    const settings = await tx
+      .select({ insurerId: quoteInsurerSettings.insurerId, coverageType: quoteInsurerSettings.coverageType })
+      .from(quoteInsurerSettings)
+      .where(eq(quoteInsurerSettings.quoteId, quoteId));
+    const coverageTypeByInsurer = new Map(settings.map((s) => [s.insurerId, s.coverageType]));
+
+    for (const row of rows) {
+      const quote = engineQuote(
+        row.insurerCode,
+        {
+          bodyType: row.bodyType,
+          vehicleYear: row.vehicleYear,
+          insuredValueCents: row.insuredValueCents ?? 0,
+          extrasValueCents: row.extrasValueCents ?? 0,
+        },
+        coverageTypeByInsurer.get(row.insurerId) ?? "TODO_RIESGO",
+        currentYear,
+      );
+      const values =
+        quote && quote !== "MANUAL"
+          ? premiumColumns(breakdownForNet(quote.netPremiumCents), quote.rate)
+          : EMPTY_PREMIUM;
+      await tx.update(quoteOptions).set(values).where(eq(quoteOptions.id, row.quoteOptionId));
     }
-    return withStatus.sort(
-      (a, b) => (a.totalPremiumCents ?? Infinity) - (b.totalPremiumCents ?? Infinity),
-    );
   },
 
   /**
-   * El ejecutivo digita la prima neta que le cotizó la aseguradora por
-   * teléfono/portal propio — el mismo paso manual que hoy hace en el Excel,
-   * solo que centralizado. Recalcula impuestos y derechos de emisión con la
-   * misma fórmula que las aseguradoras con tabla real (premium.calculator) —
-   * nunca dos lugares distintos calculando el mismo impuesto.
+   * Prima digitada del portal de la aseguradora. Anual: prima neta (DATOS
+   * OFERTA fila PN). Auto x Km: prima total (DATOS OFERTA X KM fila PT), la
+   * neta se despeja. La tasa es neta / (casco + extras), como en el Excel.
+   * `null` borra la prima.
    */
-  async setManualPremium(tx: Db, quoteOptionId: string, netPremiumCents: number) {
-    const emissionFeeCents = emissionFeeForNetPremium(netPremiumCents);
-    const breakdown = calculatePremium(netPremiumCents, emissionFeeCents);
+  async setManualPremium(tx: Db, quoteOptionId: string, premiumCents: number | null) {
+    if (premiumCents == null) {
+      await tx.update(quoteOptions).set(EMPTY_PREMIUM).where(eq(quoteOptions.id, quoteOptionId));
+      return;
+    }
 
-    await tx
-      .update(quoteOptions)
-      .set({
-        netPremiumCents: breakdown.netPremiumCents,
-        superBancosCents: breakdown.superBancosCents,
-        campesinoCents: breakdown.campesinoCents,
-        emissionFeeCents: breakdown.emissionFeeCents,
-        ivaCents: breakdown.ivaCents,
-        totalPremiumCents: breakdown.totalPremiumCents,
+    const [option] = await tx
+      .select({
+        modality: quoteOptions.modality,
+        insuredValueCents: quoteRisks.insuredValueCents,
+        extrasValueCents: quoteRisks.extrasValueCents,
       })
-      .where(eq(quoteOptions.id, quoteOptionId));
+      .from(quoteOptions)
+      .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
+      .where(eq(quoteOptions.id, quoteOptionId))
+      .limit(1);
+    if (!option) throw new Error("Opción de cotización no encontrada");
+
+    const breakdown =
+      option.modality === "POR_KM" ? premiumFromTotal(premiumCents) : breakdownForNet(premiumCents);
+    const valueCents = (option.insuredValueCents ?? 0) + (option.extrasValueCents ?? 0);
+    const rate = valueCents > 0 ? breakdown.netPremiumCents / valueCents : 0;
+
+    await tx.update(quoteOptions).set(premiumColumns(breakdown, rate)).where(eq(quoteOptions.id, quoteOptionId));
   },
 };

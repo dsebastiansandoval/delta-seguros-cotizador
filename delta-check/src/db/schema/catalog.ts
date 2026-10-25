@@ -15,6 +15,7 @@ import {
   coverageValueTypeEnum,
   deductibleKindEnum,
   genderEnum,
+  insuredRelationEnum,
   integrationModeEnum,
   rateTableVisibilityEnum,
   regionEnum,
@@ -32,6 +33,8 @@ export const insurers = pgTable("insurers", {
   logoUrl: text("logo_url"),
   isActive: boolean("is_active").notNull().default(true),
   integrationMode: integrationModeEnum("integration_mode").notNull().default("MANUAL"),
+  // Hoy solo AIG vende Auto x Km; las demás se habilitan cambiando este flag.
+  supportsKm: boolean("supports_km").notNull().default(false),
 });
 
 /** 🌐 RC, AP, GM, AUTO_SUSTITUTO, AMPARO_PATRIMONIAL… */
@@ -173,6 +176,9 @@ export const healthRateRules = pgTable("health_rate_rules", {
   ageMax: integer("age_max").notNull(),
   gender: genderEnum("gender"),
   region: regionEnum("region"),
+  // Algunas aseguradoras tarifan distinto al titular y a los dependientes (Humana PH15K: tabla
+  // individual vs. familiar). Nulo = aplica a ambos.
+  relation: insuredRelationEnum("relation"),
   deductibleCode: text("deductible_code"), // "D150", "I150"... nulo si el plan no distingue
   premiumCents: bigint("premium_cents", { mode: "number" }).notNull(),
 });

@@ -1,6 +1,6 @@
 import { bigint, boolean, date, integer, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
-import { documentTypeEnum, genderEnum, insuredRelationEnum, personTypeEnum, regionEnum } from "./enums";
+import { documentTypeEnum, genderEnum, insuredRelationEnum, maritalStatusEnum, personTypeEnum, regionEnum } from "./enums";
 import { users } from "./identity";
 
 /** 🏢 Persona natural o jurídica. Equivale a "DATOS" en `DATOS VH` del Excel. */
@@ -13,6 +13,10 @@ export const clients = pgTable("clients", {
   firstName: text("first_name"),
   lastName: text("last_name"),
   businessName: text("business_name"),
+  // Solo persona natural — DATOS VH!D14 (nacimiento), D16 (estado civil), H12 (género).
+  birthDate: date("birth_date"),
+  maritalStatus: maritalStatusEnum("marital_status"),
+  gender: genderEnum("gender"),
   email: text("email"),
   phone: text("phone"),
   source: text("source"), // FUENTE del Excel

@@ -25,6 +25,8 @@ export const authProviderEnum = pgEnum("auth_provider", ["microsoft", "google", 
 export const personTypeEnum = pgEnum("person_type", ["NATURAL", "JURIDICA"]);
 export const documentTypeEnum = pgEnum("document_type", ["CEDULA", "RUC", "PASAPORTE"]);
 export const genderEnum = pgEnum("gender", ["MASCULINO", "FEMENINO"]);
+// INFO GENERAL!AB26:AB30 — lista de DATOS VH!D16.
+export const maritalStatusEnum = pgEnum("marital_status", ["CASADO", "DIVORCIADO", "SOLTERO", "UNION_DE_HECHO", "VIUDO"]);
 export const regionEnum = pgEnum("region", ["SIERRA", "COSTA", "AUSTRO"]);
 export const insuredRelationEnum = pgEnum("insured_relation", ["TITULAR", "DEPENDIENTE"]);
 
@@ -46,6 +48,8 @@ export const quoteStatusEnum = pgEnum("quote_status", [
 ]);
 export const operationTypeEnum = pgEnum("operation_type", ["NUEVA", "RENOVACION"]);
 export const modalityEnum = pgEnum("modality", ["ANUAL", "POR_KM"]);
+// DATOS OFERTA fila 80: "Sí otorga" (todo riesgo) / "Solo pérdida total".
+export const autoCoverageTypeEnum = pgEnum("auto_coverage_type", ["TODO_RIESGO", "SOLO_PERDIDA_TOTAL"]);
 export const quoteSourceEnum = pgEnum("quote_source", ["MANUAL", "API"]);
 export const paymentMethodEnum = pgEnum("payment_method", ["CONTADO", "TARJETA"]);
 

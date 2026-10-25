@@ -151,6 +151,7 @@ async function seedCatalog() {
         integrationMode: (code === "LATINA" || code === "CONDOR" ? "API" : "MANUAL") as
           | "API"
           | "MANUAL",
+        supportsKm: code === "AIG",
       })),
       ...healthInsurers.map((code) => ({ code, name: code, branch: "SALUD" as const })),
     ])

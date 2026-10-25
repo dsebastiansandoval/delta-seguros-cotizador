@@ -46,22 +46,63 @@ export function calculatePremium(
 }
 
 /**
- * Tabla de derechos de emisión por tramo de valor asegurado — extraída de
- * INFO GENERAL!T6:V11 (EXCEL-AUDIT.md §2.4), valores reales, no de ejemplo.
+ * Tabla de derechos de emisión — INFO GENERAL!T6:V11 (EXCEL-AUDIT.md §2.4).
+ * El Excel la consulta con VLOOKUP aproximado sobre la columna DESDE, así
+ * que una neta con centavos entre tramos (ej. 250.50) cae en el tramo
+ * anterior; por eso solo importa el umbral inferior (y el último es 4000,
+ * no 4001, tal cual está en la hoja).
  */
-const EMISSION_FEE_BRACKETS: Array<{ min: number; max: number; feeCents: number }> = [
-  { min: 0, max: 250, feeCents: 50 },
-  { min: 251, max: 500, feeCents: 100 },
-  { min: 501, max: 1000, feeCents: 300 },
-  { min: 1001, max: 2000, feeCents: 500 },
-  { min: 2001, max: 4000, feeCents: 700 },
-  { min: 4001, max: Infinity, feeCents: 900 },
+const EMISSION_FEE_BRACKETS: Array<{ fromCents: number; feeCents: number }> = [
+  { fromCents: 0, feeCents: 50 },
+  { fromCents: 25100, feeCents: 100 },
+  { fromCents: 50100, feeCents: 300 },
+  { fromCents: 100100, feeCents: 500 },
+  { fromCents: 200100, feeCents: 700 },
+  { fromCents: 400000, feeCents: 900 },
 ];
 
 export function emissionFeeForNetPremium(netPremiumCents: number): number {
-  const netPremiumDollars = netPremiumCents / 100;
-  const bracket = EMISSION_FEE_BRACKETS.find(
-    (b) => netPremiumDollars >= b.min && netPremiumDollars <= b.max,
-  );
-  return bracket?.feeCents ?? EMISSION_FEE_BRACKETS[EMISSION_FEE_BRACKETS.length - 1].feeCents;
+  let feeCents = EMISSION_FEE_BRACKETS[0].feeCents;
+  for (const bracket of EMISSION_FEE_BRACKETS) {
+    if (netPremiumCents >= bracket.fromCents) feeCents = bracket.feeCents;
+  }
+  return feeCents;
+}
+
+export function breakdownForNet(netPremiumCents: number): PremiumBreakdown {
+  return calculatePremium(netPremiumCents, emissionFeeForNetPremium(netPremiumCents));
+}
+
+/**
+ * Auto x Km: el ejecutivo digita la prima TOTAL que le da el portal de la
+ * aseguradora (`DATOS OFERTA X KM!E10:J10`) y la neta se despeja hacia
+ * atrás (`OFERTA KM!H37`). El Excel asume siempre derechos de $0.50; acá se
+ * busca la neta cuyo desglose completo (con el derecho de su propio tramo)
+ * suma exactamente el total digitado, o el más cercano si el redondeo a
+ * centavos no permite exactitud.
+ */
+export function premiumFromTotal(totalPremiumCents: number): PremiumBreakdown {
+  const grossUpFactor =
+    (1 + (SUPER_BANCOS_PERCENT + SEGURO_CAMPESINO_PERCENT) / 100) * (1 + IVA_PERCENT / 100);
+
+  let best: PremiumBreakdown | null = null;
+  for (const { feeCents } of EMISSION_FEE_BRACKETS) {
+    const approxNet = Math.round(
+      (totalPremiumCents - feeCents * (1 + IVA_PERCENT / 100)) / grossUpFactor,
+    );
+    for (let delta = -3; delta <= 3; delta++) {
+      const net = approxNet + delta;
+      if (net <= 0) continue;
+      const candidate = breakdownForNet(net);
+      if (
+        !best ||
+        Math.abs(candidate.totalPremiumCents - totalPremiumCents) <
+          Math.abs(best.totalPremiumCents - totalPremiumCents)
+      ) {
+        best = candidate;
+      }
+    }
+  }
+  if (!best) throw new Error("La prima total es demasiado baja para cubrir impuestos y derechos de emisión");
+  return best;
 }

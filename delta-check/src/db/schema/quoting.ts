@@ -12,7 +12,15 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
-import { branchEnum, modalityEnum, operationTypeEnum, paymentMethodEnum, quoteSourceEnum, quoteStatusEnum } from "./enums";
+import {
+  autoCoverageTypeEnum,
+  branchEnum,
+  modalityEnum,
+  operationTypeEnum,
+  paymentMethodEnum,
+  quoteSourceEnum,
+  quoteStatusEnum,
+} from "./enums";
 import { clients, insuredGroups, vehicles } from "./clients";
 import { coverages, insurers } from "./catalog";
 import { users } from "./identity";
@@ -39,6 +47,9 @@ export const quotes = pgTable("quotes", {
   previousInsurerId: uuid("previous_insurer_id").references(() => insurers.id),
   previousPolicyNumber: text("previous_policy_number"),
   previousExpiryDate: date("previous_expiry_date"),
+  // DATOS VH!H18 (prima vencida) y D20 (inicio de vigencia de la póliza anterior).
+  previousPremiumCents: bigint("previous_premium_cents", { mode: "number" }),
+  previousStartDate: date("previous_start_date"),
   validUntil: date("valid_until"),
   ...timestamps,
 });
@@ -89,7 +100,42 @@ export const quoteOptions = pgTable("quote_options", {
   rawResponse: jsonb("raw_response"), // respuesta cruda de API, cuando aplique (Fase 4)
   quotedAt: timestamp("quoted_at", { withTimezone: true }).notNull().defaultNow(),
   isRecommended: boolean("is_recommended").notNull().default(false),
+  // Salud — "Mostrar" del plan en OFERTA AM (macros *_MOSTRAR_OCULTAR_*); arranca oculto como en el Excel.
+  includedInOffer: boolean("included_in_offer").notNull().default(false),
+  // Salud — prima de cada asegurado del grupo { [insuredMemberId]: cents } (OFERTA AM filas 56-61).
+  memberPremiums: jsonb("member_premiums").$type<Record<string, number>>(),
 });
+
+/**
+ * 🏢 Configuración de la oferta por aseguradora (hoja DATOS OFERTA del
+ * Excel): mostrar/ocultar, todo riesgo vs. solo pérdida total, amparo, RC,
+ * GM y deducibles. Aplica a todos los riesgos de la cotización, igual que en
+ * el Excel. `coverageSnapshot` congela las coberturas fijas del perfil al
+ * crear la cotización, para que una oferta enviada siga siendo reproducible.
+ */
+export const quoteInsurerSettings = pgTable(
+  "quote_insurer_settings",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    quoteId: uuid("quote_id")
+      .notNull()
+      .references(() => quotes.id),
+    insurerId: uuid("insurer_id")
+      .notNull()
+      .references(() => insurers.id),
+    included: boolean("included").notNull().default(true),
+    coverageType: autoCoverageTypeEnum("coverage_type").notNull().default("TODO_RIESGO"),
+    amparoPatrimonial: boolean("amparo_patrimonial").notNull(),
+    rcAmountCents: bigint("rc_amount_cents", { mode: "number" }),
+    gmAmountCents: bigint("gm_amount_cents", { mode: "number" }),
+    partialDeductible: text("partial_deductible"),
+    totalLossDeductible: text("total_loss_deductible"),
+    coverageSnapshot: jsonb("coverage_snapshot").notNull(),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("quote_insurer_settings_quote_insurer_idx").on(t.quoteId, t.insurerId)],
+);
 
 /**
  * 🏢 Snapshot inmutable de la cobertura al momento de cotizar — regla clave
