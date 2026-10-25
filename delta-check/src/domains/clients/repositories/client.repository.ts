@@ -25,6 +25,10 @@ export const clientRepository = {
     return client;
   },
 
+  async update(tx: Db, id: string, data: Partial<NewClient>) {
+    await tx.update(clients).set({ ...data, updatedAt: new Date() }).where(eq(clients.id, id));
+  },
+
   async createVehicle(tx: Db, data: NewVehicle) {
     const [vehicle] = await tx.insert(vehicles).values(data).returning();
     return vehicle;

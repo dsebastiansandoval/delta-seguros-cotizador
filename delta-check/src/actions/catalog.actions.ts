@@ -1,8 +1,8 @@
 "use server";
 
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import { db, withOrganization } from "@/db";
-import { vehicleBrands, vehicleModels } from "@/db/schema/catalog";
+import { insurers, vehicleBrands, vehicleModels } from "@/db/schema/catalog";
 import { quoteSources, quoteExecutives } from "@/db/schema/clients";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 
@@ -71,4 +71,14 @@ export async function listQuoteExecutives() {
       .where(eq(quoteExecutives.isActive, true))
       .orderBy(asc(quoteExecutives.displayOrder)),
   );
+}
+
+/** 🌐 Aseguradoras de Autos — "ASEGURADORA" de la póliza anterior en una renovación (DATOS VH!D18). */
+export async function listAutoInsurers() {
+  await requirePermission("quote:create");
+  return db
+    .select({ id: insurers.id, name: insurers.name })
+    .from(insurers)
+    .where(and(eq(insurers.branch, "AUTOS"), eq(insurers.isActive, true)))
+    .orderBy(asc(insurers.name));
 }

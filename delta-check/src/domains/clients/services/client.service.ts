@@ -26,6 +26,9 @@ export const clientService = {
       | "firstName"
       | "lastName"
       | "businessName"
+      | "birthDate"
+      | "maritalStatus"
+      | "gender"
       | "email"
       | "phone"
       | "source"
@@ -33,6 +36,16 @@ export const clientService = {
     > & { vehicles: VehicleRiskInput[] },
   ) {
     const existing = await clientRepository.findByDocument(tx, input.documentNumber);
+
+    // Cliente que vuelve a cotizar: se actualizan los datos personales que el ejecutivo sí digitó.
+    const personalData = {
+      ...(input.birthDate && { birthDate: input.birthDate }),
+      ...(input.maritalStatus && { maritalStatus: input.maritalStatus }),
+      ...(input.gender && { gender: input.gender }),
+    };
+    if (existing && Object.keys(personalData).length) {
+      await clientRepository.update(tx, existing.id, personalData);
+    }
 
     const client =
       existing ??
@@ -44,6 +57,9 @@ export const clientService = {
         firstName: input.firstName,
         lastName: input.lastName,
         businessName: input.businessName,
+        birthDate: input.birthDate,
+        maritalStatus: input.maritalStatus,
+        gender: input.gender,
         email: input.email || undefined,
         phone: input.phone,
         source: input.source,

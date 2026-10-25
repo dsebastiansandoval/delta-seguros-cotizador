@@ -8,6 +8,7 @@ import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferen
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
 import { VehicleRiskFields } from "@/components/quoting/VehicleRiskFields";
 import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
+import { calculateAge } from "@/domains/shared/age";
 
 const initialState: ActionResult<{ quoteId: string }> | null = null;
 
@@ -23,6 +24,7 @@ export function NuevaCotizacionForm({
   modelsByBrand,
   sources,
   executives,
+  insurers,
 }: {
   brands: string[];
   /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
@@ -31,6 +33,8 @@ export function NuevaCotizacionForm({
   sources: string[];
   /** EJECUTIVO del Excel (INFO GENERAL!Y15:Y19) — ver listQuoteExecutives(). */
   executives: string[];
+  /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
+  insurers: Array<{ id: string; name: string }>;
 }) {
   const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
   const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
@@ -52,9 +56,15 @@ export function NuevaCotizacionForm({
   const cityRef = useRef<HTMLInputElement>(null);
   const vehicleProvinceRef = useRef<HTMLSelectElement>(null);
   const operationTypeRef = useRef<HTMLSelectElement>(null);
-  const previousInsurerIdRef = useRef<HTMLInputElement>(null);
+  const previousInsurerIdRef = useRef<HTMLSelectElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
+  const previousStartDateRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
+  const previousPremiumRef = useRef<HTMLInputElement>(null);
+  const [operationType, setOperationType] = useState<"NUEVA" | "RENOVACION">("NUEVA");
+  const [personType, setPersonType] = useState<"NATURAL" | "JURIDICA">("NATURAL");
+  const [birthDate, setBirthDate] = useState("");
+  const age = birthDate ? calculateAge(birthDate) : null;
   const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
   const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef, provinceRef: vehicleProvinceRef });
 
@@ -86,19 +96,70 @@ export function NuevaCotizacionForm({
           <select
             ref={operationTypeRef}
             name="operationType"
-            defaultValue="NUEVA"
+            value={operationType}
+            onChange={(e) => setOperationType(e.target.value as "NUEVA" | "RENOVACION")}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           >
             <option value="NUEVA">Nueva</option>
             <option value="RENOVACION">Renovación</option>
           </select>
         </label>
-        {/* CIA ANTERIOR / No. POLIZA / FIN VIGENCIA del Excel — se llenan
-            solos con "Buscar cotización anterior", quedan ocultos porque
-            no hace falta que el ejecutivo los toque a mano. */}
-        <input ref={previousInsurerIdRef} type="hidden" name="previousInsurerId" />
-        <input ref={previousPolicyNumberRef} type="hidden" name="previousPolicyNumber" />
-        <input ref={previousExpiryDateRef} type="hidden" name="previousExpiryDate" />
+      </fieldset>
+
+      {/* DATOS VH en renovación: aseguradora, No. póliza, prima vencida e inicio/fin de vigencia.
+          Siempre montado (oculto en NUEVA) para que "Buscar cotización anterior" pueda precargarlo. */}
+      <fieldset className={`grid grid-cols-1 gap-4 sm:grid-cols-3 ${operationType === "RENOVACION" ? "" : "hidden"}`}>
+        <legend className="col-span-full text-sm font-semibold">Póliza anterior</legend>
+        <label className="flex flex-col gap-1 text-sm">
+          Aseguradora
+          <select ref={previousInsurerIdRef} name="previousInsurerId" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
+            <option value="">—</option>
+            {insurers.map((i) => (
+              <option key={i.id} value={i.id}>
+                {i.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          No. póliza
+          <input ref={previousPolicyNumberRef} name="previousPolicyNumber" className="rounded-lg border border-border bg-surface px-3 py-2" />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Prima vencida (USD)
+          <input
+            ref={previousPremiumRef}
+            name="previousPremiumDollars"
+            type="number"
+            step="0.01"
+            min="0"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+          <FieldError errors={errors} name="previousPremiumDollars" />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Inicio de vigencia
+          <input
+            ref={previousStartDateRef}
+            name="previousStartDate"
+            type="date"
+            onChange={(e) => {
+              const [y, m, d] = e.target.value.split("-");
+              if (y && previousExpiryDateRef.current) previousExpiryDateRef.current.value = `${Number(y) + 1}-${m}-${d}`;
+            }}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+        </label>
+        <label className="flex flex-col gap-1 text-sm">
+          Fin de vigencia
+          <input
+            ref={previousExpiryDateRef}
+            name="previousExpiryDate"
+            type="date"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+          <FieldError errors={errors} name="previousExpiryDate" />
+        </label>
       </fieldset>
 
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
@@ -106,7 +167,12 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Tipo de persona
-          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-surface px-3 py-2">
+          <select
+            name="personType"
+            value={personType}
+            onChange={(e) => setPersonType(e.target.value as "NATURAL" | "JURIDICA")}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          >
             <option value="NATURAL">Natural</option>
             <option value="JURIDICA">Jurídica</option>
           </select>
@@ -171,7 +237,10 @@ export function NuevaCotizacionForm({
             operationTypeRef={operationTypeRef}
             previousInsurerIdRef={previousInsurerIdRef}
             previousPolicyNumberRef={previousPolicyNumberRef}
+            previousStartDateRef={previousStartDateRef}
             previousExpiryDateRef={previousExpiryDateRef}
+            previousPremiumRef={previousPremiumRef}
+            onRenewalFound={() => setOperationType("RENOVACION")}
           />
         </div>
 
@@ -184,6 +253,45 @@ export function NuevaCotizacionForm({
           Apellidos
           <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
+
+        {personType === "NATURAL" && (
+          <>
+            <label className="flex flex-col gap-1 text-sm">
+              Fecha de nacimiento
+              <input
+                name="birthDate"
+                type="date"
+                value={birthDate}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(e) => setBirthDate(e.target.value)}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+              {age != null && <p className="text-xs text-muted">Edad: {age} años</p>}
+              <FieldError errors={errors} name="birthDate" />
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Estado civil
+              <select name="maritalStatus" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
+                <option value="">—</option>
+                <option value="CASADO">Casado</option>
+                <option value="DIVORCIADO">Divorciado</option>
+                <option value="SOLTERO">Soltero</option>
+                <option value="UNION_DE_HECHO">Unión de hecho</option>
+                <option value="VIUDO">Viudo</option>
+              </select>
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Género
+              <select name="gender" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
+                <option value="">—</option>
+                <option value="FEMENINO">Femenino</option>
+                <option value="MASCULINO">Masculino</option>
+              </select>
+            </label>
+          </>
+        )}
 
         <label className="flex flex-col gap-1 text-sm">
           Fuente

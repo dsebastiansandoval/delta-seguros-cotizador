@@ -18,9 +18,13 @@ type Refs = {
   cityRef: RefObject<HTMLInputElement | null>;
   provinceRef: RefObject<HTMLSelectElement | null>;
   operationTypeRef: RefObject<HTMLSelectElement | null>;
-  previousInsurerIdRef: RefObject<HTMLInputElement | null>;
+  previousInsurerIdRef: RefObject<HTMLSelectElement | null>;
   previousPolicyNumberRef: RefObject<HTMLInputElement | null>;
+  previousStartDateRef: RefObject<HTMLInputElement | null>;
   previousExpiryDateRef: RefObject<HTMLInputElement | null>;
+  previousPremiumRef: RefObject<HTMLInputElement | null>;
+  /** El formulario muestra el bloque de renovación según el tipo de operación (estado de React, no solo el valor del select). */
+  onRenewalFound: () => void;
 };
 
 /**
@@ -75,9 +79,15 @@ export function RenewalLookupButton(refs: Refs) {
       if (refs.previousPolicyNumberRef.current) {
         refs.previousPolicyNumberRef.current.value = result.previousPolicyNumber ?? "";
       }
+      if (refs.previousStartDateRef.current) refs.previousStartDateRef.current.value = result.previousStartDate ?? "";
       if (refs.previousExpiryDateRef.current) {
         refs.previousExpiryDateRef.current.value = result.previousExpiryDate ?? "";
       }
+      if (refs.previousPremiumRef.current) {
+        refs.previousPremiumRef.current.value =
+          result.previousPremiumCents != null ? String(centsToDollars(result.previousPremiumCents)) : "";
+      }
+      refs.onRenewalFound();
 
       setMessage({
         kind: "ok",

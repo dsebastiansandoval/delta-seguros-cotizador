@@ -17,6 +17,16 @@ function optionalNumber() {
   return z.preprocess((v) => (v === "" || v == null ? undefined : v), z.coerce.number().min(0).optional());
 }
 
+function optionalDate() {
+  return z.preprocess((v) => (v === "" ? undefined : v), z.iso.date("Fecha inválida").optional());
+}
+
+/** DATOS VH!H20: fin de vigencia = inicio + 1 año. */
+function oneYearAfter(isoDate: string): string {
+  const [y, m, d] = isoDate.split("-");
+  return `${Number(y) + 1}-${m}-${d}`;
+}
+
 function optionalYear() {
   return z.preprocess(
     (v) => (v === "" || v == null ? undefined : v),
@@ -84,7 +94,9 @@ const baseAutoQuoteSchema = z.object({
   operationType: z.enum(["NUEVA", "RENOVACION"]).default("NUEVA"),
   previousInsurerId: z.preprocess((v) => (v === "" ? undefined : v), z.uuid().optional()),
   previousPolicyNumber: optionalText(),
-  previousExpiryDate: z.preprocess((v) => (v === "" ? undefined : v), z.string().optional()),
+  previousExpiryDate: optionalDate(),
+  previousStartDate: optionalDate(),
+  previousPremiumDollars: optionalNumber(),
 
   // Cliente
   personType: z.enum(["NATURAL", "JURIDICA"]),
@@ -93,6 +105,13 @@ const baseAutoQuoteSchema = z.object({
   firstName: optionalText(),
   lastName: optionalText(),
   businessName: optionalText(),
+  // Persona natural — DATOS VH: NACIMIENTO (la edad se calcula), ESTADO CIVIL, GÉNERO.
+  birthDate: optionalDate().refine((v) => !v || v <= new Date().toISOString().slice(0, 10), "La fecha no puede ser futura"),
+  maritalStatus: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.enum(["CASADO", "DIVORCIADO", "SOLTERO", "UNION_DE_HECHO", "VIUDO"]).optional(),
+  ),
+  gender: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["MASCULINO", "FEMENINO"]).optional()),
   email: z.preprocess((v) => (v === "" ? undefined : v), z.email().optional()),
   phone: optionalText(),
   // FUENTE del Excel — lista cerrada de personas (INFO GENERAL!T15:T43),
@@ -199,13 +218,19 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
       operationType: data.operationType,
       previousInsurerId: data.previousInsurerId,
       previousPolicyNumber: data.previousPolicyNumber,
-      previousExpiryDate: data.previousExpiryDate,
+      previousStartDate: data.previousStartDate,
+      previousExpiryDate:
+        data.previousExpiryDate ?? (data.previousStartDate ? oneYearAfter(data.previousStartDate) : undefined),
+      previousPremiumDollars: data.previousPremiumDollars,
       personType: data.personType,
       documentType: data.documentType,
       documentNumber: data.documentNumber,
       firstName: data.firstName,
       lastName: data.lastName,
       businessName: data.businessName,
+      birthDate: data.personType === "NATURAL" ? data.birthDate : undefined,
+      maritalStatus: data.personType === "NATURAL" ? data.maritalStatus : undefined,
+      gender: data.personType === "NATURAL" ? data.gender : undefined,
       email: data.email,
       phone: data.phone,
       source: data.source,

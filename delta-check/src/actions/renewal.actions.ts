@@ -26,7 +26,9 @@ export type RenewalLookupResult =
       previousInsurerId: string | null;
       previousInsurerName: string | null;
       previousPolicyNumber: string | null;
+      previousStartDate: string | null;
       previousExpiryDate: string | null;
+      previousPremiumCents: number | null;
     };
 
 /**
@@ -75,7 +77,9 @@ export async function findRenewalData(documentNumber: string): Promise<RenewalLo
       previousInsurerId: previousPolicy?.policy.insurerId ?? null,
       previousInsurerName: previousPolicy?.insurerName ?? null,
       previousPolicyNumber: previousPolicy?.policy.policyNumber ?? null,
+      previousStartDate: previousPolicy?.policy.startsAt ?? null,
       previousExpiryDate: previousPolicy?.policy.endsAt ?? null,
+      previousPremiumCents: previousPolicy?.policy.premiumCents ?? null,
     };
   });
 }
