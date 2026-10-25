@@ -32,8 +32,7 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
       ...(branches.has("SALUD") ? [{ href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" }] : []),
       // Del mockup visual original — sin ninguna macro ni hoja propia en el
       // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-
-      // AUDIT.md), así que va como "Pronto" (mismo patrón que Back-office)
-      // en vez de fabricar una pantalla sin ramo real que cotizar todavía.
+      // AUDIT.md), así que va como "Pronto" en vez de fabricar una pantalla sin ramo real que cotizar todavía.
       { href: "#", label: "Vida & Patrimonio", disabled: true },
     ],
   },
@@ -52,8 +51,7 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
   {
     label: "Administración",
     links: [
-      // Back-office no tiene pantalla propia todavía — "Pronto", mismo criterio que
-      // "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
+      // Sin permiso, el link queda deshabilitado en vez de llevar a "Sin acceso".
       access?.permissions.has("user:manage")
         ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
         : { href: "#", label: "Usuarios", disabled: true },
@@ -63,7 +61,9 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
       access?.permissions.has("user:manage") || access?.permissions.has("rate:edit")
         ? { href: "/admin/configuracion", label: "Configuración", activePrefix: "/admin/configuracion" }
         : { href: "#", label: "Configuración", disabled: true },
-      { href: "#", label: "Back-office", disabled: true },
+      access?.permissions.has("quote:read_all")
+        ? { href: "/back-office", label: "Back-office", activePrefix: "/back-office" }
+        : { href: "#", label: "Back-office", disabled: true },
     ],
   },
   ];
@@ -77,10 +77,9 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
  * principal de navegación (grupo "General" con Resumen, CTA "+ Nueva
  * cotización" arriba), y el topbar queda solo para utilidades de contexto
  * (breadcrumbs, buscador, perfil) — ya no duplica los links de ramo.
- * "Vida & Patrimonio", "Ejecutivos", "Configuración" y "Back-office"
- * aparecen como "Pronto" (deshabilitados) — ninguno tiene pantalla propia
- * todavía; un link muerto es peor que uno deshabilitado, pero un sidebar
- * que no refleja el mapa real del producto es peor todavía.
+ * "Vida & Patrimonio" aparece como "Pronto" (deshabilitado) — no tiene
+ * pantalla propia todavía; un link muerto es peor que uno deshabilitado,
+ * pero un sidebar que no refleja el mapa real del producto es peor todavía.
  *
  * También hace explícito el guard de sesión (redirect a /login) que antes
  * solo existía implícito en cada Server Action — `proxy.ts` (el middleware
