@@ -247,6 +247,19 @@ export function NuevaCotizacionForm({
               + Añadir riesgo
             </button>
           )}
+          {riskCount > 1 && (
+            <button
+              type="button"
+              onClick={() => {
+                const next = riskCount - 1;
+                setRiskCount(next);
+                setActiveTab((t) => (t > next ? next : t));
+              }}
+              className="rounded-lg px-3.5 py-1.5 text-xs font-bold text-link underline"
+            >
+              Quitar riesgo {riskCount}
+            </button>
+          )}
         </div>
 
         <div hidden={activeTab !== 1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
