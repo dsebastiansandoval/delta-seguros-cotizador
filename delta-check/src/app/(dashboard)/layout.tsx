@@ -52,15 +52,17 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
   {
     label: "Administración",
     links: [
-      // Configuración y Back-office no tienen pantalla propia todavía — "Pronto",
-      // mismo criterio que "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
+      // Back-office no tiene pantalla propia todavía — "Pronto", mismo criterio que
+      // "Vida & Patrimonio": un link muerto es peor que uno deshabilitado.
       access?.permissions.has("user:manage")
         ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
         : { href: "#", label: "Usuarios", disabled: true },
       ...(access?.permissions.has("rate:edit")
         ? [{ href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" }]
         : []),
-      { href: "#", label: "Configuración", disabled: true },
+      access?.permissions.has("user:manage") || access?.permissions.has("rate:edit")
+        ? { href: "/admin/configuracion", label: "Configuración", activePrefix: "/admin/configuracion" }
+        : { href: "#", label: "Configuración", disabled: true },
       { href: "#", label: "Back-office", disabled: true },
     ],
   },

@@ -4,6 +4,7 @@ import { insurers } from "@/db/schema/catalog";
 import { quoteInsurerSettings, quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { vehicles } from "@/db/schema/clients";
 import { engineQuote } from "../offer/excel-rates";
+import { engineRatesService } from "./engine-rates.service";
 import { breakdownForNet, premiumFromTotal, type PremiumBreakdown } from "./premium.calculator";
 import { KM_BRACKETS } from "../constants";
 
@@ -122,6 +123,7 @@ export const comparisonService = {
       .from(quoteInsurerSettings)
       .where(eq(quoteInsurerSettings.quoteId, quoteId));
     const coverageTypeByInsurer = new Map(settings.map((s) => [s.insurerId, s.coverageType]));
+    const { rates } = await engineRatesService.get(tx);
 
     for (const row of rows) {
       const quote = engineQuote(
@@ -134,6 +136,7 @@ export const comparisonService = {
         },
         coverageTypeByInsurer.get(row.insurerId) ?? "TODO_RIESGO",
         currentYear,
+        rates,
       );
       const values =
         quote && quote !== "MANUAL"

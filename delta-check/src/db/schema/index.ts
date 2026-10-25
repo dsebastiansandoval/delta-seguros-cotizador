@@ -8,3 +8,4 @@ export * from "./catalog";
 export * from "./quoting";
 export * from "./policies";
 export * from "./compliance";
+export * from "./settings";
