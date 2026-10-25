@@ -24,7 +24,7 @@ const SIDEBAR_GROUPS: NavGroup[] = [
       // "+ Nueva" adentro. A pedido explícito del usuario (antes "Autos"
       // iba directo al formulario y "Mis cotizaciones" era una entrada
       // aparte).
-      { href: "/cotizar/autos", label: "Autos", exact: true },
+      { href: "/cotizar/autos", label: "Autos", activePrefix: "/cotizar/autos" },
       { href: "/cotizar/salud", label: "Salud AM", activePrefix: "/cotizar/salud" },
       // Del mockup visual original — sin ninguna macro ni hoja propia en el
       // Excel (PRODUCTOS solo tiene VEHICULOS/ASISTENCIA_MEDICA, EXCEL-

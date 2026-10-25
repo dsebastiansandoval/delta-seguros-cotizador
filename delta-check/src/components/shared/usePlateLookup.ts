@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, type FocusEvent, type RefObject } from "react";
+import { useRef, useState, useTransition, type FocusEvent, type RefObject } from "react";
 import { lookupVehicleByPlate } from "@/actions/lookup.actions";
 import { provinceFromPlate } from "@/domains/lookup/plate-province";
 
@@ -33,11 +33,13 @@ export function usePlateLookup({
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
+  const lastLookedUp = useRef<string | null>(null);
 
   function onBlur(event: FocusEvent<HTMLInputElement>) {
     const value = event.target.value.trim();
     setMessage(null);
     if (!value || !PLATE_FORMAT.test(value)) return;
+    if (value === lastLookedUp.current) return;
 
     if (provinceRef?.current) {
       const province = provinceFromPlate(value);
@@ -45,19 +47,24 @@ export function usePlateLookup({
     }
 
     startTransition(async () => {
-      const result = await lookupVehicleByPlate(value);
+      try {
+        const result = await lookupVehicleByPlate(value);
+        lastLookedUp.current = value;
 
-      if (result.status === "FOUND") {
-        if (brandRef.current) brandRef.current.value = result.brand;
-        if (modelRef.current) modelRef.current.value = result.model;
-        if (yearRef.current) yearRef.current.value = String(result.year);
-        if (colorRef?.current && result.color) colorRef.current.value = result.color;
-        if (bodyTypeRef?.current) bodyTypeRef.current.value = result.bodyType;
-        setMessage({ kind: "ok", text: `Encontrado: ${result.brand} ${result.model} ${result.year}` });
-      } else if (result.status === "NOT_FOUND") {
-        setMessage({ kind: "error", text: "No se encontró esa placa — completa los datos a mano" });
-      } else {
-        setMessage({ kind: "error", text: result.message });
+        if (result.status === "FOUND") {
+          if (brandRef.current) brandRef.current.value = result.brand;
+          if (modelRef.current) modelRef.current.value = result.model;
+          if (yearRef.current) yearRef.current.value = String(result.year);
+          if (colorRef?.current && result.color) colorRef.current.value = result.color;
+          if (bodyTypeRef?.current) bodyTypeRef.current.value = result.bodyType;
+          setMessage({ kind: "ok", text: `Encontrado: ${result.brand} ${result.model} ${result.year}` });
+        } else if (result.status === "NOT_FOUND") {
+          setMessage({ kind: "error", text: "No se encontró esa placa — completa los datos a mano" });
+        } else {
+          setMessage({ kind: "error", text: result.message });
+        }
+      } catch {
+        setMessage({ kind: "error", text: "No se pudo consultar la placa — completa los datos a mano" });
       }
     });
   }

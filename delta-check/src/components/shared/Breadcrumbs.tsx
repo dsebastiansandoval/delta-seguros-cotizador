@@ -26,6 +26,42 @@ const SEGMENT_LABELS: Record<string, string> = {
 // "Fuera de alcance"), se muestra como "Detalle" en vez de un uuid crudo.
 const DYNAMIC_SEGMENT = /^[0-9a-f-]{20,}$/i;
 
+const PARAM = Symbol("param");
+
+// Rutas que realmente existen bajo app/(dashboard) — un segmento intermedio
+// (p. ej. /cotizar/autos/{quoteId} sin /comparar) no tiene page.tsx propio,
+// así que solo estos prefijos exactos se renderizan como link; el resto se
+// muestra como texto plano para no mandar a un 404.
+const KNOWN_ROUTES: (string | typeof PARAM)[][] = [
+  ["dashboard"],
+  ["buscar"],
+  ["cartera"],
+  ["cartera", PARAM],
+  ["cartera", "emitir"],
+  ["comisiones"],
+  ["cotizar", "autos"],
+  ["cotizar", "autos", "nueva"],
+  ["cotizar", "autos", PARAM, "comparar"],
+  ["cotizar", "autos", PARAM, "opciones", PARAM, "coberturas"],
+  ["cotizar", "salud"],
+  ["cotizar", "salud", "nueva"],
+  ["cotizar", "salud", PARAM, "comparar"],
+  ["cotizar", "salud", PARAM, "opciones", PARAM, "coberturas"],
+  ["cumplimiento"],
+  ["cumplimiento", "nueva"],
+  ["cumplimiento", PARAM],
+  ["siniestros"],
+  ["siniestros", "nuevo"],
+];
+
+function isKnownRoute(segments: string[]): boolean {
+  return KNOWN_ROUTES.some(
+    (pattern) =>
+      pattern.length === segments.length &&
+      pattern.every((part, i) => (part === PARAM ? DYNAMIC_SEGMENT.test(segments[i]) : part === segments[i])),
+  );
+}
+
 /**
  * Migas de pan del topbar (propuesta de reorganización del usuario) —
  * basadas en los segmentos de la URL con un diccionario estático de
@@ -39,9 +75,10 @@ export function Breadcrumbs() {
   if (segments.length === 0) return null;
 
   const crumbs = segments.map((segment, i) => {
-    const href = "/" + segments.slice(0, i + 1).join("/");
+    const prefix = segments.slice(0, i + 1);
+    const href = "/" + prefix.join("/");
     const label = DYNAMIC_SEGMENT.test(segment) ? "Detalle" : (SEGMENT_LABELS[segment] ?? segment);
-    return { href, label };
+    return { href, label, isLink: isKnownRoute(prefix) };
   });
 
   return (
@@ -49,8 +86,10 @@ export function Breadcrumbs() {
       {crumbs.map((crumb, i) => (
         <span key={crumb.href} className="flex items-center gap-1.5">
           {i > 0 && <span aria-hidden="true">›</span>}
-          {i === crumbs.length - 1 ? (
-            <span className="font-semibold text-foreground">{crumb.label}</span>
+          {i === crumbs.length - 1 || !crumb.isLink ? (
+            <span className={i === crumbs.length - 1 ? "font-semibold text-foreground" : undefined}>
+              {crumb.label}
+            </span>
           ) : (
             <Link href={crumb.href} className="no-underline hover:text-foreground">
               {crumb.label}

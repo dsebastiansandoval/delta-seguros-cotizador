@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, type FocusEvent, type RefObject } from "react";
+import { useRef, useState, useTransition, type FocusEvent, type RefObject } from "react";
 import { lookupPersonByDocument } from "@/actions/lookup.actions";
 import { isNaturalPersonRuc, isValidCedula, isValidRuc, provinceFromCedula } from "@/domains/lookup/cedula.validator";
 
@@ -30,6 +30,7 @@ export function useDocumentLookup({
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
+  const lastLookedUp = useRef<string | null>(null);
 
   function onBlur(event: FocusEvent<HTMLInputElement>) {
     const value = event.target.value.trim();
@@ -38,6 +39,8 @@ export function useDocumentLookup({
     if (!value || (documentType !== "CEDULA" && documentType !== "RUC")) return;
     if (documentType === "CEDULA" && !isValidCedula(value)) return;
     if (documentType === "RUC" && !isValidRuc(value)) return;
+    const lookupKey = `${documentType}:${value}`;
+    if (lookupKey === lastLookedUp.current) return;
 
     // Provincia: local, instantánea, sin esperar al SRI — los 2 primeros
     // dígitos ya la determinan. Para RUC de sociedad no aplica (no hay
@@ -48,24 +51,29 @@ export function useDocumentLookup({
     }
 
     startTransition(async () => {
-      const result = await lookupPersonByDocument(value, documentType);
+      try {
+        const result = await lookupPersonByDocument(value, documentType);
+        lastLookedUp.current = lookupKey;
 
-      if (result.status === "FOUND" && result.kind === "NATURAL") {
-        if (firstNameRef.current) firstNameRef.current.value = result.firstName;
-        if (lastNameRef.current) lastNameRef.current.value = result.lastName;
-        if (provinceRef?.current) provinceRef.current.value = result.province ?? "";
-        setMessage({
-          kind: "ok",
-          text: result.province ? `Encontrado: ${result.fullName} — cédula de ${result.province}` : `Encontrado: ${result.fullName}`,
-        });
-      } else if (result.status === "FOUND" && result.kind === "JURIDICA") {
-        if (firstNameRef.current) firstNameRef.current.value = result.businessName;
-        if (lastNameRef.current) lastNameRef.current.value = "";
-        setMessage({ kind: "ok", text: `Encontrado: ${result.businessName}` });
-      } else if (result.status === "NOT_FOUND") {
-        setMessage({ kind: "error", text: "No se encontró en el SRI — digita el nombre a mano" });
-      } else {
-        setMessage({ kind: "error", text: result.message });
+        if (result.status === "FOUND" && result.kind === "NATURAL") {
+          if (firstNameRef.current) firstNameRef.current.value = result.firstName;
+          if (lastNameRef.current) lastNameRef.current.value = result.lastName;
+          if (provinceRef?.current) provinceRef.current.value = result.province ?? "";
+          setMessage({
+            kind: "ok",
+            text: result.province ? `Encontrado: ${result.fullName} — cédula de ${result.province}` : `Encontrado: ${result.fullName}`,
+          });
+        } else if (result.status === "FOUND" && result.kind === "JURIDICA") {
+          if (firstNameRef.current) firstNameRef.current.value = result.businessName;
+          if (lastNameRef.current) lastNameRef.current.value = "";
+          setMessage({ kind: "ok", text: `Encontrado: ${result.businessName}` });
+        } else if (result.status === "NOT_FOUND") {
+          setMessage({ kind: "error", text: "No se encontró en el SRI — digita el nombre a mano" });
+        } else {
+          setMessage({ kind: "error", text: result.message });
+        }
+      } catch {
+        setMessage({ kind: "error", text: "No se pudo consultar el documento — digita el nombre a mano" });
       }
     });
   }
