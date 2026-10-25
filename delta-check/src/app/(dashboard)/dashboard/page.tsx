@@ -1,4 +1,5 @@
-import { getDashboardSummary } from "@/actions/dashboard.actions";
+import { getAgentReport, getDashboardSummary } from "@/actions/dashboard.actions";
+import { recentMonths } from "@/domains/dashboard/services/agent-report";
 import { formatUSD } from "@/domains/shared/money";
 
 /**
@@ -56,7 +57,102 @@ function Breakdown({ title, rows }: { title: string; rows: Array<{ label: string
   );
 }
 
-export default async function DashboardPage() {
+const RISK_HEADER = { AUTOS: "Vehículos", SALUD: "Grupos" } as const;
+
+/** Producción por ejecutivo (BASE VEHICULOS por EJECUTIVO y MES). Filtro por GET para poder compartir el link. */
+async function AgentReport({ mes, ramo }: { mes?: string; ramo?: string }) {
+  const report = await getAgentReport({ mes, ramo });
+  const pct = (rate: number) => `${(rate * 100).toFixed(0)}%`;
+
+  return (
+    <section className="mb-6 rounded-xl border border-border bg-surface shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-5 py-3">
+        <h2 className="text-xs font-semibold uppercase tracking-wide text-muted">
+          Producción por ejecutivo · {report.month.label}
+        </h2>
+        <form method="get" className="flex items-center gap-2 text-sm">
+          <select
+            name="mes"
+            defaultValue={report.month.value}
+            aria-label="Mes"
+            className="rounded-md border border-border bg-surface px-2 py-1"
+          >
+            {recentMonths(12).map((m) => (
+              <option key={m.value} value={m.value}>
+                {m.label}
+              </option>
+            ))}
+          </select>
+          <select
+            name="ramo"
+            defaultValue={report.branch ?? ""}
+            aria-label="Ramo"
+            className="rounded-md border border-border bg-surface px-2 py-1"
+          >
+            <option value="">Todos los ramos</option>
+            <option value="AUTOS">Autos</option>
+            <option value="SALUD">Salud AM</option>
+          </select>
+          <button type="submit" className="rounded-md bg-delta-navy px-3 py-1 text-xs font-semibold text-white">
+            Ver
+          </button>
+        </form>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
+              <th className="px-5 py-2">Ejecutivo</th>
+              <th className="px-5 py-2 text-right">Cotizaciones</th>
+              <th className="px-5 py-2 text-right">{report.branch ? RISK_HEADER[report.branch] : "Riesgos"}</th>
+              <th className="px-5 py-2 text-right">Pólizas</th>
+              <th className="px-5 py-2 text-right">Conversión</th>
+              <th className="px-5 py-2 text-right">Prima emitida</th>
+            </tr>
+          </thead>
+          <tbody>
+            {report.rows.map((r) => (
+              <tr key={r.agentId} className="border-b border-border last:border-0">
+                <td className="px-5 py-2">{r.agentName}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{r.quotes}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{r.risks}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{r.policies}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{pct(r.conversionRate)}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{formatUSD(r.premiumCents)}</td>
+              </tr>
+            ))}
+            {report.rows.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-5 py-6 text-center text-muted">
+                  Sin cotizaciones en {report.month.label}.
+                </td>
+              </tr>
+            ) : (
+              <tr className="border-t border-border font-semibold">
+                <td className="px-5 py-2">Total</td>
+                <td className="px-5 py-2 text-right tabular-nums">{report.totals.quotes}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{report.totals.risks}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{report.totals.policies}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{pct(report.totals.conversionRate)}</td>
+                <td className="px-5 py-2 text-right tabular-nums">{formatUSD(report.totals.premiumCents)}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      <p className="border-t border-border px-5 py-2 text-xs text-muted">
+        Pólizas y prima de las cotizaciones hechas en el mes, aunque se hayan emitido después.
+      </p>
+    </section>
+  );
+}
+
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mes?: string; ramo?: string }>;
+}) {
+  const { mes, ramo } = await searchParams;
   const summary = await getDashboardSummary();
 
   return (
@@ -91,6 +187,8 @@ export default async function DashboardPage() {
           delta={{ percent: summary.monthly.comisionGeneradaCents.deltaPercent, note: "vs. mes anterior" }}
         />
       </div>
+
+      <AgentReport mes={mes} ramo={ramo} />
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card label="Cotizaciones" value={String(summary.quotes.total)} />

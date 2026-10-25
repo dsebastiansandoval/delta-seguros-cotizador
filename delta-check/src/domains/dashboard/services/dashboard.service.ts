@@ -1,7 +1,9 @@
-import { and, count, eq, gte, lt, lte, sum } from "drizzle-orm";
+import { and, count, countDistinct, eq, gte, inArray, lt, lte, sum } from "drizzle-orm";
 import type { Db } from "@/db";
-import { quotes } from "@/db/schema/quoting";
+import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { policies, commissions, claims } from "@/db/schema/policies";
+import { users } from "@/db/schema/identity";
+import { buildAgentReport, type ReportMonth } from "./agent-report";
 
 const toDateStr = (d: Date) => d.toISOString().slice(0, 10);
 
@@ -173,5 +175,47 @@ export const dashboardService = {
         },
       },
     };
+  },
+
+  /** Producción por ejecutivo del mes (y ramo) — ver agent-report.ts. */
+  async getAgentReport(tx: Db, organizationId: string, params: { month: ReportMonth; branch?: "AUTOS" | "SALUD" }) {
+    const inMonth = and(
+      eq(quotes.organizationId, organizationId),
+      gte(quotes.createdAt, params.month.start),
+      lt(quotes.createdAt, params.month.end),
+      params.branch ? eq(quotes.branch, params.branch) : undefined,
+    );
+
+    const quoted = await tx
+      .select({ agentId: quotes.agentId, quotes: countDistinct(quotes.id), risks: count(quoteRisks.id) })
+      .from(quotes)
+      .leftJoin(quoteRisks, eq(quoteRisks.quoteId, quotes.id))
+      .where(inMonth)
+      .groupBy(quotes.agentId);
+
+    const issued = await tx
+      .select({
+        agentId: quotes.agentId,
+        convertedQuotes: countDistinct(quotes.id),
+        policies: count(policies.id),
+        premiumCents: sum(policies.premiumCents),
+      })
+      .from(policies)
+      .innerJoin(quoteOptions, eq(quoteOptions.id, policies.quoteOptionId))
+      .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
+      .innerJoin(quotes, eq(quotes.id, quoteRisks.quoteId))
+      .where(and(inMonth, eq(policies.isVoid, false)))
+      .groupBy(quotes.agentId);
+
+    const agentIds = quoted.map((r) => r.agentId);
+    const agents = agentIds.length
+      ? await tx.select({ id: users.id, fullName: users.fullName }).from(users).where(inArray(users.id, agentIds))
+      : [];
+
+    return buildAgentReport(
+      quoted,
+      issued.map((r) => ({ ...r, premiumCents: Number(r.premiumCents ?? 0) })),
+      new Map(agents.map((a) => [a.id, a.fullName])),
+    );
   },
 };
