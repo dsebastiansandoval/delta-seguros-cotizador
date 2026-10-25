@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, isNotNull } from "drizzle-orm";
+import { and, asc, eq, isNotNull } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients, insuredGroups, insuredMembers } from "@/db/schema/clients";
@@ -15,12 +15,15 @@ export type CaratulaAMCoverageRow = {
 };
 
 export type CaratulaAMOffer = {
+  quoteOptionId: string;
   insurerName: string;
   planCode: string;
   netPremiumCents: number;
   emissionFeeCents: number;
   campesinoCents: number;
   totalPremiumCents: number;
+  /** Prima de cada asegurado, en el mismo orden que `CaratulaAMData.members` (null si se digitó solo el total). */
+  memberPremiumsCents: Array<number | null>;
   /**
    * Grilla real de sublímites/copago/carencia (`health_plan_coverages`,
    * extraída de OFERTA AM) — vacío si el plan no tiene fila sembrada
@@ -57,11 +60,15 @@ export type CaratulaAMData = {
  * OTROS CARGOS, 0.5% campesino, total) sí son reales — ver
  * `health-comparison.service.ts` y ARCHITECTURE.md §31.
  */
-export async function getCaratulaAMData(
-  tx: Db,
-  quoteId: string,
-  quoteOptionIds?: string[],
-): Promise<CaratulaAMData | null> {
+// Orden de las columnas en OFERTA AM.
+const INSURER_ORDER = ["BMI", "SALUD", "SALUDSA", "CONFIAMED", "HUMANA", "BUPA", "PRO", "VB"];
+
+/**
+ * Hoja OFERTA AM: los planes marcados "Mostrar" en la configuración, con la
+ * prima de cada asegurado, cargos, descuentos y la grilla de coberturas. La
+ * usan la comparativa web y el PDF (IMPRIMIR_OFERTA_AM).
+ */
+export async function getCaratulaAMData(tx: Db, quoteId: string): Promise<CaratulaAMData | null> {
   const [quote] = await tx.select().from(quotes).where(and(eq(quotes.id, quoteId), eq(quotes.branch, "SALUD"))).limit(1);
   if (!quote) return null;
 
@@ -74,7 +81,9 @@ export async function getCaratulaAMData(
   const [group] = await tx.select().from(insuredGroups).where(eq(insuredGroups.id, risk.insuredGroupId)).limit(1);
   if (!group) return null;
 
-  const memberRows = await tx.select().from(insuredMembers).where(eq(insuredMembers.groupId, group.id));
+  const memberRows = (await tx.select().from(insuredMembers).where(eq(insuredMembers.groupId, group.id))).sort(
+    (a, b) => (a.relation === "TITULAR" ? -1 : 0) - (b.relation === "TITULAR" ? -1 : 0),
+  );
   if (!memberRows.length) return null;
 
   const baseQuery = tx
@@ -88,19 +97,24 @@ export async function getCaratulaAMData(
       emissionFeeCents: quoteOptions.emissionFeeCents,
       campesinoCents: quoteOptions.campesinoCents,
       totalPremiumCents: quoteOptions.totalPremiumCents,
+      memberPremiums: quoteOptions.memberPremiums,
     })
     .from(quoteOptions)
     .innerJoin(insurers, eq(insurers.id, quoteOptions.insurerId));
 
-  const hasSelection = quoteOptionIds != null && quoteOptionIds.length > 0;
-  const offersRaw = hasSelection
-    ? await baseQuery.where(and(eq(quoteOptions.quoteRiskId, risk.id), inArray(quoteOptions.id, quoteOptionIds)))
-    : await baseQuery
-        .where(and(eq(quoteOptions.quoteRiskId, risk.id), isNotNull(quoteOptions.totalPremiumCents)))
-        .orderBy(quoteOptions.totalPremiumCents)
-        .limit(1);
-
-  const pricedOffers = offersRaw.filter((o) => o.totalPremiumCents != null);
+  const pricedOffers = (
+    await baseQuery.where(
+      and(
+        eq(quoteOptions.quoteRiskId, risk.id),
+        eq(quoteOptions.includedInOffer, true),
+        isNotNull(quoteOptions.totalPremiumCents),
+      ),
+    )
+  ).sort(
+    (a, b) =>
+      INSURER_ORDER.indexOf(a.insurerCode) - INSURER_ORDER.indexOf(b.insurerCode) ||
+      (a.planCode ?? "").localeCompare(b.planCode ?? "", "es", { numeric: true }),
+  );
   if (!pricedOffers.length) return null;
 
   // Grilla real de coberturas (health_plan_coverages) para cada oferta —
@@ -156,12 +170,14 @@ export async function getCaratulaAMData(
         totalPremiumCents,
       );
       return {
+        quoteOptionId: o.quoteOptionId,
         insurerName: o.insurerName,
         planCode: o.planCode ?? "-",
         netPremiumCents,
         emissionFeeCents,
         campesinoCents: o.campesinoCents ?? 0,
         totalPremiumCents,
+        memberPremiumsCents: memberRows.map((m) => o.memberPremiums?.[m.id] ?? null),
         coverages: coverageRows[i],
         ...discounts,
       };

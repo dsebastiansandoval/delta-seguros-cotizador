@@ -11,6 +11,7 @@ import { clientRepository } from "@/domains/clients/repositories/client.reposito
 import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
 import { healthComparisonService } from "@/domains/health/services/health-comparison.service";
+import { getCaratulaAMData } from "@/domains/health/services/caratula-am.service";
 import { audit } from "@/domains/shared/audit";
 import { dollarsToCents } from "@/domains/shared/money";
 import { rateLimit } from "@/lib/rate-limit";
@@ -76,39 +77,63 @@ export async function createHealthQuote(
   });
 
   revalidatePath("/cotizar/salud");
-  redirect(`/cotizar/salud/${quoteId}/comparar`);
+  redirect(`/cotizar/salud/${quoteId}/configurar`);
 }
 
-const manualHealthPremiumSchema = z.object({
-  quoteOptionId: z.uuid(),
-  quoteId: z.uuid(),
-  totalPremiumDollars: z.coerce.number().positive("La prima debe ser mayor a 0"),
-});
+const money = z.union([z.literal(""), z.coerce.number().positive("La prima debe ser mayor a 0")]);
 
-export async function setManualHealthPremium(
+/**
+ * Configuración de OFERTA AM: qué planes se muestran (`included`) y las
+ * primas netas digitadas a mano (`premium:<quoteOptionId>`). Lleva a la comparativa.
+ */
+export async function saveHealthOfferConfiguration(
   _prevState: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
   const session = await requirePermission("quote:create");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
-  const parsed = manualHealthPremiumSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
-  const { quoteOptionId, quoteId, totalPremiumDollars } = parsed.data;
+  const quoteId = z.uuid().safeParse(formData.get("quoteId"));
+  if (!quoteId.success) return { ok: false, errors: { form: ["Cotización inválida"] } };
 
-  await withOrganization(session.organizationId, async (tx) => {
-    await healthComparisonService.setManualPremium(tx, quoteOptionId, dollarsToCents(totalPremiumDollars));
+  const includedIds = z.array(z.uuid()).safeParse(formData.getAll("included"));
+  const premiumIds = z.array(z.uuid()).safeParse(formData.getAll("premiumOptionId"));
+  if (!includedIds.success || !premiumIds.success) return { ok: false, errors: { form: ["Datos inválidos"] } };
+
+  const premiums: Array<{ quoteOptionId: string; netPremiumCents: number | null }> = [];
+  for (const quoteOptionId of premiumIds.data) {
+    const parsed = money.safeParse(formData.get(`premium:${quoteOptionId}`) ?? "");
+    if (!parsed.success) return { ok: false, errors: { form: [parsed.error.issues[0].message] } };
+    premiums.push({ quoteOptionId, netPremiumCents: parsed.data === "" ? null : dollarsToCents(parsed.data) });
+  }
+
+  const saved = await withOrganization(session.organizationId, async (tx) => {
+    const [risk] = await tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId.data)).limit(1);
+    if (!risk) return false;
+    await healthComparisonService.saveConfiguration(tx, risk.id, { includedIds: includedIds.data, premiums });
     await audit(tx, {
       organizationId: session.organizationId,
       userId: session.userId,
-      action: "quote_option.manual_premium_set",
-      entityType: "quote_options",
-      entityId: quoteOptionId,
+      action: "quote.offer_configured",
+      entityType: "quotes",
+      entityId: quoteId.data,
+      metadata: { plans: includedIds.data.length },
     });
+    return true;
   });
+  if (!saved) return { ok: false, errors: { form: ["Cotización no encontrada"] } };
 
-  revalidatePath(`/cotizar/salud/${quoteId}/comparar`);
-  return { ok: true, value: undefined };
+  revalidatePath(`/cotizar/salud/${quoteId.data}/comparar`);
+  if (formData.get("intent") === "save") {
+    revalidatePath(`/cotizar/salud/${quoteId.data}/configurar`);
+    return { ok: true, value: undefined };
+  }
+  redirect(`/cotizar/salud/${quoteId.data}/comparar`);
+}
+
+export async function getHealthOfferSheet(quoteId: string) {
+  const session = await requirePermission("quote:read");
+  return withOrganization(session.organizationId, (tx) => getCaratulaAMData(tx, quoteId));
 }
 
 /**

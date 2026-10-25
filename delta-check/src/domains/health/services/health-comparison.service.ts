@@ -1,10 +1,12 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
 import { quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { insuredGroups, insuredMembers } from "@/db/schema/clients";
 import { HealthRateTableAdapter } from "../gateways/health-rate-table.adapter";
 import type { HealthPlanQuote } from "../gateways/health-insurer.gateway";
+import { healthPremium, otrosCargosCents } from "./health-premium";
+import { HEALTH_PLANS } from "../health-plans.generated";
 
 export type HealthComparisonRow = {
   quoteOptionId: string;
@@ -13,35 +15,9 @@ export type HealthComparisonRow = {
   insurerName: string;
   planCode: string | null;
   status: "COTIZADO" | "PENDIENTE_MANUAL";
+  netPremiumCents: number | null;
   totalPremiumCents: number | null;
-};
-
-/**
- * Corrección a lo que decía antes este archivo ("Salud no aplica IVA/SB/
- * campesino — EXCEL-AUDIT.md §2.4"): **no es cierto para el 0.5% Seguro
- * Campesino ni para un cargo fijo "OTROS CARGOS"**. La auditoría original
- * buscó referencias a las celdas compartidas `INFO GENERAL!E37/E38/E39`
- * (el mecanismo de Autos) y no encontró nada — pero `OFERTA AM` (la hoja
- * que se imprime junto a `CARATULA AM`, confirmado en la macro
- * `IMPRIMIR_OFERTA_AM`) tiene el 0.5% escrito directo en la fórmula
- * (`=SUBTOTAL*0.5%`), sin pasar por esas celdas — por eso esa búsqueda no
- * lo encontró. Verificado celda por celda, con la fórmula de cada columna
- * de plan referenciando directo la hoja de la aseguradora real (`=IF(...,
- * BMI!D9,...)`, `=IF(..., SALUDSA!E8,...)`, etc. — no una suposición de
- * columna): `OTROS CARGOS` es un cargo fijo que varía por aseguradora
- * ($0 a $80), y el 0.5% se cobra siempre sobre (prima neta + ese cargo).
- * BUPA queda afuera de esta tabla — es 100% manual (`EXCEL-AUDIT.md`
- * §2.3, sin tabla de tasas), así que lo que el ejecutivo digita a mano en
- * `setManualPremium` ya es el total final, sin ningún cargo que sumarle acá.
- */
-const HEALTH_OTROS_CARGOS_CENTS: Record<string, number> = {
-  BMI: 8000, // $80 — confirmado en OFERTA AM!H64 (planes SIGMA)
-  SALUDSA: 2832, // $28.32 — OFERTA AM!CL64 (UNICO/ESENCIAL/PRACTICO/IDEAL/ELITE/PRIVILEGIO)
-  SALUD: 2832, // $28.32 — OFERTA AM!BC64 (STAR/SKY/PRO_150.../PRO_500..., el "SALUD" genérico)
-  CONFIAMED: 0, // OFERTA AM!DI64 — sin cargo fijo, pero el 0.5% sí aplica
-  HUMANA: 0, // OFERTA AM!FD64 — sin cargo fijo, pero el 0.5% sí aplica
-  PRO: 3600, // $36 — OFERTA AM!FS64 (hoja PRO, planes "Plan Life" 10K/15K)
-  VB: 3600, // $36 — OFERTA AM!FU64 (hoja VB, "Plan Predilecto" 20K)
+  includedInOffer: boolean;
 };
 
 /**
@@ -72,8 +48,8 @@ export const healthComparisonService = {
     const gateway = new HealthRateTableAdapter(tx);
 
     for (const insurer of activeInsurers) {
-      // planKey (planCode|deductibleCode) -> lista de primas, una por miembro que sí tuvo precio
-      const plansByKey = new Map<string, { plan: HealthPlanQuote; prices: number[] }>();
+      // planKey (planCode|deductibleCode) -> prima de cada miembro que sí tuvo precio
+      const plansByKey = new Map<string, { plan: HealthPlanQuote; prices: Map<string, number> }>();
       let anyoneUnpriced = false;
 
       for (const member of members) {
@@ -82,6 +58,7 @@ export const healthComparisonService = {
           age: member.age,
           gender: member.gender,
           region: group.region,
+          relation: member.relation,
         });
 
         if (result.status === "PENDIENTE_MANUAL") {
@@ -91,48 +68,44 @@ export const healthComparisonService = {
 
         for (const plan of result.plans) {
           const key = `${plan.planCode}|${plan.deductibleCode ?? ""}`;
-          const entry = plansByKey.get(key) ?? { plan, prices: [] };
-          entry.prices.push(plan.premiumCents);
+          const entry = plansByKey.get(key) ?? { plan, prices: new Map<string, number>() };
+          entry.prices.set(member.id, plan.premiumCents);
           plansByKey.set(key, entry);
         }
       }
 
       if (anyoneUnpriced || plansByKey.size === 0) {
-        await tx.insert(quoteOptions).values({
-          organizationId,
-          quoteRiskId,
-          insurerId: insurer.id,
-          modality: "ANUAL",
-          source: "MANUAL",
-        });
+        // Sin tabla (BUPA): una opción por plan del Excel para digitar su prima; si no hay
+        // catálogo de planes, una sola opción por aseguradora.
+        const manualPlans = HEALTH_PLANS.filter((p) => p.insurerCode === insurer.code && p.manual);
+        await tx.insert(quoteOptions).values(
+          (manualPlans.length ? manualPlans.map((p) => p.planCode) : [null]).map((planCode) => ({
+            organizationId,
+            quoteRiskId,
+            insurerId: insurer.id,
+            modality: "ANUAL" as const,
+            planCode,
+            source: "MANUAL" as const,
+          })),
+        );
         continue;
       }
 
       for (const { plan, prices } of plansByKey.values()) {
         // Un plan solo se ofrece completo si TODOS los miembros tienen precio en él.
-        if (prices.length !== members.length) continue;
-        const netPremiumCents = prices.reduce((sum, p) => sum + p, 0);
+        if (prices.size !== members.length) continue;
+        const netPremiumCents = [...prices.values()].reduce((sum, p) => sum + p, 0);
+        const planCode = plan.deductibleCode ? `${plan.planCode}_${plan.deductibleCode}` : plan.planCode;
 
-        // OTROS CARGOS + 0.5% Seguro Campesino — reales, ver el comentario
-        // de HEALTH_OTROS_CARGOS_CENTS arriba. `emissionFeeCents` es el
-        // campo que ya existe en el esquema para un cargo fijo por
-        // emisión (mismo concepto que "Derechos de emisión" en Autos) —
-        // se reusa en vez de agregar una columna nueva.
-        const emissionFeeCents = HEALTH_OTROS_CARGOS_CENTS[insurer.code] ?? 0;
-        const subtotalCents = netPremiumCents + emissionFeeCents;
-        const campesinoCents = Math.round(subtotalCents * 0.005);
-        const totalPremiumCents = subtotalCents + campesinoCents;
-
+        // `emissionFeeCents` guarda OTROS CARGOS (mismo concepto que derechos de emisión en Autos).
         await tx.insert(quoteOptions).values({
           organizationId,
           quoteRiskId,
           insurerId: insurer.id,
           modality: "ANUAL",
-          planCode: plan.deductibleCode ? `${plan.planCode}_${plan.deductibleCode}` : plan.planCode,
-          netPremiumCents,
-          emissionFeeCents,
-          campesinoCents,
-          totalPremiumCents,
+          planCode,
+          ...healthPremium(netPremiumCents, otrosCargosCents(insurer.code, planCode)),
+          memberPremiums: Object.fromEntries(prices),
           source: "MANUAL",
         });
       }
@@ -147,7 +120,9 @@ export const healthComparisonService = {
         insurerCode: insurers.code,
         insurerName: insurers.name,
         planCode: quoteOptions.planCode,
+        netPremiumCents: quoteOptions.netPremiumCents,
         totalPremiumCents: quoteOptions.totalPremiumCents,
+        includedInOffer: quoteOptions.includedInOffer,
       })
       .from(quoteOptions)
       .innerJoin(insurers, eq(insurers.id, quoteOptions.insurerId))
@@ -163,10 +138,41 @@ export const healthComparisonService = {
       .sort((a, b) => (a.totalPremiumCents ?? Infinity) - (b.totalPremiumCents ?? Infinity));
   },
 
-  async setManualPremium(tx: Db, quoteOptionId: string, totalPremiumCents: number) {
-    await tx
-      .update(quoteOptions)
-      .set({ netPremiumCents: totalPremiumCents, totalPremiumCents })
-      .where(eq(quoteOptions.id, quoteOptionId));
+  /**
+   * Guarda la configuración de OFERTA AM: qué planes se muestran y la prima
+   * neta del grupo digitada a mano para planes sin tabla (BUPA), a la que se
+   * suman sus cargos igual que en el Excel. Solo acepta opciones de este riesgo.
+   */
+  async saveConfiguration(
+    tx: Db,
+    quoteRiskId: string,
+    input: { includedIds: string[]; premiums: Array<{ quoteOptionId: string; netPremiumCents: number | null }> },
+  ) {
+    const rows = await this.getComparisonForRisk(tx, quoteRiskId);
+    const byId = new Map(rows.map((r) => [r.quoteOptionId, r]));
+    for (const id of [...input.includedIds, ...input.premiums.map((p) => p.quoteOptionId)]) {
+      if (!byId.has(id)) throw new Error("Opción que no pertenece a esta cotización");
+    }
+
+    for (const { quoteOptionId, netPremiumCents } of input.premiums) {
+      const row = byId.get(quoteOptionId)!;
+      if (row.netPremiumCents === netPremiumCents) continue;
+      await tx
+        .update(quoteOptions)
+        .set(
+          netPremiumCents == null
+            ? { netPremiumCents: null, emissionFeeCents: null, campesinoCents: null, totalPremiumCents: null }
+            : healthPremium(netPremiumCents, otrosCargosCents(row.insurerCode, row.planCode)),
+        )
+        .where(eq(quoteOptions.id, quoteOptionId));
+    }
+
+    await tx.update(quoteOptions).set({ includedInOffer: false }).where(eq(quoteOptions.quoteRiskId, quoteRiskId));
+    if (input.includedIds.length) {
+      await tx
+        .update(quoteOptions)
+        .set({ includedInOffer: true })
+        .where(and(eq(quoteOptions.quoteRiskId, quoteRiskId), inArray(quoteOptions.id, input.includedIds)));
+    }
   },
 };

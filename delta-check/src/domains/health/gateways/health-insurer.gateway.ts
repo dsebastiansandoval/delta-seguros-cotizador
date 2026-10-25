@@ -1,6 +1,6 @@
 /**
  * Puerto de aseguradoras de Salud — mismo patrón que
- * domains/quoting/gateways/insurer.gateway.ts, pero con la forma de riesgo
+ * los adaptadores de Autos, pero con la forma de riesgo
  * que le corresponde a Salud (edad/sexo/región, no valor asegurado). Ver
  * ARCHITECTURE.md §5.
  */
@@ -9,6 +9,7 @@ export type HealthMemberInput = {
   age: number;
   gender: "MASCULINO" | "FEMENINO";
   region: "SIERRA" | "COSTA" | "AUSTRO";
+  relation: "TITULAR" | "DEPENDIENTE";
 };
 
 export type HealthPlanQuote = {

@@ -8,18 +8,16 @@ import { getCaratulaAMData } from "@/domains/health/services/caratula-am.service
 import { CaratulaAMDocument } from "@/domains/health/pdf/CaratulaAMDocument";
 import { audit } from "@/domains/shared/audit";
 
-/** Equivalente de Salud a /api/quotes/[quoteId]/caratula (Autos) — mismo contrato: ?quoteOptionId= repetible. */
+/** PDF de Salud (IMPRIMIR_OFERTA_AM): portada, carta y OFERTA AM con los planes marcados "Mostrar". */
 export async function GET(
-  request: Request,
+  _request: Request,
   { params }: { params: Promise<{ quoteId: string }> },
 ) {
   const { quoteId } = await params;
   const session = await requirePermission("quote:read");
 
-  const quoteOptionIds = new URL(request.url).searchParams.getAll("quoteOptionId");
-
   const data = await withOrganization(session.organizationId, async (tx) => {
-    const caratula = await getCaratulaAMData(tx, quoteId, quoteOptionIds.length > 0 ? quoteOptionIds : undefined);
+    const caratula = await getCaratulaAMData(tx, quoteId);
     if (caratula) {
       await audit(tx, {
         organizationId: session.organizationId,
@@ -35,7 +33,7 @@ export async function GET(
 
   if (!data) {
     return NextResponse.json(
-      { error: "Todavía no hay ninguna aseguradora cotizada para esta cotización" },
+      { error: "No hay planes marcados para mostrar en la oferta" },
       { status: 404 },
     );
   }

@@ -1,0 +1,716 @@
+[
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_I150",
+  "label": "SIGMA INCAPACIDAD",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_D150",
+  "label": "SIGMA 150",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_D250",
+  "label": "SIGMA 250",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_D500",
+  "label": "SIGMA 500",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_D1000",
+  "label": "SIGMA 1000",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "SIGMA_D2000",
+  "label": "SIGMA 2000",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "INNOVA_D250",
+  "label": "INNOVA 250",
+  "otrosCargos": 80.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "GMM_5K",
+  "label": "GMM 5.000",
+  "otrosCargos": 65.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "GMM_10K",
+  "label": "GMM 10.000",
+  "otrosCargos": 65.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "GMM_15K",
+  "label": "GMM 15.000",
+  "otrosCargos": 65.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BMI",
+  "planCode": "GMM_20K",
+  "label": "GMM 20.000",
+  "otrosCargos": 65.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_15_70",
+  "label": "STAR 15 - 70",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_15_70_1500",
+  "label": "STAR 15 - 70 - 1500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_15_70_2500",
+  "label": "STAR 15 - 70 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_30_90",
+  "label": "STAR 30 - 90",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_30_90_1500",
+  "label": "STAR 30 - 90 - 1500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_30_90_2500",
+  "label": "STAR 30 - 90 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "STAR_30_90_5000",
+  "label": "STAR 30 - 90 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_100",
+  "label": "SKY 70 PLUS - 100",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_100_1500",
+  "label": "SKY 70 PLUS - 100 - 1500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_100_2500",
+  "label": "SKY 70 PLUS - 100 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_100_5000",
+  "label": "SKY 70 PLUS - 100 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_200",
+  "label": "SKY 70 PLUS - 200",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_200_1500",
+  "label": "SKY 70 PLUS - 200 - 1500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_200_2500",
+  "label": "SKY 70 PLUS - 200 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_200_5000",
+  "label": "SKY 70 PLUS - 200 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_500",
+  "label": "SKY 70 PLUS - 500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_500_1500",
+  "label": "SKY 70 PLUS - 500 - 1500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_500_2500",
+  "label": "SKY 70 PLUS - 500 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "SKY_70_PLUS_500_5000",
+  "label": "SKY 70 PLUS - 500 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_150",
+  "label": "PRO 150 - 150",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_150_2500",
+  "label": "PRO 150 - 150 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_150_5000",
+  "label": "PRO 150 - 150 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_150_10000",
+  "label": "PRO 150 - 150 - 10000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_300",
+  "label": "PRO 150 - 300",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_300_2500",
+  "label": "PRO 150 - 300 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_300_5000",
+  "label": "PRO 150 - 300 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_150_300_10000",
+  "label": "PRO 150 - 300 - 10000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_200",
+  "label": "PRO 500 - 200",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_200_2500",
+  "label": "PRO 500 - 200 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_200_5000",
+  "label": "PRO 500 - 200 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_200_10000",
+  "label": "PRO 500 - 200 - 10000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_400",
+  "label": "PRO 500 - 400",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_400_2500",
+  "label": "PRO 500 - 400 - 2500",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_400_5000",
+  "label": "PRO 500 - 400 - 5000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUD",
+  "planCode": "PRO_500_400_10000",
+  "label": "PRO 500 - 400 - 10000",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "UNICO_7K_CON_MATERNIDAD",
+  "label": "UNICO 7K",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "UNICO_7K_SIN_MATERNIDAD",
+  "label": "UNICO 7K",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ESENCIAL_15K_CON_MATERNIDAD",
+  "label": "ESENCIAL 15K",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ESENCIAL_15K_SIN_MATERNIDAD",
+  "label": "ESENCIAL 15K",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRACTICO_30K_3_CON_MATERNIDAD",
+  "label": "PRACTICO 3",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRACTICO_30K_3_SIN_MATERNIDAD",
+  "label": "PRACTICO 3",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRACTICO_30K_3D_CON_MATERNIDAD",
+  "label": "PRACTICO 3D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRACTICO_30K_3D_SIN_MATERNIDAD",
+  "label": "PRACTICO 3D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "IDEAL_45K_4_CON_MATERNIDAD",
+  "label": "IDEAL 4",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "IDEAL_45K_4_SIN_MATERNIDAD",
+  "label": "IDEAL 4",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "IDEAL_45K_4D_CON_MATERNIDAD",
+  "label": "IDEAL 4D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "IDEAL_45K_4D_SIN_MATERNIDAD",
+  "label": "IDEAL 4D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ELITE_100K_5_CON_MATERNIDAD",
+  "label": "ELITE 5",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ELITE_100K_5_SIN_MATERNIDAD",
+  "label": "ELITE 5",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ELITE_100K_5D_CON_MATERNIDAD",
+  "label": "ELITE 5D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "ELITE_100K_5D_SIN_MATERNIDAD",
+  "label": "ELITE 5D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_1M_7_CON_MATERNIDAD",
+  "label": "PRIVILEGIO 7",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_1M_7_SIN_MATERNIDAD",
+  "label": "PRIVILEGIO 7",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_1M_7D_CON_MATERNIDAD",
+  "label": "PRIVILEGIO 7D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_1M_7D_SIN_MATERNIDAD",
+  "label": "PRIVILEGIO 7D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_PLUS_1M_8D_CON_MATERNIDAD",
+  "label": "PRIVILEGIO PLUS 8D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "SALUDSA",
+  "planCode": "PRIVILEGIO_PLUS_1M_8D_SIN_MATERNIDAD",
+  "label": "PRIVILEGIO PLUS 8D",
+  "otrosCargos": 28.32,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "10K_RED1_CON_MATERNIDAD",
+  "label": "RED 1 - 10K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "10K_RED1_SIN_MATERNIDAD",
+  "label": "RED 1 - 10K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "30K_RED1_CON_MATERNIDAD",
+  "label": "RED 1 - 30K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "30K_RED1_SIN_MATERNIDAD",
+  "label": "RED 1 - 30K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "60K_RED1_CON_MATERNIDAD",
+  "label": "RED 1 - 60K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "60K_RED1_SIN_MATERNIDAD",
+  "label": "RED 1 - 60K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "110K_RED1_CON_MATERNIDAD",
+  "label": "RED 1 - 110K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "110K_RED1_SIN_MATERNIDAD",
+  "label": "RED 1 - 110K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "10K_RED2_CON_MATERNIDAD",
+  "label": "RED 2 - 10K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "10K_RED2_SIN_MATERNIDAD",
+  "label": "RED 2 - 10K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "30K_RED2_CON_MATERNIDAD",
+  "label": "RED 2 - 30K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "30K_RED2_SIN_MATERNIDAD",
+  "label": "RED 2 - 30K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "60K_RED2_CON_MATERNIDAD",
+  "label": "RED 2 - 60K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "60K_RED2_SIN_MATERNIDAD",
+  "label": "RED 2 - 60K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "110K_RED2_CON_MATERNIDAD",
+  "label": "RED 2 - 110K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "CONFIAMED",
+  "planCode": "110K_RED2_SIN_MATERNIDAD",
+  "label": "RED 2 - 110K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "HUMANA",
+  "planCode": "PRACTIHUMANA_15",
+  "label": "PRACTIHUMANA 15K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "HUMANA",
+  "planCode": "PRACTIHUMANA_30",
+  "label": "PRACTIHUMANA 30K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "HUMANA",
+  "planCode": "METROHUMANA_50",
+  "label": "METROHUMANA 50K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "HUMANA",
+  "planCode": "METROHUMANA_80",
+  "label": "METROHUMANA 80K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "HUMANA",
+  "planCode": "METROHUMANA_150",
+  "label": "METROHUMANA 150K",
+  "otrosCargos": 0.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_BASE_35K",
+  "label": "PRIMERA BASE 35K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_PLUS_35K",
+  "label": "PRIMERA PLUS 35K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_COMPLETA_35K",
+  "label": "PRIMERA COMPLETA 35K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_BASE_55K",
+  "label": "PRIMERA BASE 55K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_PLUS_55K",
+  "label": "PRIMERA PLUS 55K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_COMPLETA_55K",
+  "label": "PRIMERA COMPLETA 55K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_BASE_125K",
+  "label": "PRIMERA BASE 125K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_PLUS_125K",
+  "label": "PRIMERA PLUS 125K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "BUPA",
+  "planCode": "PRIMERA_COMPLETA_125K",
+  "label": "PRIMERA COMPLETA 125K",
+  "otrosCargos": 0.0,
+  "manual": true
+ },
+ {
+  "insurerCode": "PRO",
+  "planCode": "PLAN_5000",
+  "label": "PLAN LIFE 5K",
+  "otrosCargos": 36.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "PRO",
+  "planCode": "PLAN_10000",
+  "label": "PLAN LIFE 10K",
+  "otrosCargos": 36.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "PRO",
+  "planCode": "PLAN_15000",
+  "label": "PLAN LIFE 15K",
+  "otrosCargos": 36.0,
+  "manual": false
+ },
+ {
+  "insurerCode": "VB",
+  "planCode": "PREDILECTO_20K_DENTAL_PLUS",
+  "label": "PLAN PREDILECTO 20K",
+  "otrosCargos": 36.0,
+  "manual": false
+ }
+]

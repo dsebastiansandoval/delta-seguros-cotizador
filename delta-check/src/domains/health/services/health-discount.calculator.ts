@@ -25,8 +25,8 @@ type DiscountRule =
   | { kind: "FIXED"; specialPercent: number; cashPercent: number | null }
   | { kind: "BY_GROUP_SIZE"; table: Record<number, number>; cashPercent: number | null };
 
-// Humana — PRACTIHUMANA 15K (BASES ASEGURADORAS AM!$AA$10:$AC$17)
-const PH15_TABLE: Record<number, number> = { 1: 0, 2: 0.03, 3: 0.11, 4: 0.18, 5: 0.24, 6: 0.24, 7: 0.24 };
+// Humana — PRACTIHUMANA 15K (BASES ASEGURADORAS AM!$AA$10:$AC$17, COTIZADOR ACTUALIZADO.xlsm)
+const PH15_TABLE: Record<number, number> = { 1: 0, 2: 0, 3: 0.23, 4: 0.3, 5: 0.3, 6: 0.3, 7: 0.3 };
 // Humana — PRACTIHUMANA 30K ($W$10:$Y$17)
 const PH30_TABLE: Record<number, number> = { 1: 0, 2: 0.09, 3: 0.17, 4: 0.24, 5: 0.3, 6: 0.3, 7: 0.3 };
 // Humana — PRACTIHUMANA 50K ($S$11:$U$14) — el Excel real solo define hasta 4

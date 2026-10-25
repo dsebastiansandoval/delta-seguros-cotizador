@@ -1,99 +1,167 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getHealthQuoteComparison } from "@/actions/health-quote.actions";
+import { getHealthOfferSheet, getHealthQuoteComparison } from "@/actions/health-quote.actions";
+import { coverageRows, coverageValueFor, memberLabels, planLabel } from "@/domains/health/services/health-offer-format";
 import { formatUSD } from "@/domains/shared/money";
-import { HealthManualPremiumForm } from "@/components/quoting/HealthManualPremiumForm";
 
-export default async function CompararSaludPage({
-  params,
-}: {
-  params: Promise<{ quoteId: string }>;
-}) {
+const labelCell = "sticky left-0 z-10 bg-surface px-3 py-1.5 text-left text-xs font-semibold";
+const dataCell = "px-3 py-1.5 text-center text-xs";
+
+function Section({ title, span }: { title: string; span: number }) {
+  return (
+    <tr className="bg-delta-navy text-white">
+      <th colSpan={span} className="sticky left-0 px-3 py-1.5 text-left text-xs font-bold uppercase tracking-wide">
+        {title}
+      </th>
+    </tr>
+  );
+}
+
+/** Comparativa de Salud en el formato de la hoja OFERTA AM. */
+export default async function CompararSaludPage({ params }: { params: Promise<{ quoteId: string }> }) {
   const { quoteId } = await params;
-  const data = await getHealthQuoteComparison(quoteId);
-  if (!data) notFound();
+  const [comparison, sheet] = await Promise.all([getHealthQuoteComparison(quoteId), getHealthOfferSheet(quoteId)]);
+  if (!comparison) notFound();
 
-  const { quote, rows } = data;
-  const best = rows.find((r) => r.status === "COTIZADO");
+  const offers = sheet?.offers ?? [];
+  const span = offers.length + 1;
+  const labels = sheet ? memberLabels(sheet.members) : [];
+
+  const money = (cents: number | null) => (cents != null ? formatUSD(cents) : "N/A");
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <header className="mb-6">
-        <h1 className="text-xl font-bold tracking-tight">Comparativa Salud — {quote.code}</h1>
-        <p className="mt-1 text-sm text-muted">
-          {rows.length} opciones · {rows.filter((r) => r.status === "COTIZADO").length} con prima
-          calculada, {rows.filter((r) => r.status === "PENDIENTE_MANUAL").length} pendientes de
-          digitar
-        </p>
+    <main className="mx-auto max-w-[1400px] p-8">
+      <header className="mb-6 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">Comparativa Salud — {comparison.quote.code}</h1>
+          <p className="mt-1 text-sm text-muted">{offers.length} planes en la oferta</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-3">
+          <Link href={`/cotizar/salud/${quoteId}/configurar`} className="rounded-lg border border-border px-4 py-2 text-sm font-semibold">
+            Configurar oferta
+          </Link>
+          {offers.length > 0 && (
+            <a
+              href={`/api/quotes/${quoteId}/caratula-am`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white"
+            >
+              Descargar oferta PDF
+            </a>
+          )}
+        </div>
       </header>
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
-        <table className="w-full min-w-[820px] text-sm">
-          <thead>
-            <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
-              <th className="px-4 py-3">Aseguradora</th>
-              <th className="px-4 py-3">Plan</th>
-              <th className="px-4 py-3">Estado</th>
-              <th className="px-4 py-3 text-right">Prima total (grupo)</th>
-              <th className="min-w-[140px] px-4 py-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.quoteOptionId} className="border-b border-border last:border-0">
-                <td className="whitespace-nowrap px-4 py-3 font-medium">{row.insurerName}</td>
-                <td className="whitespace-nowrap px-4 py-3 text-muted">{row.planCode ?? "—"}</td>
-                <td className="px-4 py-3">
-                  {row.status === "COTIZADO" ? (
-                    <span className="rounded-full bg-good-bg px-2 py-0.5 text-xs font-semibold text-good">
-                      Cotizado
-                    </span>
-                  ) : (
-                    <span className="rounded-full bg-warn-bg px-2 py-0.5 text-xs font-semibold text-warn">
-                      Pendiente — digitar
-                    </span>
-                  )}
-                </td>
-                <td className="px-4 py-3 text-right font-semibold tabular-nums">
-                  {row.totalPremiumCents != null ? (
-                    <span className={row.quoteOptionId === best?.quoteOptionId ? "text-highlight" : ""}>
-                      {formatUSD(row.totalPremiumCents)}
-                      {row.quoteOptionId === best?.quoteOptionId && " ★"}
-                    </span>
-                  ) : (
-                    <HealthManualPremiumForm quoteOptionId={row.quoteOptionId} quoteId={quoteId} />
-                  )}
-                </td>
-                <td className="px-4 py-3 text-right">
-                  {row.totalPremiumCents != null && (
-                    <div className="flex flex-col items-end gap-1">
-                      <a
-                        href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
-                        className="whitespace-nowrap text-xs font-semibold text-link underline"
-                      >
-                        Detalles del plan
-                      </a>
-                      <a
-                        href={`/api/quotes/${quoteId}/caratula-am?quoteOptionId=${row.quoteOptionId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="whitespace-nowrap text-xs font-semibold text-link underline"
-                      >
-                        Descargar carátula
-                      </a>
-                      <a
-                        href={`/cartera/emitir?quoteOptionId=${row.quoteOptionId}`}
-                        className="whitespace-nowrap text-xs font-semibold text-link underline"
-                      >
-                        Emitir póliza
-                      </a>
-                    </div>
-                  )}
-                </td>
+      {offers.length === 0 ? (
+        <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
+          Ningún plan está marcado para mostrarse — elígelos en &quot;Configurar oferta&quot;.
+        </p>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-border">
+                <th className={labelCell} />
+                {offers.map((o) => (
+                  <th key={o.quoteOptionId} className="min-w-40 px-3 py-2 text-center text-xs font-bold uppercase">
+                    {o.insurerName}
+                    <span className="block text-[10px] font-semibold text-muted">{planLabel(o.planCode)}</span>
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {coverageRows(offers).map(({ label, section, showSectionHeader }) => [
+                showSectionHeader && <Section key={`s-${section}`} title={section.replace(/_/g, " ")} span={span} />,
+                <tr key={label}>
+                  <th className={labelCell}>{label}</th>
+                  {offers.map((o) => (
+                    <td key={o.quoteOptionId} className={dataCell}>
+                      {coverageValueFor(o, label)}
+                    </td>
+                  ))}
+                </tr>,
+              ])}
+
+              <Section title="Titular — dependientes" span={span} />
+              {labels.map((label, m) => (
+                <tr key={label}>
+                  <th className={labelCell}>{label}</th>
+                  {offers.map((o) => (
+                    <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>
+                      {o.memberPremiumsCents[m] != null ? formatUSD(o.memberPremiumsCents[m]!) : ""}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              {(
+                [
+                  ["PRIMA NETA", (o) => formatUSD(o.netPremiumCents)],
+                  ["OTROS CARGOS", (o) => formatUSD(o.emissionFeeCents)],
+                  ["SUBTOTAL", (o) => formatUSD(o.netPremiumCents + o.emissionFeeCents)],
+                  ["0.50% SEGURO CAMPESINO", (o) => formatUSD(o.campesinoCents)],
+                ] as const satisfies ReadonlyArray<readonly [string, (o: (typeof offers)[number]) => string]>
+              ).map(([label, fmt]) => (
+                <tr key={label}>
+                  <th className={labelCell}>{label}</th>
+                  {offers.map((o) => (
+                    <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>
+                      {fmt(o)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+              <tr className="bg-warn-bg">
+                <th className={`${labelCell} bg-warn-bg font-bold`}>PRIMA TOTAL</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} font-bold tabular-nums text-link`}>
+                    {formatUSD(o.totalPremiumCents)}
+                  </td>
+                ))}
+              </tr>
+
+              <Section title="Valor mensual" span={span} />
+              <tr>
+                <th className={labelCell}>Total sin descuento</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(o.sinDescuentoCents)}</td>
+                ))}
+              </tr>
+              <tr>
+                <th className={labelCell}>Total con descuento especial</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(o.conDescuentoEspecialCents)}</td>
+                ))}
+              </tr>
+              <tr>
+                <th className={labelCell}>Total con descuento de contado</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(o.conDescuentoContadoCents)}</td>
+                ))}
+              </tr>
+
+              <Section title="Formas de pago" span={span} />
+              <tr>
+                <th className={labelCell}>Tarjeta de crédito (sin intereses)</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={dataCell}>Hasta 12 meses</td>
+                ))}
+              </tr>
+              <tr>
+                <th className={`${labelCell} text-muted`}>Emitir póliza</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={dataCell}>
+                    <Link href={`/cartera/emitir?quoteOptionId=${o.quoteOptionId}`} className="text-[11px] font-semibold text-link underline">
+                      Emitir
+                    </Link>
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </main>
   );
 }
