@@ -6,8 +6,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
-import { requirePermission } from "@/domains/identity/services/rbac.service";
-import { clientRepository } from "@/domains/clients/repositories/client.repository";
+import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
+import { clientService } from "@/domains/clients/services/client.service";
 import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
 import { healthComparisonService } from "@/domains/health/services/health-comparison.service";
@@ -22,6 +22,7 @@ export async function createHealthQuote(
   formData: FormData,
 ): Promise<ActionResult<{ quoteId: string }>> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "SALUD");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const parsed = newHealthQuoteSchema.safeParse(Object.fromEntries(formData));
@@ -38,20 +39,17 @@ export async function createHealthQuote(
   }
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
-    const existing = await clientRepository.findByDocument(tx, input.documentNumber);
-    const client =
-      existing ??
-      (await clientRepository.create(tx, {
-        organizationId: session.organizationId,
-        personType: input.personType,
-        documentType: input.documentType,
-        documentNumber: input.documentNumber,
-        firstName: input.firstName,
-        lastName: input.lastName,
-        source: input.source,
-        executive: input.executive,
-        assignedAgentId: session.userId,
-      }));
+    const client = await clientService.upsertByDocument(tx, {
+      organizationId: session.organizationId,
+      personType: input.personType,
+      documentType: input.documentType,
+      documentNumber: input.documentNumber,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      source: input.source,
+      executive: input.executive,
+      assignedAgentId: session.userId,
+    });
 
     const { quote, risk } = await healthQuoteService.createHealthQuote(tx, {
       organizationId: session.organizationId,
@@ -91,6 +89,7 @@ export async function saveHealthOfferConfiguration(
   formData: FormData,
 ): Promise<ActionResult> {
   const session = await requirePermission("quote:create");
+  requireBranch(session, "SALUD");
   await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
 
   const quoteId = z.uuid().safeParse(formData.get("quoteId"));
@@ -133,6 +132,7 @@ export async function saveHealthOfferConfiguration(
 
 export async function getHealthOfferSheet(quoteId: string) {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "SALUD");
   return withOrganization(session.organizationId, (tx) => getCaratulaAMData(tx, quoteId));
 }
 
@@ -144,6 +144,7 @@ export async function getHealthOfferSheet(quoteId: string) {
  */
 export async function listMyHealthQuotes() {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "SALUD");
 
   return withOrganization(session.organizationId, (tx) =>
     tx
@@ -163,6 +164,7 @@ export async function listMyHealthQuotes() {
 
 export async function getHealthQuoteComparison(quoteId: string) {
   const session = await requirePermission("quote:read");
+  requireBranch(session, "SALUD");
 
   return withOrganization(session.organizationId, async (tx) => {
     const quote = await healthQuoteService.findById(tx, quoteId);
