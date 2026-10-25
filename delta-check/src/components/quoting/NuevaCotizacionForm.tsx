@@ -75,7 +75,7 @@ export function NuevaCotizacionForm({
         <legend className="col-span-full text-sm font-semibold">Modalidad</legend>
         <label className="flex flex-col gap-1 text-sm">
           Tipo de póliza
-          <select name="modality" defaultValue="ANUAL" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select name="modality" defaultValue="ANUAL" className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="ANUAL">Anual</option>
             <option value="POR_KM">Auto x Km</option>
           </select>
@@ -87,7 +87,7 @@ export function NuevaCotizacionForm({
             ref={operationTypeRef}
             name="operationType"
             defaultValue="NUEVA"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           >
             <option value="NUEVA">Nueva</option>
             <option value="RENOVACION">Renovación</option>
@@ -106,7 +106,7 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Tipo de persona
-          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="NATURAL">Natural</option>
             <option value="JURIDICA">Jurídica</option>
           </select>
@@ -118,7 +118,7 @@ export function NuevaCotizacionForm({
             ref={documentTypeRef}
             name="documentType"
             defaultValue="CEDULA"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           >
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
@@ -133,7 +133,7 @@ export function NuevaCotizacionForm({
             name="documentNumber"
             required
             onBlur={documentLookup.onBlur}
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <FieldError errors={errors} name="documentNumber" />
           {documentLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
@@ -150,7 +150,7 @@ export function NuevaCotizacionForm({
             ref={provinceRef}
             readOnly
             placeholder="—"
-            className="rounded-lg border border-border bg-background px-3 py-2 text-muted"
+            className="rounded-lg border border-border bg-surface px-3 py-2 text-muted"
           />
         </label>
 
@@ -177,12 +177,12 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Nombres
-          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
           Apellidos
-          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
@@ -192,7 +192,7 @@ export function NuevaCotizacionForm({
             list="sources-datalist"
             placeholder="Escribe o elige de la lista"
             autoComplete="off"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <datalist id="sources-datalist">
             {sources.map((s) => (
@@ -208,7 +208,7 @@ export function NuevaCotizacionForm({
             list="executives-datalist"
             placeholder="Escribe o elige de la lista"
             autoComplete="off"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <datalist id="executives-datalist">
             {executives.map((ex) => (
@@ -271,7 +271,7 @@ export function NuevaCotizacionForm({
               required
               placeholder="PBX-1234"
               onBlur={plateLookup.onBlur}
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
             <FieldError errors={errors} name="plate1" />
             {plateLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
@@ -302,7 +302,7 @@ export function NuevaCotizacionForm({
                   );
                 }
               }}
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
             <datalist id="brand-suggestions-1">
               {brands.map((b) => (
@@ -319,7 +319,7 @@ export function NuevaCotizacionForm({
               list="model-suggestions-1"
               required
               placeholder="Escribe o elige de la lista al seleccionar marca"
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
             <datalist ref={modelDatalistRef} id="model-suggestions-1" />
           </label>
@@ -332,7 +332,7 @@ export function NuevaCotizacionForm({
               type="number"
               required
               defaultValue={new Date().getFullYear()}
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
           </label>
 
@@ -342,7 +342,7 @@ export function NuevaCotizacionForm({
               ref={bodyTypeRef}
               name="bodyType1"
               defaultValue="LIVIANO"
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               <option value="LIVIANO">Liviano</option>
               <option value="PICKUP">Pickup</option>
@@ -351,7 +351,7 @@ export function NuevaCotizacionForm({
 
           <label className="flex flex-col gap-1 text-sm">
             Color
-            <input ref={colorRef} name="color1" className="rounded-lg border border-border bg-background px-3 py-2" />
+            <input ref={colorRef} name="color1" className="rounded-lg border border-border bg-surface px-3 py-2" />
           </label>
 
           <label className="flex flex-col gap-1 text-sm">
@@ -362,7 +362,7 @@ export function NuevaCotizacionForm({
               type="number"
               step="0.01"
               required
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
             <FieldError errors={errors} name="commercialValueDollars1" />
           </label>
@@ -379,7 +379,7 @@ export function NuevaCotizacionForm({
               type="number"
               step="0.01"
               defaultValue={0}
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             />
           </label>
 
@@ -389,7 +389,7 @@ export function NuevaCotizacionForm({
               ref={vehicleProvinceRef}
               name="province1"
               defaultValue=""
-              className="rounded-lg border border-border bg-background px-3 py-2"
+              className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               <option value="">Selecciona una provincia</option>
               {ECUADOR_PROVINCES.map((p) => (
@@ -402,7 +402,7 @@ export function NuevaCotizacionForm({
 
           <label className="flex flex-col gap-1 text-sm">
             Ciudad
-            <input ref={cityRef} name="city1" className="rounded-lg border border-border bg-background px-3 py-2" />
+            <input ref={cityRef} name="city1" className="rounded-lg border border-border bg-surface px-3 py-2" />
           </label>
 
           <label className="col-span-full flex items-center gap-2 text-sm">

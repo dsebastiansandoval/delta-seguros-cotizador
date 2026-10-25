@@ -34,7 +34,7 @@ function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRem
       <AgeOrBirthDateField namePrefix={`dep${fieldNumber}`} />
       <label className="flex flex-col gap-1 text-sm">
         Sexo
-        <select name={`dep${fieldNumber}Gender`} defaultValue="" className="rounded-lg border border-border bg-background px-3 py-2">
+        <select name={`dep${fieldNumber}Gender`} defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
           <option value="">—</option>
           <option value="MASCULINO">Masculino</option>
           <option value="FEMENINO">Femenino</option>
@@ -64,7 +64,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         <legend className="col-span-full text-sm font-semibold">Cliente</legend>
         <label className="flex flex-col gap-1 text-sm">
           Tipo de persona
-          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="NATURAL">Natural</option>
             <option value="JURIDICA">Jurídica</option>
           </select>
@@ -75,7 +75,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
             ref={documentTypeRef}
             name="documentType"
             defaultValue="CEDULA"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           >
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
@@ -88,7 +88,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
             name="documentNumber"
             required
             onBlur={documentLookup.onBlur}
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           {documentLookup.pending && <p className="text-xs text-muted">Buscando…</p>}
           {documentLookup.message && (
@@ -103,16 +103,16 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
             ref={provinceRef}
             readOnly
             placeholder="—"
-            className="rounded-lg border border-border bg-background px-3 py-2 text-muted"
+            className="rounded-lg border border-border bg-surface px-3 py-2 text-muted"
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Nombres
-          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Apellidos
-          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Fuente
@@ -121,7 +121,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
             list="sources-datalist"
             placeholder="Escribe o elige de la lista"
             autoComplete="off"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <datalist id="sources-datalist">
             {sources.map((s) => (
@@ -136,7 +136,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
             list="executives-datalist"
             placeholder="Escribe o elige de la lista"
             autoComplete="off"
-            className="rounded-lg border border-border bg-background px-3 py-2"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <datalist id="executives-datalist">
             {executives.map((ex) => (
@@ -146,7 +146,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Región
-          <select name="region" defaultValue="SIERRA" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select name="region" defaultValue="SIERRA" className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="SIERRA">Sierra</option>
             <option value="COSTA">Costa</option>
             <option value="AUSTRO">Austro</option>
@@ -159,7 +159,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
         <AgeOrBirthDateField namePrefix="titular" required />
         <label className="flex flex-col gap-1 text-sm">
           Sexo
-          <select name="titularGender" defaultValue="MASCULINO" className="rounded-lg border border-border bg-background px-3 py-2">
+          <select name="titularGender" defaultValue="MASCULINO" className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="MASCULINO">Masculino</option>
             <option value="FEMENINO">Femenino</option>
           </select>

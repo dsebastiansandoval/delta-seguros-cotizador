@@ -16,7 +16,7 @@ export function ClaimStatusForm({ claimId, status }: { claimId: string; status: 
       <select
         name="status"
         defaultValue={status}
-        className="rounded-md border border-border bg-background px-2 py-1 text-xs"
+        className="rounded-md border border-border bg-surface px-2 py-1 text-xs"
       >
         {STATUSES.map((s) => (
           <option key={s} value={s}>

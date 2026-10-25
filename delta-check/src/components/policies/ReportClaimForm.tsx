@@ -16,33 +16,33 @@ export function ReportClaimForm({ policyId }: { policyId: string }) {
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Fecha del siniestro
-          <input type="date" name="occurredAt" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input type="date" name="occurredAt" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Fecha de reporte
-          <input type="date" name="reportedAt" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input type="date" name="reportedAt" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 
       <label className="flex flex-col gap-1 text-sm">
         Descripción
-        <textarea name="description" rows={3} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <textarea name="description" rows={3} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Taller
-          <input name="workshop" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="workshop" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Asesor
-          <input name="advisorName" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="advisorName" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 
       <label className="flex flex-col gap-1 text-sm">
         Contacto
-        <input name="contactPhone" className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="contactPhone" className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       <label className="flex items-center gap-2 text-sm">
@@ -53,22 +53,22 @@ export function ReportClaimForm({ policyId }: { policyId: string }) {
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Placa del tercero (RC)
-          <input name="thirdPartyPlate" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="thirdPartyPlate" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Valor estimado del siniestro (USD)
-          <input name="claimValueDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="claimValueDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Valor del tercero — RC (USD)
-          <input name="thirdPartyValueDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="thirdPartyValueDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Deducible aplicado (USD)
-          <input name="deductibleAppliedDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="deductibleAppliedDollars" type="number" step="0.01" min="0" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 

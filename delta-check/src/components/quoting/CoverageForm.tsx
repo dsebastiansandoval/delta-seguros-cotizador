@@ -53,7 +53,7 @@ export function CoverageForm({ quoteOptionId, coverages }: { quoteOptionId: stri
                         name={`amount_${c.coverageId}`}
                         defaultValue={c.amountCents != null ? centsToDollars(c.amountCents) : ""}
                         placeholder="0.00"
-                        className="w-32 rounded-md border border-border bg-background px-2 py-1"
+                        className="w-32 rounded-md border border-border bg-surface px-2 py-1"
                       />
                     </div>
                   )}
@@ -63,7 +63,7 @@ export function CoverageForm({ quoteOptionId, coverages }: { quoteOptionId: stri
                       name={`text_${c.coverageId}`}
                       defaultValue={c.textValue ?? ""}
                       placeholder="Ej. 2 años, No otorga, 30 días…"
-                      className="w-full max-w-sm rounded-md border border-border bg-background px-2 py-1"
+                      className="w-full max-w-sm rounded-md border border-border bg-surface px-2 py-1"
                     />
                   )}
                 </td>

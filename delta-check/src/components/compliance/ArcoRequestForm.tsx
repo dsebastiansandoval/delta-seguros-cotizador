@@ -13,12 +13,12 @@ export function ArcoRequestForm() {
     <form action={formAction} className="flex flex-col gap-4">
       <label className="flex flex-col gap-1 text-sm">
         Documento del titular
-        <input name="documentNumber" required className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="documentNumber" required className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
         Tipo de solicitud
-        <select name="type" defaultValue="ACCESO" className="rounded-lg border border-border bg-background px-3 py-2">
+        <select name="type" defaultValue="ACCESO" className="rounded-lg border border-border bg-surface px-3 py-2">
           <option value="ACCESO">Acceso — ver qué datos tenemos de él/ella</option>
           <option value="RECTIFICACION">Rectificación — corregir un dato</option>
           <option value="CANCELACION">Cancelación — eliminar/anonimizar sus datos</option>
@@ -28,12 +28,12 @@ export function ArcoRequestForm() {
 
       <label className="flex flex-col gap-1 text-sm">
         Canal — cómo llegó el pedido
-        <input name="channel" placeholder="Email, teléfono, presencial…" className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="channel" placeholder="Email, teléfono, presencial…" className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
         Notas
-        <textarea name="notes" rows={3} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <textarea name="notes" rows={3} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       {state?.ok === false && "form" in state.errors && (

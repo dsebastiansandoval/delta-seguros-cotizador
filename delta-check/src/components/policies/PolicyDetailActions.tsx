@@ -29,7 +29,7 @@ export function SetPolicyNumberForm({ policyId }: { policyId: string }) {
         name="policyNumber"
         placeholder="Número de póliza"
         required
-        className="w-40 rounded-md border border-border bg-background px-2 py-1 text-sm"
+        className="w-40 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
       <button
         type="submit"
@@ -69,7 +69,7 @@ export function CancelPolicyForm({ policyId }: { policyId: string }) {
         name="cancellationReason"
         placeholder="Motivo de cancelación"
         required
-        className="w-56 rounded-md border border-border bg-background px-2 py-1 text-sm"
+        className="w-56 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
       <button
         type="submit"
@@ -97,7 +97,7 @@ export function GenerateInstallmentsForm({ policyId, premiumDollars }: { policyI
           max={12}
           defaultValue={12}
           required
-          className="ml-1 w-14 rounded-md border border-border bg-background px-2 py-1 text-sm"
+          className="ml-1 w-14 rounded-md border border-border bg-surface px-2 py-1 text-sm"
         />
       </label>
       <label className="text-xs text-muted">
@@ -109,12 +109,12 @@ export function GenerateInstallmentsForm({ policyId, premiumDollars }: { policyI
           min="0"
           defaultValue={premiumDollars}
           required
-          className="ml-1 w-24 rounded-md border border-border bg-background px-2 py-1 text-sm"
+          className="ml-1 w-24 rounded-md border border-border bg-surface px-2 py-1 text-sm"
         />
       </label>
       <label className="text-xs text-muted">
         Primera cuota
-        <input name="firstDueDate" type="date" className="ml-1 rounded-md border border-border bg-background px-2 py-1 text-sm" />
+        <input name="firstDueDate" type="date" className="ml-1 rounded-md border border-border bg-surface px-2 py-1 text-sm" />
       </label>
       <button
         type="submit"
@@ -158,7 +158,7 @@ export function SetCommissionForm({ commissionId }: { commissionId: string }) {
         max="100"
         placeholder="% comisión"
         required
-        className="w-24 rounded-md border border-border bg-background px-2 py-1 text-sm"
+        className="w-24 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
       <button
         type="submit"

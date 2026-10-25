@@ -81,7 +81,7 @@ export default async function LoginPage({
                 name="email"
                 type="email"
                 defaultValue="dev@deltaseguros.local"
-                className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
+                className="rounded-lg border border-border bg-surface px-3 py-2 text-sm"
               />
               <button
                 type="submit"

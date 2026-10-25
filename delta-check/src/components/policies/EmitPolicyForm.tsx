@@ -17,29 +17,29 @@ export function EmitPolicyForm({ quoteOptionId }: { quoteOptionId: string }) {
         Número de póliza (POLIZA) — dejalo vacío si la aseguradora todavía no lo asigna
         <input
           name="policyNumber"
-          className="rounded-lg border border-border bg-background px-3 py-2"
+          className="rounded-lg border border-border bg-surface px-3 py-2"
         />
       </label>
 
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Anexo
-          <input name="annexNumber" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="annexNumber" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Factura
-          <input name="invoiceNumber" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input name="invoiceNumber" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <label className="flex flex-col gap-1 text-sm">
           Vigencia desde
-          <input type="date" name="startsAt" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input type="date" name="startsAt" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Vigencia hasta
-          <input type="date" name="endsAt" className="rounded-lg border border-border bg-background px-3 py-2" />
+          <input type="date" name="endsAt" className="rounded-lg border border-border bg-surface px-3 py-2" />
         </label>
       </div>
 
@@ -50,7 +50,7 @@ export function EmitPolicyForm({ quoteOptionId }: { quoteOptionId: string }) {
 
       <label className="flex flex-col gap-1 text-sm">
         Observaciones
-        <textarea name="notes" rows={2} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <textarea name="notes" rows={2} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       {state?.ok === false && "form" in state.errors && (

@@ -61,23 +61,23 @@ export function RectifyClientForm({
 
       <label className="flex flex-col gap-1 text-sm">
         Nombres
-        <input name="firstName" defaultValue={current.firstName ?? ""} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="firstName" defaultValue={current.firstName ?? ""} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Apellidos
-        <input name="lastName" defaultValue={current.lastName ?? ""} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="lastName" defaultValue={current.lastName ?? ""} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Razón social
-        <input name="businessName" defaultValue={current.businessName ?? ""} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="businessName" defaultValue={current.businessName ?? ""} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Email
-        <input name="email" type="email" defaultValue={current.email ?? ""} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="email" type="email" defaultValue={current.email ?? ""} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
       <label className="flex flex-col gap-1 text-sm">
         Teléfono
-        <input name="phone" defaultValue={current.phone ?? ""} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input name="phone" defaultValue={current.phone ?? ""} className="rounded-lg border border-border bg-surface px-3 py-2" />
       </label>
 
       <div className="col-span-full">
@@ -147,7 +147,7 @@ export function UpdateArcoStatusForm({ requestId, status }: { requestId: string;
   return (
     <form action={formAction} className="flex flex-wrap items-center gap-2">
       <input type="hidden" name="requestId" value={requestId} />
-      <select name="status" defaultValue={status} className="rounded-md border border-border bg-background px-2 py-1 text-sm">
+      <select name="status" defaultValue={status} className="rounded-md border border-border bg-surface px-2 py-1 text-sm">
         <option value="EN_PROCESO">En proceso</option>
         <option value="COMPLETADA">Completada</option>
         <option value="RECHAZADA">Rechazada</option>
@@ -155,7 +155,7 @@ export function UpdateArcoStatusForm({ requestId, status }: { requestId: string;
       <input
         name="resolutionNotes"
         placeholder="Notas de resolución (opcional)"
-        className="w-56 rounded-md border border-border bg-background px-2 py-1 text-sm"
+        className="w-56 rounded-md border border-border bg-surface px-2 py-1 text-sm"
       />
       <button
         type="submit"

@@ -26,7 +26,7 @@ export function ManualPremiumForm({
         min="0"
         placeholder="Prima neta USD"
         required
-        className="w-28 rounded-md border border-border bg-background px-2 py-1 text-right text-xs"
+        className="w-28 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
       />
       <button
         type="submit"
