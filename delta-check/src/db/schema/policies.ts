@@ -1,6 +1,14 @@
 import { bigint, boolean, date, integer, numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { id, organizationId, timestamps } from "./_helpers";
-import { branchEnum, claimStatusEnum, commissionStatusEnum, issueStatusEnum, lifecycleStatusEnum, paymentStatusEnum } from "./enums";
+import {
+  branchEnum,
+  claimStatusEnum,
+  commissionDiscountStatusEnum,
+  commissionStatusEnum,
+  issueStatusEnum,
+  lifecycleStatusEnum,
+  paymentStatusEnum,
+} from "./enums";
 import { quoteOptions } from "./quoting";
 import { insurers } from "./catalog";
 import { clients } from "./clients";
@@ -37,6 +45,7 @@ export const policies = pgTable("policies", {
   annexNumber: text("annex_number"),
   cancelledAt: date("cancelled_at"),
   cancellationReason: text("cancellation_reason"),
+  cancelledPremiumCents: bigint("cancelled_premium_cents", { mode: "number" }), // PRIMA de BASE CANCELADAS
   notes: text("notes"), // OBSERVACIONES, columna en las 5 hojas BASE_*
   // Trazabilidad de origen SoftSeguros y de pólizas "creadas por error"
   // (ver ARCHITECTURE.md §5b.4) — nunca se borran, se marcan.
@@ -96,6 +105,11 @@ export const commissions = pgTable("commissions", {
   amountCents: bigint("amount_cents", { mode: "number" }),
   status: commissionStatusEnum("status").notNull().default("PENDIENTE"),
   paidAt: timestamp("paid_at", { withTimezone: true }),
+  // Al cancelar la póliza la aseguradora descuenta la comisión de la prima
+  // cancelada (BASE CANCELADAS, columna COMISION: PENDIENTE → DESCONTADA).
+  discountStatus: commissionDiscountStatusEnum("discount_status"),
+  discountAmountCents: bigint("discount_amount_cents", { mode: "number" }),
+  discountedAt: timestamp("discounted_at", { withTimezone: true }),
   notes: text("notes"),
 });
 

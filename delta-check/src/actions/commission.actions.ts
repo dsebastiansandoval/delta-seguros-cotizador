@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { withOrganization } from "@/db";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { commissionService } from "@/domains/policies/services/commission.service";
-import { markCommissionPaidSchema, setCommissionSchema } from "@/domains/policies/schemas/policy.schema";
+import { PolicyStateError } from "@/domains/policies/services/policy.service";
+import { markCommissionDiscountedSchema, markCommissionPaidSchema, setCommissionSchema } from "@/domains/policies/schemas/policy.schema";
 import { audit } from "@/domains/shared/audit";
 import type { ActionResult } from "./quote.actions";
 
@@ -54,6 +55,36 @@ export async function markCommissionPaid(
   });
 
   revalidatePath("/comisiones");
+  return { ok: true, value: undefined };
+}
+
+export async function markCommissionDiscounted(
+  _prevState: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const session = await requirePermission("commission:manage");
+
+  const parsed = markCommissionDiscountedSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
+
+  try {
+    await withOrganization(session.organizationId, async (tx) => {
+      await commissionService.markDiscounted(tx, parsed.data.commissionId);
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "commission.discounted",
+        entityType: "commissions",
+        entityId: parsed.data.commissionId,
+      });
+    });
+  } catch (error) {
+    if (error instanceof PolicyStateError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+
+  revalidatePath("/comisiones");
+  if (parsed.data.policyId) revalidatePath(`/cartera/${parsed.data.policyId}`);
   return { ok: true, value: undefined };
 }
 

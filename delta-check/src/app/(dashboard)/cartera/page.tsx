@@ -4,6 +4,7 @@ import { formatUSD } from "@/domains/shared/money";
 
 const ISSUE_LABEL: Record<string, string> = {
   PENDIENTE: "Pendiente",
+  INSPECCION: "Inspección",
   EMITIDA: "Emitida",
   NO_EMITIDA: "No emitida",
 };
@@ -15,7 +16,14 @@ export default async function CarteraPage({
   searchParams: Promise<{ estado?: string }>;
 }) {
   const { estado } = await searchParams;
-  const lifecycleStatus = estado === "canceladas" ? "CANCELADA" : estado === "vigentes" ? "VIGENTE" : undefined;
+  const lifecycleStatus =
+    estado === "canceladas"
+      ? "CANCELADA"
+      : estado === "en-cancelacion"
+        ? "CANCELACION_PENDIENTE"
+        : estado === "vigentes"
+          ? "VIGENTE"
+          : undefined;
   const policies = await listPolicies(lifecycleStatus ? { lifecycleStatus } : undefined);
 
   return (
@@ -29,6 +37,12 @@ export default async function CarteraPage({
           </Link>
           <Link href="/cartera?estado=vigentes" className={estado === "vigentes" ? "font-semibold text-link" : "text-muted"}>
             Vigentes
+          </Link>
+          <Link
+            href="/cartera?estado=en-cancelacion"
+            className={estado === "en-cancelacion" ? "font-semibold text-link" : "text-muted"}
+          >
+            En cancelación
           </Link>
           <Link href="/cartera?estado=canceladas" className={estado === "canceladas" ? "font-semibold text-link" : "text-muted"}>
             Canceladas
@@ -69,6 +83,10 @@ export default async function CarteraPage({
                     {p.lifecycleStatus === "CANCELADA" ? (
                       <span className="rounded-full bg-bad-bg px-2 py-0.5 text-xs font-semibold text-bad">
                         Cancelada
+                      </span>
+                    ) : p.lifecycleStatus === "CANCELACION_PENDIENTE" ? (
+                      <span className="rounded-full bg-warn-bg px-2 py-0.5 text-xs font-semibold text-warn">
+                        En cancelación
                       </span>
                     ) : (
                       <span className="rounded-full bg-good-bg px-2 py-0.5 text-xs font-semibold text-good">

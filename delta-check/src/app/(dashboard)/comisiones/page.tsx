@@ -1,7 +1,11 @@
 import { listCommissions, listMyCommissions } from "@/actions/commission.actions";
 import { formatUSD } from "@/domains/shared/money";
 import { ForbiddenError } from "@/domains/identity/services/rbac.service";
-import { SetCommissionForm, MarkCommissionPaidButton } from "@/components/policies/PolicyDetailActions";
+import {
+  MarkCommissionDiscountedButton,
+  MarkCommissionPaidButton,
+  SetCommissionForm,
+} from "@/components/policies/PolicyDetailActions";
 
 /** SUPERVISOR/ADMIN ven todas; AGENTE solo las propias (commission:read_own) — mismo criterio que ARCHITECTURE.md §8.4. */
 async function loadCommissions() {
@@ -38,6 +42,7 @@ export default async function ComisionesPage() {
               <th className="px-4 py-3 text-right">%</th>
               <th className="px-4 py-3 text-right">Comisión</th>
               <th className="px-4 py-3">Estado</th>
+              <th className="px-4 py-3 text-right">Descuento</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
@@ -63,20 +68,35 @@ export default async function ComisionesPage() {
                       {c.status}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
-                    {all && c.status === "PENDIENTE" && (
-                      <div className="flex items-center gap-2">
-                        <SetCommissionForm commissionId={c.id} />
-                        {c.percent && <MarkCommissionPaidButton commissionId={c.id} />}
-                      </div>
+                  <td className="px-4 py-3 text-right">
+                    {c.discountStatus ? (
+                      <span className={c.discountStatus === "DESCONTADA" ? "text-good" : "text-warn"}>
+                        <span className="tabular-nums">
+                          {c.discountAmountCents != null ? `−${formatUSD(c.discountAmountCents)}` : "sin %"}
+                        </span>{" "}
+                        · {c.discountStatus}
+                      </span>
+                    ) : (
+                      "—"
                     )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      {all && c.status === "PENDIENTE" && (
+                        <>
+                          <SetCommissionForm commissionId={c.id} />
+                          {c.percent && <MarkCommissionPaidButton commissionId={c.id} />}
+                        </>
+                      )}
+                      {all && c.discountStatus === "PENDIENTE" && <MarkCommissionDiscountedButton commissionId={c.id} />}
+                    </div>
                   </td>
                 </tr>
               );
             })}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-muted">
+                <td colSpan={9} className="px-4 py-8 text-center text-muted">
                   Sin comisiones todavía — se crean automáticamente al emitir una póliza.
                 </td>
               </tr>

@@ -146,7 +146,10 @@ export const dashboardService = {
       conversion: { quotesTotal, policiesEmitidas, rate: conversionRate },
       cartera: {
         vigentes: policyStats.find((r) => r.lifecycleStatus === "VIGENTE")?.total ?? 0,
-        canceladas: policyStats.find((r) => r.lifecycleStatus === "CANCELADA")?.total ?? 0,
+        // Una cancelación pedida (aún sin confirmar por la aseguradora) ya cuenta como cancelada.
+        canceladas: policyStats
+          .filter((r) => r.lifecycleStatus === "CANCELADA" || r.lifecycleStatus === "CANCELACION_PENDIENTE")
+          .reduce((sum, r) => sum + r.total, 0),
         primaVigenteCents: Number(policyStats.find((r) => r.lifecycleStatus === "VIGENTE")?.primaCents ?? 0),
       },
       comisiones: {

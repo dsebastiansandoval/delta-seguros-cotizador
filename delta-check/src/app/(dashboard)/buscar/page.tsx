@@ -8,7 +8,11 @@ const QUOTE_STATUS_LABEL: Record<string, string> = {
   VENCIDA: "Vencida",
 };
 
-const LIFECYCLE_LABEL: Record<string, string> = { VIGENTE: "Vigente", CANCELADA: "Cancelada" };
+const LIFECYCLE_LABEL: Record<string, string> = {
+  VIGENTE: "Vigente",
+  CANCELACION_PENDIENTE: "En cancelación",
+  CANCELADA: "Cancelada",
+};
 
 function quoteHref(quote: { id: string; branch: "AUTOS" | "SALUD" }) {
   return quote.branch === "AUTOS" ? `/cotizar/autos/${quote.id}/comparar` : `/cotizar/salud/${quote.id}/comparar`;

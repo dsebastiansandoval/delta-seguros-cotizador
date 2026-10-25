@@ -5,16 +5,18 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
-import { policyService } from "@/domains/policies/services/policy.service";
+import { PolicyStateError, policyService } from "@/domains/policies/services/policy.service";
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { insurers } from "@/db/schema/catalog";
 import { clients } from "@/db/schema/clients";
 import {
   cancelPolicySchema,
+  confirmCancellationSchema,
   emitPolicySchema,
   generateInstallmentsSchema,
   markInstallmentPaidSchema,
   markPolicyPaidSchema,
+  setIssueStatusSchema,
   setPolicyNumberSchema,
 } from "@/domains/policies/schemas/policy.schema";
 import { dollarsToCents } from "@/domains/shared/money";
@@ -127,22 +129,94 @@ export async function cancelPolicy(
   const parsed = cancelPolicySchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
 
-  await withOrganization(session.organizationId, async (tx) => {
-    await policyService.cancel(
-      tx,
-      session.organizationId,
-      session.userId,
-      parsed.data.policyId,
-      parsed.data.cancellationReason,
-    );
-    await audit(tx, {
-      organizationId: session.organizationId,
-      userId: session.userId,
-      action: "policy.cancelled",
-      entityType: "policies",
-      entityId: parsed.data.policyId,
+  try {
+    await withOrganization(session.organizationId, async (tx) => {
+      await policyService.cancel(tx, session.organizationId, session.userId, parsed.data.policyId, {
+        reason: parsed.data.cancellationReason,
+        cancelledPremiumCents: dollarsToCents(parsed.data.cancelledPremiumDollars),
+        confirmed: parsed.data.confirmed,
+      });
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "policy.cancelled",
+        entityType: "policies",
+        entityId: parsed.data.policyId,
+        metadata: { confirmed: parsed.data.confirmed },
+      });
     });
-  });
+  } catch (error) {
+    if (error instanceof PolicyStateError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+
+  revalidatePath(`/cartera/${parsed.data.policyId}`);
+  revalidatePath("/cartera");
+  revalidatePath("/comisiones");
+  return { ok: true, value: undefined };
+}
+
+export async function confirmCancellation(
+  _prevState: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const session = await requirePermission("policy:manage");
+
+  const parsed = confirmCancellationSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
+
+  try {
+    await withOrganization(session.organizationId, async (tx) => {
+      await policyService.confirmCancellation(tx, session.organizationId, session.userId, parsed.data.policyId);
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "policy.cancellation_confirmed",
+        entityType: "policies",
+        entityId: parsed.data.policyId,
+      });
+    });
+  } catch (error) {
+    if (error instanceof PolicyStateError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+
+  revalidatePath(`/cartera/${parsed.data.policyId}`);
+  revalidatePath("/cartera");
+  return { ok: true, value: undefined };
+}
+
+export async function setIssueStatus(
+  _prevState: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  const session = await requirePermission("policy:manage");
+
+  const parsed = setIssueStatusSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
+
+  try {
+    await withOrganization(session.organizationId, async (tx) => {
+      await policyService.setIssueStatus(
+        tx,
+        session.organizationId,
+        session.userId,
+        parsed.data.policyId,
+        parsed.data.issueStatus,
+      );
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "policy.issue_status_set",
+        entityType: "policies",
+        entityId: parsed.data.policyId,
+        metadata: { issueStatus: parsed.data.issueStatus },
+      });
+    });
+  } catch (error) {
+    if (error instanceof PolicyStateError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
 
   revalidatePath(`/cartera/${parsed.data.policyId}`);
   revalidatePath("/cartera");
@@ -202,7 +276,7 @@ export async function markInstallmentPaid(
   return { ok: true, value: undefined };
 }
 
-export async function listPolicies(filters?: { lifecycleStatus?: "VIGENTE" | "CANCELADA" }) {
+export async function listPolicies(filters?: { lifecycleStatus?: "VIGENTE" | "CANCELACION_PENDIENTE" | "CANCELADA" }) {
   const session = await requirePermission("quote:read");
   return withOrganization(session.organizationId, (tx) => policyService.list(tx, filters));
 }

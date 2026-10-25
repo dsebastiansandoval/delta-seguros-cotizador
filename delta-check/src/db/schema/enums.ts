@@ -53,10 +53,14 @@ export const autoCoverageTypeEnum = pgEnum("auto_coverage_type", ["TODO_RIESGO",
 export const quoteSourceEnum = pgEnum("quote_source", ["MANUAL", "API"]);
 export const paymentMethodEnum = pgEnum("payment_method", ["CONTADO", "TARJETA"]);
 
-export const issueStatusEnum = pgEnum("issue_status", ["PENDIENTE", "EMITIDA", "NO_EMITIDA"]);
+// INSPECCION = estatus propio de BASE EMISIONES (INFO GENERAL!AD30): la aseguradora espera la inspección del vehículo.
+export const issueStatusEnum = pgEnum("issue_status", ["PENDIENTE", "INSPECCION", "EMITIDA", "NO_EMITIDA"]);
 export const paymentStatusEnum = pgEnum("payment_status", ["PENDIENTE", "PAGADO"]);
-export const lifecycleStatusEnum = pgEnum("lifecycle_status", ["VIGENTE", "CANCELADA"]);
+// CANCELACION_PENDIENTE = ESTATUS "PENDIENTE" de BASE CANCELADAS: pedida pero la aseguradora aún no la confirma.
+export const lifecycleStatusEnum = pgEnum("lifecycle_status", ["VIGENTE", "CANCELACION_PENDIENTE", "CANCELADA"]);
 export const commissionStatusEnum = pgEnum("commission_status", ["PENDIENTE", "COMISIONADA"]);
+// Columna COMISION de BASE CANCELADAS (INFO GENERAL!AG34:AG35).
+export const commissionDiscountStatusEnum = pgEnum("commission_discount_status", ["PENDIENTE", "DESCONTADA"]);
 export const claimStatusEnum = pgEnum("claim_status", ["REPORTADO", "APROBADO", "REPARADO"]);
 
 export const integrationProviderEnum = pgEnum("integration_provider", ["SOFTSEGUROS"]);

@@ -134,6 +134,13 @@
       "when": 1792900617196,
       "tag": "0018_health_rate_relation",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792930462739,
+      "tag": "0019_policy_cancellation_inspection",
+      "breakpoints": true
     }
   ]
 }

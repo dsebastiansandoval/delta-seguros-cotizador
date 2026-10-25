@@ -3,13 +3,23 @@ import { getPolicyDetail } from "@/actions/policy.actions";
 import { formatUSD, centsToDollars } from "@/domains/shared/money";
 import {
   CancelPolicyForm,
+  ConfirmCancellationButton,
   GenerateInstallmentsForm,
+  IssueStatusForm,
+  MarkCommissionDiscountedButton,
   MarkCommissionPaidButton,
   MarkInstallmentPaidButton,
   MarkPolicyPaidButton,
   SetCommissionForm,
   SetPolicyNumberForm,
 } from "@/components/policies/PolicyDetailActions";
+
+const ISSUE_LABEL: Record<string, string> = {
+  PENDIENTE: "Pendiente",
+  INSPECCION: "Inspección",
+  EMITIDA: "Emitida",
+  NO_EMITIDA: "No emitida",
+};
 
 export default async function PolicyDetailPage({
   params,
@@ -22,7 +32,7 @@ export default async function PolicyDetailPage({
 
   const { policy, insurerName, clientFirstName, clientLastName, clientBusinessName, clientDocumentNumber, commission, installments } = detail;
   const clientName = clientBusinessName || `${clientFirstName ?? ""} ${clientLastName ?? ""}`.trim();
-  const isCancelled = policy.lifecycleStatus === "CANCELADA";
+  const isCancelled = policy.lifecycleStatus !== "VIGENTE";
 
   return (
     <main className="mx-auto max-w-4xl p-8">
@@ -35,9 +45,13 @@ export default async function PolicyDetailPage({
             {insurerName} · {clientName} ({clientDocumentNumber}) · {policy.branch}
           </p>
         </div>
-        {isCancelled ? (
+        {policy.lifecycleStatus === "CANCELADA" ? (
           <span className="rounded-full bg-bad-bg px-3 py-1 text-xs font-semibold text-bad">
             Cancelada — {policy.cancellationReason}
+          </span>
+        ) : policy.lifecycleStatus === "CANCELACION_PENDIENTE" ? (
+          <span className="rounded-full bg-warn-bg px-3 py-1 text-xs font-semibold text-warn">
+            Cancelación pendiente — {policy.cancellationReason}
           </span>
         ) : (
           <span className="rounded-full bg-good-bg px-3 py-1 text-xs font-semibold text-good">
@@ -55,7 +69,7 @@ export default async function PolicyDetailPage({
           </div>
           <div>
             <dt className="text-muted">Emisión</dt>
-            <dd>{policy.issueStatus}</dd>
+            <dd>{ISSUE_LABEL[policy.issueStatus]}</dd>
           </div>
           <div>
             <dt className="text-muted">Pago</dt>
@@ -73,11 +87,29 @@ export default async function PolicyDetailPage({
             <dt className="text-muted">Vigencia</dt>
             <dd>{policy.startsAt || "—"} → {policy.endsAt || "—"}</dd>
           </div>
+          {isCancelled && (
+            <div>
+              <dt className="text-muted">Cancelación</dt>
+              <dd>
+                {policy.cancelledAt} ·{" "}
+                <span className="tabular-nums">
+                  {policy.cancelledPremiumCents != null ? formatUSD(policy.cancelledPremiumCents) : "—"}
+                </span>
+              </dd>
+            </div>
+          )}
         </dl>
+
+        {policy.lifecycleStatus === "CANCELACION_PENDIENTE" && (
+          <div className="mt-4 border-t border-border pt-4">
+            <ConfirmCancellationButton policyId={policy.id} />
+          </div>
+        )}
 
         {!isCancelled && (
           <div className="mt-4 flex flex-wrap items-center gap-4 border-t border-border pt-4">
             {!policy.policyNumber && <SetPolicyNumberForm policyId={policy.id} />}
+            {policy.issueStatus !== "EMITIDA" && <IssueStatusForm policyId={policy.id} current={policy.issueStatus} />}
             {policy.paymentStatus === "PENDIENTE" && <MarkPolicyPaidButton policyId={policy.id} />}
             <a href={`/siniestros/nuevo?policyId=${policy.id}`} className="text-xs font-semibold text-link underline">
               Reportar siniestro
@@ -102,6 +134,25 @@ export default async function PolicyDetailPage({
               <div className="flex items-center gap-3">
                 <SetCommissionForm commissionId={commission.id} />
                 {commission.percent && <MarkCommissionPaidButton commissionId={commission.id} />}
+              </div>
+            )}
+            {commission.discountStatus && (
+              <div className="flex w-full flex-wrap items-center justify-between gap-4 border-t border-border pt-3">
+                <div>
+                  Descuento por cancelación ·{" "}
+                  {commission.discountAmountCents != null ? (
+                    <span className="tabular-nums">{formatUSD(commission.discountAmountCents)}</span>
+                  ) : (
+                    "fija el % para calcularlo"
+                  )}{" "}
+                  ·{" "}
+                  <span className={commission.discountStatus === "DESCONTADA" ? "text-good" : "text-warn"}>
+                    {commission.discountStatus}
+                  </span>
+                </div>
+                {commission.discountStatus === "PENDIENTE" && (
+                  <MarkCommissionDiscountedButton commissionId={commission.id} policyId={policy.id} />
+                )}
               </div>
             )}
           </div>
@@ -149,7 +200,10 @@ export default async function PolicyDetailPage({
       {!isCancelled && (
         <section className="rounded-xl border border-border bg-surface p-6 shadow-sm">
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted">Cancelar póliza</h2>
-          <CancelPolicyForm policyId={policy.id} />
+          <CancelPolicyForm
+            policyId={policy.id}
+            premiumDollars={policy.premiumCents != null ? centsToDollars(policy.premiumCents) : null}
+          />
         </section>
       )}
     </main>

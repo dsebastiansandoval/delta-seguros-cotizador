@@ -1,9 +1,10 @@
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import type { Db } from "@/db";
 import { commissions, policies } from "@/db/schema/policies";
 import { insurers } from "@/db/schema/catalog";
 import { clients } from "@/db/schema/clients";
 import { applyPercent } from "@/domains/shared/money";
+import { PolicyStateError } from "./policy.service";
 
 /**
  * `% COMISION` es texto/número libre en el Excel, sin tabla por aseguradora
@@ -17,9 +18,16 @@ export const commissionService = {
 
     const amountCents = applyPercent(existing.baseAmountCents, percent);
 
+    // Si la póliza ya se canceló, el descuento se recalcula con el nuevo %.
+    let discountAmountCents = existing.discountAmountCents;
+    if (existing.discountStatus === "PENDIENTE") {
+      const [policy] = await tx.select().from(policies).where(eq(policies.id, existing.policyId));
+      if (policy?.cancelledPremiumCents != null) discountAmountCents = applyPercent(policy.cancelledPremiumCents, percent);
+    }
+
     const [updated] = await tx
       .update(commissions)
-      .set({ percent: percent.toFixed(2), amountCents })
+      .set({ percent: percent.toFixed(2), amountCents, discountAmountCents })
       .where(eq(commissions.id, commissionId))
       .returning();
     return updated;
@@ -31,6 +39,17 @@ export const commissionService = {
       .set({ status: "COMISIONADA", paidAt: new Date() })
       .where(eq(commissions.id, commissionId))
       .returning();
+    return updated;
+  },
+
+  /** La aseguradora ya descontó la comisión de la póliza cancelada (COMISION → DESCONTADA). */
+  async markDiscounted(tx: Db, commissionId: string) {
+    const [updated] = await tx
+      .update(commissions)
+      .set({ discountStatus: "DESCONTADA", discountedAt: new Date() })
+      .where(and(eq(commissions.id, commissionId), eq(commissions.discountStatus, "PENDIENTE")))
+      .returning();
+    if (!updated) throw new PolicyStateError("Esta comisión no tiene un descuento pendiente");
     return updated;
   },
 
@@ -49,6 +68,8 @@ export const commissionService = {
         amountCents: commissions.amountCents,
         status: commissions.status,
         paidAt: commissions.paidAt,
+        discountStatus: commissions.discountStatus,
+        discountAmountCents: commissions.discountAmountCents,
       })
       .from(commissions)
       .innerJoin(policies, eq(policies.id, commissions.policyId))

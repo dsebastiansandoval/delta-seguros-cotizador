@@ -29,9 +29,21 @@ export const emitPolicySchema = z.object({
 });
 export type EmitPolicyInput = z.infer<typeof emitPolicySchema>;
 
+/** Campos = columnas de BASE_CANCELADAS: PRIMA (cancelada) y ESTATUS (PENDIENTE / CANCELADA). */
 export const cancelPolicySchema = z.object({
   policyId: z.uuid(),
   cancellationReason: z.string().min(1, "Indica el motivo de cancelación"),
+  cancelledPremiumDollars: z.coerce.number().nonnegative("La prima cancelada no puede ser negativa"),
+  confirmed: z.preprocess((v) => v === "on" || v === "true", z.boolean()).default(false),
+});
+
+export const confirmCancellationSchema = z.object({
+  policyId: z.uuid(),
+});
+
+export const setIssueStatusSchema = z.object({
+  policyId: z.uuid(),
+  issueStatus: z.enum(["PENDIENTE", "INSPECCION", "NO_EMITIDA"]),
 });
 
 export const markPolicyPaidSchema = z.object({
@@ -63,6 +75,11 @@ export const setCommissionSchema = z.object({
 
 export const markCommissionPaidSchema = z.object({
   commissionId: z.uuid(),
+});
+
+export const markCommissionDiscountedSchema = z.object({
+  commissionId: z.uuid(),
+  policyId: z.uuid().optional(), // para revalidar el detalle de la póliza
 });
 
 /**

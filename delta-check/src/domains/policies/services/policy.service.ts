@@ -4,7 +4,11 @@ import { policies, policyEvents, policyInstallments, commissions } from "@/db/sc
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { insurers } from "@/db/schema/catalog";
 import { clients } from "@/db/schema/clients";
+import { applyPercent } from "@/domains/shared/money";
 import type { EmitPolicyInput } from "../schemas/policy.schema";
+
+/** Regla de estado de la póliza violada — el mensaje se muestra tal cual al usuario. */
+export class PolicyStateError extends Error {}
 
 /**
  * Orquesta cartera — emitir, cobrar, cancelar. `emitPolicy` reproduce el
@@ -37,7 +41,7 @@ export const policyService = {
         insurerId: option.insurerId,
         clientId: quote.clientId,
         branch: quote.branch,
-        issueStatus: input.policyNumber ? "EMITIDA" : "PENDIENTE",
+        issueStatus: input.policyNumber ? "EMITIDA" : input.inspectionRequired ? "INSPECCION" : "PENDIENTE",
         annexNumber: input.annexNumber,
         invoiceNumber: input.invoiceNumber,
         inspectionRequired: input.inspectionRequired,
@@ -111,25 +115,109 @@ export const policyService = {
     return updated;
   },
 
-  /** BASE_CANCELADAS — nunca se borra la póliza, se marca (mismo criterio que policies.isVoid). */
-  async cancel(tx: Db, organizationId: string, userId: string, policyId: string, reason: string) {
+  /** Estatus de BASE EMISIONES mientras no hay número de póliza (EMITIDA se fija con setPolicyNumber). */
+  async setIssueStatus(
+    tx: Db,
+    organizationId: string,
+    userId: string,
+    policyId: string,
+    status: "PENDIENTE" | "INSPECCION" | "NO_EMITIDA",
+  ) {
+    const policy = await policyService.findById(tx, policyId);
+    if (!policy) throw new Error("Póliza no encontrada");
+    if (policy.issueStatus === "EMITIDA") throw new PolicyStateError("La póliza ya está emitida");
+
     const [updated] = await tx
       .update(policies)
-      .set({
-        lifecycleStatus: "CANCELADA",
-        cancelledAt: new Date().toISOString().slice(0, 10),
-        cancellationReason: reason,
-        updatedAt: new Date(),
-      })
+      .set({ issueStatus: status, updatedAt: new Date() })
       .where(eq(policies.id, policyId))
       .returning();
 
     await tx.insert(policyEvents).values({
       organizationId,
       policyId,
+      eventType: "ISSUE_STATUS_CHANGED",
+      fromStatus: policy.issueStatus,
+      toStatus: status,
+      userId,
+    });
+
+    return updated;
+  },
+
+  /**
+   * BASE_CANCELADAS — nunca se borra la póliza, se marca (mismo criterio que
+   * policies.isVoid). Si la aseguradora todavía no la confirma queda en
+   * CANCELACION_PENDIENTE (ESTATUS "PENDIENTE" del Excel). La comisión queda
+   * por descontar sobre la prima cancelada (columna COMISION "PENDIENTE").
+   */
+  async cancel(
+    tx: Db,
+    organizationId: string,
+    userId: string,
+    policyId: string,
+    params: { reason: string; cancelledPremiumCents: number; confirmed: boolean },
+  ) {
+    const policy = await policyService.findById(tx, policyId);
+    if (!policy) throw new Error("Póliza no encontrada");
+    if (policy.lifecycleStatus !== "VIGENTE") throw new PolicyStateError("La póliza ya está en cancelación");
+    if (policy.premiumCents != null && params.cancelledPremiumCents > policy.premiumCents) {
+      throw new PolicyStateError("La prima cancelada no puede ser mayor a la prima de la póliza");
+    }
+
+    const status = params.confirmed ? "CANCELADA" : "CANCELACION_PENDIENTE";
+    const [updated] = await tx
+      .update(policies)
+      .set({
+        lifecycleStatus: status,
+        cancelledAt: new Date().toISOString().slice(0, 10),
+        cancellationReason: params.reason,
+        cancelledPremiumCents: params.cancelledPremiumCents,
+        updatedAt: new Date(),
+      })
+      .where(eq(policies.id, policyId))
+      .returning();
+
+    const [commission] = await tx.select().from(commissions).where(eq(commissions.policyId, policyId));
+    if (commission) {
+      await tx
+        .update(commissions)
+        .set({
+          discountStatus: "PENDIENTE",
+          discountAmountCents:
+            commission.percent != null ? applyPercent(params.cancelledPremiumCents, Number(commission.percent)) : null,
+        })
+        .where(eq(commissions.id, commission.id));
+    }
+
+    await tx.insert(policyEvents).values({
+      organizationId,
+      policyId,
       eventType: "CANCELLED",
+      fromStatus: policy.lifecycleStatus,
+      toStatus: status,
+      notes: params.reason,
+      userId,
+    });
+
+    return updated;
+  },
+
+  /** La aseguradora confirmó la cancelación: ESTATUS PENDIENTE → CANCELADA. */
+  async confirmCancellation(tx: Db, organizationId: string, userId: string, policyId: string) {
+    const [updated] = await tx
+      .update(policies)
+      .set({ lifecycleStatus: "CANCELADA", updatedAt: new Date() })
+      .where(and(eq(policies.id, policyId), eq(policies.lifecycleStatus, "CANCELACION_PENDIENTE")))
+      .returning();
+    if (!updated) throw new PolicyStateError("La póliza no tiene una cancelación pendiente");
+
+    await tx.insert(policyEvents).values({
+      organizationId,
+      policyId,
+      eventType: "CANCELLATION_CONFIRMED",
+      fromStatus: "CANCELACION_PENDIENTE",
       toStatus: "CANCELADA",
-      notes: reason,
       userId,
     });
 
@@ -216,7 +304,7 @@ export const policyService = {
   },
 
   /** Cartera — lista completa o filtrada por vigencia (pendientes vs. canceladas), con datos para mostrar en tabla. */
-  async list(tx: Db, filters?: { lifecycleStatus?: "VIGENTE" | "CANCELADA" }) {
+  async list(tx: Db, filters?: { lifecycleStatus?: "VIGENTE" | "CANCELACION_PENDIENTE" | "CANCELADA" }) {
     const conditions = filters?.lifecycleStatus
       ? [eq(policies.lifecycleStatus, filters.lifecycleStatus)]
       : [];

@@ -3,12 +3,14 @@
 import { useActionState } from "react";
 import {
   cancelPolicy,
+  confirmCancellation,
   generateInstallments,
   markInstallmentPaid,
   markPolicyPaid,
+  setIssueStatus,
   setPolicyNumber,
 } from "@/actions/policy.actions";
-import { setCommissionPercent, markCommissionPaid } from "@/actions/commission.actions";
+import { setCommissionPercent, markCommissionDiscounted, markCommissionPaid } from "@/actions/commission.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 
 const initial: ActionResult | null = null;
@@ -60,23 +62,96 @@ export function MarkPolicyPaidButton({ policyId }: { policyId: string }) {
   );
 }
 
-export function CancelPolicyForm({ policyId }: { policyId: string }) {
-  const [state, formAction, pending] = useActionState(cancelPolicy, initial);
+/** Mismas opciones de ESTATUS que BASE EMISIONES; EMITIDA se marca al asignar el número de póliza. */
+export function IssueStatusForm({ policyId, current }: { policyId: string; current: string }) {
+  const [state, formAction, pending] = useActionState(setIssueStatus, initial);
   return (
     <form action={formAction} className="flex items-center gap-2">
       <input type="hidden" name="policyId" value={policyId} />
-      <input
-        name="cancellationReason"
-        placeholder="Motivo de cancelación"
-        required
-        className="w-56 rounded-md border border-border bg-surface px-2 py-1 text-sm"
-      />
+      <select
+        name="issueStatus"
+        defaultValue={current}
+        aria-label="Estatus de emisión"
+        className="rounded-md border border-border bg-surface px-2 py-1 text-sm"
+      >
+        <option value="PENDIENTE">Pendiente</option>
+        <option value="INSPECCION">Inspección</option>
+        <option value="NO_EMITIDA">No emitida</option>
+      </select>
+      <button
+        type="submit"
+        disabled={pending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {pending ? "…" : "Cambiar estatus"}
+      </button>
+      <ErrorText state={state} />
+    </form>
+  );
+}
+
+/** BASE CANCELADAS: motivo, prima cancelada y si la aseguradora ya la confirmó (ESTATUS CANCELADA vs PENDIENTE). */
+export function CancelPolicyForm({ policyId, premiumDollars }: { policyId: string; premiumDollars: number | null }) {
+  const [state, formAction, pending] = useActionState(cancelPolicy, initial);
+  return (
+    <form action={formAction} className="flex flex-col gap-3">
+      <input type="hidden" name="policyId" value={policyId} />
+      <div className="flex flex-wrap items-end gap-3">
+        <label className="flex flex-col gap-1 text-xs text-muted">
+          Motivo
+          <input
+            name="cancellationReason"
+            placeholder="Motivo de cancelación"
+            required
+            className="w-56 rounded-md border border-border bg-surface px-2 py-1 text-sm text-foreground"
+          />
+        </label>
+        <label className="flex flex-col gap-1 text-xs text-muted">
+          Prima cancelada USD
+          <input
+            name="cancelledPremiumDollars"
+            type="number"
+            step="0.01"
+            min="0"
+            max={premiumDollars ?? undefined}
+            defaultValue={premiumDollars ?? undefined}
+            required
+            className="w-32 rounded-md border border-border bg-surface px-2 py-1 text-right text-sm text-foreground"
+          />
+        </label>
+        <label className="flex items-center gap-2 pb-1 text-sm">
+          <input type="checkbox" name="confirmed" />
+          Ya confirmada por la aseguradora
+        </label>
+      </div>
+      <p className="text-xs text-muted">
+        La comisión queda por descontar sobre la prima cancelada.
+      </p>
+      <div className="flex items-center gap-3">
+        <button
+          type="submit"
+          disabled={pending}
+          className="rounded-md bg-red-700 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-60"
+        >
+          {pending ? "…" : "Cancelar póliza"}
+        </button>
+        <ErrorText state={state} />
+      </div>
+    </form>
+  );
+}
+
+export function ConfirmCancellationButton({ policyId }: { policyId: string }) {
+  const [state, formAction, pending] = useActionState(confirmCancellation, initial);
+  return (
+    <form action={formAction} className="flex items-center gap-2">
+      <input type="hidden" name="policyId" value={policyId} />
       <button
         type="submit"
         disabled={pending}
         className="rounded-md bg-red-700 px-3 py-1.5 text-xs font-semibold text-white disabled:opacity-60"
       >
-        {pending ? "…" : "Cancelar póliza"}
+        {pending ? "…" : "Aseguradora confirmó la cancelación"}
       </button>
       <ErrorText state={state} />
     </form>
@@ -184,6 +259,24 @@ export function MarkCommissionPaidButton({ commissionId }: { commissionId: strin
       >
         {pending ? "…" : "Marcar comisionada"}
       </button>
+    </form>
+  );
+}
+
+export function MarkCommissionDiscountedButton({ commissionId, policyId }: { commissionId: string; policyId?: string }) {
+  const [state, formAction, pending] = useActionState(markCommissionDiscounted, initial);
+  return (
+    <form action={formAction} className="flex items-center gap-2">
+      <input type="hidden" name="commissionId" value={commissionId} />
+      {policyId && <input type="hidden" name="policyId" value={policyId} />}
+      <button
+        type="submit"
+        disabled={pending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {pending ? "…" : "Marcar descontada"}
+      </button>
+      <ErrorText state={state} />
     </form>
   );
 }
