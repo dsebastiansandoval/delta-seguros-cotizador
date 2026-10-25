@@ -57,6 +57,9 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
       access?.permissions.has("user:manage")
         ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
         : { href: "#", label: "Usuarios", disabled: true },
+      ...(access?.permissions.has("rate:edit")
+        ? [{ href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" }]
+        : []),
       { href: "#", label: "Configuración", disabled: true },
       { href: "#", label: "Back-office", disabled: true },
     ],

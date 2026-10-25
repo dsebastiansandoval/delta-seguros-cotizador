@@ -1,8 +1,9 @@
 /**
  * Tarifas de Salud de una organización desde reference-data/salud_tarifas.json
  * (generado por reference-data/extract_salud_from_excel.py a partir del
- * cotizador .xlsm de Delta). Reemplaza las tablas de Salud existentes, así que
- * se puede volver a correr cada vez que las aseguradoras actualizan tarifas.
+ * cotizador .xlsm de Delta). Borra todas las tablas de Salud existentes: es
+ * para la carga inicial. Las actualizaciones de cada aseguradora se
+ * hacen desde /admin/tarifas-salud, que versiona por fecha en vez de borrar.
  *
  * Uso: npm run db:seed:salud
  */

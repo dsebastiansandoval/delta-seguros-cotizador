@@ -1,6 +1,7 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, lte } from "drizzle-orm";
 import type { Db } from "@/db";
 import { healthRateRules, rateTables } from "@/db/schema/catalog";
+import { todayInEcuador } from "../services/health-rate-admin.service";
 
 export type HealthRateRule = typeof healthRateRules.$inferSelect;
 
@@ -18,8 +19,15 @@ export const healthRateRepository = {
     const [table] = await tx
       .select()
       .from(rateTables)
-      .where(and(eq(rateTables.insurerId, params.insurerId), eq(rateTables.isConfirmed, true)))
-      // Las tarifas cambian una vez al año: manda la tabla vigente más reciente.
+      .where(
+        and(
+          eq(rateTables.insurerId, params.insurerId),
+          eq(rateTables.isConfirmed, true),
+          lte(rateTables.validFrom, todayInEcuador()),
+        ),
+      )
+      // Las tarifas cambian una vez al año: manda la tabla vigente más reciente. Una cargada
+      // con fecha futura (/admin/tarifas-salud) no cotiza hasta ese día.
       .orderBy(desc(rateTables.validFrom))
       .limit(1);
     if (!table) return [];
