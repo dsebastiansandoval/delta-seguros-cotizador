@@ -874,6 +874,8 @@ El provider `MicrosoftEntraID` ya estaba en `auth.ts` desde antes (§11.3), pero
 
 **Verificación:** 5 tests unitarios de `isAllowedMicrosoftEmail` (dominio exacto, mayúsculas, dominio distinto, dominio parecido pero no igual, `null`/`undefined`/vacío). Confirmado en el navegador real, con y sin credenciales configuradas (`.env.local` temporal, restaurado después): sin credenciales el botón no aparece y el texto explica el estado; con credenciales de prueba, el botón sí aparece. Los dos mensajes de rechazo (`?error=dominio`, `?error=sin-acceso`) confirmados renderizando el texto correcto vía `curl` sobre el HTML servido. El flujo OAuth real contra Azure no se pudo probar — Delta todavía no generó el `Tenant ID`/`Client ID`/`Client Secret` reales (§11.3, sigue siendo lo único pendiente de este lado).
 
+**Corrección posterior (generalizar el chequeo de "existe y está activo"):** el `signIn` original solo aplicaba el caso 2 (correo sin fila en `users`) cuando `account.provider === "microsoft-entra-id"` — cualquier otro provider (en ese momento solo Google, sin credenciales) devolvía `true` sin pasar por ese chequeo. No era explotable (sin `organizationId` el RBAC de `rbac.service.ts` no otorga ningún permiso), pero el día que Google se activara, una cuenta de Gmail desconocida habría quedado "logueada" sin el mensaje claro de `?error=sin-acceso`. El chequeo de existencia/activo ahora corre para cualquier provider salvo `dev-login` (cuyo propio `authorize` ya lo garantiza); el filtro de dominio `@deltaseguros.com.ec` sigue siendo exclusivo de Microsoft — Google todavía no tiene una política de dominio definida (sigue en `README.md` → Próximos pasos).
+
 ---
 
 ## 20. Modo oscuro/claro — toggle manual

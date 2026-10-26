@@ -83,24 +83,35 @@ export const {
   },
   callbacks: {
     /**
-     * Filtro de dominio para Microsoft — Delta Check es multi-tenant
-     * (ARCHITECTURE.md §1b), así que "cualquier cuenta de Microsoft válida"
-     * no es suficiente: solo @deltaseguros.com.ec puede entrar por acá.
-     * Además, igual que el provider de desarrollo (`if (!user) return
-     * null`, más arriba), solo entra quien ya existe y está activo en
-     * `users` — no hay alta automática en el primer login; el ADMIN da de
-     * alta la cuenta en /admin/usuarios.
+     * "Existe y está activo en `users`" se exige para CUALQUIER provider
+     * (menos `dev-login`, cuyo propio `authorize` ya lo garantiza más
+     * arriba) — no solo Microsoft. Antes este chequeo estaba condicionado a
+     * `provider === "microsoft-entra-id"`: con Google todavía sin
+     * credenciales (AUTH_GOOGLE_ID/SECRET vacíos) nunca se notó, pero el día
+     * que se activara, cualquier cuenta de Gmail habría quedado "logueada"
+     * sin pasar por este filtro — sin permisos reales (RBAC exige
+     * `organizationId`, rbac.service.ts), pero sin el mensaje claro de
+     * "sin acceso" tampoco. No hay alta automática en el primer login para
+     * ningún provider; el ADMIN da de alta la cuenta en /admin/usuarios.
+     *
+     * El filtro de dominio (@deltaseguros.com.ec) sigue siendo SOLO de
+     * Microsoft — Delta es multi-tenant (§1b) y ese dominio es el de Delta,
+     * pero Google no tiene todavía una política de dominio definida (no hay
+     * Google Workspace de por medio); queda pendiente en README.md.
+     *
      * Cada rechazo redirige a /login con un motivo distinto en vez del
      * "AccessDenied" genérico de Auth.js.
      */
     async signIn({ user, account }) {
-      if (account?.provider !== "microsoft-entra-id") return true;
+      if (account?.provider === "dev-login") return true;
 
-      if (!isAllowedMicrosoftEmail(user.email)) {
+      if (account?.provider === "microsoft-entra-id" && !isAllowedMicrosoftEmail(user.email)) {
         return "/login?error=dominio";
       }
 
-      const email = user.email!.toLowerCase();
+      const email = user.email?.toLowerCase();
+      if (!email) return "/login?error=sin-acceso";
+
       const [dbUser] = await db.select().from(users).where(eq(users.email, email)).limit(1);
       if (!dbUser || !dbUser.isActive) {
         return "/login?error=sin-acceso";
