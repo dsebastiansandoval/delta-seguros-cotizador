@@ -1,9 +1,10 @@
 "use server";
 
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, arrayContains } from "drizzle-orm";
 import { db, withOrganization } from "@/db";
 import { insurers, vehicleBrands, vehicleModels } from "@/db/schema/catalog";
-import { quoteSources, quoteExecutives } from "@/db/schema/clients";
+import { quoteSources } from "@/db/schema/clients";
+import { users } from "@/db/schema/identity";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 
 /**
@@ -60,16 +61,19 @@ export async function listQuoteSources() {
 
 /**
  * 🏢 EJECUTIVO del Excel (`DATOS VH!D8`, lista `INFO GENERAL!Y15:Y19`) —
- * distinto de FUENTE (ARCHITECTURE.md §24/§26), mismo trato tenant-scoped.
+ * distinto de FUENTE (ARCHITECTURE.md §24/§26). Antes era una lista aparte
+ * editable en Configuración; a pedido de Delta ahora sale de los usuarios
+ * activos del sistema que ven ese ramo, para no mantener dos listas de
+ * personas que pueden desincronizarse.
  */
-export async function listQuoteExecutives() {
+export async function listQuoteExecutives(branch: "AUTOS" | "SALUD") {
   const session = await requirePermission("quote:create");
   return withOrganization(session.organizationId, (tx) =>
     tx
-      .select({ id: quoteExecutives.id, name: quoteExecutives.name })
-      .from(quoteExecutives)
-      .where(eq(quoteExecutives.isActive, true))
-      .orderBy(asc(quoteExecutives.displayOrder)),
+      .select({ id: users.id, name: users.fullName })
+      .from(users)
+      .where(and(eq(users.isActive, true), arrayContains(users.branches, [branch])))
+      .orderBy(asc(users.fullName)),
   );
 }
 

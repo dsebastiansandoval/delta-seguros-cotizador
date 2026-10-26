@@ -12,7 +12,7 @@ export default async function NuevaCotizacionAutosPage() {
     listVehicleBrands(),
     listVehicleModelsByBrand(),
     listQuoteSources(),
-    listQuoteExecutives(),
+    listQuoteExecutives("AUTOS"),
     listAutoInsurers(),
   ]);
 

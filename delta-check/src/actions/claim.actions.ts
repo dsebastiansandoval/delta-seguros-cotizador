@@ -62,5 +62,5 @@ export async function updateClaimStatus(
 
 export async function listClaims() {
   const session = await requirePermission("quote:read");
-  return withOrganization(session.organizationId, (tx) => claimService.list(tx));
+  return withOrganization(session.organizationId, (tx) => claimService.list(tx, [...session.branches]));
 }

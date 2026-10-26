@@ -1,4 +1,4 @@
-import { and, count, countDistinct, eq, gte, inArray, lt, lte, sum } from "drizzle-orm";
+import { and, count, countDistinct, eq, gte, inArray, lt, lte, ne, sum } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { policies, commissions, claims } from "@/db/schema/policies";
@@ -25,7 +25,8 @@ function monthOverMonth(current: number, previous: number): number | null {
  * propio dominio ya genera, no algo extraído del archivo original.
  */
 export const dashboardService = {
-  async getSummary(tx: Db, organizationId: string) {
+  /** Solo los ramos del usuario (users.branches), mismo criterio que Cartera y Back-office. */
+  async getSummary(tx: Db, organizationId: string, branches: Array<"AUTOS" | "SALUD">) {
     // Secuencial, no Promise.all: `tx` es una transacción sobre una única
     // conexión — lanzar varias queries a la vez en la misma conexión es
     // comportamiento deprecado del driver `pg` (avisa en consola y dejará
@@ -33,13 +34,13 @@ export const dashboardService = {
     const quotesByStatus = await tx
       .select({ status: quotes.status, total: count() })
       .from(quotes)
-      .where(eq(quotes.organizationId, organizationId))
+      .where(and(eq(quotes.organizationId, organizationId), inArray(quotes.branch, branches)))
       .groupBy(quotes.status);
 
     const quotesByBranch = await tx
       .select({ branch: quotes.branch, total: count() })
       .from(quotes)
-      .where(eq(quotes.organizationId, organizationId))
+      .where(and(eq(quotes.organizationId, organizationId), inArray(quotes.branch, branches)))
       .groupBy(quotes.branch);
 
     const policyStats = await tx
@@ -49,19 +50,21 @@ export const dashboardService = {
         primaCents: sum(policies.premiumCents),
       })
       .from(policies)
-      .where(eq(policies.organizationId, organizationId))
+      .where(and(eq(policies.organizationId, organizationId), inArray(policies.branch, branches)))
       .groupBy(policies.lifecycleStatus);
 
     const comisionesStats = await tx
       .select({ status: commissions.status, total: count(), montoCents: sum(commissions.amountCents) })
       .from(commissions)
-      .where(eq(commissions.organizationId, organizationId))
+      .innerJoin(policies, eq(policies.id, commissions.policyId))
+      .where(and(eq(commissions.organizationId, organizationId), inArray(policies.branch, branches)))
       .groupBy(commissions.status);
 
     const siniestrosByStatus = await tx
       .select({ status: claims.status, total: count(), valorCents: sum(claims.claimValueCents) })
       .from(claims)
-      .where(eq(claims.organizationId, organizationId))
+      .innerJoin(policies, eq(policies.id, claims.policyId))
+      .where(and(eq(claims.organizationId, organizationId), inArray(policies.branch, branches)))
       .groupBy(claims.status);
 
     // Fila de KPI del mockup visual (Cotizador-Delta-MVP-visual.html,
@@ -78,13 +81,16 @@ export const dashboardService = {
     const [quotesThisMonth] = await tx
       .select({ total: count() })
       .from(quotes)
-      .where(and(eq(quotes.organizationId, organizationId), gte(quotes.createdAt, startOfThisMonth)));
+      .where(
+        and(eq(quotes.organizationId, organizationId), inArray(quotes.branch, branches), gte(quotes.createdAt, startOfThisMonth)),
+      );
     const [quotesLastMonth] = await tx
       .select({ total: count() })
       .from(quotes)
       .where(
         and(
           eq(quotes.organizationId, organizationId),
+          inArray(quotes.branch, branches),
           gte(quotes.createdAt, startOfLastMonth),
           lt(quotes.createdAt, startOfThisMonth),
         ),
@@ -93,13 +99,20 @@ export const dashboardService = {
     const [policiesThisMonth] = await tx
       .select({ total: count() })
       .from(policies)
-      .where(and(eq(policies.organizationId, organizationId), gte(policies.createdAt, startOfThisMonth)));
+      .where(
+        and(
+          eq(policies.organizationId, organizationId),
+          inArray(policies.branch, branches),
+          gte(policies.createdAt, startOfThisMonth),
+        ),
+      );
     const [policiesLastMonth] = await tx
       .select({ total: count() })
       .from(policies)
       .where(
         and(
           eq(policies.organizationId, organizationId),
+          inArray(policies.branch, branches),
           gte(policies.createdAt, startOfLastMonth),
           lt(policies.createdAt, startOfThisMonth),
         ),
@@ -111,6 +124,7 @@ export const dashboardService = {
       .where(
         and(
           eq(policies.organizationId, organizationId),
+          inArray(policies.branch, branches),
           eq(policies.lifecycleStatus, "VIGENTE"),
           gte(policies.endsAt, toDateStr(now)),
           lte(policies.endsAt, toDateStr(in30Days)),
@@ -124,7 +138,13 @@ export const dashboardService = {
       .select({ total: sum(commissions.amountCents) })
       .from(commissions)
       .innerJoin(policies, eq(policies.id, commissions.policyId))
-      .where(and(eq(commissions.organizationId, organizationId), gte(policies.createdAt, startOfThisMonth)));
+      .where(
+        and(
+          eq(commissions.organizationId, organizationId),
+          inArray(policies.branch, branches),
+          gte(policies.createdAt, startOfThisMonth),
+        ),
+      );
     const [comisionLastMonth] = await tx
       .select({ total: sum(commissions.amountCents) })
       .from(commissions)
@@ -132,6 +152,7 @@ export const dashboardService = {
       .where(
         and(
           eq(commissions.organizationId, organizationId),
+          inArray(policies.branch, branches),
           gte(policies.createdAt, startOfLastMonth),
           lt(policies.createdAt, startOfThisMonth),
         ),
@@ -177,13 +198,24 @@ export const dashboardService = {
     };
   },
 
-  /** Producción por ejecutivo del mes (y ramo) — ver agent-report.ts. */
-  async getAgentReport(tx: Db, organizationId: string, params: { month: ReportMonth; branch?: "AUTOS" | "SALUD" }) {
+  /**
+   * Producción por ejecutivo del mes (y ramo) — ver agent-report.ts. Solo
+   * cuenta cotizaciones que se llegaron a enviar (no BORRADOR) — confirmado
+   * con Delta: un borrador sin enviar no es producción todavía. `branches`
+   * son los ramos del usuario (users.branches); `params.branch` acota más,
+   * dentro de esos ramos.
+   */
+  async getAgentReport(
+    tx: Db,
+    organizationId: string,
+    params: { month: ReportMonth; branch?: "AUTOS" | "SALUD"; branches: Array<"AUTOS" | "SALUD"> },
+  ) {
     const inMonth = and(
       eq(quotes.organizationId, organizationId),
       gte(quotes.createdAt, params.month.start),
       lt(quotes.createdAt, params.month.end),
-      params.branch ? eq(quotes.branch, params.branch) : undefined,
+      ne(quotes.status, "BORRADOR"),
+      inArray(quotes.branch, params.branch ? [params.branch] : params.branches),
     );
 
     const quoted = await tx

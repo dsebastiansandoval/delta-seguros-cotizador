@@ -1,5 +1,6 @@
 import { getAgentReport, getDashboardSummary } from "@/actions/dashboard.actions";
 import { recentMonths } from "@/domains/dashboard/services/agent-report";
+import { getAccess } from "@/domains/identity/services/rbac.service";
 import { formatUSD } from "@/domains/shared/money";
 
 /**
@@ -60,7 +61,7 @@ function Breakdown({ title, rows }: { title: string; rows: Array<{ label: string
 const RISK_HEADER = { AUTOS: "Vehículos", SALUD: "Grupos" } as const;
 
 /** Producción por ejecutivo (BASE VEHICULOS por EJECUTIVO y MES). Filtro por GET para poder compartir el link. */
-async function AgentReport({ mes, ramo }: { mes?: string; ramo?: string }) {
+async function AgentReport({ mes, ramo, branches }: { mes?: string; ramo?: string; branches: Set<"AUTOS" | "SALUD"> }) {
   const report = await getAgentReport({ mes, ramo });
   const pct = (rate: number) => `${(rate * 100).toFixed(0)}%`;
 
@@ -90,8 +91,8 @@ async function AgentReport({ mes, ramo }: { mes?: string; ramo?: string }) {
             className="rounded-md border border-border bg-surface px-2 py-1"
           >
             <option value="">Todos los ramos</option>
-            <option value="AUTOS">Autos</option>
-            <option value="SALUD">Salud AM</option>
+            {branches.has("AUTOS") && <option value="AUTOS">Autos</option>}
+            {branches.has("SALUD") && <option value="SALUD">Salud AM</option>}
           </select>
           <button type="submit" className="rounded-md bg-delta-navy px-3 py-1 text-xs font-semibold text-white">
             Ver
@@ -141,7 +142,8 @@ async function AgentReport({ mes, ramo }: { mes?: string; ramo?: string }) {
         </table>
       </div>
       <p className="border-t border-border px-5 py-2 text-xs text-muted">
-        Pólizas y prima de las cotizaciones hechas en el mes, aunque se hayan emitido después.
+        Solo cotizaciones enviadas (los borradores no cuentan). Pólizas y prima de las cotizaciones hechas en el mes,
+        aunque se hayan emitido después.
       </p>
     </section>
   );
@@ -153,7 +155,17 @@ export default async function DashboardPage({
   searchParams: Promise<{ mes?: string; ramo?: string }>;
 }) {
   const { mes, ramo } = await searchParams;
-  const summary = await getDashboardSummary();
+  const [access, summary] = await Promise.all([getAccess(), getDashboardSummary()]);
+  const branches = access?.branches ?? new Set<"AUTOS" | "SALUD">();
+
+  if (!summary) {
+    return (
+      <main className="mx-auto max-w-xl p-8">
+        <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
+        <p className="mt-2 text-sm text-muted">No tienes ningún ramo habilitado.</p>
+      </main>
+    );
+  }
 
   return (
     <main className="mx-auto max-w-5xl p-8">
@@ -188,7 +200,7 @@ export default async function DashboardPage({
         />
       </div>
 
-      <AgentReport mes={mes} ramo={ramo} />
+      <AgentReport mes={mes} ramo={ramo} branches={branches} />
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card label="Cotizaciones" value={String(summary.quotes.total)} />

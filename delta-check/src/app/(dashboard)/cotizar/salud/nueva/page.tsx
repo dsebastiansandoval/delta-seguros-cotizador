@@ -2,7 +2,7 @@ import { listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
-  const [sources, executives] = await Promise.all([listQuoteSources(), listQuoteExecutives()]);
+  const [sources, executives] = await Promise.all([listQuoteSources(), listQuoteExecutives("SALUD")]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">

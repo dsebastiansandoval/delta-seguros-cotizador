@@ -90,12 +90,12 @@ export async function markCommissionDiscounted(
 
 export async function listCommissions() {
   const session = await requirePermission("commission:read_all");
-  return withOrganization(session.organizationId, (tx) => commissionService.list(tx));
+  return withOrganization(session.organizationId, (tx) => commissionService.list(tx, [...session.branches]));
 }
 
 export async function listMyCommissions() {
   const session = await requirePermission("commission:read_own");
   return withOrganization(session.organizationId, (tx) =>
-    commissionService.list(tx, { agentId: session.userId }),
+    commissionService.list(tx, [...session.branches], { agentId: session.userId }),
   );
 }

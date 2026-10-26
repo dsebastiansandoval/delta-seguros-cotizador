@@ -1,4 +1,4 @@
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { claims, policies } from "@/db/schema/policies";
 import { insurers } from "@/db/schema/catalog";
@@ -50,7 +50,8 @@ export const claimService = {
     return updated;
   },
 
-  async list(tx: Db) {
+  /** Solo los ramos del usuario (users.branches), mismo criterio que Cartera y Back-office. */
+  async list(tx: Db, branches: Array<"AUTOS" | "SALUD">) {
     return tx
       .select({
         id: claims.id,
@@ -70,6 +71,7 @@ export const claimService = {
       .innerJoin(policies, eq(policies.id, claims.policyId))
       .innerJoin(insurers, eq(insurers.id, policies.insurerId))
       .innerJoin(clients, eq(clients.id, policies.clientId))
+      .where(inArray(policies.branch, branches))
       .orderBy(desc(claims.reportedAt));
   },
 };

@@ -65,19 +65,19 @@ export function buildOfferColumn(params: {
 }
 
 /**
- * OFERTA filas 42-47: la prima neta es la suma de los riesgos y los impuestos
- * se calculan sobre esa suma. Los derechos de emisión salen de la prima neta
- * del riesgo 1 (el Excel hace VLOOKUP sobre DATOS OFERTA fila 31); si el
- * riesgo 1 no tiene prima, se usa el primer riesgo cotizado.
+ * OFERTA filas 42-47: la prima neta es la suma de los riesgos (I42) y SB/campesino/IVA
+ * se calculan sobre esa suma (I43/I44/I46). Los derechos de emisión (I45) son la
+ * EXCEPCIÓN: el Excel hace un VLOOKUP por separado contra INFO GENERAL!T6:V11 para la
+ * prima neta de CADA riesgo (C31/C35/C39/C43) y suma los 4 resultados — confirmado
+ * leyendo la fórmula real de I45, no es la neta combinada ni la del riesgo 1.
  */
 export function combineRiskPremiums(risks: RiskPremium[]): PremiumBreakdown | null {
-  const priced = risks
-    .filter((r): r is RiskPremium & { netPremiumCents: number } => r.netPremiumCents != null)
-    .sort((a, b) => a.riskNumber - b.riskNumber);
+  const priced = risks.filter((r): r is RiskPremium & { netPremiumCents: number } => r.netPremiumCents != null);
   if (!priced.length) return null;
 
   const netPremiumCents = priced.reduce((sum, r) => sum + r.netPremiumCents, 0);
-  return calculatePremium(netPremiumCents, emissionFeeForNetPremium(priced[0].netPremiumCents));
+  const emissionFeeCents = priced.reduce((sum, r) => sum + emissionFeeForNetPremium(r.netPremiumCents), 0);
+  return calculatePremium(netPremiumCents, emissionFeeCents);
 }
 
 /** OFERTA filas 51-54: contado y tarjeta a 6/9/12 meses sin interés. */

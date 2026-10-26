@@ -21,8 +21,15 @@ describe("combineRiskPremiums", () => {
     ]);
     expect(totals?.netPremiumCents).toBe(100000);
     expect(totals?.superBancosCents).toBe(3500);
-    // derechos de emisión según la neta del riesgo 1 ($760 → $3)
-    expect(totals?.emissionFeeCents).toBe(300);
+  });
+
+  it("el derecho de emisión se calcula por riesgo y se suma, no sobre la neta combinada (OFERTA!I45)", () => {
+    const totals = combineRiskPremiums([
+      // $760 → tramo $3; $24 → tramo $0.50 (si se buscara contra la suma, $1000 caería en el tramo $5)
+      { quoteOptionId: "a", riskNumber: 1, netPremiumCents: 76000, ratePercentApplied: null },
+      { quoteOptionId: "b", riskNumber: 2, netPremiumCents: 2400, ratePercentApplied: null },
+    ]);
+    expect(totals?.emissionFeeCents).toBe(350);
   });
 
   it("devuelve null si ningún riesgo tiene prima", () => {

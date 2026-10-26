@@ -1,4 +1,4 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { commissions, policies } from "@/db/schema/policies";
 import { insurers } from "@/db/schema/catalog";
@@ -53,7 +53,8 @@ export const commissionService = {
     return updated;
   },
 
-  async list(tx: Db, filters?: { agentId?: string }) {
+  /** Solo los ramos del usuario (users.branches), mismo criterio que Cartera y Back-office. */
+  async list(tx: Db, branches: Array<"AUTOS" | "SALUD">, filters?: { agentId?: string }) {
     return tx
       .select({
         id: commissions.id,
@@ -75,7 +76,7 @@ export const commissionService = {
       .innerJoin(policies, eq(policies.id, commissions.policyId))
       .innerJoin(insurers, eq(insurers.id, commissions.insurerId))
       .innerJoin(clients, eq(clients.id, policies.clientId))
-      .where(filters?.agentId ? eq(commissions.agentId, filters.agentId) : undefined)
+      .where(and(inArray(policies.branch, branches), filters?.agentId ? eq(commissions.agentId, filters.agentId) : undefined))
       .orderBy(desc(policies.createdAt));
   },
 };
