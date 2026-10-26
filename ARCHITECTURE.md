@@ -298,13 +298,16 @@ erDiagram
 
 | Tabla | Campos clave |
 |---|---|
-| `quotes` | `id`, `code` (correlativo visible, ej. `COT-2026-00184`), `client_id`, `agent_id`, `branch`, `operation_type` (`NUEVA`\|`RENOVACION`), `status` (`BORRADOR`\|`ENVIADA`\|`ACEPTADA`\|`VENCIDA`), `previous_insurer_id`, `previous_policy_number`, `previous_expiry_date`, `valid_until`, `created_at` |
+| `quotes` | `id`, `code` (correlativo visible, ej. `COT-2026-00184` — real por organización y año desde `quote_code_sequences`, ver nota debajo de esta tabla), `client_id`, `agent_id`, `branch`, `operation_type` (`NUEVA`\|`RENOVACION`), `status` (`BORRADOR`\|`ENVIADA`\|`ACEPTADA`\|`VENCIDA`), `previous_insurer_id`, `previous_policy_number`, `previous_expiry_date`, `valid_until`, `created_at` |
+| `quote_code_sequences` | `id`, `organization_id`, `year`, `last_value` — una fila por (organización, año); `last_value` se incrementa con UPSERT atómico, nunca con lectura+escritura separadas |
 | `quote_risks` | `id`, `quote_id`, `risk_number` (1–4), `vehicle_id`, `insured_group_id`, `insured_value_cents`, `extras_value_cents` — soporta los "RIESGO 1..4" del Excel |
 | `quote_options` | `id`, `quote_risk_id`, `insurer_id`, `modality` (`ANUAL`\|`POR_KM`), `net_premium_cents`, `super_bancos_cents` (3.50%), `campesino_cents` (0.50%), `emission_fee_cents`, `iva_cents` (15%), `total_premium_cents`, `rate_percent_applied`, `source` (`MANUAL`\|`API`), `raw_response` (jsonb, respuesta cruda de API), `quoted_at`, `is_recommended` |
 | `quote_option_coverages` | `quote_option_id`, `coverage_id`, `granted`, `amount_cents`, `text_value` — **snapshot inmutable** de lo cotizado |
 | `payment_options` | `id`, `quote_option_id`, `method` (`CONTADO`\|`TARJETA`), `installments` (6\|9\|12), `has_interest`, `installment_amount_cents` |
 
 > **Regla clave:** `quote_option_coverages` guarda copia de las condiciones al momento de cotizar. Si la aseguradora cambia su cobertura mañana, la cotización enviada al cliente sigue siendo reproducible tal cual se emitió.
+
+> **`quotes.code` — correlativo real (cierra el TODO(Fase 1) de §12):** `generateQuoteCode()` generaba un sufijo aleatorio a propósito, sin ninguna garantía de unicidad. Ahora `nextQuoteCode()` (`domains/quoting/services/quote-code.service.ts`, compartido entre Autos y Salud — antes cada uno tenía su propia copia del mismo placeholder) hace un UPSERT atómico sobre `quote_code_sequences` (`INSERT ... ON CONFLICT (organization_id, year) DO UPDATE SET last_value = last_value + 1`): dos cotizaciones creadas al mismo tiempo en la misma organización nunca repiten número, sin necesitar un `SELECT ... FOR UPDATE` aparte. **Verificado contra Postgres real:** 3 llamadas secuenciales dan `00001`/`00002`/`00003` sin saltos, y 10 llamadas concurrentes (`Promise.all`) dan 10 códigos únicos y consecutivos.
 
 **Cartera, comisiones y siniestros** (🏢 todas — columnas confirmadas en las hojas `BASE EMISIONES`/`BASE PENDIENTE`/`BASE COMISIONES`/`BASE CANCELADAS`/`BASE SINIESTROS` del Excel; los *valores* de los enums de estado son diseño de Delta Check, no un vocabulario fijo del Excel — ver nota en `src/db/schema/enums.ts` y EXCEL-AUDIT.md §4)
 

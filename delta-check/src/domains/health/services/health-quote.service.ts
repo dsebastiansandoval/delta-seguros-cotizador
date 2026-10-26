@@ -2,14 +2,7 @@ import { eq } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
 import { insuredGroupRepository } from "../repositories/insured-group.repository";
-
-function generateQuoteCode(): string {
-  const year = new Date().getFullYear();
-  const suffix = Math.floor(Math.random() * 100000)
-    .toString()
-    .padStart(5, "0");
-  return `COT-${year}-${suffix}`;
-}
+import { nextQuoteCode } from "@/domains/quoting/services/quote-code.service";
 
 export type NewMemberInput = { relation: "TITULAR" | "DEPENDIENTE"; age: number; gender: "MASCULINO" | "FEMENINO" };
 
@@ -29,7 +22,7 @@ export const healthQuoteService = {
       .insert(quotes)
       .values({
         organizationId: params.organizationId,
-        code: generateQuoteCode(),
+        code: await nextQuoteCode(tx, params.organizationId),
         clientId: params.clientId,
         agentId: params.agentId,
         branch: "SALUD",

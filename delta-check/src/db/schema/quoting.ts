@@ -54,6 +54,26 @@ export const quotes = pgTable("quotes", {
   ...timestamps,
 });
 
+/**
+ * 🏢 Correlativo real de `quotes.code` (COT-<año>-00001, 00002...) por
+ * organización y año — reemplaza el sufijo aleatorio de generateQuoteCode()
+ * (TODO(Fase 1), ARCHITECTURE.md §12). Una fila por (organización, año);
+ * `lastValue` se incrementa con un UPSERT atómico (`onConflictDoUpdate` +
+ * `lastValue + 1` en el mismo statement), así que dos cotizaciones creadas
+ * al mismo tiempo nunca repiten número — no hace falta un `SELECT ... FOR
+ * UPDATE` separado.
+ */
+export const quoteCodeSequences = pgTable(
+  "quote_code_sequences",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    year: integer("year").notNull(),
+    lastValue: integer("last_value").notNull().default(0),
+  },
+  (t) => [uniqueIndex("quote_code_sequences_org_year_idx").on(t.organizationId, t.year)],
+);
+
 /** 🏢 Riesgo 1 a 4 por cotización — vehículo o grupo de salud (RIESGO 1..4 del Excel). */
 export const quoteRisks = pgTable("quote_risks", {
   id: id(),

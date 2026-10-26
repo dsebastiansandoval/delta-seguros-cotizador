@@ -155,6 +155,13 @@
       "when": 1792938726411,
       "tag": "0021_organization_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1792990413970,
+      "tag": "0022_quote_code_sequences",
+      "breakpoints": true
     }
   ]
 }

@@ -1,18 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
-
-/** Correlativo visible tipo COT-2026-00184 (ARCHITECTURE.md §4.2). */
-function generateQuoteCode(): string {
-  const year = new Date().getFullYear();
-  const suffix = Math.floor(Math.random() * 100000)
-    .toString()
-    .padStart(5, "0");
-  // TODO(Fase 1): correlativo real por organización (secuencia en BD), esto
-  // es aleatorio a propósito para no fingir una garantía de unicidad que no
-  // tiene todavía — ver ARCHITECTURE.md §12 "Definition of done por fase".
-  return `COT-${year}-${suffix}`;
-}
+import { nextQuoteCode } from "./quote-code.service";
 
 export const quoteService = {
   /**
@@ -45,7 +34,7 @@ export const quoteService = {
       .insert(quotes)
       .values({
         organizationId: params.organizationId,
-        code: generateQuoteCode(),
+        code: await nextQuoteCode(tx, params.organizationId),
         clientId: params.clientId,
         agentId: params.agentId,
         branch: "AUTOS",
