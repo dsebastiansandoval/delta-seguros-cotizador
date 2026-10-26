@@ -120,7 +120,7 @@ function CaratulaLetterPage({ data }: { data: CaratulaData }) {
       <Text style={styles.brandSub}>Cía. Ltda.</Text>
       <Text style={styles.date}>Quito, {data.date}</Text>
 
-      <Text>Señores</Text>
+      <Text>{data.salutation}</Text>
       <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
       <Text style={{ marginBottom: 12 }}>Presente.-</Text>
 
