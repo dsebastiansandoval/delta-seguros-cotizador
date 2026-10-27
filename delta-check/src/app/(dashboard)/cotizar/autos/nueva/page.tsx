@@ -5,10 +5,12 @@ import {
   listVehicleBrands,
   listVehicleModelsByBrand,
 } from "@/actions/catalog.actions";
+import { getAppSession } from "@/lib/auth";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 export default async function NuevaCotizacionAutosPage() {
-  const [brands, modelsByBrand, sources, executives, insurers] = await Promise.all([
+  const [session, brands, modelsByBrand, sources, executives, insurers] = await Promise.all([
+    getAppSession(),
     listVehicleBrands(),
     listVehicleModelsByBrand(),
     listQuoteSources(),
@@ -26,6 +28,7 @@ export default async function NuevaCotizacionAutosPage() {
         modelsByBrand={modelsByBrand}
         sources={sources.map((s) => s.name)}
         executives={executives.map((e) => e.name)}
+        currentExecutive={session?.fullName ?? ""}
         insurers={insurers}
       />
     </main>

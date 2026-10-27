@@ -24,6 +24,7 @@ export function NuevaCotizacionForm({
   modelsByBrand,
   sources,
   executives,
+  currentExecutive,
   insurers,
 }: {
   brands: string[];
@@ -33,6 +34,8 @@ export function NuevaCotizacionForm({
   sources: string[];
   /** EJECUTIVO del Excel (INFO GENERAL!Y15:Y19) — ver listQuoteExecutives(). */
   executives: string[];
+  /** Nombre del usuario logueado — precarga el campo Ejecutivo en cliente nuevo (editable). */
+  currentExecutive: string;
   /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
   insurers: Array<{ id: string; name: string }>;
 }) {
@@ -56,6 +59,7 @@ export function NuevaCotizacionForm({
   const cityRef = useRef<HTMLInputElement>(null);
   const vehicleProvinceRef = useRef<HTMLSelectElement>(null);
   const operationTypeRef = useRef<HTMLSelectElement>(null);
+  const executiveRef = useRef<HTMLInputElement>(null);
   const previousInsurerIdRef = useRef<HTMLSelectElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousStartDateRef = useRef<HTMLInputElement>(null);
@@ -82,7 +86,24 @@ export function NuevaCotizacionForm({
   return (
     <form action={formAction} className="flex flex-col gap-6">
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <legend className="col-span-full text-sm font-semibold">Modalidad</legend>
+        <label className="flex flex-col gap-1 text-sm">
+          Ejecutivo
+          <input
+            ref={executiveRef}
+            name="executive"
+            list="executives-datalist"
+            defaultValue={currentExecutive}
+            placeholder="Escribe o elige de la lista"
+            autoComplete="off"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+          <datalist id="executives-datalist">
+            {executives.map((ex) => (
+              <option key={ex} value={ex} />
+            ))}
+          </datalist>
+        </label>
+
         <label className="flex flex-col gap-1 text-sm">
           Tipo de póliza
           <select name="modality" defaultValue="ANUAL" className="rounded-lg border border-border bg-surface px-3 py-2">
@@ -211,7 +232,7 @@ export function NuevaCotizacionForm({
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
-          Provincia (según cédula)
+          Provincia
           <input
             ref={provinceRef}
             readOnly
@@ -240,6 +261,7 @@ export function NuevaCotizacionForm({
             previousStartDateRef={previousStartDateRef}
             previousExpiryDateRef={previousExpiryDateRef}
             previousPremiumRef={previousPremiumRef}
+            executiveRef={executiveRef}
             onRenewalFound={() => setOperationType("RENOVACION")}
           />
         </div>
@@ -309,21 +331,6 @@ export function NuevaCotizacionForm({
           </datalist>
         </label>
 
-        <label className="flex flex-col gap-1 text-sm">
-          Ejecutivo
-          <input
-            name="executive"
-            list="executives-datalist"
-            placeholder="Escribe o elige de la lista"
-            autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
-          />
-          <datalist id="executives-datalist">
-            {executives.map((ex) => (
-              <option key={ex} value={ex} />
-            ))}
-          </datalist>
-        </label>
       </fieldset>
 
       <fieldset className="flex flex-col gap-4">

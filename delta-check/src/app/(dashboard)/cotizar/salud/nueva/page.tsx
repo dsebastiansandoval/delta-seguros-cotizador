@@ -1,8 +1,13 @@
 import { listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions";
+import { getAppSession } from "@/lib/auth";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
-  const [sources, executives] = await Promise.all([listQuoteSources(), listQuoteExecutives("SALUD")]);
+  const [session, sources, executives] = await Promise.all([
+    getAppSession(),
+    listQuoteSources(),
+    listQuoteExecutives("SALUD"),
+  ]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -13,7 +18,11 @@ export default async function NuevaCotizacionSaludPage() {
           edad/sexo/región; el resto queda pendiente de digitar.
         </p>
       </header>
-      <NuevaCotizacionSaludForm sources={sources.map((s) => s.name)} executives={executives.map((e) => e.name)} />
+      <NuevaCotizacionSaludForm
+        sources={sources.map((s) => s.name)}
+        executives={executives.map((e) => e.name)}
+        currentExecutive={session?.fullName ?? ""}
+      />
     </main>
   );
 }

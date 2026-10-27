@@ -44,7 +44,16 @@ function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRem
   );
 }
 
-export function NuevaCotizacionSaludForm({ sources, executives }: { sources: string[]; executives: string[] }) {
+export function NuevaCotizacionSaludForm({
+  sources,
+  executives,
+  currentExecutive,
+}: {
+  sources: string[];
+  executives: string[];
+  /** Nombre del usuario logueado — precarga el campo Ejecutivo (editable). */
+  currentExecutive: string;
+}) {
   const [state, formAction, pending] = useActionState(createHealthQuote, initialState);
   const documentTypeRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
@@ -60,6 +69,25 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
+      <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <label className="flex flex-col gap-1 text-sm">
+          Ejecutivo
+          <input
+            name="executive"
+            list="executives-datalist"
+            defaultValue={currentExecutive}
+            placeholder="Escribe o elige de la lista"
+            autoComplete="off"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+          <datalist id="executives-datalist">
+            {executives.map((ex) => (
+              <option key={ex} value={ex} />
+            ))}
+          </datalist>
+        </label>
+      </fieldset>
+
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <legend className="col-span-full text-sm font-semibold">Cliente</legend>
         <label className="flex flex-col gap-1 text-sm">
@@ -98,7 +126,7 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
           )}
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Provincia (según cédula)
+          Provincia
           <input
             ref={provinceRef}
             readOnly
@@ -126,21 +154,6 @@ export function NuevaCotizacionSaludForm({ sources, executives }: { sources: str
           <datalist id="sources-datalist">
             {sources.map((s) => (
               <option key={s} value={s} />
-            ))}
-          </datalist>
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Ejecutivo
-          <input
-            name="executive"
-            list="executives-datalist"
-            placeholder="Escribe o elige de la lista"
-            autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
-          />
-          <datalist id="executives-datalist">
-            {executives.map((ex) => (
-              <option key={ex} value={ex} />
             ))}
           </datalist>
         </label>
