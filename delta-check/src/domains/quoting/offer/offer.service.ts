@@ -331,6 +331,7 @@ export const offerService = {
         quote: config.quote,
         risks: config.risks,
         km: {
+          insurerCode: column.code,
           insurerName: column.name,
           rows: (snapshotByInsurer.get(column.insurerId) as typeof KM_OFFER_ROWS) ?? KM_OFFER_ROWS,
           rcAmountCents: column.settings.rcAmountCents,
@@ -352,6 +353,7 @@ export const offerService = {
       .map((c) =>
         buildOfferColumn({
           insurerId: c.insurerId,
+          insurerCode: c.code,
           insurerName: c.name,
           snapshot: (snapshotByInsurer.get(c.insurerId) as Record<OfferCoverageKey, OfferCell>) ?? EMPTY_ROWS,
           settings: c.settings,
@@ -383,6 +385,7 @@ export type OfferSheet =
       quote: OfferConfiguration["quote"];
       risks: ConfigurationRisk[];
       km: {
+        insurerCode: string;
         insurerName: string;
         rows: typeof KM_OFFER_ROWS;
         rcAmountCents: number | null;

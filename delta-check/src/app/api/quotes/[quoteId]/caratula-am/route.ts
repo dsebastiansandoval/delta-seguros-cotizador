@@ -5,6 +5,7 @@ import { renderToBuffer, type DocumentProps } from "@react-pdf/renderer";
 import { withOrganization } from "@/db";
 import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
 import { getCaratulaAMData } from "@/domains/health/services/caratula-am.service";
+import { quoteService } from "@/domains/quoting/services/quote.service";
 import { CaratulaAMDocument } from "@/domains/health/pdf/CaratulaAMDocument";
 import { audit } from "@/domains/shared/audit";
 
@@ -20,6 +21,7 @@ export async function GET(
   const data = await withOrganization(session.organizationId, async (tx) => {
     const caratula = await getCaratulaAMData(tx, quoteId);
     if (caratula) {
+      await quoteService.markSent(tx, quoteId);
       await audit(tx, {
         organizationId: session.organizationId,
         userId: session.userId,

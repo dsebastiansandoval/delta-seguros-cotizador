@@ -21,6 +21,7 @@ export type RiskPremium = {
 
 export type OfferColumn = {
   insurerId: string;
+  insurerCode: string;
   insurerName: string;
   cells: Record<OfferCoverageKey, OfferCell>;
   partialDeductible: string;
@@ -38,6 +39,7 @@ const SOLO_PT = "Solo pérdida total";
  */
 export function buildOfferColumn(params: {
   insurerId: string;
+  insurerCode: string;
   insurerName: string;
   snapshot: Record<OfferCoverageKey, OfferCell>;
   settings: InsurerSettingsValues;
@@ -55,6 +57,7 @@ export function buildOfferColumn(params: {
 
   return {
     insurerId: params.insurerId,
+    insurerCode: params.insurerCode,
     insurerName: params.insurerName,
     cells,
     partialDeductible: soloPt ? SOLO_PT : (settings.partialDeductible ?? ""),

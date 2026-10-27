@@ -38,7 +38,7 @@ describe("combineRiskPremiums", () => {
 });
 
 describe("buildOfferColumn", () => {
-  const base = { insurerId: "i", insurerName: "AIG", snapshot: INSURER_OFFER_PROFILES.AIG.rows, risks: [] };
+  const base = { insurerId: "i", insurerCode: "AIG", insurerName: "AIG", snapshot: INSURER_OFFER_PROFILES.AIG.rows, risks: [] };
 
   it("solo pérdida total cambia pérdida parcial, robo parcial y el deducible parcial", () => {
     const col = buildOfferColumn({ ...base, settings: settings({ coverageType: "SOLO_PERDIDA_TOTAL" }) });

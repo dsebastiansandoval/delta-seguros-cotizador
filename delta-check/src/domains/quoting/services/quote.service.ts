@@ -1,4 +1,4 @@
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients, vehicles } from "@/db/schema/clients";
@@ -142,5 +142,28 @@ export const quoteService = {
         .set({ insuredValueCents: r.insuredValueCents, extrasValueCents: r.extrasValueCents })
         .where(eq(quoteRisks.id, r.quoteRiskId));
     }
+  },
+
+  /**
+   * BORRADOR → ENVIADA la primera vez que se descarga la oferta en PDF (rutas
+   * `caratula`/`caratula-am`) — es la señal real de "se le envió la cotización
+   * al cliente". dashboard.service.ts ya asumía este estado para contar
+   * producción por ejecutivo (`ne(quotes.status, "BORRADOR")`), pero nada lo
+   * escribía todavía. No-op si ya salió de BORRADOR (no retrocede ENVIADA/
+   * ACEPTADA/VENCIDA).
+   */
+  async markSent(tx: Db, quoteId: string) {
+    await tx
+      .update(quotes)
+      .set({ status: "ENVIADA", updatedAt: new Date() })
+      .where(and(eq(quotes.id, quoteId), eq(quotes.status, "BORRADOR")));
+  },
+
+  /** ENVIADA/BORRADOR → ACEPTADA al emitir una póliza desde una opción de esta cotización. */
+  async markAccepted(tx: Db, quoteId: string) {
+    await tx
+      .update(quotes)
+      .set({ status: "ACEPTADA", updatedAt: new Date() })
+      .where(and(eq(quotes.id, quoteId), inArray(quotes.status, ["BORRADOR", "ENVIADA"])));
   },
 };

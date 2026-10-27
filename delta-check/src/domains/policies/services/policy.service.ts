@@ -5,6 +5,7 @@ import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { insurers } from "@/db/schema/catalog";
 import { clients } from "@/db/schema/clients";
 import { applyPercent } from "@/domains/shared/money";
+import { quoteService } from "@/domains/quoting/services/quote.service";
 import type { EmitPolicyInput } from "../schemas/policy.schema";
 
 /** Regla de estado de la póliza violada — el mensaje se muestra tal cual al usuario. */
@@ -51,6 +52,11 @@ export const policyService = {
         notes: input.notes,
       })
       .returning();
+
+    // La cotización que llegó a emitirse quedó aceptada por el cliente — ya
+    // no es una oferta pendiente (ARCHITECTURE.md §14.1: "conversión a
+    // póliza" cuenta cotizaciones que llegaron a emitirse).
+    await quoteService.markAccepted(tx, quote.id);
 
     await tx.insert(policyEvents).values({
       organizationId,
