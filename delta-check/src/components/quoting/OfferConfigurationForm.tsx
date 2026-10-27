@@ -5,17 +5,67 @@ import { saveOfferConfiguration } from "@/actions/offer.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import type { ConfigurationColumn, OfferConfiguration } from "@/domains/quoting/offer/offer.service";
 import { KM_BRACKETS, KM_BRACKET_LABELS } from "@/domains/quoting/constants";
-import { centsToDollars, formatUSD } from "@/domains/shared/money";
+import { centsToDollars, dollarsToCents, formatUSD } from "@/domains/shared/money";
 
 const cellInput = "w-full rounded-md border border-border bg-surface px-2 py-1 text-xs";
 const labelCell = "sticky left-0 z-10 bg-surface px-3 py-2 text-xs font-semibold text-muted whitespace-nowrap";
 
+function formatRatePercent(rate: number) {
+  return `${(rate * 100).toFixed(2)}%`;
+}
+
 function formatRate(rate: string | null) {
-  return rate == null ? "" : `${(Number(rate) * 100).toFixed(2)}%`;
+  return rate == null ? "" : formatRatePercent(Number(rate));
 }
 
 function dollars(cents: number | null) {
   return cents == null ? "" : String(centsToDollars(cents));
+}
+
+/**
+ * Prima neta anual: la tasa es prima neta / VA, sin derechos de emisión ni
+ * impuestos de por medio (esos sí requieren el cálculo de premium.calculator.ts
+ * y no se reimplementan aquí). Por eso se puede mostrar al instante mientras
+ * se digita, sin esperar a guardar.
+ */
+function ManualPremiumInput({
+  name,
+  defaultCents,
+  valueCents,
+  savedRate,
+  onChange,
+}: {
+  name: string;
+  defaultCents: number | null;
+  valueCents: number;
+  savedRate: string | null;
+  onChange: () => void;
+}) {
+  const [liveRate, setLiveRate] = useState<number | null>(null);
+
+  return (
+    <>
+      <input
+        name={name}
+        type="number"
+        step="0.01"
+        min="0"
+        defaultValue={dollars(defaultCents)}
+        placeholder="Prima neta USD"
+        onChange={(e) => {
+          if (e.target.value) onChange();
+          const dollarsValue = Number(e.target.value);
+          setLiveRate(e.target.value && Number.isFinite(dollarsValue) && valueCents > 0 ? dollarsToCents(dollarsValue) / valueCents : null);
+        }}
+        className={`${cellInput} text-right`}
+      />
+      {(liveRate != null || savedRate) && (
+        <span className="mt-1 block text-center text-muted">
+          Tasa {liveRate != null ? formatRatePercent(liveRate) : formatRate(savedRate)}
+        </span>
+      )}
+    </>
+  );
 }
 
 /** Pantalla intermedia equivalente a la hoja DATOS OFERTA del Excel. */
@@ -180,19 +230,13 @@ function AnnualGrid({ config }: { config: OfferConfiguration }) {
                 return (
                   <td key={c.insurerId} className="px-3 py-2 text-xs">
                     <input type="hidden" name="premiumOptionId" value={premium.quoteOptionId} />
-                    <input
+                    <ManualPremiumInput
                       name={`premium:${premium.quoteOptionId}`}
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      defaultValue={dollars(premium.netPremiumCents)}
-                      placeholder="Prima neta USD"
-                      onChange={(e) => e.target.value && show(c.insurerId)}
-                      className={`${cellInput} text-right`}
+                      defaultCents={premium.netPremiumCents}
+                      valueCents={risk.insuredValueCents + risk.extrasValueCents}
+                      savedRate={premium.ratePercentApplied}
+                      onChange={() => show(c.insurerId)}
                     />
-                    {premium.ratePercentApplied && (
-                      <span className="mt-1 block text-center text-muted">Tasa {formatRate(premium.ratePercentApplied)}</span>
-                    )}
                   </td>
                 );
               })}
