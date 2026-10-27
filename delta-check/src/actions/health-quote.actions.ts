@@ -41,7 +41,7 @@ export async function createHealthQuote(
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
     const client = await clientService.upsertByDocument(tx, {
       organizationId: session.organizationId,
-      personType: input.personType,
+      personType: "NATURAL",
       documentType: input.documentType,
       documentNumber: input.documentNumber,
       firstName: input.firstName,

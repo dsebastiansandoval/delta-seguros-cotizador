@@ -52,8 +52,13 @@ const dependentsShape = Object.assign(
  * siendo lo que persiste el dominio; si vino por fecha, se calcula acá
  * (calculateAge); si vino directa, se usa tal cual.
  */
+// Sin personType: a diferencia de DATOS VH (Autos), DATOS AM nunca tuvo
+// "JURIDICA" — "NOMBRES:"/"APELLIDOS:" son fijos ahí, sin fórmula
+// condicional, y el titular solo tiene EDAD/GÉNERO. El contratante de Salud
+// en Delta siempre es persona natural (confirmado contra el Excel real, no
+// asumido) — documentType sigue aceptando RUC porque una persona natural
+// también puede tener uno (cédula + "001").
 const baseHealthQuoteSchema = z.object({
-  personType: z.enum(["NATURAL", "JURIDICA"]),
   documentType: z.enum(["CEDULA", "RUC", "PASAPORTE"]),
   documentNumber: z.string().min(5, "Documento inválido"),
   firstName: optionalText(),

@@ -91,13 +91,6 @@ export function NuevaCotizacionSaludForm({
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <legend className="col-span-full text-sm font-semibold">Cliente</legend>
         <label className="flex flex-col gap-1 text-sm">
-          Tipo de persona
-          <select name="personType" defaultValue="NATURAL" className="rounded-lg border border-border bg-surface px-3 py-2">
-            <option value="NATURAL">Natural</option>
-            <option value="JURIDICA">Jurídica</option>
-          </select>
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
           Tipo de documento
           <select
             ref={documentTypeRef}

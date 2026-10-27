@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { newHealthQuoteSchema } from "./health-quote.schema";
 
 const base = {
-  personType: "NATURAL",
   documentType: "CEDULA",
   documentNumber: "1710000099",
   firstName: "",
