@@ -4,6 +4,16 @@
  * estado inicial de DATOS OFERTA (filas 67-82) y `options` = los valores que
  * escriben los botones de opción VBA de esa hoja (módulo Sheet4). Si Delta
  * cambia una cobertura en el Excel, se regenera este archivo.
+ *
+ * Reverificado 2026-10-26 contra el Excel real (valores cacheados de la hoja
+ * OFERTA): estaba desactualizado en 8 de 13 aseguradoras — AIG, SESA,
+ * GENERALI, ZURICH, SWEADEN, ATLANTIDA, CHUBB y CONDOR tenían RC, Accidentes
+ * personales, Amparo Patrimonial y/o deducibles con el valor de una versión
+ * anterior del Excel (el propio Excel cambió desde que se generó este
+ * archivo la primera vez, y nadie lo regeneró). GENERALI era la más
+ * desactualizada (5 campos). ALIANZA, CONSTITUCION, UNIDOS, LATINA y ASEGSUR
+ * ya coincidían. No se reverificaron los menús `options` (qué puede elegir
+ * el agente), solo los valores iniciales.
  */
 export const OFFER_COVERAGE_ROWS = [
   { key: "PERDIDA_PARCIAL", label: "Pérdida Parcial por Daño", section: "PRINCIPALES" },
@@ -59,7 +69,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 40000, text: "sin costo" },
+      RC: { amount: 30000, text: "sin costo" },
       AP: { amount: 5000, text: "sin costo" },
       GM: { amount: 3000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
@@ -75,9 +85,9 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       AMPARO_PATRIMONIAL: { text: "Sí otorga" },
     },
     defaults: {
-      rcAmount: 40000,
+      rcAmount: 30000,
       gmAmount: 3000,
-      partialDeductible: "* 10% VS, 1% VA, mínimo USD 200 (el que sea mayor)",
+      partialDeductible: "* 10% VS, 1% VA, mínimo USD 500 (el que sea mayor)",
       totalLossDeductible: "* Vehículos menor a USD 19.999: 20% del valor asegurado sin dispositivo; 15% con dispositivo (por robo)\n* Vehículos mayores a USD 20.000: 20% del valor asegurado, sin dispositivo; 10% con dispositivo. (por robo)",
       amparoPatrimonial: true,
     },
@@ -89,7 +99,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 80000, text: "sin costo" },
+      RC: { amount: 35000, text: "sin costo" },
       AP: { amount: 5000, text: "sin costo" },
       GM: { amount: 3000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
@@ -105,7 +115,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       AMPARO_PATRIMONIAL: { text: "Sí otorga" },
     },
     defaults: {
-      rcAmount: 80000,
+      rcAmount: 35000,
       gmAmount: 3000,
       partialDeductible: "* 10% VS, 1% VA, mínimo USD 200 (el que sea mayor)",
       totalLossDeductible: "* 10% del VA por robo con dispositivo\n* 10% del VA por robo menores a USD 30,000 sin dispositivo\n* 20% del VA por robo mayores a USD 30,000 sin dispositivo",
@@ -119,8 +129,8 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 40000, text: "sin costo" },
-      AP: { amount: 10000, text: "sin costo" },
+      RC: { amount: 35000, text: "sin costo" },
+      AP: { amount: 8000, text: "sin costo" },
       GM: { amount: 3000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
       ASISTENCIA_MECANICA: { text: "Sí otorga" },
@@ -132,14 +142,14 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PACTO_ANDINO: { text: "Sí otorga" },
       ASISTENCIA_EXEQUIAL: { text: "Sí otorga" },
       CONDUCTOR_ELEGIDO: { text: "Sí otorga" },
-      AMPARO_PATRIMONIAL: { text: "Sí otorga" },
+      AMPARO_PATRIMONIAL: { text: "No otorga" },
     },
     defaults: {
-      rcAmount: 40000,
+      rcAmount: 35000,
       gmAmount: 3000,
-      partialDeductible: "* 10% VS, 1% VA,mínimo USD 300 (el que sea mayor)",
-      totalLossDeductible: "* 10% del VA por daño\n* 10% del VA por robo (Con dispositivo)\n* 20% del VA por robo (Sin dispositivo)",
-      amparoPatrimonial: true,
+      partialDeductible: "* 10% VS, 1% VA,mínimo USD 500 (el que sea mayor)",
+      totalLossDeductible: "* 25% del VA por daño\n* 25% del VA por robo",
+      amparoPatrimonial: false,
     },
     options: { partialDeductibleParts: {"vs": ["* 10% VS, "], "va": ["1% VA,mínimo USD "], "min": ["300 (el que sea mayor)", "400 (el que sea mayor)", "500 (el que sea mayor)"]} },
   },
@@ -149,7 +159,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 50000, text: "sin costo" },
+      RC: { amount: 40000, text: "sin costo" },
       AP: { amount: 10000, text: "sin costo" },
       GM: { amount: 4000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
@@ -165,10 +175,10 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       AMPARO_PATRIMONIAL: { text: "Sí otorga" },
     },
     defaults: {
-      rcAmount: 50000,
+      rcAmount: 40000,
       gmAmount: 4000,
-      partialDeductible: "* 10% VS, 1% VA, mínimo USD 400 (el que sea mayor)",
-      totalLossDeductible: "* 15% del VA por daño\n* 20% del VA por robo",
+      partialDeductible: "* 10% VS, 1% VA, mínimo USD 500 (el que sea mayor)",
+      totalLossDeductible: "* 15% del VA por daño\n* 30% del VA por robo",
       amparoPatrimonial: true,
     },
     options: { rc: [40000, 50000], gm: [3000, 4000], partialDeductible: ["* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 400 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 500 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 550 (el que sea mayor)"], totalLossDeductible: ["* 15% del VA por daño\n* 20% del VA por robo", "* 15% del VA por daño\n* 30% del VA por robo"] },
@@ -179,7 +189,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 50000, text: "sin costo" },
+      RC: { amount: 10000, text: "sin costo" },
       AP: { amount: 3000, text: "sin costo" },
       GM: { amount: 2000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
@@ -195,10 +205,10 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       AMPARO_PATRIMONIAL: { text: "Sí otorga" },
     },
     defaults: {
-      rcAmount: 50000,
+      rcAmount: 10000,
       gmAmount: 2000,
-      partialDeductible: "* 10% VS, 1% VA,mínimo USD 250 (el que sea mayor)",
-      totalLossDeductible: "* 30% del VA por robo, Sweaden no exige dispositivo de rastreo satelital",
+      partialDeductible: "* 12% VS, 1% VA,mínimo USD 400 (el que sea mayor)",
+      totalLossDeductible: "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital",
       amparoPatrimonial: true,
     },
     options: { rc: [10000, 15000, 20000, 25000, 30000, 35000, 50000], gm: [2000, 3000, 5000], partialDeductibleParts: {"vs": ["* 10% VS, ", "* 11% VS, ", "* 12% VS, "], "va": ["1% VA,mínimo USD ", "1.5% VA,mínimo USD ", "2% VA,mínimo USD "], "min": ["250 (el que sea mayor)", "350 (el que sea mayor)", "400 (el que sea mayor)", "450 (el que sea mayor)", "500 (el que sea mayor)"]}, totalLossDeductible: ["* 15% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 20% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 30% del VA por robo, Sweaden no exige dispositivo de rastreo satelital"] },
@@ -227,7 +237,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
     defaults: {
       rcAmount: 45000,
       gmAmount: 3000,
-      partialDeductible: "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)",
+      partialDeductible: "* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)",
       totalLossDeductible: "* 15% del VA por daño\n* 15% del VA por robo con o sin dispositivo hasta 30.000\n *20% del VA por robo con o sin dispositivo mayores a 30.000",
       amparoPatrimonial: true,
     },
@@ -402,14 +412,14 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PACTO_ANDINO: { text: "Sí otorga" },
       ASISTENCIA_EXEQUIAL: { text: "Sí otorga" },
       CONDUCTOR_ELEGIDO: { text: "Sí otorga" },
-      AMPARO_PATRIMONIAL: { text: "Sí otorga" },
+      AMPARO_PATRIMONIAL: { text: "No otorga" },
     },
     defaults: {
       rcAmount: 30000,
       gmAmount: 3000,
       partialDeductible: "* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)",
       totalLossDeductible: "* 15% del VA por daño\n* 20% del VA por robo sin dispositivo\n* 0% del VA por robo con dispositivo",
-      amparoPatrimonial: true,
+      amparoPatrimonial: false,
     },
     options: { rc: [30000, 35000, 40000, 50000], partialDeductible: ["* 10% VS, 1% VA, mínimo USD 250 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 400 (el que sea mayor)"] },
   },
@@ -432,14 +442,14 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PACTO_ANDINO: { text: "No otorga" },
       ASISTENCIA_EXEQUIAL: { text: "No otorga" },
       CONDUCTOR_ELEGIDO: { text: "No otorga" },
-      AMPARO_PATRIMONIAL: { text: "Sí otorga" },
+      AMPARO_PATRIMONIAL: { text: "No otorga" },
     },
     defaults: {
       rcAmount: 35000,
       gmAmount: 3000,
-      partialDeductible: "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)",
+      partialDeductible: "* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)",
       totalLossDeductible: "* 20% del VA por robo sin dispositivo\n* 10% del VA por robo con dispositivo",
-      amparoPatrimonial: true,
+      amparoPatrimonial: false,
     },
     options: { partialDeductible: ["* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 400 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 450 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 500 (el que sea mayor)"] },
   },
