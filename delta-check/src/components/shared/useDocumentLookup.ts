@@ -22,11 +22,14 @@ export function useDocumentLookup({
   firstNameRef,
   lastNameRef,
   provinceRef,
+  businessNameRef,
 }: {
   documentTypeRef: RefObject<HTMLSelectElement | null>;
   firstNameRef: RefObject<HTMLInputElement | null>;
   lastNameRef: RefObject<HTMLInputElement | null>;
   provinceRef?: RefObject<HTMLInputElement | null>;
+  /** Jurídica (DATOS VH!C10 "NOMBRE:") — distinto de Nombres/Apellidos, que no aplican. */
+  businessNameRef?: RefObject<HTMLInputElement | null>;
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
@@ -59,14 +62,10 @@ export function useDocumentLookup({
           if (firstNameRef.current) firstNameRef.current.value = result.firstName;
           if (lastNameRef.current) lastNameRef.current.value = result.lastName;
           if (provinceRef?.current) provinceRef.current.value = result.province ?? "";
-          setMessage({
-            kind: "ok",
-            text: result.province ? `Encontrado: ${result.fullName} — cédula de ${result.province}` : `Encontrado: ${result.fullName}`,
-          });
+          setMessage({ kind: "ok", text: "Encontrado" });
         } else if (result.status === "FOUND" && result.kind === "JURIDICA") {
-          if (firstNameRef.current) firstNameRef.current.value = result.businessName;
-          if (lastNameRef.current) lastNameRef.current.value = "";
-          setMessage({ kind: "ok", text: `Encontrado: ${result.businessName}` });
+          if (businessNameRef?.current) businessNameRef.current.value = result.businessName;
+          setMessage({ kind: "ok", text: "Encontrado" });
         } else if (result.status === "NOT_FOUND") {
           setMessage({ kind: "error", text: "No se encontró en el SRI — digita el nombre a mano" });
         } else {

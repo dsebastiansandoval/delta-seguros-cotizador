@@ -18,14 +18,43 @@ describe("newAutoQuoteSchema — datos de DATOS VH", () => {
     expect(parsed.previousExpiryDate).toBe("2026-11-03");
   });
 
-  it("guarda nacimiento, estado civil y género solo para persona natural", () => {
+  it("estado civil y género solo aplican a persona natural — confirmado contra DATOS VH!C16/G12", () => {
     const personal = { birthDate: "1990-05-20", maritalStatus: "CASADO", gender: "FEMENINO" };
     const natural = newAutoQuoteSchema.parse({ ...base, ...personal });
     expect(natural).toMatchObject(personal);
 
     const juridica = newAutoQuoteSchema.parse({ ...base, ...personal, personType: "JURIDICA", documentType: "RUC" });
-    expect(juridica.birthDate).toBeUndefined();
+    expect(juridica.maritalStatus).toBeUndefined();
     expect(juridica.gender).toBeUndefined();
+  });
+
+  it("birthDate es nacimiento (natural) o constitución (jurídica) — misma celda del Excel (DATOS VH!C14)", () => {
+    const juridica = newAutoQuoteSchema.parse({
+      ...base,
+      personType: "JURIDICA",
+      documentType: "RUC",
+      birthDate: "2010-03-01",
+    });
+    expect(juridica.birthDate).toBe("2010-03-01");
+  });
+
+  it("firstName/lastName solo para natural, businessName solo para jurídica (DATOS VH!C10)", () => {
+    const natural = newAutoQuoteSchema.parse({ ...base, firstName: "David", lastName: "Sandoval", businessName: "Acme" });
+    expect(natural.firstName).toBe("David");
+    expect(natural.lastName).toBe("Sandoval");
+    expect(natural.businessName).toBeUndefined();
+
+    const juridica = newAutoQuoteSchema.parse({
+      ...base,
+      personType: "JURIDICA",
+      documentType: "RUC",
+      firstName: "David",
+      lastName: "Sandoval",
+      businessName: "Acme",
+    });
+    expect(juridica.firstName).toBeUndefined();
+    expect(juridica.lastName).toBeUndefined();
+    expect(juridica.businessName).toBe("Acme");
   });
 
   it("rechaza una fecha de nacimiento futura", () => {

@@ -96,12 +96,7 @@ export function RenewalLookupButton(refs: Refs) {
       }
       refs.onRenewalFound();
 
-      setMessage({
-        kind: "ok",
-        text: result.previousInsurerName
-          ? `Precargado: ${vehicle.plate} — anterior con ${result.previousInsurerName}${result.previousPolicyNumber ? ` (póliza ${result.previousPolicyNumber})` : ""}`
-          : `Precargado: ${vehicle.plate} — sin póliza anterior registrada`,
-      });
+      setMessage({ kind: "ok", text: `Precargado: ${vehicle.plate}` });
     });
   }
 

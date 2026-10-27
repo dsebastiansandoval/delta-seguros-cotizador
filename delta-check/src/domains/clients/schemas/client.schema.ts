@@ -105,7 +105,11 @@ const baseAutoQuoteSchema = z.object({
   firstName: optionalText(),
   lastName: optionalText(),
   businessName: optionalText(),
-  // Persona natural — DATOS VH: NACIMIENTO (la edad se calcula), ESTADO CIVIL, GÉNERO.
+  // DATOS VH!C14: "NACIMIENTO:" en persona natural, "CONSTITUCION:" en
+  // jurídica — misma celda del Excel, mismo campo acá (birthDate), solo
+  // cambia el label en el formulario según personType. ESTADO CIVIL/GÉNERO
+  // (C16/G12) no existen para jurídica — confirmado contra las fórmulas
+  // reales de esas celdas (EXCEL-AUDIT.md).
   birthDate: optionalDate().refine((v) => !v || v <= new Date().toISOString().slice(0, 10), "La fecha no puede ser futura"),
   maritalStatus: z.preprocess(
     (v) => (v === "" ? undefined : v),
@@ -225,10 +229,10 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
       personType: data.personType,
       documentType: data.documentType,
       documentNumber: data.documentNumber,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      businessName: data.businessName,
-      birthDate: data.personType === "NATURAL" ? data.birthDate : undefined,
+      firstName: data.personType === "NATURAL" ? data.firstName : undefined,
+      lastName: data.personType === "NATURAL" ? data.lastName : undefined,
+      businessName: data.personType === "JURIDICA" ? data.businessName : undefined,
+      birthDate: data.birthDate,
       maritalStatus: data.personType === "NATURAL" ? data.maritalStatus : undefined,
       gender: data.personType === "NATURAL" ? data.gender : undefined,
       email: data.email,

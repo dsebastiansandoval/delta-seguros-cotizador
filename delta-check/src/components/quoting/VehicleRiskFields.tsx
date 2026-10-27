@@ -18,10 +18,25 @@ export function VehicleRiskFields({
   suffix,
   brands,
   modelsByBrand,
+  initialValue,
 }: {
   suffix: string;
   brands: string[];
   modelsByBrand: Record<string, string[]>;
+  /** Precarga al editar una cotización BORRADOR ya creada — ver NuevaCotizacionForm. */
+  initialValue?: {
+    plate: string;
+    brand: string;
+    model: string;
+    year: number;
+    bodyType: "LIVIANO" | "PICKUP";
+    color: string | null;
+    commercialValueDollars: number;
+    extrasValueDollars: number;
+    hasTracker: boolean;
+    city: string | null;
+    province: string | null;
+  };
 }) {
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
@@ -40,6 +55,7 @@ export function VehicleRiskFields({
         Placa
         <input
           name={`plate${suffix}`}
+          defaultValue={initialValue?.plate ?? ""}
           placeholder="PBX-1234"
           onBlur={plateLookup.onBlur}
           className="rounded-lg border border-border bg-background px-3 py-2"
@@ -58,6 +74,7 @@ export function VehicleRiskFields({
           ref={brandRef}
           name={`brand${suffix}`}
           list={brandListId}
+          defaultValue={initialValue?.brand ?? ""}
           placeholder="Escribe o elige de la lista"
           autoComplete="off"
           onChange={(e) => {
@@ -86,6 +103,7 @@ export function VehicleRiskFields({
           ref={modelRef}
           name={`model${suffix}`}
           list={modelListId}
+          defaultValue={initialValue?.model ?? ""}
           placeholder="Escribe o elige de la lista al seleccionar marca"
           className="rounded-lg border border-border bg-background px-3 py-2"
         />
@@ -98,7 +116,7 @@ export function VehicleRiskFields({
           ref={yearRef}
           name={`year${suffix}`}
           type="number"
-          defaultValue={new Date().getFullYear()}
+          defaultValue={initialValue?.year ?? new Date().getFullYear()}
           className="rounded-lg border border-border bg-background px-3 py-2"
         />
       </label>
@@ -108,7 +126,7 @@ export function VehicleRiskFields({
         <select
           ref={bodyTypeRef}
           name={`bodyType${suffix}`}
-          defaultValue="LIVIANO"
+          defaultValue={initialValue?.bodyType ?? "LIVIANO"}
           className="rounded-lg border border-border bg-background px-3 py-2"
         >
           <option value="LIVIANO">Liviano</option>
@@ -118,7 +136,12 @@ export function VehicleRiskFields({
 
       <label className="flex flex-col gap-1 text-sm">
         Color
-        <input ref={colorRef} name={`color${suffix}`} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input
+          ref={colorRef}
+          name={`color${suffix}`}
+          defaultValue={initialValue?.color ?? ""}
+          className="rounded-lg border border-border bg-background px-3 py-2"
+        />
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
@@ -127,6 +150,7 @@ export function VehicleRiskFields({
           name={`commercialValueDollars${suffix}`}
           type="number"
           step="0.01"
+          defaultValue={initialValue?.commercialValueDollars ?? undefined}
           className="rounded-lg border border-border bg-background px-3 py-2"
         />
       </label>
@@ -141,7 +165,7 @@ export function VehicleRiskFields({
           name={`extrasValueDollars${suffix}`}
           type="number"
           step="0.01"
-          defaultValue={0}
+          defaultValue={initialValue?.extrasValueDollars ?? 0}
           className="rounded-lg border border-border bg-background px-3 py-2"
         />
       </label>
@@ -151,7 +175,7 @@ export function VehicleRiskFields({
         <select
           ref={provinceRef}
           name={`province${suffix}`}
-          defaultValue=""
+          defaultValue={initialValue?.province ?? ""}
           className="rounded-lg border border-border bg-background px-3 py-2"
         >
           <option value="">Selecciona una provincia</option>
@@ -165,11 +189,15 @@ export function VehicleRiskFields({
 
       <label className="flex flex-col gap-1 text-sm">
         Ciudad
-        <input name={`city${suffix}`} className="rounded-lg border border-border bg-background px-3 py-2" />
+        <input
+          name={`city${suffix}`}
+          defaultValue={initialValue?.city ?? ""}
+          className="rounded-lg border border-border bg-background px-3 py-2"
+        />
       </label>
 
       <label className="col-span-full flex items-center gap-2 text-sm">
-        <input name={`hasTracker${suffix}`} type="checkbox" value="true" />
+        <input name={`hasTracker${suffix}`} type="checkbox" value="true" defaultChecked={initialValue?.hasTracker ?? false} />
         Tiene dispositivo de rastreo
       </label>
     </div>

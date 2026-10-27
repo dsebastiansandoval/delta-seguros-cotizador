@@ -162,6 +162,13 @@
       "when": 1792990413970,
       "tag": "0022_quote_code_sequences",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1793071609983,
+      "tag": "0023_equisuiza_display_name",
+      "breakpoints": true
     }
   ]
 }

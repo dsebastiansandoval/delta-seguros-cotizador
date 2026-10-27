@@ -1,6 +1,7 @@
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
+import { clients, vehicles } from "@/db/schema/clients";
 import { nextQuoteCode } from "./quote-code.service";
 
 export const quoteService = {
@@ -76,5 +77,70 @@ export const quoteService = {
 
   async findRisksByQuote(tx: Db, quoteId: string) {
     return tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId)).orderBy(quoteRisks.riskNumber);
+  },
+
+  /** Cliente + vehículo(s) de una cotización, para precargar el formulario de edición. */
+  async getEditData(tx: Db, quoteId: string) {
+    const quote = await quoteService.findById(tx, quoteId);
+    if (!quote) return null;
+
+    const [client] = await tx.select().from(clients).where(eq(clients.id, quote.clientId)).limit(1);
+    if (!client) return null;
+
+    const risks = await quoteService.findRisksByQuote(tx, quoteId);
+    const vehicleIds = risks.map((r) => r.vehicleId).filter((id): id is string => Boolean(id));
+    const vehicleRows = vehicleIds.length ? await tx.select().from(vehicles).where(inArray(vehicles.id, vehicleIds)) : [];
+    const vehicleById = new Map(vehicleRows.map((v) => [v.id, v]));
+
+    return {
+      quote,
+      client,
+      risks: risks.map((r) => ({ ...r, vehicle: r.vehicleId ? (vehicleById.get(r.vehicleId) ?? null) : null })),
+    };
+  },
+
+  /**
+   * Corrige una cotización BORRADOR ya creada (ver updateAutoQuote en
+   * quote.actions.ts) — cliente y número de riesgos no cambian acá, solo
+   * sus valores. `risks` viene ya emparejado 1 a 1 por posición con los
+   * `quote_risks` existentes (mismo orden, mismo riskNumber).
+   */
+  async updateAutoQuote(
+    tx: Db,
+    quoteId: string,
+    params: {
+      clientId: string;
+      modality: "ANUAL" | "POR_KM";
+      operationType: "NUEVA" | "RENOVACION";
+      previousInsurerId?: string;
+      previousPolicyNumber?: string;
+      previousStartDate?: string;
+      previousExpiryDate?: string;
+      previousPremiumCents?: number;
+      risks: Array<{ quoteRiskId: string; insuredValueCents: number; extrasValueCents: number }>;
+    },
+  ) {
+    const isRenewal = params.operationType === "RENOVACION";
+    await tx
+      .update(quotes)
+      .set({
+        clientId: params.clientId,
+        modality: params.modality,
+        operationType: params.operationType,
+        previousInsurerId: isRenewal ? params.previousInsurerId : null,
+        previousPolicyNumber: isRenewal ? params.previousPolicyNumber : null,
+        previousStartDate: isRenewal ? params.previousStartDate : null,
+        previousExpiryDate: isRenewal ? params.previousExpiryDate : null,
+        previousPremiumCents: isRenewal ? params.previousPremiumCents : null,
+        updatedAt: new Date(),
+      })
+      .where(eq(quotes.id, quoteId));
+
+    for (const r of params.risks) {
+      await tx
+        .update(quoteRisks)
+        .set({ insuredValueCents: r.insuredValueCents, extrasValueCents: r.extrasValueCents })
+        .where(eq(quoteRisks.id, r.quoteRiskId));
+    }
   },
 };

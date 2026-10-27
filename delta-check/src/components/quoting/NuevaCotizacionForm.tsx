@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useRef, useState } from "react";
-import { createAutoQuote, saveAutoQuoteDraft, type ActionResult } from "@/actions/quote.actions";
+import { createAutoQuote, saveAutoQuoteDraft, updateAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
 import { usePlateLookup } from "@/components/shared/usePlateLookup";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
@@ -19,6 +19,44 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
   return <p className="text-xs text-red-600">{fieldErrors[0]}</p>;
 }
 
+/** Precarga para corregir una cotización BORRADOR ya creada (getAutoQuoteForEdit) — ver quote.actions.ts. */
+export type EditAutoQuoteData = {
+  quoteId: string;
+  client: {
+    personType: "NATURAL" | "JURIDICA";
+    documentType: "CEDULA" | "RUC" | "PASAPORTE";
+    documentNumber: string;
+    firstName: string | null;
+    lastName: string | null;
+    businessName: string | null;
+    birthDate: string | null;
+    maritalStatus: string | null;
+    gender: string | null;
+    source: string | null;
+    executive: string | null;
+  };
+  modality: "ANUAL" | "POR_KM";
+  operationType: "NUEVA" | "RENOVACION";
+  previousInsurerId: string | null;
+  previousPolicyNumber: string | null;
+  previousStartDate: string | null;
+  previousExpiryDate: string | null;
+  previousPremiumDollars: number | null;
+  risks: Array<{
+    plate: string;
+    brand: string;
+    model: string;
+    year: number;
+    bodyType: "LIVIANO" | "PICKUP";
+    color: string | null;
+    commercialValueDollars: number;
+    extrasValueDollars: number;
+    hasTracker: boolean;
+    city: string | null;
+    province: string | null;
+  }>;
+};
+
 export function NuevaCotizacionForm({
   brands,
   modelsByBrand,
@@ -26,6 +64,7 @@ export function NuevaCotizacionForm({
   executives,
   currentExecutive,
   insurers,
+  editQuote,
 }: {
   brands: string[];
   /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
@@ -38,13 +77,21 @@ export function NuevaCotizacionForm({
   currentExecutive: string;
   /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
   insurers: Array<{ id: string; name: string }>;
+  /**
+   * Si viene, el formulario corrige esta cotización BORRADOR en vez de crear
+   * una nueva — mismo formulario, solo cambia la acción y los valores
+   * iniciales. No soporta cambiar el número de vehículos (ver EditarPage).
+   */
+  editQuote?: EditAutoQuoteData;
 }) {
-  const [state, formAction, pending] = useActionState(createAutoQuote, initialState);
+  const isEditing = Boolean(editQuote);
+  const [state, formAction, pending] = useActionState(isEditing ? updateAutoQuote : createAutoQuote, initialState);
   const [draftState, draftAction, draftPending] = useActionState(saveAutoQuoteDraft, initialState);
   const documentNumberRef = useRef<HTMLInputElement>(null);
   const documentTypeRef = useRef<HTMLSelectElement>(null);
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const businessNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
@@ -65,11 +112,11 @@ export function NuevaCotizacionForm({
   const previousStartDateRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
   const previousPremiumRef = useRef<HTMLInputElement>(null);
-  const [operationType, setOperationType] = useState<"NUEVA" | "RENOVACION">("NUEVA");
-  const [personType, setPersonType] = useState<"NATURAL" | "JURIDICA">("NATURAL");
-  const [birthDate, setBirthDate] = useState("");
+  const [operationType, setOperationType] = useState<"NUEVA" | "RENOVACION">(editQuote?.operationType ?? "NUEVA");
+  const [personType, setPersonType] = useState<"NATURAL" | "JURIDICA">(editQuote?.client.personType ?? "NATURAL");
+  const [birthDate, setBirthDate] = useState(editQuote?.client.birthDate ?? "");
   const age = birthDate ? calculateAge(birthDate) : null;
-  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
+  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef, businessNameRef });
   const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef, provinceRef: vehicleProvinceRef });
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
@@ -77,7 +124,7 @@ export function NuevaCotizacionForm({
   // §5), acá como tabs. `riskCount` cuántos bloques existen, `activeTab`
   // cuál se ve — los que no están activos siguen montados (con `hidden`,
   // no desmontados) para no perder lo ya escrito ahí.
-  const [riskCount, setRiskCount] = useState(1);
+  const [riskCount, setRiskCount] = useState(editQuote?.risks.length ?? 1);
   const [activeTab, setActiveTab] = useState(1);
 
   const errors = state?.ok === false ? state.errors : undefined;
@@ -85,6 +132,8 @@ export function NuevaCotizacionForm({
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
+      {isEditing && <input type="hidden" name="quoteId" value={editQuote!.quoteId} />}
+
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm">
           Ejecutivo
@@ -92,7 +141,7 @@ export function NuevaCotizacionForm({
             ref={executiveRef}
             name="executive"
             list="executives-datalist"
-            defaultValue={currentExecutive}
+            defaultValue={editQuote?.client.executive ?? currentExecutive}
             placeholder="Escribe o elige de la lista"
             autoComplete="off"
             className="rounded-lg border border-border bg-surface px-3 py-2"
@@ -106,7 +155,7 @@ export function NuevaCotizacionForm({
 
         <label className="flex flex-col gap-1 text-sm">
           Tipo de póliza
-          <select name="modality" defaultValue="ANUAL" className="rounded-lg border border-border bg-surface px-3 py-2">
+          <select name="modality" defaultValue={editQuote?.modality ?? "ANUAL"} className="rounded-lg border border-border bg-surface px-3 py-2">
             <option value="ANUAL">Anual</option>
             <option value="POR_KM">Auto x Km</option>
           </select>
@@ -133,7 +182,12 @@ export function NuevaCotizacionForm({
         <legend className="col-span-full text-sm font-semibold">Póliza anterior</legend>
         <label className="flex flex-col gap-1 text-sm">
           Aseguradora
-          <select ref={previousInsurerIdRef} name="previousInsurerId" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
+          <select
+            ref={previousInsurerIdRef}
+            name="previousInsurerId"
+            defaultValue={editQuote?.previousInsurerId ?? ""}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          >
             <option value="">—</option>
             {insurers.map((i) => (
               <option key={i.id} value={i.id}>
@@ -144,7 +198,12 @@ export function NuevaCotizacionForm({
         </label>
         <label className="flex flex-col gap-1 text-sm">
           No. póliza
-          <input ref={previousPolicyNumberRef} name="previousPolicyNumber" className="rounded-lg border border-border bg-surface px-3 py-2" />
+          <input
+            ref={previousPolicyNumberRef}
+            name="previousPolicyNumber"
+            defaultValue={editQuote?.previousPolicyNumber ?? ""}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Prima vencida (USD)
@@ -154,6 +213,7 @@ export function NuevaCotizacionForm({
             type="number"
             step="0.01"
             min="0"
+            defaultValue={editQuote?.previousPremiumDollars ?? undefined}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <FieldError errors={errors} name="previousPremiumDollars" />
@@ -164,6 +224,7 @@ export function NuevaCotizacionForm({
             ref={previousStartDateRef}
             name="previousStartDate"
             type="date"
+            defaultValue={editQuote?.previousStartDate ?? ""}
             onChange={(e) => {
               const [y, m, d] = e.target.value.split("-");
               if (y && previousExpiryDateRef.current) previousExpiryDateRef.current.value = `${Number(y) + 1}-${m}-${d}`;
@@ -177,6 +238,7 @@ export function NuevaCotizacionForm({
             ref={previousExpiryDateRef}
             name="previousExpiryDate"
             type="date"
+            defaultValue={editQuote?.previousExpiryDate ?? ""}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           />
           <FieldError errors={errors} name="previousExpiryDate" />
@@ -204,7 +266,7 @@ export function NuevaCotizacionForm({
           <select
             ref={documentTypeRef}
             name="documentType"
-            defaultValue="CEDULA"
+            defaultValue={editQuote?.client.documentType ?? "CEDULA"}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           >
             <option value="CEDULA">Cédula</option>
@@ -219,6 +281,7 @@ export function NuevaCotizacionForm({
             ref={documentNumberRef}
             name="documentNumber"
             required
+            defaultValue={editQuote?.client.documentNumber ?? ""}
             onBlur={documentLookup.onBlur}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           />
@@ -231,6 +294,105 @@ export function NuevaCotizacionForm({
           )}
         </label>
 
+        {personType === "NATURAL" ? (
+          <>
+            <label className="flex flex-col gap-1 text-sm">
+              Nombres
+              <input
+                ref={firstNameRef}
+                name="firstName"
+                defaultValue={editQuote?.client.firstName ?? ""}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Apellidos
+              <input
+                ref={lastNameRef}
+                name="lastName"
+                defaultValue={editQuote?.client.lastName ?? ""}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Fecha de nacimiento
+              <input
+                name="birthDate"
+                type="date"
+                value={birthDate}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(e) => setBirthDate(e.target.value)}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+              {age != null && <p className="text-xs text-muted">Edad: {age} años</p>}
+              <FieldError errors={errors} name="birthDate" />
+            </label>
+          </>
+        ) : (
+          <>
+            {/* DATOS VH!C10/C14 en JURIDICA: un solo "NOMBRE:" (no Nombres+Apellidos) y
+                "CONSTITUCION:" en vez de "NACIMIENTO:" — mismo campo birthDate del schema,
+                reutilizado con otro significado (igual que la celda del Excel). */}
+            <label className="flex flex-col gap-1 text-sm">
+              Nombre
+              <input
+                ref={businessNameRef}
+                name="businessName"
+                defaultValue={editQuote?.client.businessName ?? ""}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+            </label>
+
+            <label className="flex flex-col gap-1 text-sm">
+              Fecha de constitución
+              <input
+                name="birthDate"
+                type="date"
+                value={birthDate}
+                max={new Date().toISOString().slice(0, 10)}
+                onChange={(e) => setBirthDate(e.target.value)}
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+              <FieldError errors={errors} name="birthDate" />
+            </label>
+          </>
+        )}
+
+        {personType === "NATURAL" && (
+          <label className="flex flex-col gap-1 text-sm">
+            Estado civil
+            <select
+              name="maritalStatus"
+              defaultValue={editQuote?.client.maritalStatus ?? ""}
+              className="rounded-lg border border-border bg-surface px-3 py-2"
+            >
+              <option value="">—</option>
+              <option value="CASADO">Casado</option>
+              <option value="DIVORCIADO">Divorciado</option>
+              <option value="SOLTERO">Soltero</option>
+              <option value="UNION_DE_HECHO">Unión de hecho</option>
+              <option value="VIUDO">Viudo</option>
+            </select>
+          </label>
+        )}
+
+        {personType === "NATURAL" && (
+          <label className="flex flex-col gap-1 text-sm">
+            Género
+            <select
+              name="gender"
+              defaultValue={editQuote?.client.gender ?? ""}
+              className="rounded-lg border border-border bg-surface px-3 py-2"
+            >
+              <option value="">—</option>
+              <option value="FEMENINO">Femenino</option>
+              <option value="MASCULINO">Masculino</option>
+            </select>
+          </label>
+        )}
+
         <label className="flex flex-col gap-1 text-sm">
           Provincia
           <input
@@ -239,6 +401,23 @@ export function NuevaCotizacionForm({
             placeholder="—"
             className="rounded-lg border border-border bg-surface px-3 py-2 text-muted"
           />
+        </label>
+
+        <label className="flex flex-col gap-1 text-sm">
+          Fuente
+          <input
+            name="source"
+            list="sources-datalist"
+            defaultValue={editQuote?.client.source ?? ""}
+            placeholder="Escribe o elige de la lista"
+            autoComplete="off"
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
+          <datalist id="sources-datalist">
+            {sources.map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
         </label>
 
         <div className="flex items-end">
@@ -265,72 +444,6 @@ export function NuevaCotizacionForm({
             onRenewalFound={() => setOperationType("RENOVACION")}
           />
         </div>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Nombres
-          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-surface px-3 py-2" />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Apellidos
-          <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-surface px-3 py-2" />
-        </label>
-
-        {personType === "NATURAL" && (
-          <>
-            <label className="flex flex-col gap-1 text-sm">
-              Fecha de nacimiento
-              <input
-                name="birthDate"
-                type="date"
-                value={birthDate}
-                max={new Date().toISOString().slice(0, 10)}
-                onChange={(e) => setBirthDate(e.target.value)}
-                className="rounded-lg border border-border bg-surface px-3 py-2"
-              />
-              {age != null && <p className="text-xs text-muted">Edad: {age} años</p>}
-              <FieldError errors={errors} name="birthDate" />
-            </label>
-
-            <label className="flex flex-col gap-1 text-sm">
-              Estado civil
-              <select name="maritalStatus" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
-                <option value="">—</option>
-                <option value="CASADO">Casado</option>
-                <option value="DIVORCIADO">Divorciado</option>
-                <option value="SOLTERO">Soltero</option>
-                <option value="UNION_DE_HECHO">Unión de hecho</option>
-                <option value="VIUDO">Viudo</option>
-              </select>
-            </label>
-
-            <label className="flex flex-col gap-1 text-sm">
-              Género
-              <select name="gender" defaultValue="" className="rounded-lg border border-border bg-surface px-3 py-2">
-                <option value="">—</option>
-                <option value="FEMENINO">Femenino</option>
-                <option value="MASCULINO">Masculino</option>
-              </select>
-            </label>
-          </>
-        )}
-
-        <label className="flex flex-col gap-1 text-sm">
-          Fuente
-          <input
-            name="source"
-            list="sources-datalist"
-            placeholder="Escribe o elige de la lista"
-            autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
-          />
-          <datalist id="sources-datalist">
-            {sources.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
-        </label>
-
       </fieldset>
 
       <fieldset className="flex flex-col gap-4">
@@ -349,7 +462,7 @@ export function NuevaCotizacionForm({
               Riesgo {n}
             </button>
           ))}
-          {riskCount < 4 && (
+          {!isEditing && riskCount < 4 && (
             <button
               type="button"
               onClick={() => {
@@ -362,7 +475,7 @@ export function NuevaCotizacionForm({
               + Añadir riesgo
             </button>
           )}
-          {riskCount > 1 && (
+          {!isEditing && riskCount > 1 && (
             <button
               type="button"
               onClick={() => {
@@ -376,6 +489,11 @@ export function NuevaCotizacionForm({
             </button>
           )}
         </div>
+        {isEditing && (
+          <p className="text-xs text-muted">
+            No se puede cambiar el número de vehículos al editar — para eso, crea una cotización nueva.
+          </p>
+        )}
 
         <div hidden={activeTab !== 1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <label className="flex flex-col gap-1 text-sm">
@@ -384,6 +502,7 @@ export function NuevaCotizacionForm({
               ref={plateRef}
               name="plate1"
               required
+              defaultValue={editQuote?.risks[0]?.plate ?? ""}
               placeholder="PBX-1234"
               onBlur={plateLookup.onBlur}
               className="rounded-lg border border-border bg-surface px-3 py-2"
@@ -404,6 +523,7 @@ export function NuevaCotizacionForm({
               name="brand1"
               list="brand-suggestions-1"
               required
+              defaultValue={editQuote?.risks[0]?.brand ?? ""}
               placeholder="Escribe o elige de la lista"
               autoComplete="off"
               onChange={(e) => {
@@ -433,6 +553,7 @@ export function NuevaCotizacionForm({
               name="model1"
               list="model-suggestions-1"
               required
+              defaultValue={editQuote?.risks[0]?.model ?? ""}
               placeholder="Escribe o elige de la lista al seleccionar marca"
               className="rounded-lg border border-border bg-surface px-3 py-2"
             />
@@ -446,7 +567,7 @@ export function NuevaCotizacionForm({
               name="year1"
               type="number"
               required
-              defaultValue={new Date().getFullYear()}
+              defaultValue={editQuote?.risks[0]?.year ?? new Date().getFullYear()}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             />
           </label>
@@ -456,7 +577,7 @@ export function NuevaCotizacionForm({
             <select
               ref={bodyTypeRef}
               name="bodyType1"
-              defaultValue="LIVIANO"
+              defaultValue={editQuote?.risks[0]?.bodyType ?? "LIVIANO"}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               <option value="LIVIANO">Liviano</option>
@@ -466,7 +587,12 @@ export function NuevaCotizacionForm({
 
           <label className="flex flex-col gap-1 text-sm">
             Color
-            <input ref={colorRef} name="color1" className="rounded-lg border border-border bg-surface px-3 py-2" />
+            <input
+              ref={colorRef}
+              name="color1"
+              defaultValue={editQuote?.risks[0]?.color ?? ""}
+              className="rounded-lg border border-border bg-surface px-3 py-2"
+            />
           </label>
 
           <label className="flex flex-col gap-1 text-sm">
@@ -477,6 +603,7 @@ export function NuevaCotizacionForm({
               type="number"
               step="0.01"
               required
+              defaultValue={editQuote?.risks[0]?.commercialValueDollars ?? undefined}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             />
             <FieldError errors={errors} name="commercialValueDollars1" />
@@ -493,7 +620,7 @@ export function NuevaCotizacionForm({
               name="extrasValueDollars1"
               type="number"
               step="0.01"
-              defaultValue={0}
+              defaultValue={editQuote?.risks[0]?.extrasValueDollars ?? 0}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             />
           </label>
@@ -503,7 +630,7 @@ export function NuevaCotizacionForm({
             <select
               ref={vehicleProvinceRef}
               name="province1"
-              defaultValue=""
+              defaultValue={editQuote?.risks[0]?.province ?? ""}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               <option value="">Selecciona una provincia</option>
@@ -517,11 +644,22 @@ export function NuevaCotizacionForm({
 
           <label className="flex flex-col gap-1 text-sm">
             Ciudad
-            <input ref={cityRef} name="city1" className="rounded-lg border border-border bg-surface px-3 py-2" />
+            <input
+              ref={cityRef}
+              name="city1"
+              defaultValue={editQuote?.risks[0]?.city ?? ""}
+              className="rounded-lg border border-border bg-surface px-3 py-2"
+            />
           </label>
 
           <label className="col-span-full flex items-center gap-2 text-sm">
-            <input ref={hasTrackerRef} name="hasTracker1" type="checkbox" value="true" />
+            <input
+              ref={hasTrackerRef}
+              name="hasTracker1"
+              type="checkbox"
+              value="true"
+              defaultChecked={editQuote?.risks[0]?.hasTracker ?? false}
+            />
             Tiene dispositivo de rastreo
           </label>
         </div>
@@ -530,7 +668,12 @@ export function NuevaCotizacionForm({
           (n) =>
             riskCount >= n && (
               <div key={n} hidden={activeTab !== n}>
-                <VehicleRiskFields suffix={String(n)} brands={brands} modelsByBrand={modelsByBrand} />
+                <VehicleRiskFields
+                  suffix={String(n)}
+                  brands={brands}
+                  modelsByBrand={modelsByBrand}
+                  initialValue={editQuote?.risks[n - 1]}
+                />
               </div>
             ),
         )}
@@ -542,20 +685,22 @@ export function NuevaCotizacionForm({
       )}
 
       <div className="flex gap-3">
-        <button
-          type="submit"
-          formAction={draftAction}
-          disabled={draftPending || pending}
-          className="self-start rounded-lg border border-border-strong px-5 py-2.5 text-sm font-semibold text-foreground disabled:opacity-60"
-        >
-          {draftPending ? "Guardando…" : "Guardar borrador"}
-        </button>
+        {!isEditing && (
+          <button
+            type="submit"
+            formAction={draftAction}
+            disabled={draftPending || pending}
+            className="self-start rounded-lg border border-border-strong px-5 py-2.5 text-sm font-semibold text-foreground disabled:opacity-60"
+          >
+            {draftPending ? "Guardando…" : "Guardar borrador"}
+          </button>
+        )}
         <button
           type="submit"
           disabled={pending || draftPending}
           className="self-start rounded-lg bg-delta-navy px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
         >
-          {pending ? "Comparando…" : "Generar comparativa →"}
+          {pending ? "Guardando…" : isEditing ? "Guardar cambios" : "Generar comparativa →"}
         </button>
       </div>
     </form>

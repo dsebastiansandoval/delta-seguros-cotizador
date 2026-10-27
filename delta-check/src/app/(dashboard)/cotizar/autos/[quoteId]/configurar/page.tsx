@@ -22,9 +22,16 @@ export default async function ConfigurarOfertaPage({ params }: { params: Promise
               : "Elige qué aseguradoras salen en la oferta, sus coberturas y deducibles, y digita la prima neta de cada portal. Latina y Cóndor se calculan solas."}
           </p>
         </div>
-        <Link href={`/cotizar/autos/${quoteId}/comparar`} className="shrink-0 text-sm font-semibold text-link underline">
-          Ver comparativa
-        </Link>
+        <div className="flex shrink-0 gap-4">
+          {config.quote.status === "BORRADOR" && (
+            <Link href={`/cotizar/autos/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
+              Editar datos
+            </Link>
+          )}
+          <Link href={`/cotizar/autos/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
+            Ver comparativa
+          </Link>
+        </div>
       </header>
       {config.columns.length === 0 ? (
         <p className="text-sm text-muted">Esta cotización todavía no tiene comparativa generada.</p>

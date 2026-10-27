@@ -20,6 +20,11 @@ export const clientRepository = {
     return client ?? null;
   },
 
+  async findById(tx: Db, id: string) {
+    const [client] = await tx.select().from(clients).where(eq(clients.id, id)).limit(1);
+    return client ?? null;
+  },
+
   async create(tx: Db, data: NewClient) {
     const [client] = await tx.insert(clients).values(data).returning();
     return client;
@@ -34,7 +39,16 @@ export const clientRepository = {
     return vehicle;
   },
 
+  async updateVehicle(tx: Db, id: string, data: Partial<NewVehicle>) {
+    await tx.update(vehicles).set(data).where(eq(vehicles.id, id));
+  },
+
   async findVehiclesByClient(tx: Db, clientId: string) {
     return tx.select().from(vehicles).where(eq(vehicles.clientId, clientId));
+  },
+
+  async findVehicleById(tx: Db, id: string) {
+    const [vehicle] = await tx.select().from(vehicles).where(eq(vehicles.id, id)).limit(1);
+    return vehicle ?? null;
   },
 };

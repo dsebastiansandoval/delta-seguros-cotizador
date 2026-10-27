@@ -66,7 +66,7 @@ export type ConfigurationColumn = {
 };
 
 export type OfferConfiguration = {
-  quote: { id: string; code: string; modality: "ANUAL" | "POR_KM" };
+  quote: { id: string; code: string; modality: "ANUAL" | "POR_KM"; status: "BORRADOR" | "ENVIADA" | "ACEPTADA" | "VENCIDA" };
   risks: ConfigurationRisk[];
   columns: ConfigurationColumn[];
 };
@@ -253,7 +253,7 @@ export const offerService = {
       }))
       .sort((a, b) => order.indexOf(a.code) - order.indexOf(b.code));
 
-    return { quote: { id: quote.id, code: quote.code, modality: quote.modality }, risks, columns };
+    return { quote: { id: quote.id, code: quote.code, modality: quote.modality, status: quote.status }, risks, columns };
   },
 
   /**

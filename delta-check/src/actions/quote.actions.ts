@@ -192,6 +192,160 @@ export async function runQuoteComparison(
 }
 
 /**
+ * Precarga para `/cotizar/autos/[quoteId]/editar` — null si no existe o es
+ * de otro ramo; `{ locked: true }` si ya no es BORRADOR (una vez enviada,
+ * los datos quedan fijos — mismo criterio que "un borrador sin enviar no
+ * es producción todavía", ARCHITECTURE.md §14.1).
+ */
+export async function getAutoQuoteForEdit(quoteId: string) {
+  const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
+
+  return withOrganization(session.organizationId, async (tx) => {
+    const data = await quoteService.getEditData(tx, quoteId);
+    if (!data || data.quote.branch !== "AUTOS") return null;
+    if (data.quote.status !== "BORRADOR") return { locked: true as const };
+
+    return {
+      locked: false as const,
+      quoteId: data.quote.id,
+      quoteCode: data.quote.code,
+      client: {
+        personType: data.client.personType,
+        documentType: data.client.documentType,
+        documentNumber: data.client.documentNumber,
+        firstName: data.client.firstName,
+        lastName: data.client.lastName,
+        businessName: data.client.businessName,
+        birthDate: data.client.birthDate,
+        maritalStatus: data.client.maritalStatus,
+        gender: data.client.gender,
+        source: data.client.source,
+        executive: data.client.executive,
+      },
+      modality: data.quote.modality,
+      operationType: data.quote.operationType,
+      previousInsurerId: data.quote.previousInsurerId,
+      previousPolicyNumber: data.quote.previousPolicyNumber,
+      previousStartDate: data.quote.previousStartDate,
+      previousExpiryDate: data.quote.previousExpiryDate,
+      previousPremiumDollars:
+        data.quote.previousPremiumCents != null ? data.quote.previousPremiumCents / 100 : null,
+      risks: data.risks
+        .filter((r) => r.vehicle)
+        .map((r) => ({
+          plate: r.vehicle!.plate,
+          brand: r.vehicle!.brand,
+          model: r.vehicle!.model,
+          year: r.vehicle!.year,
+          bodyType: r.vehicle!.bodyType as "LIVIANO" | "PICKUP",
+          color: r.vehicle!.color,
+          commercialValueDollars: r.vehicle!.commercialValueCents / 100,
+          extrasValueDollars: r.vehicle!.extrasValueCents / 100,
+          hasTracker: r.vehicle!.hasTracker,
+          city: r.vehicle!.city,
+          province: r.vehicle!.province,
+        })),
+    };
+  });
+}
+
+/**
+ * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada — lo
+ * que le faltaba al flujo de "Generar comparativa": antes, volver atrás en
+ * el navegador no ofrecía ninguna forma de corregir lo ya guardado (se veía
+ * como si se hubiera perdido, aunque seguía intacto en la base). No cambia
+ * el número de vehículos — eso exige una cotización nueva. Si ya se había
+ * generado la comparativa, Latina/Cóndor se recalculan con los datos
+ * nuevos (`repriceEngines`); las primas que el resto de aseguradoras ya
+ * tenía digitadas a mano no se tocan — no hay forma de "recalcularlas"
+ * nosotros, son cotizaciones manuales de otro portal.
+ */
+export async function updateAutoQuote(
+  _prevState: ActionResult<{ quoteId: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ quoteId: string }>> {
+  const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
+  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
+
+  const quoteId = formData.get("quoteId");
+  if (typeof quoteId !== "string" || !quoteId) {
+    return { ok: false, errors: { form: ["Cotización inválida"] } };
+  }
+
+  const parsed = newAutoQuoteSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) {
+    return { ok: false, errors: parsed.error.flatten().fieldErrors };
+  }
+  const input = parsed.data;
+
+  const result = await withOrganization(session.organizationId, async (tx) => {
+    const quote = await quoteService.findById(tx, quoteId);
+    if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
+    if (quote.status !== "BORRADOR") return { ok: false as const, message: "Esta cotización ya no se puede editar" };
+
+    const risks = await quoteService.findRisksByQuote(tx, quoteId);
+    if (risks.length !== input.vehicles.length) {
+      return { ok: false as const, message: "No se puede cambiar el número de vehículos al editar — usa una cotización nueva" };
+    }
+
+    const client = await clientService.editClientAndVehicles(tx, session.organizationId, {
+      personType: input.personType,
+      documentType: input.documentType,
+      documentNumber: input.documentNumber,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      businessName: input.businessName,
+      birthDate: input.birthDate,
+      maritalStatus: input.maritalStatus,
+      gender: input.gender,
+      email: input.email,
+      phone: input.phone,
+      source: input.source,
+      executive: input.executive,
+      assignedAgentId: quote.agentId,
+      vehicles: input.vehicles.map((v, i) => ({ ...v, vehicleId: risks[i].vehicleId })),
+    });
+
+    await quoteService.updateAutoQuote(tx, quoteId, {
+      clientId: client.id,
+      modality: input.modality,
+      operationType: input.operationType,
+      previousInsurerId: input.previousInsurerId,
+      previousPolicyNumber: input.previousPolicyNumber,
+      previousStartDate: input.previousStartDate,
+      previousExpiryDate: input.previousExpiryDate,
+      previousPremiumCents: input.previousPremiumDollars != null ? dollarsToCents(input.previousPremiumDollars) : undefined,
+      risks: risks.map((r, i) => ({
+        quoteRiskId: r.id,
+        insuredValueCents: dollarsToCents(input.vehicles[i].commercialValueDollars),
+        extrasValueCents: dollarsToCents(input.vehicles[i].extrasValueDollars),
+      })),
+    });
+
+    if (risks.length && (await comparisonService.hasOptions(tx, risks[0].id))) {
+      await comparisonService.repriceEngines(tx, quoteId);
+    }
+
+    await audit(tx, {
+      organizationId: session.organizationId,
+      userId: session.userId,
+      action: "quote.edited",
+      entityType: "quotes",
+      entityId: quoteId,
+    });
+
+    return { ok: true as const };
+  });
+
+  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
+
+  revalidatePath("/cotizar/autos");
+  redirect(`/cotizar/autos/${quoteId}/configurar`);
+}
+
+/**
  * "Mis cotizaciones" — lo que le faltaba a "Guardar borrador" para no ser
  * un callejón sin salida: sin esto, guardar un borrador significa perder
  * la cotización de vista hasta acordarse de la URL exacta. Se filtra por

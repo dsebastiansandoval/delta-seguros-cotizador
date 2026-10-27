@@ -140,13 +140,16 @@ async function seedCatalog() {
   ];
   // Salud — 8 aseguradoras confirmadas en EXCEL-AUDIT.md §2.3.
   const healthInsurers = ["BMI", "HUMANA", "SALUDSA", "SALUD", "CONFIAMED", "BUPA", "PRO", "VB"];
+  // code = identificador interno estable (usado en insurer-offer-profiles.ts); name = nombre
+  // visible. SESA se renombró a Equisuiza, pero el código interno no cambia.
+  const displayNames: Record<string, string> = { SESA: "EQUISUIZA" };
 
   await db
     .insert(insurers)
     .values([
       ...autoInsurers.map((code) => ({
         code,
-        name: code,
+        name: displayNames[code] ?? code,
         branch: "AUTOS" as const,
         integrationMode: (code === "LATINA" || code === "CONDOR" ? "API" : "MANUAL") as
           | "API"

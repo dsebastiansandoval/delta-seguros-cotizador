@@ -92,4 +92,72 @@ export const clientService = {
 
     return { client, vehicles };
   },
+
+  /**
+   * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada
+   * (ver updateAutoQuote en quote.actions.ts). A diferencia de
+   * createClientWithVehicles, acá los vehículos ya existen — se actualizan
+   * en el lugar (mismo id), nunca se crean filas nuevas. Si el documento
+   * cambió a uno de otro cliente, `upsertByDocument` repunta a ese cliente
+   * (o crea uno nuevo) — quien llama es responsable de repuntar
+   * `quotes.clientId` al `client.id` devuelto acá.
+   */
+  async editClientAndVehicles(
+    tx: Db,
+    organizationId: string,
+    input: Pick<
+      NewAutoQuoteInput,
+      | "personType"
+      | "documentType"
+      | "documentNumber"
+      | "firstName"
+      | "lastName"
+      | "businessName"
+      | "birthDate"
+      | "maritalStatus"
+      | "gender"
+      | "email"
+      | "phone"
+      | "source"
+      | "executive"
+    > & { assignedAgentId: string; vehicles: Array<VehicleRiskInput & { vehicleId: string | null }> },
+  ) {
+    const client = await clientService.upsertByDocument(tx, {
+      organizationId,
+      personType: input.personType,
+      documentType: input.documentType,
+      documentNumber: input.documentNumber,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      businessName: input.businessName,
+      birthDate: input.birthDate,
+      maritalStatus: input.maritalStatus,
+      gender: input.gender,
+      email: input.email || undefined,
+      phone: input.phone,
+      source: input.source,
+      executive: input.executive,
+      assignedAgentId: input.assignedAgentId,
+    });
+
+    for (const v of input.vehicles) {
+      if (!v.vehicleId) continue;
+      await clientRepository.updateVehicle(tx, v.vehicleId, {
+        clientId: client.id,
+        plate: v.plate.toUpperCase(),
+        brand: v.brand,
+        model: v.model,
+        year: v.year,
+        bodyType: v.bodyType,
+        color: v.color,
+        commercialValueCents: dollarsToCents(v.commercialValueDollars),
+        extrasValueCents: dollarsToCents(v.extrasValueDollars),
+        hasTracker: v.hasTracker,
+        city: v.city,
+        province: v.province,
+      });
+    }
+
+    return client;
+  },
 };
