@@ -13,6 +13,49 @@ import { coverageRows, coverageValueFor, memberLabels, planLabel } from "../serv
 const PORTADA_SALUD = readFileSync(join(process.cwd(), "src/domains/quoting/pdf/assets/portada-salud.jpg"));
 const PORTADA_SIZE: [number, number] = [560, 792];
 
+/**
+ * Logo real de Delta (mismo PNG que usa Autos, `CaratulaDocument.tsx` —
+ * no se duplica el archivo, se referencia la misma ruta) — reemplaza el
+ * texto "DELTA SEGUROS / Cía. Ltda." a pedido del usuario, que compartió
+ * un PDF real (`OFERTA AM` impresa, IMPRIMIR_OFERTA_AM) donde la carta y
+ * las tablas siempre llevan el isotipo, nunca el nombre en texto plano.
+ */
+const DELTA_LOGO = readFileSync(join(process.cwd(), "src/domains/quoting/pdf/assets/delta-logo-stacked.png"));
+const DELTA_LOGO_ASPECT = 303 / 346;
+
+/**
+ * Logos de las aseguradoras de Salud, extraídos de `COTIZADOR
+ * ACTUALIZADO.xlsm` (hoja DATOS AM y las hojas propias BUPA/CONFIAMED/
+ * HUMANA/PRO/VB — recortados a su bounding box real, sin el badge de
+ * "Vitality" que trae pegado el de SaludSA en el Excel) — mismos logos que
+ * ya usa Delta en el PDF real que manda al cliente. SALUD (genérica) no
+ * tiene un logo propio embebido en ningún lado del libro — cae al nombre
+ * en texto, mismo criterio de respaldo que ya usa Autos para aseguradoras
+ * sin logo en `INSURER_LOGO_ASPECT`.
+ */
+const INSURER_LOGO_ASPECT: Record<string, number> = {
+  BMI: 456 / 181,
+  HUMANA: 351 / 102,
+  CONFIAMED: 382 / 113,
+  SALUDSA: 432 / 103,
+  BUPA: 337 / 137,
+  PRO: 426 / 101,
+  VB: 448 / 117,
+};
+
+const INSURER_LOGOS: Record<string, Buffer> = Object.fromEntries(
+  Object.keys(INSURER_LOGO_ASPECT).map((code) => [
+    code,
+    readFileSync(join(process.cwd(), `src/domains/health/pdf/assets/insurer-logos/${code}.png`)),
+  ]),
+);
+
+/** Ajusta un logo a una caja (alto objetivo, ancho máximo) sin deformarlo — igual que Autos. */
+function fitLogo(aspect: number, targetHeight: number, maxWidth: number) {
+  const height = Math.min(targetHeight, maxWidth / aspect);
+  return { width: height * aspect, height };
+}
+
 const portadaStyles = StyleSheet.create({
   page: { padding: 0 },
   image: { position: "absolute", top: 0, left: 0, width: "100%", height: "100%" },
@@ -62,10 +105,11 @@ function PortadaAMPage({ data }: { data: CaratulaAMData }) {
  * campesino, total) sí son reales — ver ARCHITECTURE.md §31.
  */
 const styles = StyleSheet.create({
-  page: { padding: 42, fontSize: 10.5, fontFamily: "Helvetica", color: "#182338", lineHeight: 1.4 },
-  brand: { fontSize: 16, fontWeight: 700, color: "#152a52", marginBottom: 2 },
-  brandSub: { fontSize: 8.5, color: "#6b6f76", marginBottom: 16 },
-  date: { textAlign: "right", marginBottom: 12, color: "#6b6f76" },
+  page: { paddingTop: 36, paddingBottom: 64, paddingHorizontal: 42, fontSize: 10.5, fontFamily: "Helvetica", color: "#182338", lineHeight: 1.4 },
+  headerRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 14 },
+  date: { color: "#6b6f76" },
+  pageFooter: { position: "absolute", bottom: 28, left: 42, right: 42, textAlign: "center", fontSize: 8.5, color: "#6b6f76" },
+  footerLink: { color: "#0a589f", textDecoration: "underline" },
   h2: { fontSize: 11, fontWeight: 700, color: "#152a52", marginTop: 12, marginBottom: 5 },
   row: { flexDirection: "row", justifyContent: "space-between", marginBottom: 3 },
   label: { color: "#6b6f76" },
@@ -88,6 +132,17 @@ const styles = StyleSheet.create({
   paymentValue: { fontWeight: 700 },
 });
 
+/** Pie de página real — mismos datos que ya usa Autos, extraídos del PDF real (`IMPRIMIR_OFERTA_AM`). */
+function AMPageFooter() {
+  return (
+    <View style={styles.pageFooter} fixed>
+      <Text>Quito: Guayas y Av. Amazonas Edf. Torre Centre Of. 1107</Text>
+      <Text>Telf. 0982625495 / 0994889692 / 0995885289</Text>
+      <Text style={styles.footerLink}>www.deltaseguros.com.ec</Text>
+    </View>
+  );
+}
+
 const INSTALLMENT_TERMS = [6, 9, 12] as const;
 
 const REGION_LABEL: Record<CaratulaAMData["region"], string> = {
@@ -98,11 +153,14 @@ const REGION_LABEL: Record<CaratulaAMData["region"], string> = {
 
 function CaratulaAMLetterPage({ data }: { data: CaratulaAMData }) {
   const labels = memberLabels(data.members);
+  const logoSize = fitLogo(DELTA_LOGO_ASPECT, 46, 46);
   return (
     <Page size="A4" style={styles.page}>
-      <Text style={styles.brand}>DELTA SEGUROS</Text>
-      <Text style={styles.brandSub}>Cía. Ltda.</Text>
-      <Text style={styles.date}>Quito, {data.date}</Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.date}>Quito, {data.date}</Text>
+        {/* eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`. */}
+        <Image src={DELTA_LOGO} style={logoSize} />
+      </View>
 
       <Text>Señores</Text>
       <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
@@ -135,12 +193,20 @@ function CaratulaAMLetterPage({ data }: { data: CaratulaAMData }) {
       </Text>
       <Text style={styles.footer}>Cordialmente,</Text>
       <Text style={{ marginTop: 10, fontWeight: 700, color: "#152a52" }}>DELTASEGUROS CÍA. LTDA.</Text>
+
+      <AMPageFooter />
     </Page>
   );
 }
 
+// Ámbar verificado contra el PDF real (IMPRIMIR_OFERTA_AM): las 3 filas de
+// descuento (sin descuento/especial/de contado) siempre van resaltadas,
+// mismo tono que usa Autos para la fila de riesgos (CaratulaDocument.tsx).
+const AM_AMBER = "#fbc053";
+
 const tableStyles = StyleSheet.create({
-  page: { padding: 24, fontSize: 7.5, fontFamily: "Helvetica", color: "#182338" },
+  page: { paddingTop: 20, paddingBottom: 44, paddingHorizontal: 24, fontSize: 7.5, fontFamily: "Helvetica", color: "#182338" },
+  topRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 8 },
   table: { borderWidth: 1, borderColor: "#dfe1e6" },
   row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#dfe1e6" },
   sectionRow: { flexDirection: "row", backgroundColor: "#152a52" },
@@ -156,6 +222,7 @@ const tableStyles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: "#38456e",
   },
+  logoCell: { flex: 1, alignItems: "center", justifyContent: "center", padding: 4, borderLeftWidth: 1, borderLeftColor: "#dfe1e6" },
   totalsRow: { flexDirection: "row", backgroundColor: "#fef3e0" },
   totalsLabelCell: { width: 140, padding: 4, fontWeight: 700 },
   totalsDataCell: {
@@ -167,7 +234,55 @@ const tableStyles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: "#dfe1e6",
   },
+  amberRow: { flexDirection: "row", backgroundColor: AM_AMBER },
+  amberLabelCell: { width: 140, padding: 4, fontWeight: 700 },
+  amberDataCell: { flex: 1, padding: 4, textAlign: "center", fontWeight: 700, borderLeftWidth: 1, borderLeftColor: "#e0a83a" },
+  pageFooter: { position: "absolute", bottom: 16, left: 24, right: 24, textAlign: "center", fontSize: 6.5, color: "#6b6f76" },
+  footerLink: { color: "#0a589f", textDecoration: "underline" },
 });
+
+/** Las 2 filas de cabecera de la grilla/precios apaisada — plan arriba (navy), logo de la aseguradora debajo (blanco), igual que el PDF real. */
+function OfferTableHeader({ data }: { data: CaratulaAMData }) {
+  return (
+    <>
+      <View style={tableStyles.sectionRow}>
+        <Text style={tableStyles.sectionLabelCell}> </Text>
+        {data.offers.map((o, i) => (
+          <Text key={i} style={tableStyles.headerCell}>
+            {planLabel(o.planCode)}
+          </Text>
+        ))}
+      </View>
+      <View style={tableStyles.row}>
+        <Text style={tableStyles.labelCell}> </Text>
+        {data.offers.map((o, i) => {
+          const aspect = INSURER_LOGO_ASPECT[o.insurerCode];
+          const logo = aspect ? fitLogo(aspect, 20, 90) : null;
+          return (
+            <View key={i} style={tableStyles.logoCell}>
+              {logo ? (
+                // eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`.
+                <Image src={INSURER_LOGOS[o.insurerCode]} style={logo} />
+              ) : (
+                <Text style={{ fontWeight: 700 }}>{o.insurerName}</Text>
+              )}
+            </View>
+          );
+        })}
+      </View>
+    </>
+  );
+}
+
+function AMTablePageFooter() {
+  return (
+    <View style={tableStyles.pageFooter} fixed>
+      <Text>Quito: Guayas y Av. Amazonas Edf. Torre Centre Of. 1107</Text>
+      <Text>Telf. 0982625495 / 0994889692 / 0995885289</Text>
+      <Text style={tableStyles.footerLink}>www.deltaseguros.com.ec</Text>
+    </View>
+  );
+}
 
 /**
  * Grilla ancha de coberturas — equivalente a imprimir directo la sección
@@ -181,21 +296,17 @@ function CoverageGridPage({ data }: { data: CaratulaAMData }) {
   const rowsWithHeaders = coverageRows(data.offers);
   if (rowsWithHeaders.length === 0) return null;
   const valueFor = coverageValueFor;
+  const deltaLogo = fitLogo(DELTA_LOGO_ASPECT, 32, 32);
 
   return (
     <Page size="A4" orientation="landscape" style={tableStyles.page}>
-      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
-        Coberturas por plan — {data.clientName}
-      </Text>
+      <View style={tableStyles.topRow}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`. */}
+        <Image src={DELTA_LOGO} style={deltaLogo} />
+        <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52" }}>Coberturas por plan — {data.clientName}</Text>
+      </View>
       <View style={tableStyles.table}>
-        <View style={tableStyles.sectionRow}>
-          <Text style={tableStyles.sectionLabelCell}> </Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.headerCell}>
-              {o.insurerName} — {planLabel(o.planCode)}
-            </Text>
-          ))}
-        </View>
+        <OfferTableHeader data={data} />
         {rowsWithHeaders.map(({ label, section, showSectionHeader }) => {
           return (
             <View key={label}>
@@ -216,6 +327,7 @@ function CoverageGridPage({ data }: { data: CaratulaAMData }) {
           );
         })}
       </View>
+      <AMTablePageFooter />
     </Page>
   );
 }
@@ -223,23 +335,19 @@ function CoverageGridPage({ data }: { data: CaratulaAMData }) {
 /** Tabla ancha de precios/descuentos — equivalente a la sección TITULAR-DEPENDIENTES/PRIMA de `OFERTA AM`. */
 function PricingTablePage({ data }: { data: CaratulaAMData }) {
   const labels = memberLabels(data.members);
+  const deltaLogo = fitLogo(DELTA_LOGO_ASPECT, 32, 32);
   return (
     <Page size="A4" orientation="landscape" style={tableStyles.page}>
-      <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52", marginBottom: 8 }}>
-        Comparativa de primas — {data.clientName}
-      </Text>
-      <Text style={{ fontSize: 8, color: "#6b6f76", marginBottom: 6 }}>
-        Grupo: {labels.join(" · ")}
-      </Text>
-      <View style={tableStyles.table}>
-        <View style={tableStyles.sectionRow}>
-          <Text style={tableStyles.sectionLabelCell}> </Text>
-          {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.headerCell}>
-              {o.insurerName} — {planLabel(o.planCode)}
-            </Text>
-          ))}
+      <View style={tableStyles.topRow}>
+        {/* eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`. */}
+        <Image src={DELTA_LOGO} style={deltaLogo} />
+        <View>
+          <Text style={{ fontSize: 11, fontWeight: 700, color: "#152a52" }}>Comparativa de primas — {data.clientName}</Text>
+          <Text style={{ fontSize: 8, color: "#6b6f76", marginTop: 2 }}>Grupo: {labels.join(" · ")}</Text>
         </View>
+      </View>
+      <View style={tableStyles.table}>
+        <OfferTableHeader data={data} />
         {labels.map((label, m) => (
           <View style={tableStyles.row} key={label}>
             <Text style={tableStyles.labelCell}>{label}</Text>
@@ -290,26 +398,26 @@ function PricingTablePage({ data }: { data: CaratulaAMData }) {
             </Text>
           ))}
         </View>
-        <View style={tableStyles.row}>
-          <Text style={tableStyles.labelCell}>Total sin descuento</Text>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total sin descuento</Text>
           {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.dataCell}>
+            <Text key={i} style={tableStyles.amberDataCell}>
               {formatUSD(o.sinDescuentoCents)}
             </Text>
           ))}
         </View>
-        <View style={tableStyles.row}>
-          <Text style={tableStyles.labelCell}>Total con descuento especial</Text>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total con descuento especial</Text>
           {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.dataCell}>
+            <Text key={i} style={tableStyles.amberDataCell}>
               {o.conDescuentoEspecialCents != null ? formatUSD(o.conDescuentoEspecialCents) : "N/A"}
             </Text>
           ))}
         </View>
-        <View style={tableStyles.row}>
-          <Text style={tableStyles.labelCell}>Total con descuento de contado</Text>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total con descuento de contado</Text>
           {data.offers.map((o, i) => (
-            <Text key={i} style={tableStyles.dataCell}>
+            <Text key={i} style={tableStyles.amberDataCell}>
               {o.conDescuentoContadoCents != null ? formatUSD(o.conDescuentoContadoCents) : "N/A"}
             </Text>
           ))}
@@ -333,6 +441,7 @@ function PricingTablePage({ data }: { data: CaratulaAMData }) {
           </View>
         ))}
       </View>
+      <AMTablePageFooter />
     </Page>
   );
 }

@@ -46,20 +46,36 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
   const detail = await getClaimDetail(claimId);
   if (!detail) notFound();
 
-  const { claim, policyNumber, insurerName, clientFirstName, clientLastName, clientBusinessName, events } = detail;
-  const clientName = clientBusinessName || `${clientFirstName ?? ""} ${clientLastName ?? ""}`.trim();
+  const { claim, policyNumber, insurerName, standaloneInsurerName, clientFirstName, clientLastName, clientBusinessName, events } =
+    detail;
+  const clientName = clientBusinessName || `${clientFirstName ?? ""} ${clientLastName ?? ""}`.trim() || claim.clientName;
+  const effectiveInsurerName = insurerName ?? standaloneInsurerName;
 
   return (
     <main className="mx-auto max-w-3xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">
-          Siniestro {claim.claimNumber || `— póliza ${policyNumber || "(sin número)"}`}
+          Siniestro {claim.claimNumber || `— ${clientName || "sin cliente"}`}
         </h1>
         <p className="mt-1 text-sm text-muted">
-          {insurerName} · {clientName} ·{" "}
-          <a href={`/cartera/${claim.policyId}`} className="text-link underline">
-            {policyNumber || "(sin número)"}
-          </a>
+          {effectiveInsurerName} · {clientName || "—"}
+          {claim.policyId ? (
+            <>
+              {" · "}
+              <a href={`/cartera/${claim.policyId}`} className="text-link underline">
+                {policyNumber || "(sin número)"}
+              </a>
+            </>
+          ) : (
+            <>
+              {" · "}
+              {policyNumber || "(sin número de póliza)"}
+              {claim.clientDocumentNumber && <> · {claim.clientDocumentNumber}</>}
+              <span className="ml-1 text-xs" title="Reportado sin vincular a una póliza de Cartera">
+                (sin póliza en Cartera)
+              </span>
+            </>
+          )}
         </p>
       </header>
 

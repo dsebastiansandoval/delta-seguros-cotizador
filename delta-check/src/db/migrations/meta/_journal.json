@@ -176,6 +176,13 @@
       "when": 1793108302241,
       "tag": "0024_claim_events",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1793109388213,
+      "tag": "0025_claims_standalone",
+      "breakpoints": true
     }
   ]
 }

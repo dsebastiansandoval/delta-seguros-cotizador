@@ -119,13 +119,27 @@ export const commissions = pgTable("commissions", {
  * (EXCEL-AUDIT.md §4) — placa/marca/modelo del vehículo propio no se
  * duplican acá, se llega a ellos por policy → quote_option → quote_risk →
  * vehicle.
+ *
+ * `policyId` es opcional (2026-10-27) — en el Excel original, ASEGURADORA/
+ * POLIZA/C.I./NOMBRES/APELLIDOS de esa hoja son columnas de texto libre,
+ * sin ninguna referencia a otra tabla: se podía anotar un siniestro ahí sin
+ * que la póliza existiera en ningún otro lado del libro. `insurerId`/
+ * `clientName`/`clientDocumentNumber`/`policyNumber` reproducen eso — solo
+ * se llenan cuando no hay `policyId`, para un siniestro reportado directo
+ * desde Siniestros en vez de desde el detalle de una póliza en Cartera.
+ * `branch` queda siempre, con o sin póliza (de la póliza si la hay, o
+ * elegido a mano si no) — así la lista no depende de un join para filtrar
+ * por ramo.
  */
 export const claims = pgTable("claims", {
   id: id(),
   organizationId: organizationId(),
-  policyId: uuid("policy_id")
-    .notNull()
-    .references(() => policies.id),
+  policyId: uuid("policy_id").references(() => policies.id),
+  branch: branchEnum("branch").notNull(),
+  insurerId: uuid("insurer_id").references(() => insurers.id), // solo si no hay policyId
+  clientName: text("client_name"), // solo si no hay policyId
+  clientDocumentNumber: text("client_document_number"), // C.I./RUC, solo si no hay policyId
+  policyNumber: text("policy_number"), // POLIZA, solo si no hay policyId
   claimNumber: text("claim_number"),
   status: claimStatusEnum("status").notNull().default("REPORTADO"),
   occurredAt: date("occurred_at"),

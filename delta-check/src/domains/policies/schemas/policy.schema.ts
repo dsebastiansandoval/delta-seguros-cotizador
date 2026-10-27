@@ -12,6 +12,10 @@ function optionalDate() {
   return z.preprocess((v) => (v === "" ? undefined : v), z.string().optional());
 }
 
+function optionalUuid() {
+  return z.preprocess((v) => (v === "" ? undefined : v), z.uuid().optional());
+}
+
 /**
  * Nombres de campo = columnas reales de `BASE_EMISIONES`/`BASE_PENDIENTE`
  * (EXCEL-AUDIT.md §4): POLIZA, ANEXO, FACTURA. `quoteOptionId` identifica
@@ -85,31 +89,51 @@ export const markCommissionDiscountedSchema = z.object({
 /**
  * Campos = columnas reales de `BASE_SINIESTROS` (EXCEL-AUDIT.md §4). RC es
  * la única lista de validación real en la hoja (SI/NO), de ahí el checkbox.
+ *
+ * `policyId` es opcional — en el Excel, ASEGURADORA/POLIZA/C.I./NOMBRES de
+ * esa hoja son texto libre, no una referencia a otra tabla: un siniestro se
+ * podía anotar ahí sin que la póliza estuviera cargada en ningún otro lado.
+ * Reportado desde Cartera (con `policyId`), esos datos salen de la póliza;
+ * reportado directo desde Siniestros (sin `policyId`), se piden a mano.
  */
-export const reportClaimSchema = z.object({
-  policyId: z.uuid(),
-  claimNumber: optionalText(),
-  occurredAt: optionalDate(),
-  reportedAt: optionalDate(),
-  description: optionalText(),
-  workshop: optionalText(),
-  advisorName: optionalText(),
-  contactPhone: optionalText(),
-  hasThirdPartyLiability: z.preprocess((v) => v === "on" || v === "true", z.boolean()).default(false),
-  thirdPartyPlate: optionalText(),
-  claimValueDollars: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().nonnegative().optional(),
-  ),
-  thirdPartyValueDollars: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().nonnegative().optional(),
-  ),
-  deductibleAppliedDollars: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().nonnegative().optional(),
-  ),
-});
+export const reportClaimSchema = z
+  .object({
+    policyId: optionalUuid(),
+    branch: z.enum(["AUTOS", "SALUD"]),
+    insurerId: optionalUuid(), // solo si no hay policyId
+    clientName: optionalText(), // solo si no hay policyId
+    clientDocumentNumber: optionalText(), // C.I./RUC, solo si no hay policyId
+    policyNumber: optionalText(), // POLIZA de BASE_SINIESTROS, solo si no hay policyId
+    claimNumber: optionalText(),
+    occurredAt: optionalDate(),
+    reportedAt: optionalDate(),
+    description: optionalText(),
+    workshop: optionalText(),
+    advisorName: optionalText(),
+    contactPhone: optionalText(),
+    hasThirdPartyLiability: z.preprocess((v) => v === "on" || v === "true", z.boolean()).default(false),
+    thirdPartyPlate: optionalText(),
+    claimValueDollars: z.preprocess(
+      (v) => (v === "" ? undefined : v),
+      z.coerce.number().nonnegative().optional(),
+    ),
+    thirdPartyValueDollars: z.preprocess(
+      (v) => (v === "" ? undefined : v),
+      z.coerce.number().nonnegative().optional(),
+    ),
+    deductibleAppliedDollars: z.preprocess(
+      (v) => (v === "" ? undefined : v),
+      z.coerce.number().nonnegative().optional(),
+    ),
+  })
+  .superRefine((data, ctx) => {
+    if (data.policyId) return;
+    if (!data.insurerId) ctx.addIssue({ path: ["insurerId"], code: "custom", message: "Elige la aseguradora" });
+    if (!data.clientName) ctx.addIssue({ path: ["clientName"], code: "custom", message: "Escribe el nombre del cliente" });
+    if (!data.clientDocumentNumber) {
+      ctx.addIssue({ path: ["clientDocumentNumber"], code: "custom", message: "Escribe la cédula o RUC" });
+    }
+  });
 
 export const updateClaimStatusSchema = z.object({
   claimId: z.uuid(),

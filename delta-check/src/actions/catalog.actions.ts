@@ -86,3 +86,22 @@ export async function listAutoInsurers() {
     .where(and(eq(insurers.branch, "AUTOS"), eq(insurers.isActive, true)))
     .orderBy(asc(insurers.name));
 }
+
+/**
+ * 🌐 Aseguradoras de ambos ramos agrupadas — para el siniestro reportado
+ * directo desde Siniestros, sin póliza: el ramo se elige en el formulario,
+ * así que se trae todo de una vez y se cascadea en el navegador, mismo
+ * patrón que listVehicleModelsByBrand().
+ */
+export async function listInsurersByBranch() {
+  await requirePermission("claim:manage");
+  const rows = await db
+    .select({ id: insurers.id, name: insurers.name, branch: insurers.branch })
+    .from(insurers)
+    .where(eq(insurers.isActive, true))
+    .orderBy(asc(insurers.name));
+
+  const byBranch: Record<"AUTOS" | "SALUD", { id: string; name: string }[]> = { AUTOS: [], SALUD: [] };
+  for (const row of rows) byBranch[row.branch].push({ id: row.id, name: row.name });
+  return byBranch;
+}

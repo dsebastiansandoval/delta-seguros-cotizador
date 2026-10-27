@@ -96,5 +96,5 @@ export async function listClaims() {
 export async function getClaimDetail(claimId: string) {
   const session = await requirePermission("quote:read");
   const detail = await withOrganization(session.organizationId, (tx) => claimService.getDetail(tx, claimId));
-  return detail && session.branches.has(detail.policyBranch) ? detail : null;
+  return detail && session.branches.has(detail.claim.branch) ? detail : null;
 }

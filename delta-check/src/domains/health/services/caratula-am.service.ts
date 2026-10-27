@@ -1,4 +1,4 @@
-import { and, asc, eq, isNotNull } from "drizzle-orm";
+import { and, asc, eq, isNotNull, or } from "drizzle-orm";
 import type { Db } from "@/db";
 import { quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients, insuredGroups, insuredMembers } from "@/db/schema/clients";
@@ -16,6 +16,7 @@ export type CaratulaAMCoverageRow = {
 
 export type CaratulaAMOffer = {
   quoteOptionId: string;
+  insurerCode: string;
   insurerName: string;
   planCode: string;
   netPremiumCents: number;
@@ -117,25 +118,46 @@ export async function getCaratulaAMData(tx: Db, quoteId: string): Promise<Caratu
   );
   if (!pricedOffers.length) return null;
 
-  // Grilla real de coberturas (health_plan_coverages) para cada oferta —
-  // una consulta por (insurerId, planCode), agrupada después.
-  const coverageRows = await Promise.all(
-    pricedOffers.map((o) =>
-      o.planCode
-        ? tx
-            .select({
-              section: healthPlanCoverages.section,
-              label: healthPlanCoverages.label,
-              displayOrder: healthPlanCoverages.displayOrder,
-              copago: healthPlanCoverages.copago,
-              sublimite: healthPlanCoverages.sublimite,
-              carencia: healthPlanCoverages.carencia,
-            })
-            .from(healthPlanCoverages)
-            .where(and(eq(healthPlanCoverages.insurerId, o.insurerId), eq(healthPlanCoverages.planCode, o.planCode)))
-            .orderBy(asc(healthPlanCoverages.displayOrder))
-        : Promise.resolve([]),
-    ),
+  // Grilla real de coberturas (health_plan_coverages) para cada oferta — una
+  // sola consulta con todos los pares (insurerId, planCode) en vez de una
+  // por oferta: `tx` es el mismo cliente pg dentro de una transacción, y
+  // varias queries concurrentes sobre el mismo cliente (el Promise.all de
+  // antes) son justo lo que pg marca como deprecado — "Calling client.query()
+  // when the client is already executing a query" — y en producción, con
+  // más de una oferta en la carátula, terminaba sirviendo coberturas mezcladas
+  // entre aseguradoras. Agrupar después en JS en vez de preguntarle a la BD.
+  const planPairs = [...new Map(pricedOffers.filter((o) => o.planCode).map((o) => [`${o.insurerId}:${o.planCode}`, o])).values()];
+  const allCoverageRows = planPairs.length
+    ? await tx
+        .select({
+          insurerId: healthPlanCoverages.insurerId,
+          planCode: healthPlanCoverages.planCode,
+          section: healthPlanCoverages.section,
+          label: healthPlanCoverages.label,
+          displayOrder: healthPlanCoverages.displayOrder,
+          copago: healthPlanCoverages.copago,
+          sublimite: healthPlanCoverages.sublimite,
+          carencia: healthPlanCoverages.carencia,
+        })
+        .from(healthPlanCoverages)
+        .where(
+          or(
+            ...planPairs.map((p) => and(eq(healthPlanCoverages.insurerId, p.insurerId), eq(healthPlanCoverages.planCode, p.planCode!))),
+          ),
+        )
+        .orderBy(asc(healthPlanCoverages.displayOrder))
+    : [];
+  const coverageRows: CaratulaAMCoverageRow[][] = pricedOffers.map((o) =>
+    allCoverageRows
+      .filter((r) => r.insurerId === o.insurerId && r.planCode === o.planCode)
+      .map((r) => ({
+        section: r.section,
+        label: r.label,
+        displayOrder: r.displayOrder,
+        copago: r.copago,
+        sublimite: r.sublimite,
+        carencia: r.carencia,
+      })),
   );
 
   const clientName =
@@ -171,6 +193,7 @@ export async function getCaratulaAMData(tx: Db, quoteId: string): Promise<Caratu
       );
       return {
         quoteOptionId: o.quoteOptionId,
+        insurerCode: o.insurerCode,
         insurerName: o.insurerName,
         planCode: o.planCode ?? "-",
         netPremiumCents,
