@@ -57,6 +57,7 @@ const KNOWN_ROUTES: (string | typeof PARAM)[][] = [
   ["cumplimiento", PARAM],
   ["siniestros"],
   ["siniestros", "nuevo"],
+  ["siniestros", PARAM],
   ["back-office"],
   ["admin", "usuarios"],
   ["admin", "tarifas-salud"],

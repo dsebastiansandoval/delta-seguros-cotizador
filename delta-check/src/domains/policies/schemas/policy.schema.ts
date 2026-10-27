@@ -115,3 +115,9 @@ export const updateClaimStatusSchema = z.object({
   claimId: z.uuid(),
   status: z.enum(["REPORTADO", "APROBADO", "REPARADO"]),
 });
+
+/** Novedad escrita a mano en el historial del siniestro — el "chat" que reemplaza la celda de observaciones del Excel. */
+export const addClaimNoteSchema = z.object({
+  claimId: z.uuid(),
+  note: z.string().trim().min(1, "Escribe la novedad").max(2000),
+});

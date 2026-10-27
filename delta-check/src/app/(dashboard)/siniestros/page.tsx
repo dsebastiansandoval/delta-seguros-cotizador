@@ -23,6 +23,7 @@ export default async function SiniestrosPage() {
               <th className="px-4 py-3">Reportado</th>
               <th className="px-4 py-3 text-right">Valor</th>
               <th className="px-4 py-3">Estado</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -45,12 +46,17 @@ export default async function SiniestrosPage() {
                   <td className="px-4 py-3">
                     <ClaimStatusForm claimId={c.id} status={c.status} />
                   </td>
+                  <td className="px-4 py-3">
+                    <a href={`/siniestros/${c.id}`} className="text-xs font-semibold text-link underline">
+                      Historial
+                    </a>
+                  </td>
                 </tr>
               );
             })}
             {claims.length === 0 && (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-muted">
+                <td colSpan={8} className="px-4 py-8 text-center text-muted">
                   Sin siniestros — se reportan desde el detalle de una póliza.
                 </td>
               </tr>

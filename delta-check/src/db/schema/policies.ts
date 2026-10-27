@@ -141,3 +141,23 @@ export const claims = pgTable("claims", {
   thirdPartyValueCents: bigint("third_party_value_cents", { mode: "number" }), // VALOR RC
   notes: text("notes"),
 });
+
+/**
+ * 🏢 Historial de novedades de un siniestro, append-only — reemplaza el
+ * Excel/OneDrive que usa Delta hoy para ir anotando el seguimiento (una
+ * celda de observaciones que cada quien sobrescribe, sin quién ni cuándo).
+ * Cada cambio de estado también queda acá, no solo las notas escritas a mano.
+ */
+export const claimEvents = pgTable("claim_events", {
+  id: id(),
+  organizationId: organizationId(),
+  claimId: uuid("claim_id")
+    .notNull()
+    .references(() => claims.id),
+  eventType: text("event_type").notNull(), // "NOTA" | "STATUS_CHANGE"
+  note: text("note"),
+  fromStatus: claimStatusEnum("from_status"),
+  toStatus: claimStatusEnum("to_status"),
+  userId: uuid("user_id").references(() => users.id),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

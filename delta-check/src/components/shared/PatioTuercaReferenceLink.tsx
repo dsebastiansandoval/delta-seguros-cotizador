@@ -1,7 +1,17 @@
 "use client";
 
 import { useState, type RefObject } from "react";
-import { buildPatioTuercaUrl } from "@/domains/shared/patiotuerca-link";
+import { buildPatioTuercaLink, type PatioTuercaLink } from "@/domains/shared/patiotuerca-link";
+
+/** Aviso cuando la página abierta no es exactamente lo escrito, para que el agente sepa qué está mirando. */
+function messageFor(link: PatioTuercaLink, year: string): string | null {
+  if (link.kind === "BRAND") return "PatioTuerca no tiene este modelo — elige el modelo en la lista de la marca";
+  if (link.kind !== "MODEL" || !link.name) return null;
+  const opened = link.exact ? null : `Abrí «${link.name}», lo más cercano que tiene PatioTuerca.`;
+  const near = link.nearestYears.slice(0, 3).sort((a, b) => a - b).join(", ");
+  const noYear = link.yearListed ? null : `PatioTuerca no tiene publicaciones de «${link.name}» ${year}; si sale sin precio, prueba ${near}.`;
+  return [opened, noYear].filter(Boolean).join(" ") || null;
+}
 
 /**
  * Abre la guía de precios de PatioTuerca para la marca/modelo/año que el
@@ -24,18 +34,22 @@ export function PatioTuercaReferenceLink({
 
   function handleClick() {
     const brand = brandRef.current?.value ?? "";
-    const url = buildPatioTuercaUrl(
+    const link = buildPatioTuercaLink(
       brand,
       modelRef.current?.value ?? "",
       yearRef.current?.value ?? "",
       modelsByBrand?.[brand] ?? [],
     );
-    if (!url) {
+    if (!link) {
       setMessage("Completa marca, modelo y año primero");
       return;
     }
-    setMessage(null);
-    window.open(url, "_blank", "noopener,noreferrer");
+    if (link.kind === "UNAVAILABLE") {
+      setMessage("PatioTuerca no tiene precios de esta marca");
+      return;
+    }
+    setMessage(messageFor(link, yearRef.current?.value.trim() ?? ""));
+    window.open(link.url, "_blank", "noopener,noreferrer");
   }
 
   return (

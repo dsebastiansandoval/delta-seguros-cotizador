@@ -14,6 +14,7 @@ export function ClaimStatusForm({ claimId, status }: { claimId: string; status: 
     <form action={formAction} className="flex items-center gap-2">
       <input type="hidden" name="claimId" value={claimId} />
       <select
+        key={status}
         name="status"
         defaultValue={status}
         className="rounded-md border border-border bg-surface px-2 py-1 text-xs"
