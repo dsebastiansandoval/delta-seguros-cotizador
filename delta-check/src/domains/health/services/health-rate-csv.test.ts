@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { healthRatesToCsv, parseHealthRateCsv, parseMoneyCents } from "./health-rate-csv";
+import { blankHealthRateCsv, healthRatesToCsv, parseHealthRateCsv, parseMoneyCents } from "./health-rate-csv";
 
 const options = { validPlanCodes: ["SIGMA_D150", "SIGMA_D250"] };
 
@@ -54,5 +54,16 @@ describe("parseHealthRateCsv", () => {
       { planCode: "SIGMA_D250", relation: null, ageMin: 0, ageMax: 99, gender: "MASCULINO", region: "AUSTRO", premiumCents: 123456 },
     ] as const;
     expect(parseHealthRateCsv(healthRatesToCsv([...rows]), options).rows).toEqual(rows);
+  });
+});
+
+describe("blankHealthRateCsv", () => {
+  it("una fila por plan, con el código puesto y el resto vacío", () => {
+    const csv = blankHealthRateCsv(["SIGMA_D150", "SIGMA_D250"]);
+    expect(csv).toBe("﻿plan,relacion,edad_desde,edad_hasta,sexo,region,prima\r\nSIGMA_D150,,,,,,\r\nSIGMA_D250,,,,,,\r\n");
+  });
+
+  it("sin plan_code, es solo el encabezado", () => {
+    expect(blankHealthRateCsv([])).toBe("﻿plan,relacion,edad_desde,edad_hasta,sexo,region,prima\r\n");
   });
 });

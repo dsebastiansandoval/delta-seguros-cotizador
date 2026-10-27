@@ -75,10 +75,15 @@ export default async function TarifasSaludPage() {
                 <td className="px-5 py-3">
                   {insurer.current ? (
                     <TableLink table={insurer.current} />
+                  ) : insurer.ratedPlanCodes.length ? (
+                    <div>
+                      <span className="text-muted">Sin tabla — no cotiza</span>{" "}
+                      <a href={`/api/admin/tarifas-salud/plantilla/${insurer.id}`} className="text-link hover:underline">
+                        · descargar plantilla
+                      </a>
+                    </div>
                   ) : (
-                    <span className="text-muted">
-                      {insurer.ratedPlanCodes.length ? "Sin tabla — no cotiza" : "Prima manual en la cotización"}
-                    </span>
+                    <span className="text-muted">Prima manual en la cotización</span>
                   )}
                 </td>
                 <td className="px-5 py-3 text-muted">

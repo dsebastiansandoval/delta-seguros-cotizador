@@ -196,3 +196,15 @@ export function healthRatesToCsv(rows: HealthRateCsvRow[]): string {
   );
   return `﻿${[HEALTH_RATE_CSV_HEADER.join(","), ...lines].join("\r\n")}\r\n`;
 }
+
+/**
+ * Plantilla vacía para una aseguradora que todavía no tiene ninguna tabla
+ * cargada — sin esto, el ADMIN tenía que armar el CSV a mano y adivinar los
+ * códigos de plan exactos (tienen que calzar con `ratedPlanCodes`, si no
+ * `parseHealthRateCsv` rechaza la fila). Una fila por plan, con el código ya
+ * puesto y el resto vacío para llenar.
+ */
+export function blankHealthRateCsv(planCodes: string[]): string {
+  const lines = planCodes.map((code) => [code, "", "", "", "", "", ""].join(","));
+  return `﻿${[HEALTH_RATE_CSV_HEADER.join(","), ...lines].join("\r\n")}\r\n`;
+}
