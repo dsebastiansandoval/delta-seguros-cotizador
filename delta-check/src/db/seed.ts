@@ -216,7 +216,7 @@ async function seedCatalog() {
  * consultado en vivo — 192 marcas en total), filtrado a lo que aplica a
  * Autos LIVIANO/PICKUP: se excluyeron camiones pesados (Freightliner, Hino,
  * Fuso, Iveco, Scania, Kenworth…), motos (Harley Davidson, Yamaha, KTM…) y
- * maquinaria — ramos que Prodeseg cubre pero Delta Check no cotiza. También
+ * maquinaria — ramos que Prodeseg cubre pero Cotizador Delta Seguros no cotiza. También
  * se consolidaron variantes de un mismo fabricante que su catálogo trae
  * como entradas separadas (p. ej. "GWM (ANTES GREAT WALL)"/"GREAT WALL" →
  * una sola fila). Ordenado por prevalencia real en el mercado ecuatoriano,
@@ -257,7 +257,7 @@ async function seedVehicleBrands() {
  * seedVehicleBrands() (Prodeseg, sin autenticación), consultado una sola
  * vez para las 66 marcas ya curadas y exportado a
  * reference-data/vehicle_models.json (950 modelos reales en total). Las
- * marcas que Delta Check consolida en un solo nombre (p. ej. "GREAT WALL
+ * marcas que Cotizador Delta Seguros consolida en un solo nombre (p. ej. "GREAT WALL
  * (GWM)") ya vienen fusionadas y sin duplicados en ese archivo.
  */
 async function seedVehicleModels() {

@@ -24,6 +24,8 @@ const SEGMENT_LABELS: Record<string, string> = {
   usuarios: "Usuarios",
   "tarifas-salud": "Tarifas Salud",
   configuracion: "Configuración",
+  cuenta: "Cuenta",
+  "cambiar-clave": "Cambiar clave",
 };
 
 // uuid v4-ish o cualquier id largo alfanumérico — no se resuelve a un
@@ -62,6 +64,7 @@ const KNOWN_ROUTES: (string | typeof PARAM)[][] = [
   ["admin", "usuarios"],
   ["admin", "tarifas-salud"],
   ["admin", "configuracion"],
+  ["cuenta", "cambiar-clave"],
 ];
 
 function isKnownRoute(segments: string[]): boolean {

@@ -21,7 +21,7 @@ export default async function UsuariosPage() {
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Usuarios</h1>
         <p className="mt-1 text-sm text-muted">
-          Quién entra a Delta Check, con qué rol y qué ramos ve. La persona ingresa con su cuenta de Microsoft del
+          Quién entra a Cotizador Delta Seguros, con qué rol y qué ramos ve. La persona ingresa con su cuenta de Microsoft del
           mismo correo; no hay contraseñas. Un usuario no se borra: se desactiva y conserva su historial.
         </p>
       </header>

@@ -27,6 +27,13 @@ const envSchema = z.object({
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),
 
+  // Resend — correos de "crear clave"/"recuperar clave". Sin esto, el link
+  // queda solo en el log del servidor (útil en local) en vez de romper el
+  // arranque — mismo criterio que Upstash/EcuadorAPI arriba.
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().default("Cotizador Delta Seguros <onboarding@resend.dev>"),
+  APP_URL: z.string().default("http://localhost:3000"),
+
   // Lookup de placa (EcuadorAPI, $0.02/consulta) — opcional: sin esto, el
   // autocompletado de vehículo por placa queda deshabilitado (ERROR), no
   // rompe el arranque. Cédula/RUC no la necesitan, van directo al SRI gratis.

@@ -21,7 +21,7 @@ function monthOverMonth(current: number, previous: number): number | null {
  * KPIs — sin equivalente real en el Excel (`DASHBOARD`/`BASE DASHBOARD`
  * están completamente vacías, sin una sola fórmula COUNTIF/SUMIF que
  * defina qué métrica mostrar — confirmado al auditar Fase 3, EXCEL-AUDIT.md
- * §4). Estas métricas son diseño de Delta Check sobre los datos que el
+ * §4). Estas métricas son diseño de Cotizador Delta Seguros sobre los datos que el
  * propio dominio ya genera, no algo extraído del archivo original.
  */
 export const dashboardService = {

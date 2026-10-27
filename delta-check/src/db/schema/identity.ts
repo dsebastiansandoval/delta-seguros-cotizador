@@ -14,6 +14,15 @@ export const users = pgTable("users", {
   fullName: text("full_name").notNull(),
   provider: authProviderEnum("provider").notNull(),
   providerAccountId: text("provider_account_id"),
+  // Login por clave (provider "credentials") — null para cuentas OAuth
+  // (microsoft/google), que nunca tienen clave propia. El token de
+  // crear/recuperar clave se guarda hasheado (SHA-256): si la base se
+  // filtrara, el valor ahí no alcanza para tomar la cuenta sin que además
+  // venza o ya se haya usado — el valor real viaja solo en el link del
+  // correo, nunca se persiste en texto plano.
+  passwordHash: text("password_hash"),
+  passwordResetTokenHash: text("password_reset_token_hash"),
+  passwordResetTokenExpiresAt: timestamp("password_reset_token_expires_at", { withTimezone: true }),
   isActive: boolean("is_active").notNull().default(true),
   // Ramos que el usuario puede cotizar y ver (Autos, Salud AM) — lo fija el ADMIN en /admin/usuarios.
   branches: branchEnum("branches").array().notNull().default(["AUTOS", "SALUD"]),

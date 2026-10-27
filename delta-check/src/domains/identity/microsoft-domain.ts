@@ -1,5 +1,5 @@
 /**
- * Filtro de dominio para el login por Microsoft — Delta Check es
+ * Filtro de dominio para el login por Microsoft — Cotizador Delta Seguros es
  * multi-tenant (ARCHITECTURE.md §1b), así que "cualquier cuenta de
  * Microsoft válida" no alcanza: solo @deltaseguros.com.ec entra por acá.
  * Función pura, separada de auth.ts, para poder testearla sin levantar

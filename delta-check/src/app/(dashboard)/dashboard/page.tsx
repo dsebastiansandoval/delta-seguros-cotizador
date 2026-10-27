@@ -172,7 +172,7 @@ export default async function DashboardPage({
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
         <p className="mt-1 text-sm text-muted">
-          Métricas propias de Delta Check — el Excel original no traía un tablero real que
+          Métricas propias de Cotizador Delta Seguros — el Excel original no traía un tablero real que
           reproducir (hojas DASHBOARD/BASE DASHBOARD vacías).
         </p>
       </header>

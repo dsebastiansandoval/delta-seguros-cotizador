@@ -8,7 +8,7 @@ import { pgEnum } from "drizzle-orm/pg-core";
  * columna ESTATUS de esas 5 hojas es texto libre, sin lista de validación ni
  * fórmula que fije un vocabulario (confirmado revisando las macros
  * ALTA_EN_BASE_* — ninguna escribe un literal en esa columna). Los valores
- * de esos 5 enums son una decisión de diseño de Delta Check, no un hecho
+ * de esos 5 enums son una decisión de diseño de Cotizador Delta Seguros, no un hecho
  * extraído del Excel — se documentan así en vez de inventar una "fuente".
  */
 
@@ -20,7 +20,7 @@ export const roleCodeEnum = pgEnum("role_code", [
   "LECTOR",
 ]);
 
-export const authProviderEnum = pgEnum("auth_provider", ["microsoft", "google", "email"]);
+export const authProviderEnum = pgEnum("auth_provider", ["microsoft", "google", "email", "credentials"]);
 
 export const personTypeEnum = pgEnum("person_type", ["NATURAL", "JURIDICA"]);
 export const documentTypeEnum = pgEnum("document_type", ["CEDULA", "RUC", "PASAPORTE"]);
@@ -68,7 +68,7 @@ export const integrationProviderEnum = pgEnum("integration_provider", ["SOFTSEGU
 /**
  * ARCO — derechos LOPDP (Ecuador) del titular de datos: Acceso, Rectificación,
  * Cancelación, Oposición. Sin equivalente en el Excel (no es un dato de
- * negocio del cotizador) — diseño propio de Delta Check, ver ARCHITECTURE.md
+ * negocio del cotizador) — diseño propio de Cotizador Delta Seguros, ver ARCHITECTURE.md
  * §9/§14.
  */
 export const arcoRequestTypeEnum = pgEnum("arco_request_type", [

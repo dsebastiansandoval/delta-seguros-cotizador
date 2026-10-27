@@ -7,6 +7,8 @@ import Google from "next-auth/providers/google";
 import { db } from "@/db";
 import { users } from "@/db/schema/identity";
 import { isAllowedMicrosoftEmail } from "@/domains/identity/microsoft-domain";
+import { verifyPassword } from "@/domains/identity/services/password.service";
+import { rateLimit, RateLimitExceededError } from "./rate-limit";
 import { env } from "./env";
 
 export { MICROSOFT_ALLOWED_DOMAIN } from "@/domains/identity/microsoft-domain";
@@ -40,6 +42,48 @@ if (env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET) {
     }),
   );
 }
+
+/**
+ * Login real por correo+clave — el reemplazo de "clave por correo" que
+ * pidió el usuario (sin mandar la clave en sí: ver password.service.ts/
+ * email.ts, el correo lleva un link de un solo uso para crear/recuperar la
+ * clave, nunca la clave en texto plano). A diferencia de Microsoft/Google,
+ * no depende de credenciales externas — se registra siempre.
+ */
+providers.push(
+  Credentials({
+    id: "credentials",
+    name: "Correo y clave",
+    credentials: {
+      email: { label: "Correo", type: "email" },
+      password: { label: "Clave", type: "password" },
+    },
+    async authorize(credentials, request) {
+      const email = typeof credentials?.email === "string" ? credentials.email.trim().toLowerCase() : null;
+      const password = typeof credentials?.password === "string" ? credentials.password : null;
+      if (!email || !password) return null;
+
+      // ARCHITECTURE.md §8.2 — 5/min/IP. `x-forwarded-for` es lo que pone
+      // Vercel; en local, sin ese header, se limita por una clave fija (un
+      // solo "IP" de desarrollo, inofensivo).
+      const ip = request.headers?.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "dev";
+      try {
+        await rateLimit(`login:${ip}`, { limit: 5, window: "1 m" });
+      } catch (error) {
+        if (error instanceof RateLimitExceededError) return null;
+        throw error;
+      }
+
+      const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
+      if (!user || !user.isActive || !user.passwordHash) return null;
+
+      const valid = await verifyPassword(password, user.passwordHash);
+      if (!valid) return null;
+
+      return { id: user.id, email: user.email, name: user.fullName };
+    },
+  }),
+);
 
 /**
  * SOLO DESARROLLO — nunca debe llegar a producción. Microsoft/Google
@@ -103,7 +147,7 @@ export const {
      * "AccessDenied" genérico de Auth.js.
      */
     async signIn({ user, account }) {
-      if (account?.provider === "dev-login") return true;
+      if (account?.provider === "dev-login" || account?.provider === "credentials") return true;
 
       if (account?.provider === "microsoft-entra-id" && !isAllowedMicrosoftEmail(user.email)) {
         return "/login?error=dominio";

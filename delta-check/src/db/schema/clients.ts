@@ -66,7 +66,7 @@ export const vehicles = pgTable("vehicles", {
  * `T50:T62`, que tiene el mismo encabezado pero ninguna validación lo usa)
  * — quién trajo al cliente. Es tenant-scoped y no un catálogo 🌐 como
  * `vehicleBrands`: es la nómina propia de Delta, no algo que otro tenant
- * de Delta Check deba ver. `clients.source` se queda como texto libre
+ * de Cotizador Delta Seguros deba ver. `clients.source` se queda como texto libre
  * (soporta "Otra") — esta tabla es solo el catálogo cerrado que alimenta
  * el selector, igual que `vehicleBrands` alimenta el de Marca.
  */

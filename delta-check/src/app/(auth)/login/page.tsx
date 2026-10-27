@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MICROSOFT_ALLOWED_DOMAIN, signIn } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
@@ -10,7 +11,8 @@ import { ThemeToggle } from "@/components/shared/ThemeToggle";
 const ERROR_MESSAGES: Record<string, string> = {
   dominio: `Esa cuenta no es de Delta Seguros — solo entra una cuenta ${MICROSOFT_ALLOWED_DOMAIN}.`,
   "sin-acceso":
-    "Esa cuenta es de Delta Seguros pero todavía no tiene acceso asignado en Delta Check — pídele a un administrador que te agregue.",
+    "Esa cuenta es de Delta Seguros pero todavía no tiene acceso asignado en Cotizador Delta Seguros — pídele a un administrador que te agregue.",
+  CredentialsSignin: "Correo o clave incorrectos.",
 };
 
 export default async function LoginPage({
@@ -64,6 +66,52 @@ export default async function LoginPage({
               solo cuentas {MICROSOFT_ALLOWED_DOMAIN} van a poder entrar.
             </p>
           )}
+
+          <form
+            action={async (formData) => {
+              "use server";
+              await signIn("credentials", {
+                email: formData.get("email"),
+                password: formData.get("password"),
+                redirectTo: "/",
+              });
+            }}
+            className="mt-6 flex flex-col gap-3 border-t border-border pt-6"
+          >
+            <div>
+              <label className="text-xs font-semibold text-muted" htmlFor="login-email">
+                Correo
+              </label>
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                required
+                className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-muted" htmlFor="login-password">
+                Clave
+              </label>
+              <input
+                id="login-password"
+                name="password"
+                type="password"
+                required
+                className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+              />
+            </div>
+            <button
+              type="submit"
+              className="rounded-lg bg-delta-navy px-3 py-2.5 text-sm font-semibold text-white"
+            >
+              Entrar
+            </button>
+            <Link href="/recuperar-clave" className="text-center text-xs text-link underline">
+              Olvidé mi clave
+            </Link>
+          </form>
 
           {process.env.NODE_ENV === "development" && (
             <form

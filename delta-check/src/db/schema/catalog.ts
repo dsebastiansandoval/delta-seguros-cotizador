@@ -56,7 +56,7 @@ export const coverages = pgTable("coverages", {
  * público real de marcas de un bróker ecuatoriano (Prodeseg,
  * `/api/public/marcas`, sin autenticación) filtrado a lo que aplica a
  * Autos LIVIANO/PICKUP — se excluyeron camiones pesados, motos y
- * maquinaria, que ellos también cubren pero Delta Check no cotiza. El
+ * maquinaria, que ellos también cubren pero Cotizador Delta Seguros no cotiza. El
  * formulario igual deja "Otra" como texto libre — ningún catálogo de
  * marcas es exhaustivo para siempre.
  */

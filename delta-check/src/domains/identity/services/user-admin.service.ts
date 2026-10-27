@@ -1,6 +1,7 @@
 import { and, asc, eq, ne } from "drizzle-orm";
 import type { Db } from "@/db";
 import { roles, userRoles, users } from "@/db/schema/identity";
+import { issuePasswordResetToken } from "./password.service";
 import type { AssignableRole, CreateUserInput, UpdateUserInput } from "../schemas/user.schema";
 
 /** Regla de administración violada — el mensaje se muestra tal cual al ADMIN. */
@@ -26,9 +27,12 @@ async function countOtherActiveAdmins(tx: Db, exceptUserId: string) {
 
 /**
  * ABM de usuarios de la organización (ARCHITECTURE.md §8.4, rol ADMIN).
- * No hay contraseñas: la cuenta entra por Microsoft con ese correo (o por
- * el login de desarrollo en local). Un usuario nunca se borra — se
- * desactiva, para conservar su historial de cotizaciones y auditoría.
+ * La cuenta entra por correo+clave (provider "credentials") — `create()`
+ * deja al usuario sin clave todavía y con un token de "crear clave" listo;
+ * la Server Action (`user.actions.ts`) es quien manda el correo con el
+ * link, para mantener el envío de correo fuera de la capa de servicio. Un
+ * usuario nunca se borra — se desactiva, para conservar su historial de
+ * cotizaciones y auditoría.
  */
 export const userAdminService = {
   async list(tx: Db) {
@@ -62,7 +66,7 @@ export const userAdminService = {
           organizationId,
           email: input.email,
           fullName: input.fullName,
-          provider: "microsoft",
+          provider: "credentials",
           branches: input.branches,
         })
         .returning();
@@ -76,7 +80,8 @@ export const userAdminService = {
       throw error;
     }
     await tx.insert(userRoles).values({ organizationId, userId: user.id, roleId: await roleId(tx, input.role) });
-    return user;
+    const resetToken = await issuePasswordResetToken(tx, user.id);
+    return { user, resetToken };
   },
 
   /** El ADMIN no puede quitarse a sí mismo el acceso, y siempre queda al menos un ADMIN activo. */
