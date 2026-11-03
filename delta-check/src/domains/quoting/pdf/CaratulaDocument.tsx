@@ -283,6 +283,18 @@ function DataRow({ label, values, wrap = false, tone }: { label: string; values:
   );
 }
 
+/** Como COBERTURAS/DEDUCIBLES en Auto x Km: el mismo valor para todos los rangos de km mostrados, en una sola celda que ocupa todo el ancho de la tabla (igual que el colSpan de la comparativa web, OfferSheetView.tsx). */
+function MergedDataRow({ label, value, span, tone }: { label: string; value: string; span: number; tone?: RowTone }) {
+  const labelStyle = tone === "navy" ? tones.navyLabel : tone === "blue" ? tones.blueLabel : tone === "amber" ? tones.amberLabel : t.label;
+  const cellStyle = tone === "navy" ? tones.navyCell : tone === "blue" ? tones.blueCell : tone === "amber" ? tones.amberCell : t.cell;
+  return (
+    <View style={t.row}>
+      <Text style={labelStyle}>{label}</Text>
+      <Text style={[cellStyle, { flex: span }]}>{value}</Text>
+    </View>
+  );
+}
+
 function PageFooter() {
   return (
     <View style={t.pageFooter} fixed>
@@ -381,8 +393,11 @@ function OfertaKmPage({ data, sheet }: { data: CaratulaData; sheet: Extract<Offe
   return (
     <>
       {sheet.risks.map((risk) => {
-        const brackets = km.brackets.filter((b) => b.riskNumber === risk.riskNumber);
-        const fixed = (value: string) => brackets.map((_, i) => (i === 0 ? value : ""));
+        // Solo los rangos de km que el ejecutivo ya digitó — un rango sin prima no
+        // se le muestra al cliente en el PDF (a diferencia de la comparativa web,
+        // que sí deja ver todos los rangos mientras se cotiza).
+        const brackets = km.brackets.filter((b) => b.riskNumber === risk.riskNumber && b.totals);
+        if (!brackets.length) return null;
         return (
           <Page key={risk.id} size="A4" orientation="landscape" style={t.page}>
             <View style={t.topRow}>
@@ -412,19 +427,20 @@ function OfertaKmPage({ data, sheet }: { data: CaratulaData; sheet: Extract<Offe
               </View>
               <SectionRow title="COBERTURAS" />
               {km.rows.map((row) => (
-                <DataRow
+                <MergedDataRow
                   key={row.key}
                   label={row.label}
-                  values={fixed(
+                  span={brackets.length}
+                  value={
                     row.key === "RC"
                       ? formatOfferCell({ amount: (km.rcAmountCents ?? 0) / 100 })
-                      : formatOfferCell("amount" in row ? { amount: row.amount } : { text: row.text }),
-                  )}
+                      : formatOfferCell("amount" in row ? { amount: row.amount } : { text: row.text })
+                  }
                 />
               ))}
               <SectionRow title="DEDUCIBLES" />
-              <DataRow label="Pérdidas Parciales" values={fixed(km.partialDeductible)} />
-              <DataRow label="Pérdida Total" values={fixed(km.totalLossDeductible)} />
+              <MergedDataRow label="Pérdidas Parciales" span={brackets.length} value={km.partialDeductible} />
+              <MergedDataRow label="Pérdida Total" span={brackets.length} value={km.totalLossDeductible} />
               <DataRow label="TASA" values={brackets.map((b) => formatRate(b.ratePercentApplied))} />
               {PREMIUM_ROWS.map(([label, field], i) => (
                 <DataRow key={field} tone={i === 0 ? "navy" : "blue"} label={label} values={brackets.map((b) => formatMoney(b.totals?.[field]))} />

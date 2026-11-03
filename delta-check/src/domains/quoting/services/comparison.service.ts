@@ -1,7 +1,7 @@
 import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
-import { quoteInsurerSettings, quoteOptions, quoteRisks } from "@/db/schema/quoting";
+import { quoteInsurerSettings, quoteOptionCoverages, quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { vehicles } from "@/db/schema/clients";
 import { engineQuote } from "../offer/excel-rates";
 import { engineRatesService } from "./engine-rates.service";
@@ -87,6 +87,32 @@ export const comparisonService = {
       .where(eq(quoteOptions.quoteRiskId, quoteRiskId))
       .limit(1);
     return Boolean(row);
+  },
+
+  /**
+   * Borra las opciones (y su `quote_option_coverages`) y la configuración de
+   * aseguradoras de una cotización BORRADOR cuando cambia de modalidad
+   * (ANUAL ↔ POR_KM) al editarla — las filas viejas tienen la forma de la
+   * modalidad anterior (ANUAL: una por aseguradora, sin `km_bracket`; POR_KM:
+   * una por rango de km de AIG) y no sirven para la nueva. Sin esto, la
+   * grilla de "Configurar oferta" queda con filas sin `kmBracket`/ajenas a
+   * la modalidad nueva y la pantalla muestra "—" en todas las celdas.
+   * `updateAutoQuote` ya exige `status === "BORRADOR"` antes de llamar
+   * esto, así que nunca hay una póliza emitida sobre estas opciones.
+   */
+  async resetForModalityChange(tx: Db, quoteId: string, riskIds: string[]) {
+    if (riskIds.length) {
+      const stale = await tx
+        .select({ id: quoteOptions.id })
+        .from(quoteOptions)
+        .where(inArray(quoteOptions.quoteRiskId, riskIds));
+      const staleIds = stale.map((o) => o.id);
+      if (staleIds.length) {
+        await tx.delete(quoteOptionCoverages).where(inArray(quoteOptionCoverages.quoteOptionId, staleIds));
+        await tx.delete(quoteOptions).where(inArray(quoteOptions.id, staleIds));
+      }
+    }
+    await tx.delete(quoteInsurerSettings).where(eq(quoteInsurerSettings.quoteId, quoteId));
   },
 
   /**

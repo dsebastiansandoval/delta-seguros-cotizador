@@ -13,12 +13,33 @@ import {
 import { dollarsToCents } from "@/domains/shared/money";
 import { audit } from "@/domains/shared/audit";
 import { rateLimit } from "@/lib/rate-limit";
+import { premiumFromTotal } from "@/domains/quoting/services/premium.calculator";
 import type { ActionResult } from "./quote.actions";
 
 export async function getOfferConfiguration(quoteId: string) {
   const session = await requirePermission("quote:read");
   requireBranch(session, "AUTOS");
   return withOrganization(session.organizationId, (tx) => offerService.getConfiguration(tx, quoteId));
+}
+
+/**
+ * Tasa en vivo para Auto x Km mientras se digita la prima total del portal —
+ * sin guardar. A diferencia de la prima neta anual (que es la tasa tal
+ * cual), acá la neta se despeja de la total con `premiumFromTotal` (impuestos
+ * + derechos de emisión de por medio), así que no se puede calcular en el
+ * navegador sin reimplementar esa lógica (protegida contra duplicación en
+ * premium.calculator.ts, DRY — ARCHITECTURE.md §2); por eso esto vive en el
+ * servidor y el cliente lo llama con un debounce en vez de recalcular local.
+ */
+export async function previewKmRate(totalDollars: number, valueCents: number): Promise<string | null> {
+  await requirePermission("quote:read");
+  if (!(totalDollars > 0) || !(valueCents > 0)) return null;
+  try {
+    const breakdown = premiumFromTotal(dollarsToCents(totalDollars));
+    return (breakdown.netPremiumCents / valueCents).toFixed(5);
+  } catch {
+    return null;
+  }
 }
 
 export async function getOfferSheet(quoteId: string) {

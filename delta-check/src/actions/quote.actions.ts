@@ -289,6 +289,7 @@ export async function updateAutoQuote(
     if (risks.length !== input.vehicles.length) {
       return { ok: false as const, message: "No se puede cambiar el número de vehículos al editar — usa una cotización nueva" };
     }
+    const modalityChanged = quote.modality !== input.modality;
 
     const client = await clientService.editClientAndVehicles(tx, session.organizationId, {
       personType: input.personType,
@@ -324,7 +325,17 @@ export async function updateAutoQuote(
       })),
     });
 
-    if (risks.length && (await comparisonService.hasOptions(tx, risks[0].id))) {
+    if (modalityChanged) {
+      // Las opciones y la configuración de aseguradoras ya guardadas tienen la
+      // forma de la modalidad anterior (ver resetForModalityChange) — se
+      // descartan y se regeneran desde cero para la modalidad nueva.
+      await comparisonService.resetForModalityChange(
+        tx,
+        quoteId,
+        risks.map((r) => r.id),
+      );
+      await generateComparison(tx, session.organizationId, quoteId, input.modality, risks);
+    } else if (risks.length && (await comparisonService.hasOptions(tx, risks[0].id))) {
       await comparisonService.repriceEngines(tx, quoteId);
     }
 

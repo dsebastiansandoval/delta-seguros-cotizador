@@ -1,7 +1,7 @@
 "use client";
 
-import { startTransition, useActionState, useState } from "react";
-import { saveOfferConfiguration } from "@/actions/offer.actions";
+import { startTransition, useActionState, useEffect, useRef, useState } from "react";
+import { previewKmRate, saveOfferConfiguration } from "@/actions/offer.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import type { ConfigurationColumn, OfferConfiguration } from "@/domains/quoting/offer/offer.service";
 import { KM_BRACKETS, KM_BRACKET_LABELS } from "@/domains/quoting/constants";
@@ -62,6 +62,60 @@ function ManualPremiumInput({
       {(liveRate != null || savedRate) && (
         <span className="mt-1 block text-center text-muted">
           Tasa {liveRate != null ? formatRatePercent(liveRate) : formatRate(savedRate)}
+        </span>
+      )}
+    </>
+  );
+}
+
+/**
+ * Prima total del portal (Auto x Km): la tasa necesita despejar la neta de
+ * la total (`premiumFromTotal`, con impuestos y derechos de emisión), así
+ * que no se puede calcular en el navegador como en la grilla anual — se le
+ * pide al servidor (`previewKmRate`) con un debounce de 400ms mientras se
+ * digita, en vez de solo al guardar.
+ */
+function KmPremiumInput({
+  name,
+  defaultCents,
+  valueCents,
+  savedRate,
+}: {
+  name: string;
+  defaultCents: number | null;
+  valueCents: number;
+  savedRate: string | null;
+}) {
+  const [liveRate, setLiveRate] = useState<string | null | undefined>(undefined);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+  useEffect(() => () => clearTimeout(timeoutRef.current), []);
+
+  return (
+    <>
+      <input
+        name={name}
+        type="number"
+        step="0.01"
+        min="0"
+        defaultValue={dollars(defaultCents)}
+        placeholder="Prima total USD"
+        onChange={(e) => {
+          const dollarsValue = Number(e.target.value);
+          clearTimeout(timeoutRef.current);
+          if (!e.target.value || !Number.isFinite(dollarsValue)) {
+            setLiveRate(undefined);
+            return;
+          }
+          timeoutRef.current = setTimeout(() => {
+            previewKmRate(dollarsValue, valueCents).then(setLiveRate);
+          }, 400);
+        }}
+        className={`${cellInput} text-right`}
+      />
+      {(liveRate !== undefined || savedRate) && (
+        <span className="mt-1 block text-center text-muted">
+          Tasa {liveRate !== undefined ? formatRate(liveRate) : formatRate(savedRate)}
         </span>
       )}
     </>
@@ -286,21 +340,16 @@ function KmGrid({ config }: { config: OfferConfiguration }) {
                 {KM_BRACKETS.map((km) => {
                   const premium = column.premiums.find((p) => p.riskId === risk.id && p.kmBracket === km);
                   if (!premium) return <td key={km} className="px-3 py-2 text-center text-muted">—</td>;
+                  const valueCents = risk.insuredValueCents + risk.extrasValueCents;
                   return (
                     <td key={km} className="px-3 py-2 text-xs">
                       <input type="hidden" name="premiumOptionId" value={premium.quoteOptionId} />
-                      <input
+                      <KmPremiumInput
                         name={`premium:${premium.quoteOptionId}`}
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        defaultValue={dollars(premium.totalPremiumCents)}
-                        placeholder="Prima total USD"
-                        className={`${cellInput} text-right`}
+                        defaultCents={premium.totalPremiumCents}
+                        valueCents={valueCents}
+                        savedRate={premium.ratePercentApplied}
                       />
-                      {premium.ratePercentApplied && (
-                        <span className="mt-1 block text-center text-muted">Tasa {formatRate(premium.ratePercentApplied)}</span>
-                      )}
                     </td>
                   );
                 })}
