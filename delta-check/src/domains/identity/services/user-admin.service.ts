@@ -110,4 +110,17 @@ export const userAdminService = {
     await tx.delete(userRoles).where(eq(userRoles.userId, input.userId));
     await tx.insert(userRoles).values({ organizationId, userId: input.userId, roleId: await roleId(tx, input.role) });
   },
+
+  /**
+   * Link de "crear/recuperar clave" para un usuario ya existente, a pedido
+   * del ADMIN desde /admin/usuarios — mismo token que genera `create()` o
+   * "Olvidé mi clave", solo que el ADMIN se lo puede copiar directo sin
+   * depender de que el correo salga (útil mientras Resend no tiene el
+   * dominio verificado, ver ARCHITECTURE.md §35).
+   */
+  async regenerateInviteLink(tx: Db, userId: string) {
+    const [user] = await tx.select({ id: users.id }).from(users).where(eq(users.id, userId));
+    if (!user) throw new UserAdminError("Usuario no encontrado");
+    return issuePasswordResetToken(tx, user.id);
+  },
 };

@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
-import { createUser, updateUser } from "@/actions/user.actions";
+import { useActionState, useState, useTransition } from "react";
+import { createUser, generateInviteLink, updateUser } from "@/actions/user.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import { ASSIGNABLE_ROLES, ROLE_LABELS } from "@/domains/identity/schemas/user.schema";
 
@@ -77,6 +77,63 @@ export function CreateUserForm() {
   );
 }
 
+/** "Generar link" — token de crear/recuperar clave para copiar y pasarle a mano al usuario, sin esperar el correo. */
+function GenerateLinkButton({ userId }: { userId: string }) {
+  const [link, setLink] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+
+  function handleClick() {
+    startTransition(async () => {
+      const result = await generateInviteLink(userId);
+      if (result.ok) {
+        setLink(result.value);
+        setError(null);
+      } else {
+        setLink(null);
+        setError(Object.values(result.errors).flat()[0] ?? "No se pudo generar el link");
+      }
+    });
+  }
+
+  async function copyLink() {
+    if (!link) return;
+    try {
+      await navigator.clipboard.writeText(link);
+    } catch {
+      // Clipboard API puede fallar sin permiso del navegador — el input queda igual seleccionable a mano.
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={pending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {pending ? "…" : "Generar link"}
+      </button>
+      {link && (
+        <>
+          <input
+            readOnly
+            value={link}
+            onFocus={(e) => e.currentTarget.select()}
+            aria-label="Link para crear clave"
+            className={`${inputClass} w-64`}
+          />
+          <button type="button" onClick={copyLink} className="text-xs font-semibold text-link underline">
+            Copiar
+          </button>
+        </>
+      )}
+      {error && <span className="text-xs text-bad">{error}</span>}
+    </div>
+  );
+}
+
 export type UserRowData = {
   id: string;
   email: string;
@@ -119,6 +176,9 @@ export function UserRow({ user, isSelf }: { user: UserRowData; isSelf: boolean }
           {user.lastLoginAt ? `Último ingreso ${user.lastLoginAt.toLocaleDateString("es-EC")}` : "Nunca ingresó"}
         </span>
       </form>
+      <div className="mt-2 border-t border-border pt-2">
+        <GenerateLinkButton userId={user.id} />
+      </div>
     </li>
   );
 }

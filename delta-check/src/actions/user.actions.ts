@@ -15,6 +15,28 @@ export async function listUsers() {
   return withOrganization(session.organizationId, (tx) => userAdminService.list(tx));
 }
 
+/** Botón "Generar link" de cada fila en /admin/usuarios — ver userAdminService.regenerateInviteLink. */
+export async function generateInviteLink(userId: string): Promise<ActionResult<string>> {
+  const session = await requirePermission("user:manage");
+  try {
+    const link = await withOrganization(session.organizationId, async (tx) => {
+      const resetToken = await userAdminService.regenerateInviteLink(tx, userId);
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "user.invite_link_regenerated",
+        entityType: "users",
+        entityId: userId,
+      });
+      return `${env.APP_URL}/crear-clave/${resetToken}`;
+    });
+    return { ok: true, value: link };
+  } catch (error) {
+    if (error instanceof UserAdminError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+}
+
 export async function createUser(_prevState: ActionResult | null, formData: FormData): Promise<ActionResult> {
   const session = await requirePermission("user:manage");
 
