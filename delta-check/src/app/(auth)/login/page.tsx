@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MICROSOFT_ALLOWED_DOMAIN, signIn } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
+import { PasswordField } from "@/components/shared/PasswordField";
 
 /**
  * Mensajes de los rechazos del callback `signIn` en auth.ts — dos motivos
@@ -90,18 +91,7 @@ export default async function LoginPage({
                 className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
               />
             </div>
-            <div>
-              <label className="text-xs font-semibold text-muted" htmlFor="login-password">
-                Clave
-              </label>
-              <input
-                id="login-password"
-                name="password"
-                type="password"
-                required
-                className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
-              />
-            </div>
+            <PasswordField id="login-password" name="password" label="Clave" autoComplete="current-password" />
             <button
               type="submit"
               className="rounded-lg bg-delta-navy px-3 py-2.5 text-sm font-semibold text-white"

@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef } from "react";
 import { changePassword } from "@/actions/password.actions";
 import type { ActionResult } from "@/actions/quote.actions";
+import { PasswordField } from "@/components/shared/PasswordField";
 
 const initial: ActionResult | null = null;
 
@@ -23,45 +24,33 @@ export function ChangePasswordForm() {
   return (
     <form ref={formRef} action={formAction} className="flex max-w-sm flex-col gap-3">
       <div>
-        <label className="text-xs font-semibold text-muted" htmlFor="currentPassword">
-          Clave actual
-        </label>
-        <input
+        <PasswordField
           id="currentPassword"
           name="currentPassword"
-          type="password"
-          required
-          className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          label="Clave actual"
+          autoComplete="current-password"
         />
         {fieldError(state, "currentPassword") && (
           <p className="mt-1 text-xs text-red-500">{fieldError(state, "currentPassword")}</p>
         )}
       </div>
       <div>
-        <label className="text-xs font-semibold text-muted" htmlFor="newPassword">
-          Clave nueva
-        </label>
-        <input
+        <PasswordField
           id="newPassword"
           name="newPassword"
-          type="password"
+          label="Clave nueva"
           minLength={8}
-          required
-          className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          autoComplete="new-password"
         />
         {fieldError(state, "newPassword") && <p className="mt-1 text-xs text-red-500">{fieldError(state, "newPassword")}</p>}
       </div>
       <div>
-        <label className="text-xs font-semibold text-muted" htmlFor="confirmPassword">
-          Repetir clave nueva
-        </label>
-        <input
+        <PasswordField
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
+          label="Repetir clave nueva"
           minLength={8}
-          required
-          className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          autoComplete="new-password"
         />
         {fieldError(state, "confirmPassword") && (
           <p className="mt-1 text-xs text-red-500">{fieldError(state, "confirmPassword")}</p>

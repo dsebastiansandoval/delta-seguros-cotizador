@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { setPassword } from "@/actions/password.actions";
 import type { ActionResult } from "@/actions/quote.actions";
+import { PasswordField } from "@/components/shared/PasswordField";
 
 const initial: ActionResult | null = null;
 
@@ -38,30 +39,16 @@ export function SetPasswordForm({ token }: { token: string }) {
     <form action={formAction} className="flex flex-col gap-3">
       <input type="hidden" name="token" value={token} />
       <div>
-        <label className="text-xs font-semibold text-muted" htmlFor="password">
-          Clave nueva
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          minLength={8}
-          required
-          className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
-        />
+        <PasswordField id="password" name="password" label="Clave nueva" minLength={8} autoComplete="new-password" />
         {fieldError(state, "password") && <p className="mt-1 text-xs text-red-500">{fieldError(state, "password")}</p>}
       </div>
       <div>
-        <label className="text-xs font-semibold text-muted" htmlFor="confirmPassword">
-          Repetir clave
-        </label>
-        <input
+        <PasswordField
           id="confirmPassword"
           name="confirmPassword"
-          type="password"
+          label="Repetir clave"
           minLength={8}
-          required
-          className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+          autoComplete="new-password"
         />
         {fieldError(state, "confirmPassword") && (
           <p className="mt-1 text-xs text-red-500">{fieldError(state, "confirmPassword")}</p>
