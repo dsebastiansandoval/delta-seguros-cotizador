@@ -20,7 +20,7 @@ export async function generateInviteLink(userId: string): Promise<ActionResult<s
   const session = await requirePermission("user:manage");
   try {
     const link = await withOrganization(session.organizationId, async (tx) => {
-      const resetToken = await userAdminService.regenerateInviteLink(tx, userId);
+      const { resetToken } = await userAdminService.regenerateInviteLink(tx, userId);
       await audit(tx, {
         organizationId: session.organizationId,
         userId: session.userId,
@@ -31,6 +31,40 @@ export async function generateInviteLink(userId: string): Promise<ActionResult<s
       return `${env.APP_URL}/crear-clave/${resetToken}`;
     });
     return { ok: true, value: link };
+  } catch (error) {
+    if (error instanceof UserAdminError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+}
+
+/**
+ * Botón "Enviar correo" junto a "Generar link" — mismo token, pero además
+ * lo manda por Resend (o lo deja en el log si RESEND_API_KEY no está
+ * configurado, ver lib/email.ts). Emite un token nuevo en vez de reusar
+ * uno ya copiado — mismo criterio que "Olvidé mi clave".
+ */
+export async function sendInviteEmail(userId: string): Promise<ActionResult<{ sent: boolean }>> {
+  const session = await requirePermission("user:manage");
+  try {
+    const invite = await withOrganization(session.organizationId, async (tx) => {
+      const { resetToken, email, fullName } = await userAdminService.regenerateInviteLink(tx, userId);
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "user.invite_email_sent",
+        entityType: "users",
+        entityId: userId,
+      });
+      return { resetToken, email, fullName };
+    });
+
+    const { sent } = await sendPasswordSetupEmail({
+      to: invite.email,
+      fullName: invite.fullName,
+      link: `${env.APP_URL}/crear-clave/${invite.resetToken}`,
+      isNewAccount: false,
+    });
+    return { ok: true, value: { sent } };
   } catch (error) {
     if (error instanceof UserAdminError) return { ok: false, errors: { form: [error.message] } };
     throw error;

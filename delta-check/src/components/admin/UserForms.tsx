@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
-import { createUser, generateInviteLink, updateUser } from "@/actions/user.actions";
+import { createUser, generateInviteLink, sendInviteEmail, updateUser } from "@/actions/user.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import { ASSIGNABLE_ROLES, ROLE_LABELS } from "@/domains/identity/schemas/user.schema";
 
@@ -105,8 +105,25 @@ function GenerateLinkButton({ userId }: { userId: string }) {
     }
   }
 
+  const [emailStatus, setEmailStatus] = useState<"sent" | "logged" | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [emailPending, startEmailTransition] = useTransition();
+
+  function handleSendEmail() {
+    startEmailTransition(async () => {
+      const result = await sendInviteEmail(userId);
+      if (result.ok) {
+        setEmailStatus(result.value.sent ? "sent" : "logged");
+        setEmailError(null);
+      } else {
+        setEmailStatus(null);
+        setEmailError(Object.values(result.errors).flat()[0] ?? "No se pudo enviar el correo");
+      }
+    });
+  }
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <button
         type="button"
         onClick={handleClick}
@@ -129,7 +146,22 @@ function GenerateLinkButton({ userId }: { userId: string }) {
           </button>
         </>
       )}
+      <button
+        type="button"
+        onClick={handleSendEmail}
+        disabled={emailPending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {emailPending ? "…" : "Enviar correo"}
+      </button>
+      {emailStatus === "sent" && <span className="text-xs font-semibold text-good">Correo enviado.</span>}
+      {emailStatus === "logged" && (
+        <span className="text-xs text-warn">
+          No se pudo mandar el correo (falta RESEND_API_KEY o el dominio) — usa &quot;Generar link&quot;.
+        </span>
+      )}
       {error && <span className="text-xs text-bad">{error}</span>}
+      {emailError && <span className="text-xs text-bad">{emailError}</span>}
     </div>
   );
 }

@@ -119,8 +119,12 @@ export const userAdminService = {
    * dominio verificado, ver ARCHITECTURE.md §35).
    */
   async regenerateInviteLink(tx: Db, userId: string) {
-    const [user] = await tx.select({ id: users.id }).from(users).where(eq(users.id, userId));
+    const [user] = await tx
+      .select({ id: users.id, email: users.email, fullName: users.fullName })
+      .from(users)
+      .where(eq(users.id, userId));
     if (!user) throw new UserAdminError("Usuario no encontrado");
-    return issuePasswordResetToken(tx, user.id);
+    const resetToken = await issuePasswordResetToken(tx, user.id);
+    return { resetToken, email: user.email, fullName: user.fullName };
   },
 };
