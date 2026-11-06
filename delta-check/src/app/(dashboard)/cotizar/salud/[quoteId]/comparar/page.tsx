@@ -27,6 +27,11 @@ export default async function CompararSaludPage({ params }: { params: Promise<{ 
   const span = offers.length + 1;
   const labels = sheet ? memberLabels(sheet.members) : [];
 
+  // Un plan marcado "Mostrar" sin prima digitada (aseguradora sin tabla) nunca entra a la
+  // oferta — getCaratulaAMData exige totalPremiumCents — así que el mensaje de "nada marcado"
+  // sería falso en ese caso. Se distingue para que el agente sepa qué le falta.
+  const markedWithoutPremium = comparison.rows.filter((r) => r.includedInOffer && r.totalPremiumCents == null);
+
   const money = (cents: number | null) => (cents != null ? formatUSD(cents) : "N/A");
 
   return (
@@ -55,7 +60,9 @@ export default async function CompararSaludPage({ params }: { params: Promise<{ 
 
       {offers.length === 0 ? (
         <p className="rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
-          Ningún plan está marcado para mostrarse — elígelos en &quot;Configurar oferta&quot;.
+          {markedWithoutPremium.length > 0
+            ? `${markedWithoutPremium.length} ${markedWithoutPremium.length === 1 ? "plan está marcado" : "planes están marcados"} para mostrarse, pero ${markedWithoutPremium.length === 1 ? "le falta" : "les falta"} la prima neta digitada — complétala en "Configurar oferta".`
+            : 'Ningún plan está marcado para mostrarse — elígelos en "Configurar oferta".'}
         </p>
       ) : (
         <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">

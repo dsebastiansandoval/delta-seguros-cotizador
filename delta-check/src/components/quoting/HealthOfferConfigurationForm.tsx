@@ -10,12 +10,21 @@ import { HEALTH_PLANS } from "@/domains/health/health-plans.generated";
 function isManualPlan(row: HealthComparisonRow) {
   return HEALTH_PLANS.some((p) => p.insurerCode === row.insurerCode && p.planCode === row.planCode && p.manual);
 }
+
+function isManualRow(row: HealthComparisonRow) {
+  return row.status === "PENDIENTE_MANUAL" || isManualPlan(row);
+}
 import { formatUSD } from "@/domains/shared/money";
 
 /** Equivalente a los botones MOSTRAR/OCULTAR de cada plan en OFERTA AM, agrupados por aseguradora. */
 export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: string; rows: HealthComparisonRow[] }) {
   const [state, formAction, pending] = useActionState<ActionResult | null, FormData>(saveHealthOfferConfiguration, null);
-  const [included, setIncluded] = useState(() => new Set(rows.filter((r) => r.includedInOffer).map((r) => r.quoteOptionId)));
+  // Un plan manual sin prima nunca puede salir en la comparativa (caratula-am.service.ts
+  // exige totalPremiumCents) — si quedó marcado así de una sesión anterior (dato
+  // inconsistente), se descarta acá para que "Guardar" lo corrija solo.
+  const [included, setIncluded] = useState(
+    () => new Set(rows.filter((r) => r.includedInOffer && (!isManualRow(r) || r.netPremiumCents != null)).map((r) => r.quoteOptionId)),
+  );
 
   const toggle = (id: string, on: boolean) =>
     setIncluded((prev) => {
@@ -27,7 +36,7 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
 
   // Planes sin tabla (BUPA): se digitan; el resto viene del motor. Se fija al montar para que
   // un plan manual ya digitado siga editable.
-  const [manualIds] = useState(() => new Set(rows.filter((r) => r.status === "PENDIENTE_MANUAL" || isManualPlan(r)).map((r) => r.quoteOptionId)));
+  const [manualIds] = useState(() => new Set(rows.filter(isManualRow).map((r) => r.quoteOptionId)));
 
   const byInsurer = new Map<string, HealthComparisonRow[]>();
   for (const row of rows) byInsurer.set(row.insurerName, [...(byInsurer.get(row.insurerName) ?? []), row]);
@@ -51,14 +60,28 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
             <ul className="divide-y divide-border">
               {plans.map((row) => (
                 <li key={row.quoteOptionId} className="flex items-center gap-3 px-4 py-2 text-sm">
-                  <input
-                    type="checkbox"
-                    name="included"
-                    value={row.quoteOptionId}
-                    checked={included.has(row.quoteOptionId)}
-                    onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
-                    aria-label={`Mostrar ${planLabel(row.planCode)}`}
-                  />
+                  {manualIds.has(row.quoteOptionId) ? (
+                    // Sin tabla de tarifas: no se puede marcar "a mano" sin prima — quedaría
+                    // marcado pero invisible en la comparativa (caratula-am.service.ts exige
+                    // totalPremiumCents). Se marca solo, al digitar la prima, más abajo.
+                    <input
+                      type="checkbox"
+                      checked={included.has(row.quoteOptionId)}
+                      disabled
+                      readOnly
+                      title="Se marca solo al digitar la prima neta"
+                      aria-label={`Mostrar ${planLabel(row.planCode)}`}
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      name="included"
+                      value={row.quoteOptionId}
+                      checked={included.has(row.quoteOptionId)}
+                      onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
+                      aria-label={`Mostrar ${planLabel(row.planCode)}`}
+                    />
+                  )}
                   <span className="flex-1">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</span>
                   {!manualIds.has(row.quoteOptionId) ? (
                     <>
@@ -72,6 +95,7 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
                     </>
                   ) : (
                     <>
+                      {included.has(row.quoteOptionId) && <input type="hidden" name="included" value={row.quoteOptionId} />}
                       <input type="hidden" name="premiumOptionId" value={row.quoteOptionId} />
                       <input
                         name={`premium:${row.quoteOptionId}`}
@@ -80,7 +104,7 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
                         min="0"
                         defaultValue={row.netPremiumCents != null ? row.netPremiumCents / 100 : ""}
                         placeholder="Prima neta USD"
-                        onChange={(e) => e.target.value && toggle(row.quoteOptionId, true)}
+                        onChange={(e) => toggle(row.quoteOptionId, e.target.value !== "")}
                         className="w-32 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
                       />
                     </>
