@@ -87,9 +87,10 @@ export async function addClaimNote(
   return { ok: true, value: undefined };
 }
 
-export async function listClaims() {
+/** Sin `search`: solo vigentes. Con `search`: busca en todos los estados, incluye entregados. */
+export async function listClaims(search?: string) {
   const session = await requirePermission("quote:read");
-  return withOrganization(session.organizationId, (tx) => claimService.list(tx, [...session.branches]));
+  return withOrganization(session.organizationId, (tx) => claimService.list(tx, [...session.branches], search));
 }
 
 /** Detalle + historial de novedades, para /siniestros/[claimId] — mismo patrón de chequeo de ramo que getPolicyDetail. */

@@ -5,7 +5,7 @@ import { updateClaimStatus } from "@/actions/claim.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 
 const initial: ActionResult | null = null;
-const STATUSES = ["REPORTADO", "APROBADO", "REPARADO"] as const;
+const STATUSES = ["REPORTADO", "APROBADO", "REPARADO", "ENTREGADO"] as const;
 
 export function ClaimStatusForm({ claimId, status }: { claimId: string; status: string }) {
   const [, formAction, pending] = useActionState(updateClaimStatus, initial);

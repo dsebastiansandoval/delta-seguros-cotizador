@@ -1,23 +1,24 @@
 import { alias } from "drizzle-orm/pg-core";
-import { asc, desc, eq, inArray, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, ne, or, sql } from "drizzle-orm";
 import type { Db } from "@/db";
 import { claimEvents, claims, policies } from "@/db/schema/policies";
 import { insurers } from "@/db/schema/catalog";
-import { clients } from "@/db/schema/clients";
+import { clients, vehicles } from "@/db/schema/clients";
+import { quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { users } from "@/db/schema/identity";
 import { dollarsToCents } from "@/domains/shared/money";
 import type { z } from "zod";
 import type { reportClaimSchema } from "../schemas/policy.schema";
 
 type ReportClaimInput = z.infer<typeof reportClaimSchema>;
-type ClaimStatus = "REPORTADO" | "APROBADO" | "REPARADO";
+type ClaimStatus = "REPORTADO" | "APROBADO" | "REPARADO" | "ENTREGADO";
 
 // Siniestro reportado directo desde Siniestros (sin policyId): "sus" datos
 // de aseguradora/cliente salen de claims.*, no de un join a policies —
 // mismo alias en list() y getDetail() para no repetir la unión.
 const standaloneInsurer = alias(insurers, "standalone_insurer");
 
-/** REPORTADO → APROBADO → REPARADO — mismos 3 estados que la macro SINIESTROS prepara en el Excel. */
+/** REPORTADO → APROBADO → REPARADO → ENTREGADO — ENTREGADO lo sacó el 6-nov de la lista de vigentes. */
 export const claimService = {
   async report(tx: Db, organizationId: string, input: ReportClaimInput) {
     const standalone = !input.policyId;
@@ -31,6 +32,11 @@ export const claimService = {
         clientName: standalone ? input.clientName : undefined,
         clientDocumentNumber: standalone ? input.clientDocumentNumber : undefined,
         policyNumber: standalone ? input.policyNumber : undefined,
+        vehiclePlate: standalone ? input.vehiclePlate : undefined,
+        vehicleBrand: standalone ? input.vehicleBrand : undefined,
+        vehicleModel: standalone ? input.vehicleModel : undefined,
+        vehicleYear: standalone ? input.vehicleYear : undefined,
+        vehicleColor: standalone ? input.vehicleColor : undefined,
         claimNumber: input.claimNumber,
         occurredAt: input.occurredAt,
         reportedAt: input.reportedAt,
@@ -87,8 +93,31 @@ export const claimService = {
    * Solo los ramos del usuario (users.branches), mismo criterio que Cartera
    * y Back-office. `claims.branch` es siempre propio (nunca viene solo del
    * join a policies), así que un siniestro sin póliza también se filtra bien.
+   *
+   * Sin `search`: solo vigentes (todo menos ENTREGADO) — lo que importa dar
+   * seguimiento día a día. Con `search`: busca en TODOS los estados
+   * (incluye entregados) por cliente o número de póliza — el "buscador de
+   * cerrados" que pidió David el 6-nov, para encontrar el histórico sin que
+   * la lista del día a día se llene de siniestros ya resueltos.
    */
-  async list(tx: Db, branches: Array<"AUTOS" | "SALUD">) {
+  async list(tx: Db, branches: Array<"AUTOS" | "SALUD">, search?: string) {
+    const term = search?.trim();
+    const conditions = [inArray(claims.branch, branches)];
+    if (!term) {
+      conditions.push(ne(claims.status, "ENTREGADO"));
+    } else {
+      const like = `%${term}%`;
+      conditions.push(
+        or(
+          ilike(sql`coalesce(${policies.policyNumber}, ${claims.policyNumber})`, like),
+          ilike(clients.firstName, like),
+          ilike(clients.lastName, like),
+          ilike(clients.businessName, like),
+          ilike(claims.clientName, like),
+        )!,
+      );
+    }
+
     return tx
       .select({
         id: claims.id,
@@ -112,11 +141,18 @@ export const claimService = {
       .leftJoin(insurers, eq(insurers.id, policies.insurerId))
       .leftJoin(standaloneInsurer, eq(standaloneInsurer.id, claims.insurerId))
       .leftJoin(clients, eq(clients.id, policies.clientId))
-      .where(inArray(claims.branch, branches))
+      .where(and(...conditions))
       .orderBy(desc(claims.reportedAt));
   },
 
-  /** Detalle de un siniestro + su historial completo de novedades, para la página de detalle. */
+  /**
+   * Detalle de un siniestro + su historial completo de novedades, para la
+   * página de detalle. Si hay `policyId`, el vehículo real se alcanza por
+   * policy → quote_option → quote_risk → vehicle (nunca se duplica en
+   * `claims`); si no hay póliza, viene de los `vehicle*` que se piden a
+   * mano al reportar — `vehicle` siempre es la misma forma para la página,
+   * sin importar de cuál de las dos fuentes salió.
+   */
   async getDetail(tx: Db, claimId: string) {
     const [row] = await tx
       .select({
@@ -127,12 +163,20 @@ export const claimService = {
         clientFirstName: clients.firstName,
         clientLastName: clients.lastName,
         clientBusinessName: clients.businessName,
+        policyVehiclePlate: vehicles.plate,
+        policyVehicleBrand: vehicles.brand,
+        policyVehicleModel: vehicles.model,
+        policyVehicleYear: vehicles.year,
+        policyVehicleColor: vehicles.color,
       })
       .from(claims)
       .leftJoin(policies, eq(policies.id, claims.policyId))
       .leftJoin(insurers, eq(insurers.id, policies.insurerId))
       .leftJoin(standaloneInsurer, eq(standaloneInsurer.id, claims.insurerId))
       .leftJoin(clients, eq(clients.id, policies.clientId))
+      .leftJoin(quoteOptions, eq(quoteOptions.id, policies.quoteOptionId))
+      .leftJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
+      .leftJoin(vehicles, eq(vehicles.id, quoteRisks.vehicleId))
       .where(eq(claims.id, claimId));
     if (!row) return null;
 
@@ -151,6 +195,22 @@ export const claimService = {
       .where(eq(claimEvents.claimId, claimId))
       .orderBy(asc(claimEvents.createdAt));
 
-    return { ...row, events };
+    const vehicle = row.claim.policyId
+      ? {
+          plate: row.policyVehiclePlate,
+          brand: row.policyVehicleBrand,
+          model: row.policyVehicleModel,
+          year: row.policyVehicleYear,
+          color: row.policyVehicleColor,
+        }
+      : {
+          plate: row.claim.vehiclePlate,
+          brand: row.claim.vehicleBrand,
+          model: row.claim.vehicleModel,
+          year: row.claim.vehicleYear,
+          color: row.claim.vehicleColor,
+        };
+
+    return { ...row, vehicle, events };
   },
 };

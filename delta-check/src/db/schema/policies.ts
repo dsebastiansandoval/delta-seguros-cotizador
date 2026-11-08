@@ -140,6 +140,15 @@ export const claims = pgTable("claims", {
   clientName: text("client_name"), // solo si no hay policyId
   clientDocumentNumber: text("client_document_number"), // C.I./RUC, solo si no hay policyId
   policyNumber: text("policy_number"), // POLIZA, solo si no hay policyId
+  // Datos del vehículo propio — solo si no hay policyId (con póliza, se llega
+  // al vehículo real por policy → quote_option → quote_risk → vehicle, igual
+  // que arriba; acá se piden a mano porque un siniestro reportado directo
+  // desde Siniestros no tiene esa cadena de la que tirar). Pedido 6-nov.
+  vehiclePlate: text("vehicle_plate"),
+  vehicleBrand: text("vehicle_brand"),
+  vehicleModel: text("vehicle_model"),
+  vehicleYear: integer("vehicle_year"),
+  vehicleColor: text("vehicle_color"),
   claimNumber: text("claim_number"),
   status: claimStatusEnum("status").notNull().default("REPORTADO"),
   occurredAt: date("occurred_at"),

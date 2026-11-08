@@ -1,17 +1,22 @@
 import Link from "next/link";
 import { listClaims } from "@/actions/claim.actions";
 import { formatUSD } from "@/domains/shared/money";
+import { daysSince } from "@/domains/shared/days-since";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
 
-export default async function SiniestrosPage() {
-  const claims = await listClaims();
+export default async function SiniestrosPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams;
+  const isSearching = Boolean(q?.trim());
+  const claims = await listClaims(q);
 
   return (
     <main className="mx-auto max-w-5xl p-8">
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight">Siniestros</h1>
-          <p className="mt-1 text-sm text-muted">{claims.length} siniestros reportados</p>
+          <p className="mt-1 text-sm text-muted">
+            {claims.length} {isSearching ? "resultados (incluye entregados)" : "siniestros vigentes"}
+          </p>
         </div>
         <Link
           href="/siniestros/nuevo"
@@ -20,6 +25,24 @@ export default async function SiniestrosPage() {
           + Reportar siniestro
         </Link>
       </header>
+
+      <form action="/siniestros" className="mb-4 flex items-center gap-2">
+        <input
+          type="search"
+          name="q"
+          defaultValue={q ?? ""}
+          placeholder="Buscar por cliente o N° de póliza — incluye entregados"
+          className="w-80 rounded-lg border border-border bg-surface px-3 py-2 text-sm"
+        />
+        <button type="submit" className="rounded-lg border border-border px-3 py-2 text-sm font-semibold">
+          Buscar
+        </button>
+        {isSearching && (
+          <Link href="/siniestros" className="text-sm font-semibold text-link underline">
+            Ver vigentes
+          </Link>
+        )}
+      </form>
 
       <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
         <table className="w-full text-sm">
@@ -30,6 +53,7 @@ export default async function SiniestrosPage() {
               <th className="px-4 py-3">Aseguradora</th>
               <th className="px-4 py-3">Ocurrido</th>
               <th className="px-4 py-3">Reportado</th>
+              <th className="px-4 py-3 text-right">Días</th>
               <th className="px-4 py-3 text-right">Valor</th>
               <th className="px-4 py-3">Estado</th>
               <th className="px-4 py-3"></th>
@@ -40,6 +64,7 @@ export default async function SiniestrosPage() {
               const clientName =
                 c.clientBusinessName || `${c.clientFirstName ?? ""} ${c.clientLastName ?? ""}`.trim() || c.standaloneClientName;
               const insurerName = c.insurerName ?? c.standaloneInsurerName;
+              const days = daysSince(c.reportedAt);
               return (
                 <tr key={c.id} className="border-b border-border last:border-0">
                   <td className="px-4 py-3">
@@ -60,6 +85,7 @@ export default async function SiniestrosPage() {
                   <td className="px-4 py-3">{insurerName || "—"}</td>
                   <td className="px-4 py-3">{c.occurredAt || "—"}</td>
                   <td className="px-4 py-3">{c.reportedAt || "—"}</td>
+                  <td className="px-4 py-3 text-right tabular-nums">{days ?? "—"}</td>
                   <td className="px-4 py-3 text-right tabular-nums">
                     {c.claimValueCents != null ? formatUSD(c.claimValueCents) : "—"}
                   </td>
@@ -76,8 +102,10 @@ export default async function SiniestrosPage() {
             })}
             {claims.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-8 text-center text-muted">
-                  Sin siniestros — repórtalo desde el detalle de una póliza o con el botón de arriba.
+                <td colSpan={9} className="px-4 py-8 text-center text-muted">
+                  {isSearching
+                    ? "Sin resultados para esa búsqueda."
+                    : "Sin siniestros vigentes — repórtalo desde el detalle de una póliza o con el botón de arriba."}
                 </td>
               </tr>
             )}

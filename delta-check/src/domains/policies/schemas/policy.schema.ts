@@ -16,6 +16,10 @@ function optionalUuid() {
   return z.preprocess((v) => (v === "" ? undefined : v), z.uuid().optional());
 }
 
+function optionalNumber() {
+  return z.preprocess((v) => (v === "" || v == null ? undefined : v), z.coerce.number().int().optional());
+}
+
 /**
  * Nombres de campo = columnas reales de `BASE_EMISIONES`/`BASE_PENDIENTE`
  * (EXCEL-AUDIT.md §4): POLIZA, ANEXO, FACTURA. `quoteOptionId` identifica
@@ -95,6 +99,11 @@ export const markCommissionDiscountedSchema = z.object({
  * podía anotar ahí sin que la póliza estuviera cargada en ningún otro lado.
  * Reportado desde Cartera (con `policyId`), esos datos salen de la póliza;
  * reportado directo desde Siniestros (sin `policyId`), se piden a mano.
+ *
+ * `vehicle*` (placa/marca/modelo/año/color) no es del Excel original — gap
+ * real encontrado el 6-nov: un siniestro sin `policyId` no tenía ningún
+ * dato del vehículo propio. Mismo criterio que el resto: solo se piden a
+ * mano cuando no hay póliza de la que sacarlos.
  */
 export const reportClaimSchema = z
   .object({
@@ -104,6 +113,11 @@ export const reportClaimSchema = z
     clientName: optionalText(), // solo si no hay policyId
     clientDocumentNumber: optionalText(), // C.I./RUC, solo si no hay policyId
     policyNumber: optionalText(), // POLIZA de BASE_SINIESTROS, solo si no hay policyId
+    vehiclePlate: optionalText(), // solo si no hay policyId — con póliza, el vehículo real sale del join
+    vehicleBrand: optionalText(),
+    vehicleModel: optionalText(),
+    vehicleYear: optionalNumber(),
+    vehicleColor: optionalText(),
     claimNumber: optionalText(),
     occurredAt: optionalDate(),
     reportedAt: optionalDate(),
@@ -137,7 +151,7 @@ export const reportClaimSchema = z
 
 export const updateClaimStatusSchema = z.object({
   claimId: z.uuid(),
-  status: z.enum(["REPORTADO", "APROBADO", "REPARADO"]),
+  status: z.enum(["REPORTADO", "APROBADO", "REPARADO", "ENTREGADO"]),
 });
 
 /** Novedad escrita a mano en el historial del siniestro — el "chat" que reemplaza la celda de observaciones del Excel. */

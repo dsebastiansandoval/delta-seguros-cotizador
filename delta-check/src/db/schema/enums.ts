@@ -61,7 +61,7 @@ export const lifecycleStatusEnum = pgEnum("lifecycle_status", ["VIGENTE", "CANCE
 export const commissionStatusEnum = pgEnum("commission_status", ["PENDIENTE", "COMISIONADA"]);
 // Columna COMISION de BASE CANCELADAS (INFO GENERAL!AG34:AG35).
 export const commissionDiscountStatusEnum = pgEnum("commission_discount_status", ["PENDIENTE", "DESCONTADA"]);
-export const claimStatusEnum = pgEnum("claim_status", ["REPORTADO", "APROBADO", "REPARADO"]);
+export const claimStatusEnum = pgEnum("claim_status", ["REPORTADO", "APROBADO", "REPARADO", "ENTREGADO"]);
 
 export const integrationProviderEnum = pgEnum("integration_provider", ["SOFTSEGUROS"]);
 

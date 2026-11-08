@@ -3,11 +3,13 @@ import { getClaimDetail } from "@/actions/claim.actions";
 import { AddClaimNoteForm } from "@/components/policies/AddClaimNoteForm";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
 import { formatUSD } from "@/domains/shared/money";
+import { daysSince } from "@/domains/shared/days-since";
 
 const STATUS_LABEL: Record<string, string> = {
   REPORTADO: "Reportado",
   APROBADO: "Aprobado",
   REPARADO: "Reparado",
+  ENTREGADO: "Entregado",
 };
 
 function formatDateTime(value: Date) {
@@ -46,10 +48,12 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
   const detail = await getClaimDetail(claimId);
   if (!detail) notFound();
 
-  const { claim, policyNumber, insurerName, standaloneInsurerName, clientFirstName, clientLastName, clientBusinessName, events } =
+  const { claim, policyNumber, insurerName, standaloneInsurerName, clientFirstName, clientLastName, clientBusinessName, vehicle, events } =
     detail;
   const clientName = clientBusinessName || `${clientFirstName ?? ""} ${clientLastName ?? ""}`.trim() || claim.clientName;
   const effectiveInsurerName = insurerName ?? standaloneInsurerName;
+  const days = daysSince(claim.reportedAt);
+  const hasVehicle = vehicle.plate || vehicle.brand || vehicle.model || vehicle.color;
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -93,9 +97,23 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
           <p className="mt-1">{claim.reportedAt || "—"}</p>
         </div>
         <div>
+          <p className="text-xs uppercase tracking-wide text-muted">Días desde el reporte</p>
+          <p className="mt-1">{days ?? "—"}</p>
+        </div>
+        <div>
           <p className="text-xs uppercase tracking-wide text-muted">Valor</p>
           <p className="mt-1">{claim.claimValueCents != null ? formatUSD(claim.claimValueCents) : "—"}</p>
         </div>
+        {hasVehicle && (
+          <div className="col-span-full">
+            <p className="text-xs uppercase tracking-wide text-muted">Vehículo</p>
+            <p className="mt-1">
+              {[vehicle.plate, [vehicle.brand, vehicle.model].filter(Boolean).join(" "), vehicle.year, vehicle.color]
+                .filter(Boolean)
+                .join(" · ") || "—"}
+            </p>
+          </div>
+        )}
         {claim.workshop && (
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">Taller</p>
