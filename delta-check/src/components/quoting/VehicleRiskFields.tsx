@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { usePlateLookup } from "@/components/shared/usePlateLookup";
+import { VehicleColorPicker } from "@/components/shared/VehicleColorPicker";
 import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
 
 /**
@@ -134,15 +135,7 @@ export function VehicleRiskFields({
         </select>
       </label>
 
-      <label className="flex flex-col gap-1 text-sm">
-        Color
-        <input
-          ref={colorRef}
-          name={`color${suffix}`}
-          defaultValue={initialValue?.color ?? ""}
-          className="rounded-lg border border-border bg-background px-3 py-2"
-        />
-      </label>
+      <VehicleColorPicker name={`color${suffix}`} initialValue={initialValue?.color} colorRef={colorRef} />
 
       <label className="flex flex-col gap-1 text-sm">
         Valor comercial (USD)

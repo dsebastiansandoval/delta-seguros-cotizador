@@ -55,7 +55,10 @@ export function usePlateLookup({
           if (brandRef.current) brandRef.current.value = result.brand;
           if (modelRef.current) modelRef.current.value = result.model;
           if (yearRef.current) yearRef.current.value = String(result.year);
-          if (colorRef?.current && result.color) colorRef.current.value = result.color;
+          if (colorRef?.current && result.color) {
+            colorRef.current.value = result.color;
+            colorRef.current.dispatchEvent(new Event("input", { bubbles: true }));
+          }
           if (bodyTypeRef?.current) bodyTypeRef.current.value = result.bodyType;
           setMessage({ kind: "ok", text: `Encontrado: ${result.brand} ${result.model} ${result.year}` });
         } else if (result.status === "NOT_FOUND") {

@@ -71,7 +71,10 @@ export function RenewalLookupButton(refs: Refs) {
       if (refs.modelRef.current) refs.modelRef.current.value = vehicle.model;
       if (refs.yearRef.current) refs.yearRef.current.value = String(vehicle.year);
       if (refs.bodyTypeRef.current) refs.bodyTypeRef.current.value = vehicle.bodyType;
-      if (refs.colorRef.current) refs.colorRef.current.value = vehicle.color ?? "";
+      if (refs.colorRef.current) {
+        refs.colorRef.current.value = vehicle.color ?? "";
+        refs.colorRef.current.dispatchEvent(new Event("input", { bubbles: true }));
+      }
       if (refs.commercialValueRef.current) {
         refs.commercialValueRef.current.value = String(centsToDollars(vehicle.commercialValueCents));
       }
