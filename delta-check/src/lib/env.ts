@@ -38,6 +38,12 @@ const envSchema = z.object({
   // autocompletado de vehículo por placa queda deshabilitado (ERROR), no
   // rompe el arranque. Cédula/RUC no la necesitan, van directo al SRI gratis.
   ECUADOR_API_KEY: z.string().optional(),
+
+  // Fallback de cédula/RUC cuando el SRI no encuentra a la persona
+  // (WebServices.ec, $0.05/cédula — $0.04/RUC). Opcional: sin esto, el
+  // fallback simplemente no se intenta y el flujo queda como antes (NOT_FOUND
+  // del SRI pasa directo al usuario, campos a mano).
+  WEBSERVICES_EC_API_KEY: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);
