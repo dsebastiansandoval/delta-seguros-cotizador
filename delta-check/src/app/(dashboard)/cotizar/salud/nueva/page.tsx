@@ -1,10 +1,10 @@
 import { listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions";
-import { getAppSession } from "@/lib/auth";
+import { getAccess } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
   const [session, sources, executives] = await Promise.all([
-    getAppSession(),
+    getAccess(),
     listQuoteSources(),
     listQuoteExecutives("SALUD"),
   ]);
@@ -22,6 +22,7 @@ export default async function NuevaCotizacionSaludPage() {
         sources={sources.map((s) => s.name)}
         executives={executives.map((e) => e.name)}
         currentExecutive={session?.fullName ?? ""}
+        canAssignExecutive={session?.permissions.has("quote:assign_executive") ?? false}
       />
     </main>
   );

@@ -4,14 +4,14 @@ import { z } from "zod";
  * Roles que el ADMIN de una organización puede asignar (ARCHITECTURE.md
  * §8.4). PLATFORM_ADMIN es cross-tenant y nunca se asigna desde acá.
  */
-export const ASSIGNABLE_ROLES = ["ADMIN", "SUPERVISOR", "AGENTE", "LECTOR"] as const;
+export const ASSIGNABLE_ROLES = ["ADMIN", "SUPERVISOR", "AGENTE", "FREELANCE"] as const;
 export type AssignableRole = (typeof ASSIGNABLE_ROLES)[number];
 
 export const ROLE_LABELS: Record<AssignableRole, string> = {
   ADMIN: "Administrador",
   SUPERVISOR: "Supervisor",
   AGENTE: "Agente",
-  LECTOR: "Lector",
+  FREELANCE: "Freelance",
 };
 
 const branches = z.array(z.enum(["AUTOS", "SALUD"])).transform((list) => [...new Set(list)]);

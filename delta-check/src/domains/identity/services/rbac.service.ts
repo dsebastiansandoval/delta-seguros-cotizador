@@ -23,6 +23,7 @@ export type AuthorizedSession = {
   userId: string;
   organizationId: string;
   email: string;
+  fullName: string | null;
   permissions: Set<string>;
   branches: Set<Branch>;
 };
@@ -53,6 +54,21 @@ export function requireBranch(session: AuthorizedSession, branch: Branch) {
   if (!session.branches.has(branch)) throw new ForbiddenError(`branch:${branch}`);
 }
 
+/**
+ * El campo "Ejecutivo" de una cotización (Autos/Salud) es texto libre, pero
+ * solo quien tiene `quote:assign_executive` (ADMIN/SUPERVISOR) puede
+ * ponerle el nombre de otra persona — el resto (Agente, Freelance) queda
+ * fijo a su propio nombre, sin importar qué haya mandado el formulario.
+ * Nunca se confía en que el cliente deshabilitó el campo.
+ */
+export function resolveExecutive(
+  session: Pick<AuthorizedSession, "permissions" | "fullName">,
+  submitted: string | undefined,
+): string | undefined {
+  if (session.permissions.has("quote:assign_executive")) return submitted;
+  return session.fullName ?? undefined;
+}
+
 /** Para armar la navegación: null si no hay sesión válida, sin lanzar. */
 export async function getAccess(): Promise<AuthorizedSession | null> {
   return loadGrants();
@@ -81,7 +97,7 @@ async function loadGrants(): Promise<AuthorizedSession | null> {
       .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
       .where(eq(userRoles.userId, user.id));
 
-    return { userId: user.id, codes: rows.map((r) => r.code), branches: user.branches };
+    return { userId: user.id, fullName: user.fullName, codes: rows.map((r) => r.code), branches: user.branches };
   });
 
   if (!grants) return null;
@@ -90,6 +106,7 @@ async function loadGrants(): Promise<AuthorizedSession | null> {
     userId: grants.userId,
     organizationId,
     email,
+    fullName: grants.fullName,
     permissions: new Set(grants.codes),
     branches: new Set(grants.branches),
   };

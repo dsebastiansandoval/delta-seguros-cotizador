@@ -7,7 +7,7 @@ import {
   listVehicleModelsByBrand,
 } from "@/actions/catalog.actions";
 import { getAutoQuoteForEdit } from "@/actions/quote.actions";
-import { getAppSession } from "@/lib/auth";
+import { getAccess } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 /**
@@ -20,7 +20,7 @@ export default async function EditarCotizacionAutosPage({ params }: { params: Pr
   const { quoteId } = await params;
 
   const [session, edit, brands, modelsByBrand, sources, executives, insurers] = await Promise.all([
-    getAppSession(),
+    getAccess(),
     getAutoQuoteForEdit(quoteId),
     listVehicleBrands(),
     listVehicleModelsByBrand(),
@@ -54,6 +54,7 @@ export default async function EditarCotizacionAutosPage({ params }: { params: Pr
         sources={sources.map((s) => s.name)}
         executives={executives.map((e) => e.name)}
         currentExecutive={session?.fullName ?? ""}
+        canAssignExecutive={session?.permissions.has("quote:assign_executive") ?? false}
         insurers={insurers}
         editQuote={edit}
       />

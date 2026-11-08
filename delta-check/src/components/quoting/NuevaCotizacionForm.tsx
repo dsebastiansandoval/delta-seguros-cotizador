@@ -6,6 +6,7 @@ import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
 import { usePlateLookup } from "@/components/shared/usePlateLookup";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
+import { VehicleColorPicker } from "@/components/shared/VehicleColorPicker";
 import { VehicleRiskFields } from "@/components/quoting/VehicleRiskFields";
 import { ECUADOR_PROVINCES } from "@/domains/lookup/cedula.validator";
 import { calculateAge } from "@/domains/shared/age";
@@ -63,6 +64,7 @@ export function NuevaCotizacionForm({
   sources,
   executives,
   currentExecutive,
+  canAssignExecutive,
   insurers,
   editQuote,
 }: {
@@ -75,6 +77,8 @@ export function NuevaCotizacionForm({
   executives: string[];
   /** Nombre del usuario logueado — precarga el campo Ejecutivo en cliente nuevo (editable). */
   currentExecutive: string;
+  /** Solo ADMIN/SUPERVISOR (permiso `quote:assign_executive`) pueden poner otro nombre — el resto queda fijo al propio. */
+  canAssignExecutive: boolean;
   /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
   insurers: Array<{ id: string; name: string }>;
   /**
@@ -140,17 +144,20 @@ export function NuevaCotizacionForm({
           <input
             ref={executiveRef}
             name="executive"
-            list="executives-datalist"
+            list={canAssignExecutive ? "executives-datalist" : undefined}
             defaultValue={editQuote?.client.executive ?? currentExecutive}
-            placeholder="Escribe o elige de la lista"
+            readOnly={!canAssignExecutive}
+            placeholder={canAssignExecutive ? "Escribe o elige de la lista" : undefined}
             autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
+            className={`rounded-lg border border-border px-3 py-2 ${canAssignExecutive ? "bg-surface" : "bg-background text-muted"}`}
           />
-          <datalist id="executives-datalist">
-            {executives.map((ex) => (
-              <option key={ex} value={ex} />
-            ))}
-          </datalist>
+          {canAssignExecutive && (
+            <datalist id="executives-datalist">
+              {executives.map((ex) => (
+                <option key={ex} value={ex} />
+              ))}
+            </datalist>
+          )}
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
@@ -585,15 +592,7 @@ export function NuevaCotizacionForm({
             </select>
           </label>
 
-          <label className="flex flex-col gap-1 text-sm">
-            Color
-            <input
-              ref={colorRef}
-              name="color1"
-              defaultValue={editQuote?.risks[0]?.color ?? ""}
-              className="rounded-lg border border-border bg-surface px-3 py-2"
-            />
-          </label>
+          <VehicleColorPicker name="color1" initialValue={editQuote?.risks[0]?.color} colorRef={colorRef} />
 
           <label className="flex flex-col gap-1 text-sm">
             Valor comercial (USD)

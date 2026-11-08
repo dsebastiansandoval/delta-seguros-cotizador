@@ -83,12 +83,15 @@ function GenerateLinkButton({ userId }: { userId: string }) {
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
-  function handleClick() {
+  function handleClick(openInNewTab = false) {
     startTransition(async () => {
       const result = await generateInviteLink(userId);
       if (result.ok) {
         setLink(result.value);
         setError(null);
+        // "Cambiar clave": un clic, directo a la página de crear/recuperar clave —
+        // sin el paso intermedio de copiar y pegar el link a mano.
+        if (openInNewTab) window.open(result.value, "_blank", "noopener,noreferrer");
       } else {
         setLink(null);
         setError(Object.values(result.errors).flat()[0] ?? "No se pudo generar el link");
@@ -126,11 +129,19 @@ function GenerateLinkButton({ userId }: { userId: string }) {
     <div className="flex flex-wrap items-center gap-2">
       <button
         type="button"
-        onClick={handleClick}
+        onClick={() => handleClick(false)}
         disabled={pending}
         className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
       >
         {pending ? "…" : "Generar link"}
+      </button>
+      <button
+        type="button"
+        onClick={() => handleClick(true)}
+        disabled={pending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {pending ? "…" : "Cambiar clave"}
       </button>
       {link && (
         <>

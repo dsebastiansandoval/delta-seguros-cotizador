@@ -63,7 +63,7 @@ async function seedRoles() {
     { code: "ADMIN" as const, name: "Administrador" },
     { code: "SUPERVISOR" as const, name: "Supervisor" },
     { code: "AGENTE" as const, name: "Agente" },
-    { code: "LECTOR" as const, name: "Lector" },
+    { code: "FREELANCE" as const, name: "Freelance" },
   ];
   await db.insert(roles).values(roleRows).onConflictDoNothing({ target: roles.code });
 
@@ -71,6 +71,7 @@ async function seedRoles() {
     "quote:create",
     "quote:read",
     "quote:read_all", // supervisor: ve las de todos los agentes
+    "quote:assign_executive", // escoger el "Ejecutivo" de una cotización en vez de quedar fijo al propio nombre
     "rate:edit",
     "commission:read_own",
     "commission:read_all",
@@ -95,6 +96,7 @@ async function seedRoles() {
       "quote:create",
       "quote:read",
       "quote:read_all",
+      "quote:assign_executive",
       "commission:read_own",
       "commission:read_all",
       "commission:manage",
@@ -111,7 +113,9 @@ async function seedRoles() {
       "claim:manage",
       "client:read_pii",
     ],
-    LECTOR: ["quote:read"],
+    // Cuenta externa: solo cotiza lo suyo, con el "Ejecutivo" fijo a su propio
+    // nombre (nunca quote:assign_executive) — no ve comisiones ni siniestros.
+    FREELANCE: ["quote:create", "quote:read", "client:read_pii"],
   };
 
   const allRoles = await db.select().from(roles);

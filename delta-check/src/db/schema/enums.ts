@@ -17,7 +17,7 @@ export const roleCodeEnum = pgEnum("role_code", [
   "ADMIN",
   "SUPERVISOR",
   "AGENTE",
-  "LECTOR",
+  "FREELANCE",
 ]);
 
 export const authProviderEnum = pgEnum("auth_provider", ["microsoft", "google", "email", "credentials"]);

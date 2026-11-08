@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
-import { requireBranch, requirePermission } from "@/domains/identity/services/rbac.service";
+import { requireBranch, requirePermission, resolveExecutive } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService } from "@/domains/quoting/services/quote.service";
@@ -52,7 +52,7 @@ async function generateComparison(
  */
 async function createQuoteFromForm(
   formData: FormData,
-  session: { organizationId: string; userId: string },
+  session: { organizationId: string; userId: string; permissions: Set<string>; fullName: string | null },
   runComparison: boolean,
 ): Promise<ActionResult<{ quoteId: string }>> {
   const parsed = newAutoQuoteSchema.safeParse(Object.fromEntries(formData));
@@ -60,6 +60,7 @@ async function createQuoteFromForm(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
   const input = parsed.data;
+  input.executive = resolveExecutive(session, input.executive);
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
     const { client, vehicles: createdVehicles } = await clientService.createClientWithVehicles(
@@ -279,6 +280,7 @@ export async function updateAutoQuote(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
   const input = parsed.data;
+  input.executive = resolveExecutive(session, input.executive);
 
   const result = await withOrganization(session.organizationId, async (tx) => {
     const quote = await quoteService.findById(tx, quoteId);

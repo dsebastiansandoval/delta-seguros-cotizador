@@ -48,11 +48,14 @@ export function NuevaCotizacionSaludForm({
   sources,
   executives,
   currentExecutive,
+  canAssignExecutive,
 }: {
   sources: string[];
   executives: string[];
   /** Nombre del usuario logueado — precarga el campo Ejecutivo (editable). */
   currentExecutive: string;
+  /** Solo ADMIN/SUPERVISOR (permiso `quote:assign_executive`) pueden poner otro nombre — el resto queda fijo al propio. */
+  canAssignExecutive: boolean;
 }) {
   const [state, formAction, pending] = useActionState(createHealthQuote, initialState);
   const documentTypeRef = useRef<HTMLSelectElement>(null);
@@ -74,17 +77,20 @@ export function NuevaCotizacionSaludForm({
           Ejecutivo
           <input
             name="executive"
-            list="executives-datalist"
+            list={canAssignExecutive ? "executives-datalist" : undefined}
             defaultValue={currentExecutive}
-            placeholder="Escribe o elige de la lista"
+            readOnly={!canAssignExecutive}
+            placeholder={canAssignExecutive ? "Escribe o elige de la lista" : undefined}
             autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
+            className={`rounded-lg border border-border px-3 py-2 ${canAssignExecutive ? "bg-surface" : "bg-background text-muted"}`}
           />
-          <datalist id="executives-datalist">
-            {executives.map((ex) => (
-              <option key={ex} value={ex} />
-            ))}
-          </datalist>
+          {canAssignExecutive && (
+            <datalist id="executives-datalist">
+              {executives.map((ex) => (
+                <option key={ex} value={ex} />
+              ))}
+            </datalist>
+          )}
         </label>
       </fieldset>
 

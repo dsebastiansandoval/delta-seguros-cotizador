@@ -5,12 +5,12 @@ import {
   listVehicleBrands,
   listVehicleModelsByBrand,
 } from "@/actions/catalog.actions";
-import { getAppSession } from "@/lib/auth";
+import { getAccess } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 export default async function NuevaCotizacionAutosPage() {
   const [session, brands, modelsByBrand, sources, executives, insurers] = await Promise.all([
-    getAppSession(),
+    getAccess(),
     listVehicleBrands(),
     listVehicleModelsByBrand(),
     listQuoteSources(),
@@ -29,6 +29,7 @@ export default async function NuevaCotizacionAutosPage() {
         sources={sources.map((s) => s.name)}
         executives={executives.map((e) => e.name)}
         currentExecutive={session?.fullName ?? ""}
+        canAssignExecutive={session?.permissions.has("quote:assign_executive") ?? false}
         insurers={insurers}
       />
     </main>
