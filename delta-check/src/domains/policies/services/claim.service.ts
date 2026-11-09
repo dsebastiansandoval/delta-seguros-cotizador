@@ -89,6 +89,27 @@ export const claimService = {
     return event;
   },
 
+  /** Etiqueta corta para el asunto del correo de "Agregar y notificar" — N° de siniestro, o si no hay, el cliente. */
+  async getLabel(tx: Db, claimId: string): Promise<string | null> {
+    const [row] = await tx
+      .select({
+        claimNumber: claims.claimNumber,
+        policyNumber: sql<string | null>`coalesce(${policies.policyNumber}, ${claims.policyNumber})`,
+        clientFirstName: clients.firstName,
+        clientLastName: clients.lastName,
+        clientBusinessName: clients.businessName,
+        standaloneClientName: claims.clientName,
+      })
+      .from(claims)
+      .leftJoin(policies, eq(policies.id, claims.policyId))
+      .leftJoin(clients, eq(clients.id, policies.clientId))
+      .where(eq(claims.id, claimId));
+    if (!row) return null;
+
+    const clientName = row.clientBusinessName || `${row.clientFirstName ?? ""} ${row.clientLastName ?? ""}`.trim() || row.standaloneClientName;
+    return row.claimNumber || clientName || row.policyNumber || "sin identificar";
+  },
+
   /**
    * Solo los ramos del usuario (users.branches), mismo criterio que Cartera
    * y Back-office. `claims.branch` es siempre propio (nunca viene solo del

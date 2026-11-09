@@ -158,4 +158,7 @@ export const updateClaimStatusSchema = z.object({
 export const addClaimNoteSchema = z.object({
   claimId: z.uuid(),
   note: z.string().trim().min(1, "Escribe la novedad").max(2000),
+  // "Agregar y notificar" (reunión 6-nov) — si viene, además de guardar la
+  // novedad en el historial se manda una copia por correo a esta dirección.
+  notifyEmail: z.preprocess((v) => (v === "" ? undefined : v), z.email("Correo inválido").optional()),
 });

@@ -50,3 +50,46 @@ export async function sendPasswordSetupEmail({
   }
   return { sent: Boolean(data) };
 }
+
+/**
+ * "Agregar y notificar" en el detalle de un siniestro (reunión 6-nov,
+ * Workstream E.6) — la novedad ya quedó en el historial (`addClaimNote`);
+ * esto manda además una copia por correo a quien el usuario escriba.
+ * Mismo criterio no-op que arriba: sin `RESEND_API_KEY` queda en el log.
+ */
+export async function sendClaimNoteNotification({
+  to,
+  claimLabel,
+  authorName,
+  note,
+  claimUrl,
+}: {
+  to: string;
+  claimLabel: string;
+  authorName: string;
+  note: string;
+  claimUrl: string;
+}): Promise<{ sent: boolean }> {
+  const subject = `Novedad en siniestro ${claimLabel} — Cotizador Delta Seguros`;
+
+  if (!resend) {
+    console.warn(`[email] RESEND_API_KEY no configurado — no se envió notificación a ${to}. Nota: ${note}`);
+    return { sent: false };
+  }
+
+  const { data, error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to,
+    subject,
+    html: `
+      <p>${authorName} agregó una novedad al siniestro <strong>${claimLabel}</strong>:</p>
+      <blockquote style="margin:0;padding-left:12px;border-left:3px solid #ccc;">${note}</blockquote>
+      <p><a href="${claimUrl}">${claimUrl}</a></p>
+    `,
+  });
+  if (error) {
+    console.error(`[email] Resend rechazó la notificación a ${to}: ${error.name} — ${error.message}`);
+    return { sent: false };
+  }
+  return { sent: Boolean(data) };
+}

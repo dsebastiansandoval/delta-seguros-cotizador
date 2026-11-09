@@ -7,6 +7,8 @@ import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { claimService } from "@/domains/policies/services/claim.service";
 import { addClaimNoteSchema, reportClaimSchema, updateClaimStatusSchema } from "@/domains/policies/schemas/policy.schema";
 import { audit } from "@/domains/shared/audit";
+import { sendClaimNoteNotification } from "@/lib/email";
+import { env } from "@/lib/env";
 import { rateLimit } from "@/lib/rate-limit";
 import type { ActionResult } from "./quote.actions";
 
@@ -72,7 +74,7 @@ export async function addClaimNote(
   const parsed = addClaimNoteSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
 
-  await withOrganization(session.organizationId, async (tx) => {
+  const claimLabel = await withOrganization(session.organizationId, async (tx) => {
     const event = await claimService.addNote(tx, session.organizationId, parsed.data.claimId, session.userId, parsed.data.note);
     await audit(tx, {
       organizationId: session.organizationId,
@@ -81,7 +83,20 @@ export async function addClaimNote(
       entityType: "claim_events",
       entityId: event.id,
     });
+    return parsed.data.notifyEmail ? claimService.getLabel(tx, parsed.data.claimId) : null;
   });
+
+  // Correo afuera de la transacción, mismo criterio que sendPasswordSetupEmail
+  // en user.actions.ts — la novedad ya quedó guardada, un correo caído no la deshace.
+  if (parsed.data.notifyEmail && claimLabel) {
+    await sendClaimNoteNotification({
+      to: parsed.data.notifyEmail,
+      claimLabel,
+      authorName: session.fullName ?? "Alguien del equipo",
+      note: parsed.data.note,
+      claimUrl: `${env.APP_URL}/siniestros/${parsed.data.claimId}`,
+    });
+  }
 
   revalidatePath(`/siniestros/${parsed.data.claimId}`);
   return { ok: true, value: undefined };
