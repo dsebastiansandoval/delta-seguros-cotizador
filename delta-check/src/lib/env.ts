@@ -44,6 +44,15 @@ const envSchema = z.object({
   // fallback simplemente no se intenta y el flujo queda como antes (NOT_FOUND
   // del SRI pasa directo al usuario, campos a mano).
   WEBSERVICES_EC_API_KEY: z.string().optional(),
+
+  // Adjuntos de Siniestros (AWS S3, Workstream F.1/E.5 de la reunión 6-nov).
+  // Opcionales en conjunto: sin las 4, la sección de adjuntos se oculta/avisa
+  // "no configurado" en vez de romper la página — mismo criterio que el
+  // resto de integraciones de pago de este proyecto.
+  AWS_ACCESS_KEY_ID: z.string().optional(),
+  AWS_SECRET_ACCESS_KEY: z.string().optional(),
+  AWS_REGION: z.string().optional(),
+  AWS_S3_BUCKET_ATTACHMENTS: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

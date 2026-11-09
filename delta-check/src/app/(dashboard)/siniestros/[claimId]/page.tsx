@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getClaimDetail } from "@/actions/claim.actions";
+import { getClaimDetail, listClaimAttachments } from "@/actions/claim.actions";
 import { AddClaimNoteForm } from "@/components/policies/AddClaimNoteForm";
+import { ClaimAttachments } from "@/components/policies/ClaimAttachments";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
 import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
@@ -47,6 +48,7 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
   const { claimId } = await params;
   const detail = await getClaimDetail(claimId);
   if (!detail) notFound();
+  const attachments = await listClaimAttachments(claimId);
 
   const { claim, policyNumber, insurerName, standaloneInsurerName, clientFirstName, clientLastName, clientBusinessName, vehicle, events } =
     detail;
@@ -158,6 +160,12 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
         </ul>
         <AddClaimNoteForm claimId={claim.id} />
       </section>
+
+      {attachments !== null && (
+        <section className="mt-6">
+          <ClaimAttachments claimId={claim.id} initialAttachments={attachments} />
+        </section>
+      )}
     </main>
   );
 }

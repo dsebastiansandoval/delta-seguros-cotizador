@@ -184,3 +184,24 @@ export const claimEvents = pgTable("claim_events", {
   userId: uuid("user_id").references(() => users.id),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+/**
+ * 🏢 Adjuntos de un siniestro (fotos, facturas de taller, informes) —
+ * Workstream E.5 de la reunión 6-nov. Solo guarda metadata; el archivo en
+ * sí vive en AWS S3 (`src/lib/s3.ts`), nunca en la base — `s3Key` es la
+ * referencia. Elegido S3 sobre otra opción porque algunos adjuntos de Salud
+ * son datos médicos (control de acceso/auditoría más maduro, ver el plan).
+ */
+export const claimAttachments = pgTable("claim_attachments", {
+  id: id(),
+  organizationId: organizationId(),
+  claimId: uuid("claim_id")
+    .notNull()
+    .references(() => claims.id),
+  fileName: text("file_name").notNull(),
+  contentType: text("content_type").notNull(),
+  sizeBytes: integer("size_bytes").notNull(),
+  s3Key: text("s3_key").notNull(),
+  uploadedByUserId: uuid("uploaded_by_user_id").references(() => users.id),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

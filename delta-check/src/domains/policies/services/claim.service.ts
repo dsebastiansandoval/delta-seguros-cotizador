@@ -89,6 +89,12 @@ export const claimService = {
     return event;
   },
 
+  /** Ramo del siniestro, para el mismo chequeo de `session.branches` que usan `list`/`getDetail`. */
+  async getBranch(tx: Db, claimId: string): Promise<"AUTOS" | "SALUD" | null> {
+    const [row] = await tx.select({ branch: claims.branch }).from(claims).where(eq(claims.id, claimId));
+    return row?.branch ?? null;
+  },
+
   /** Etiqueta corta para el asunto del correo de "Agregar y notificar" — N° de siniestro, o si no hay, el cliente. */
   async getLabel(tx: Db, claimId: string): Promise<string | null> {
     const [row] = await tx
