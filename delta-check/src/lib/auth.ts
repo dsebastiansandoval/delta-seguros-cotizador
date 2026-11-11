@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import NextAuth from "next-auth";
+import NextAuth, { CredentialsSignin } from "next-auth";
 import type { Provider } from "next-auth/providers";
 import Credentials from "next-auth/providers/credentials";
 import MicrosoftEntraID from "next-auth/providers/microsoft-entra-id";
@@ -12,6 +12,21 @@ import { rateLimit, RateLimitExceededError } from "./rate-limit";
 import { env } from "./env";
 
 export { MICROSOFT_ALLOWED_DOMAIN } from "@/domains/identity/microsoft-domain";
+
+/**
+ * Dos subclases de CredentialsSignin, una por motivo de rechazo, para que
+ * /login (page.tsx) pueda mostrar "ese correo no existe" vs "la contraseña
+ * es incorrecta" en vez de un solo mensaje genérico — pedido explícito del
+ * usuario, con el trade-off de enumeración de cuentas ya aceptado por él
+ * (normalmente se evita a propósito, ver el comentario de
+ * requestPasswordReset en password.actions.ts).
+ */
+export class InvalidEmailSignin extends CredentialsSignin {
+  code = "correo-no-existe";
+}
+export class InvalidPasswordSignin extends CredentialsSignin {
+  code = "clave-incorrecta";
+}
 
 /**
  * Providers según ARCHITECTURE.md §1/§11.3: Microsoft Entra ID (Delta ya
@@ -75,10 +90,10 @@ providers.push(
       }
 
       const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-      if (!user || !user.isActive || !user.passwordHash) return null;
+      if (!user || !user.isActive || !user.passwordHash) throw new InvalidEmailSignin();
 
       const valid = await verifyPassword(password, user.passwordHash);
-      if (!valid) return null;
+      if (!valid) throw new InvalidPasswordSignin();
 
       return { id: user.id, email: user.email, name: user.fullName };
     },

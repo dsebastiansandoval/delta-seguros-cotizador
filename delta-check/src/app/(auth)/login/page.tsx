@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { AuthError } from "next-auth";
+import { AuthError, CredentialsSignin } from "next-auth";
 import { MICROSOFT_ALLOWED_DOMAIN, signIn } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
@@ -15,7 +15,13 @@ const ERROR_MESSAGES: Record<string, string> = {
   dominio: `Esa cuenta no es de Delta Seguros — solo entra una cuenta ${MICROSOFT_ALLOWED_DOMAIN}.`,
   "sin-acceso":
     "Esa cuenta es de Delta Seguros pero todavía no tiene acceso asignado en Cotizador Delta Seguros — pídele a un administrador que te agregue.",
-  CredentialsSignin: "Correo o contraseña incorrectos.",
+  // `credentials` es el `code` genérico de CredentialsSignin (límite de
+  // intentos, o campos vacíos) — los otros dos son los `code` de
+  // InvalidEmailSignin/InvalidPasswordSignin (auth.ts), que si distinguen
+  // cuál de los dos está mal, a pedido explícito del usuario.
+  credentials: "Correo o contraseña incorrectos.",
+  "correo-no-existe": "Ese correo no tiene una cuenta en Cotizador Delta Seguros.",
+  "clave-incorrecta": "La contraseña es incorrecta.",
 };
 
 export default async function LoginPage({
@@ -85,13 +91,16 @@ export default async function LoginPage({
                   redirectTo: "/",
                 });
               } catch (error) {
-                // `authorize` devuelve null (usuario inexistente o clave
-                // incorrecta) -> next-auth lanza AuthError en vez de
-                // redirigir solo — sin este catch, esa excepción llegaba sin
-                // manejar y Next.js mostraba la pantalla genérica de error
-                // de servidor en vez del mensaje de /login?error=...
+                // `authorize` lanza InvalidEmailSignin/InvalidPasswordSignin
+                // (auth.ts) en vez de devolver null -> next-auth lanza
+                // AuthError en vez de redirigir solo — sin este catch, esa
+                // excepción llegaba sin manejar y Next.js mostraba la
+                // pantalla genérica de error de servidor en vez del mensaje
+                // de /login?error=... Se usa `code` (no `type`) para
+                // distinguir correo-no-existe de clave-incorrecta.
                 if (error instanceof AuthError) {
-                  redirect(`/login?error=${error.type}`);
+                  const reason = error instanceof CredentialsSignin ? error.code : error.type;
+                  redirect(`/login?error=${reason}`);
                 }
                 throw error;
               }
@@ -130,7 +139,8 @@ export default async function LoginPage({
                   await signIn("dev-login", { email: formData.get("email"), redirectTo: "/" });
                 } catch (error) {
                   if (error instanceof AuthError) {
-                    redirect(`/login?error=${error.type}`);
+                    const reason = error instanceof CredentialsSignin ? error.code : error.type;
+                    redirect(`/login?error=${reason}`);
                   }
                   throw error;
                 }
