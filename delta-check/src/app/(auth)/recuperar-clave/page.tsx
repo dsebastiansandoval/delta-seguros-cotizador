@@ -8,8 +8,8 @@ export default function RecuperarClavePage() {
       <ThemeToggle />
       <main className="flex min-h-full flex-1 items-center justify-center p-8">
         <div className="w-full max-w-sm rounded-xl border border-border bg-surface p-8 shadow-sm">
-          <h1 className="text-lg font-bold tracking-tight">Recuperar clave</h1>
-          <p className="mt-1 text-sm text-muted">Te mandamos un link para crear una clave nueva.</p>
+          <h1 className="text-lg font-bold tracking-tight">Recuperar contraseña</h1>
+          <p className="mt-1 text-sm text-muted">Te mandamos un link para crear una contraseña nueva.</p>
           <div className="mt-4">
             <RequestPasswordResetForm />
           </div>

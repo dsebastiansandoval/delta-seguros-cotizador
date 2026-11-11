@@ -69,12 +69,7 @@ export default async function LoginPage({
               </button>
               <p className="mt-2 text-center text-xs text-muted">Solo cuentas {MICROSOFT_ALLOWED_DOMAIN}</p>
             </form>
-          ) : (
-            <p className="mt-2 text-sm text-muted">
-              Login con Microsoft — pendiente de credenciales reales de Delta (ARCHITECTURE.md §11.3). Cuando estén,
-              solo cuentas {MICROSOFT_ALLOWED_DOMAIN} van a poder entrar.
-            </p>
-          )}
+          ) : null}
 
           <form
             action={async (formData) => {
