@@ -39,7 +39,7 @@ export default async function LoginPage({
 
         <div className="login-card relative w-full max-w-sm">
           <div className="mb-6 flex justify-center">
-            <a href="https://www.deltaseguros.com.ec" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.deltaseguros.com.ec">
               {/* eslint-disable-next-line @next/next/no-img-element -- logo chico y fijo, mismo patrón que (dashboard)/layout.tsx */}
               <img src="/delta-logo.png" alt="Delta Seguros" className="h-11 w-auto rounded-lg bg-white p-2 shadow-sm" />
             </a>
