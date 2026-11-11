@@ -88,5 +88,17 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  /**
+   * BUG REAL (2026-11-11), reportado por el usuario como "el logo está
+   * roto" en /login: el matcher solo excluía `_next/static`/`_next/image`/
+   * `favicon.ico` — cualquier otro archivo de `public/` (ej. delta-logo.png)
+   * SÍ pasaba por el guard de sesión de arriba. Para alguien sin sesión
+   * (cualquiera en /login), la petición de la imagen se redirigía a
+   * `/login?from=...` — el navegador recibe HTML donde esperaba una
+   * imagen, ícono roto. Nunca se había notado porque el logo del dashboard
+   * solo se pinta para usuarios ya autenticados. Patrón estándar de
+   * Next.js: excluir también cualquier archivo con extensión de asset
+   * estático, sin importar en qué carpeta de `public/` viva.
+   */
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:png|jpg|jpeg|gif|webp|svg|ico|woff2?)$).*)"],
 };
