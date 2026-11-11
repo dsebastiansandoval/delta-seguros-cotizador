@@ -13,7 +13,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   dominio: `Esa cuenta no es de Delta Seguros — solo entra una cuenta ${MICROSOFT_ALLOWED_DOMAIN}.`,
   "sin-acceso":
     "Esa cuenta es de Delta Seguros pero todavía no tiene acceso asignado en Cotizador Delta Seguros — pídele a un administrador que te agregue.",
-  CredentialsSignin: "Correo o clave incorrectos.",
+  CredentialsSignin: "Correo o contraseña incorrectos.",
 };
 
 export default async function LoginPage({
@@ -99,7 +99,7 @@ export default async function LoginPage({
                 className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
               />
             </div>
-            <PasswordField id="login-password" name="password" label="Clave" autoComplete="current-password" />
+            <PasswordField id="login-password" name="password" label="Contraseña" autoComplete="current-password" />
             <button
               type="submit"
               className="rounded-lg bg-delta-navy px-3 py-2.5 text-sm font-semibold text-white"
@@ -107,7 +107,7 @@ export default async function LoginPage({
               Entrar
             </button>
             <Link href="/recuperar-clave" className="text-center text-xs text-link underline">
-              Olvidé mi clave
+              Olvidé mi contraseña
             </Link>
           </form>
 
