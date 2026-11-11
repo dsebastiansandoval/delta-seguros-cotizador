@@ -3,9 +3,11 @@ import {
   boolean,
   date,
   integer,
+  jsonb,
   numeric,
   pgTable,
   text,
+  timestamp,
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
@@ -225,3 +227,39 @@ export const deductibleRules = pgTable("deductible_rules", {
   requiresTracker: boolean("requires_tracker").notNull().default(false),
   textLabel: text("text_label"),
 });
+
+/**
+ * 🏢 Override editable desde /admin/deducibles del deducible parcial/pérdida
+ * total de Autos por aseguradora — reunión 6-nov, Workstream D: hoy ese
+ * texto (y su menú de opciones seleccionables) vive hardcodeado en
+ * `insurer-offer-profiles.ts`, cambiarlo requiere un deploy. Esta tabla deja
+ * EDITAR solo eso; las otras 17 coberturas del perfil (RC, GM, asistencia
+ * mecánica…) siguen en código — cambian casi nunca. Sin fila para una
+ * aseguradora = se sigue usando el valor hardcodeado (ver
+ * `offer.service.ts`, `loadDeductibleOverrides`), así que esta tabla nace
+ * vacía sin cambiar ningún comportamiento visible hasta que alguien edite
+ * una aseguradora desde el admin.
+ */
+export const insurerDeductibleProfiles = pgTable(
+  "insurer_deductible_profiles",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    insurerId: uuid("insurer_id")
+      .notNull()
+      .references(() => insurers.id),
+    partialDefault: text("partial_default").notNull(),
+    totalLossDefault: text("total_loss_default").notNull(),
+    // string[] — frases completas seleccionables para el deducible parcial.
+    partialOptions: jsonb("partial_options").notNull().default([]),
+    // { vs: string[]; va: string[]; min: string[] } | null — solo 2 aseguradoras
+    // arman el deducible parcial combinando 3 fragmentos en vez de un menú de
+    // frases completas; si no es null, manda sobre partialOptions.
+    partialParts: jsonb("partial_parts"),
+    // string[] — frases completas seleccionables para la pérdida total.
+    totalLossOptions: jsonb("total_loss_options").notNull().default([]),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedBy: uuid("updated_by"),
+  },
+  (t) => [uniqueIndex("insurer_deductible_profiles_org_insurer_idx").on(t.organizationId, t.insurerId)],
+);

@@ -56,7 +56,10 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
         ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
         : { href: "#", label: "Usuarios", disabled: true },
       ...(access?.permissions.has("rate:edit")
-        ? [{ href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" }]
+        ? [
+            { href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" },
+            { href: "/admin/deducibles", label: "Deducibles Autos", activePrefix: "/admin/deducibles" },
+          ]
         : []),
       access?.permissions.has("user:manage") || access?.permissions.has("rate:edit")
         ? { href: "/admin/configuracion", label: "Configuración", activePrefix: "/admin/configuracion" }

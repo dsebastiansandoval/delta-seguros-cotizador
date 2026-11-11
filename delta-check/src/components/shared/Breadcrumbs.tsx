@@ -23,6 +23,7 @@ const SEGMENT_LABELS: Record<string, string> = {
   admin: "Administración",
   usuarios: "Usuarios",
   "tarifas-salud": "Tarifas Salud",
+  deducibles: "Deducibles Autos",
   configuracion: "Configuración",
   cuenta: "Cuenta",
   "cambiar-clave": "Cambiar clave",
@@ -63,6 +64,7 @@ const KNOWN_ROUTES: (string | typeof PARAM)[][] = [
   ["back-office"],
   ["admin", "usuarios"],
   ["admin", "tarifas-salud"],
+  ["admin", "deducibles"],
   ["admin", "configuracion"],
   ["cuenta", "cambiar-clave"],
 ];

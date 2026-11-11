@@ -16,6 +16,7 @@ import {
   type OfferCoverageKey,
 } from "./insurer-offer-profiles";
 import { buildOfferColumn, type OfferColumn, type RiskPremium } from "./offer-sheet";
+import { applyDeductibleOverride, loadDeductibleOverrides, type DeductibleOverride } from "./deductible-override.repo";
 
 const ENGINE_CODES = new Set(["LATINA", "CONDOR"]);
 
@@ -24,8 +25,9 @@ const EMPTY_ROWS = Object.fromEntries(OFFER_COVERAGE_ROWS.map((r) => [r.key, {}]
 /** Opciones de los selectores de DATOS OFERTA para una aseguradora. */
 export type InsurerOptions = InsurerOfferProfile["options"];
 
-function annualProfile(code: string): InsurerOfferProfile | null {
-  return INSURER_OFFER_PROFILES[code] ?? null;
+function annualProfile(code: string, overridesByInsurerId: Map<string, DeductibleOverride>, insurerId: string): InsurerOfferProfile | null {
+  const base = INSURER_OFFER_PROFILES[code] ?? null;
+  return applyDeductibleOverride(base, overridesByInsurerId.get(insurerId));
 }
 
 const kmOptions: InsurerOptions = KM_OFFER_PROFILE.options;
@@ -145,6 +147,7 @@ export const offerService = {
       .from(quoteInsurerSettings)
       .where(eq(quoteInsurerSettings.quoteId, quoteId));
     const have = new Set(existing.map((e) => e.insurerId));
+    const overrides = isKm ? new Map<string, DeductibleOverride>() : await loadDeductibleOverrides(tx);
 
     const rows = candidates
       .filter((insurer) => !have.has(insurer.id))
@@ -163,7 +166,7 @@ export const offerService = {
             coverageSnapshot: KM_OFFER_ROWS,
           };
         }
-        const profile = annualProfile(insurer.code);
+        const profile = annualProfile(insurer.code, overrides, insurer.id);
         return {
           organizationId,
           quoteId,
@@ -231,6 +234,8 @@ export const offerService = {
       .where(eq(quoteRisks.quoteId, quoteId))
       .orderBy(asc(quoteRisks.riskNumber), asc(quoteOptions.kmBracket));
 
+    const overrides = isKm ? new Map<string, DeductibleOverride>() : await loadDeductibleOverrides(tx);
+
     // Mismo orden de columnas que DATOS OFERTA (C..O).
     const order = Object.keys(INSURER_OFFER_PROFILES);
     const columns = settingsRows
@@ -248,7 +253,7 @@ export const offerService = {
           partialDeductible: settings.partialDeductible,
           totalLossDeductible: settings.totalLossDeductible,
         },
-        options: isKm ? kmOptions : (annualProfile(code)?.options ?? {}),
+        options: isKm ? kmOptions : (annualProfile(code, overrides, settings.insurerId)?.options ?? {}),
         premiums: premiumRows.filter((p) => p.insurerId === settings.insurerId),
       }))
       .sort((a, b) => order.indexOf(a.code) - order.indexOf(b.code));
