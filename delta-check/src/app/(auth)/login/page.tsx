@@ -32,12 +32,20 @@ export default async function LoginPage({
   return (
     <>
       <ThemeToggle />
-      <main className="flex min-h-full flex-1 items-center justify-center p-8">
-        <div className="w-full max-w-sm rounded-xl border border-border bg-surface p-8 shadow-sm">
-          <div className="mb-4 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-delta-navy font-mono text-sm font-bold text-white">
-            DC
+      <main className="login-backdrop relative flex min-h-full flex-1 items-center justify-center p-8">
+        <div aria-hidden className="login-orb login-orb-1" />
+        <div aria-hidden className="login-orb login-orb-2" />
+        <div aria-hidden className="login-orb login-orb-3" />
+
+        <div className="login-card relative w-full max-w-sm">
+          <div className="mb-6 flex justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element -- logo chico y fijo, mismo patrón que (dashboard)/layout.tsx */}
+            <img src="/delta-logo.png" alt="Delta Seguros" className="h-11 w-auto rounded-lg bg-white p-2 shadow-sm" />
           </div>
+
+          <div className="rounded-2xl border border-border bg-surface p-8 shadow-xl">
           <h1 className="text-lg font-bold tracking-tight">Iniciar sesión</h1>
+          <p className="mt-1 text-xs text-muted">Portal de cotizaciones de Delta Seguros</p>
 
           {errorMessage && (
             <p className="mt-3 rounded-lg border border-red-900/40 bg-red-950/30 px-3 py-2 text-xs text-red-400">
@@ -129,6 +137,7 @@ export default async function LoginPage({
               </button>
             </form>
           )}
+          </div>
         </div>
       </main>
     </>
