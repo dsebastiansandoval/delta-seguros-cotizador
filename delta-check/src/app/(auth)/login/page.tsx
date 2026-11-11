@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { AuthError } from "next-auth";
 import { MICROSOFT_ALLOWED_DOMAIN, signIn } from "@/lib/auth";
 import { env } from "@/lib/env";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
@@ -76,11 +78,23 @@ export default async function LoginPage({
           <form
             action={async (formData) => {
               "use server";
-              await signIn("credentials", {
-                email: formData.get("email"),
-                password: formData.get("password"),
-                redirectTo: "/",
-              });
+              try {
+                await signIn("credentials", {
+                  email: formData.get("email"),
+                  password: formData.get("password"),
+                  redirectTo: "/",
+                });
+              } catch (error) {
+                // `authorize` devuelve null (usuario inexistente o clave
+                // incorrecta) -> next-auth lanza AuthError en vez de
+                // redirigir solo — sin este catch, esa excepción llegaba sin
+                // manejar y Next.js mostraba la pantalla genérica de error
+                // de servidor en vez del mensaje de /login?error=...
+                if (error instanceof AuthError) {
+                  redirect(`/login?error=${error.type}`);
+                }
+                throw error;
+              }
             }}
             className="mt-6 flex flex-col gap-3 border-t border-border pt-6"
           >
@@ -112,7 +126,14 @@ export default async function LoginPage({
             <form
               action={async (formData) => {
                 "use server";
-                await signIn("dev-login", { email: formData.get("email"), redirectTo: "/" });
+                try {
+                  await signIn("dev-login", { email: formData.get("email"), redirectTo: "/" });
+                } catch (error) {
+                  if (error instanceof AuthError) {
+                    redirect(`/login?error=${error.type}`);
+                  }
+                  throw error;
+                }
               }}
               className="mt-6 flex flex-col gap-3 border-t border-border pt-6"
             >
