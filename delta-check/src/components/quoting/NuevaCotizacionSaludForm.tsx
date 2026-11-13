@@ -46,16 +46,21 @@ function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRem
 
 export function NuevaCotizacionSaludForm({
   sources,
-  executives,
-  currentExecutive,
-  canAssignExecutive,
+  vendors,
+  currentVendor,
+  vendorMode,
 }: {
   sources: string[];
-  executives: string[];
-  /** Nombre del usuario logueado — precarga el campo Ejecutivo (editable). */
-  currentExecutive: string;
-  /** Solo ADMIN/SUPERVISOR (permiso `quote:assign_executive`) pueden poner otro nombre — el resto queda fijo al propio. */
-  canAssignExecutive: boolean;
+  /** Usuarios activos que ven este ramo — ver listQuoteVendors(). */
+  vendors: string[];
+  /** Nombre del usuario logueado — precarga el campo Vendedor siempre, sea cual sea el modo. */
+  currentVendor: string;
+  /**
+   * "free": ADMIN/SUPERVISOR escriben cualquier nombre. "select": Agente
+   * elige de la lista completa, no puede agregar uno nuevo. "locked":
+   * Freelance, fijo a su propio nombre — ver vendorMode() en rbac.service.ts.
+   */
+  vendorMode: "free" | "select" | "locked";
 }) {
   const [state, formAction, pending] = useActionState(createHealthQuote, initialState);
   const documentTypeRef = useRef<HTMLSelectElement>(null);
@@ -72,22 +77,33 @@ export function NuevaCotizacionSaludForm({
 
   return (
     <form action={formAction} className="flex flex-col gap-6">
+      {/* El usuario que carga la cotización (antes "Ejecutivo") viaja oculto — ver resolveExecutive() en rbac.service.ts. */}
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm">
-          Ejecutivo
-          <input
-            name="executive"
-            list={canAssignExecutive ? "executives-datalist" : undefined}
-            defaultValue={currentExecutive}
-            readOnly={!canAssignExecutive}
-            placeholder={canAssignExecutive ? "Escribe o elige de la lista" : undefined}
-            autoComplete="off"
-            className={`rounded-lg border border-border px-3 py-2 ${canAssignExecutive ? "bg-surface" : "bg-background text-muted"}`}
-          />
-          {canAssignExecutive && (
-            <datalist id="executives-datalist">
-              {executives.map((ex) => (
-                <option key={ex} value={ex} />
+          Vendedor
+          {vendorMode === "select" ? (
+            <select name="vendor" defaultValue={currentVendor} className="rounded-lg border border-border bg-surface px-3 py-2">
+              {vendors.map((v) => (
+                <option key={v} value={v}>
+                  {v}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              name="vendor"
+              list={vendorMode === "free" ? "vendors-datalist" : undefined}
+              defaultValue={currentVendor}
+              readOnly={vendorMode === "locked"}
+              placeholder={vendorMode === "free" ? "Escribe o elige de la lista" : undefined}
+              autoComplete="off"
+              className={`rounded-lg border border-border px-3 py-2 ${vendorMode === "free" ? "bg-surface" : "bg-background text-muted"}`}
+            />
+          )}
+          {vendorMode === "free" && (
+            <datalist id="vendors-datalist">
+              {vendors.map((v) => (
+                <option key={v} value={v} />
               ))}
             </datalist>
           )}

@@ -5,7 +5,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
-import { requireBranch, requirePermission, resolveExecutive } from "@/domains/identity/services/rbac.service";
+import {
+  listActiveUsersByBranch,
+  requireBranch,
+  requirePermission,
+  resolveExecutive,
+  resolveVendor,
+} from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService } from "@/domains/quoting/services/quote.service";
@@ -60,9 +66,11 @@ async function createQuoteFromForm(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
   const input = parsed.data;
-  input.executive = resolveExecutive(session, input.executive);
+  input.executive = resolveExecutive(session);
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
+    input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "AUTOS"));
+
     const { client, vehicles: createdVehicles } = await clientService.createClientWithVehicles(
       tx,
       session.organizationId,
@@ -222,7 +230,7 @@ export async function getAutoQuoteForEdit(quoteId: string) {
         maritalStatus: data.client.maritalStatus,
         gender: data.client.gender,
         source: data.client.source,
-        executive: data.client.executive,
+        vendor: data.client.vendor,
       },
       modality: data.quote.modality,
       operationType: data.quote.operationType,
@@ -280,9 +288,11 @@ export async function updateAutoQuote(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
   const input = parsed.data;
-  input.executive = resolveExecutive(session, input.executive);
+  input.executive = resolveExecutive(session);
 
   const result = await withOrganization(session.organizationId, async (tx) => {
+    input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "AUTOS"));
+
     const quote = await quoteService.findById(tx, quoteId);
     if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
     if (quote.status !== "BORRADOR") return { ok: false as const, message: "Esta cotización ya no se puede editar" };
@@ -307,6 +317,7 @@ export async function updateAutoQuote(
       phone: input.phone,
       source: input.source,
       executive: input.executive,
+      vendor: input.vendor,
       assignedAgentId: quote.agentId,
       vehicles: input.vehicles.map((v, i) => ({ ...v, vehicleId: risks[i].vehicleId })),
     });

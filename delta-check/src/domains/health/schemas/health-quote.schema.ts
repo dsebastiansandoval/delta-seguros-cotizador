@@ -65,6 +65,7 @@ const baseHealthQuoteSchema = z.object({
   lastName: optionalText(),
   source: optionalText(),
   executive: optionalText(),
+  vendor: optionalText(),
 
   region: z.enum(["SIERRA", "COSTA", "AUSTRO"]),
   titularBirthDate: optionalDate(),

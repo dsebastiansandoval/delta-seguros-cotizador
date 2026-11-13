@@ -20,10 +20,15 @@ export const clients = pgTable("clients", {
   email: text("email"),
   phone: text("phone"),
   source: text("source"), // FUENTE del Excel
-  // EJECUTIVO del Excel (DATOS VH!D8, distinto de FUENTE — confirmado en
-  // ARCHITECTURE.md §24/§26) — quién de Delta gestionó la venta, no
-  // necesariamente el mismo agente autenticado que cargó la cotización.
+  // EJECUTIVO del Excel (DATOS VH!D8) — ya no es asignable: desde que se
+  // agregó VENDEDOR (abajo), este campo es puramente de auditoría, siempre
+  // el usuario autenticado que cargó la cotización, oculto en el formulario.
   executive: text("executive"),
+  // Quién de Delta gestionó/vendió la venta, no necesariamente el mismo
+  // usuario autenticado que cargó la cotización (eso es `executive`) —
+  // ADMIN/SUPERVISOR lo asignan libremente, Agente elige de la lista de
+  // usuarios activos del ramo, Freelance queda fijo a su propio nombre.
+  vendor: text("vendor"),
   assignedAgentId: uuid("assigned_agent_id").references(() => users.id),
   // ARCO — Cancelación/Oposición (ARCHITECTURE.md §14). `isAnonymized` no
   // borra la fila (pólizas/siniestros ligados exigen retención legal) — ver

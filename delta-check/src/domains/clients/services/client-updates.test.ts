@@ -20,4 +20,10 @@ describe("editableClientUpdates (cliente que vuelve a cotizar)", () => {
   it("no borra lo que quedó en blanco ni toca documento, fuente o ejecutivo", () => {
     expect(editableClientUpdates({ ...base, firstName: "", email: undefined, source: "REFERIDO", executive: "X" })).toEqual({});
   });
+
+  it("sí actualiza vendor — refleja quién vendió esta venta, no un atributo fijo del cliente", () => {
+    expect(editableClientUpdates({ ...base, source: "REFERIDO", executive: "X", vendor: "Ana Pérez" })).toEqual({
+      vendor: "Ana Pérez",
+    });
+  });
 });

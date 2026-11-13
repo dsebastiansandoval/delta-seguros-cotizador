@@ -121,9 +121,16 @@ const baseAutoQuoteSchema = z.object({
   // FUENTE del Excel — lista cerrada de personas (INFO GENERAL!T15:T43),
   // no texto libre; ver ARCHITECTURE.md §24.
   source: optionalText(),
-  // EJECUTIVO del Excel — lista separada de FUENTE (DATOS VH!D8, INFO
-  // GENERAL!Y15:Y19); ver ARCHITECTURE.md §26.
+  // EJECUTIVO del Excel (DATOS VH!D8) — ya no viene del formulario, se
+  // fija siempre al usuario autenticado (ver resolveExecutive en
+  // rbac.service.ts); el campo sigue acá por si algún día un test manda
+  // el valor a mano, pero el formulario real nunca lo manda.
   executive: optionalText(),
+  // VENDEDOR — reemplaza el rol que tenía EJECUTIVO antes de volverse
+  // automático: quién de Delta gestionó la venta. ADMIN/SUPERVISOR lo
+  // asignan libre, Agente elige de la lista, Freelance queda fijo al
+  // propio nombre (ver resolveVendor en rbac.service.ts).
+  vendor: optionalText(),
 
   ...riskShape("1"),
   ...riskShape("2"),
@@ -239,6 +246,7 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
       phone: data.phone,
       source: data.source,
       executive: data.executive,
+      vendor: data.vendor,
       vehicles,
     };
   });

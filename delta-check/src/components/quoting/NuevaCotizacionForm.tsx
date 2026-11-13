@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useRef, useState, type RefObject } from "react";
 import { createAutoQuote, saveAutoQuoteDraft, updateAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
 import { usePlateLookup } from "@/components/shared/usePlateLookup";
@@ -34,7 +34,7 @@ export type EditAutoQuoteData = {
     maritalStatus: string | null;
     gender: string | null;
     source: string | null;
-    executive: string | null;
+    vendor: string | null;
   };
   modality: "ANUAL" | "POR_KM";
   operationType: "NUEVA" | "RENOVACION";
@@ -62,9 +62,9 @@ export function NuevaCotizacionForm({
   brands,
   modelsByBrand,
   sources,
-  executives,
-  currentExecutive,
-  canAssignExecutive,
+  vendors,
+  currentVendor,
+  vendorMode,
   insurers,
   editQuote,
 }: {
@@ -73,12 +73,16 @@ export function NuevaCotizacionForm({
   modelsByBrand: Record<string, string[]>;
   /** FUENTE del Excel (INFO GENERAL!T15:T43) — ver listQuoteSources(). */
   sources: string[];
-  /** EJECUTIVO del Excel (INFO GENERAL!Y15:Y19) — ver listQuoteExecutives(). */
-  executives: string[];
-  /** Nombre del usuario logueado — precarga el campo Ejecutivo en cliente nuevo (editable). */
-  currentExecutive: string;
-  /** Solo ADMIN/SUPERVISOR (permiso `quote:assign_executive`) pueden poner otro nombre — el resto queda fijo al propio. */
-  canAssignExecutive: boolean;
+  /** Usuarios activos que ven este ramo — ver listQuoteVendors(). */
+  vendors: string[];
+  /** Nombre del usuario logueado — precarga el campo Vendedor siempre, sea cual sea el modo. */
+  currentVendor: string;
+  /**
+   * "free": ADMIN/SUPERVISOR escriben cualquier nombre. "select": Agente
+   * elige de la lista completa, no puede agregar uno nuevo. "locked":
+   * Freelance, fijo a su propio nombre — ver vendorMode() en rbac.service.ts.
+   */
+  vendorMode: "free" | "select" | "locked";
   /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
   insurers: Array<{ id: string; name: string }>;
   /**
@@ -110,7 +114,8 @@ export function NuevaCotizacionForm({
   const cityRef = useRef<HTMLInputElement>(null);
   const vehicleProvinceRef = useRef<HTMLSelectElement>(null);
   const operationTypeRef = useRef<HTMLSelectElement>(null);
-  const executiveRef = useRef<HTMLInputElement>(null);
+  /** Nunca se renderiza <input> y <select> a la vez (depende de vendorMode) — un solo ref alcanza. */
+  const vendorRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
   const previousInsurerIdRef = useRef<HTMLSelectElement>(null);
   const previousPolicyNumberRef = useRef<HTMLInputElement>(null);
   const previousStartDateRef = useRef<HTMLInputElement>(null);
@@ -138,23 +143,39 @@ export function NuevaCotizacionForm({
     <form action={formAction} className="flex flex-col gap-6">
       {isEditing && <input type="hidden" name="quoteId" value={editQuote!.quoteId} />}
 
+      {/* El usuario que carga la cotización (antes "Ejecutivo") viaja oculto — ver resolveExecutive() en rbac.service.ts. */}
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm">
-          Ejecutivo
-          <input
-            ref={executiveRef}
-            name="executive"
-            list={canAssignExecutive ? "executives-datalist" : undefined}
-            defaultValue={editQuote?.client.executive ?? currentExecutive}
-            readOnly={!canAssignExecutive}
-            placeholder={canAssignExecutive ? "Escribe o elige de la lista" : undefined}
-            autoComplete="off"
-            className={`rounded-lg border border-border px-3 py-2 ${canAssignExecutive ? "bg-surface" : "bg-background text-muted"}`}
-          />
-          {canAssignExecutive && (
-            <datalist id="executives-datalist">
-              {executives.map((ex) => (
-                <option key={ex} value={ex} />
+          Vendedor
+          {vendorMode === "select" ? (
+            <select
+              ref={vendorRef as RefObject<HTMLSelectElement>}
+              name="vendor"
+              defaultValue={editQuote?.client.vendor ?? currentVendor}
+              className="rounded-lg border border-border bg-surface px-3 py-2"
+            >
+              {vendors.map((v) => (
+                <option key={v} value={v}>
+                  {v}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              ref={vendorRef as RefObject<HTMLInputElement>}
+              name="vendor"
+              list={vendorMode === "free" ? "vendors-datalist" : undefined}
+              defaultValue={vendorMode === "free" ? (editQuote?.client.vendor ?? currentVendor) : currentVendor}
+              readOnly={vendorMode === "locked"}
+              placeholder={vendorMode === "free" ? "Escribe o elige de la lista" : undefined}
+              autoComplete="off"
+              className={`rounded-lg border border-border px-3 py-2 ${vendorMode === "free" ? "bg-surface" : "bg-background text-muted"}`}
+            />
+          )}
+          {vendorMode === "free" && (
+            <datalist id="vendors-datalist">
+              {vendors.map((v) => (
+                <option key={v} value={v} />
               ))}
             </datalist>
           )}
@@ -447,7 +468,7 @@ export function NuevaCotizacionForm({
             previousStartDateRef={previousStartDateRef}
             previousExpiryDateRef={previousExpiryDateRef}
             previousPremiumRef={previousPremiumRef}
-            executiveRef={executiveRef}
+            vendorRef={vendorMode === "locked" ? undefined : vendorRef}
             onRenewalFound={() => setOperationType("RENOVACION")}
           />
         </div>

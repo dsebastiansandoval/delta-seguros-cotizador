@@ -6,7 +6,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
-import { requireBranch, requirePermission, resolveExecutive } from "@/domains/identity/services/rbac.service";
+import {
+  listActiveUsersByBranch,
+  requireBranch,
+  requirePermission,
+  resolveExecutive,
+  resolveVendor,
+} from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
@@ -30,7 +36,7 @@ export async function createHealthQuote(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
   const input = parsed.data;
-  input.executive = resolveExecutive(session, input.executive);
+  input.executive = resolveExecutive(session);
 
   const members: NewMemberInput[] = [{ relation: "TITULAR", age: input.titularAge, gender: input.titularGender }];
   for (let i = 1; i <= MAX_DEPENDENTS; i++) {
@@ -40,6 +46,8 @@ export async function createHealthQuote(
   }
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
+    input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "SALUD"));
+
     const client = await clientService.upsertByDocument(tx, {
       organizationId: session.organizationId,
       personType: "NATURAL",
@@ -49,6 +57,7 @@ export async function createHealthQuote(
       lastName: input.lastName,
       source: input.source,
       executive: input.executive,
+      vendor: input.vendor,
       assignedAgentId: session.userId,
     });
 

@@ -71,7 +71,8 @@ async function seedRoles() {
     "quote:create",
     "quote:read",
     "quote:read_all", // supervisor: ve las de todos los agentes
-    "quote:assign_executive", // escoger el "Ejecutivo" de una cotización en vez de quedar fijo al propio nombre
+    "quote:assign_vendor", // escribir cualquier nombre en "Vendedor" (ADMIN/SUPERVISOR)
+    "quote:select_vendor", // elegir "Vendedor" de la lista completa, sin poder agregar uno nuevo (Agente)
     "rate:edit",
     "commission:read_own",
     "commission:read_all",
@@ -96,7 +97,7 @@ async function seedRoles() {
       "quote:create",
       "quote:read",
       "quote:read_all",
-      "quote:assign_executive",
+      "quote:assign_vendor",
       "commission:read_own",
       "commission:read_all",
       "commission:manage",
@@ -108,13 +109,15 @@ async function seedRoles() {
     AGENTE: [
       "quote:create",
       "quote:read",
+      "quote:select_vendor",
       "commission:read_own",
       "policy:manage",
       "claim:manage",
       "client:read_pii",
     ],
-    // Cuenta externa: solo cotiza lo suyo, con el "Ejecutivo" fijo a su propio
-    // nombre (nunca quote:assign_executive) — no ve comisiones ni siniestros.
+    // Cuenta externa: solo cotiza lo suyo, con "Vendedor" fijo a su propio
+    // nombre (ni quote:assign_vendor ni quote:select_vendor) — no ve
+    // comisiones ni siniestros.
     FREELANCE: ["quote:create", "quote:read", "client:read_pii"],
   };
 

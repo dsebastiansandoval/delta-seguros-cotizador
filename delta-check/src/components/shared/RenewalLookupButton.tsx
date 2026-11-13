@@ -23,7 +23,12 @@ type Refs = {
   previousStartDateRef: RefObject<HTMLInputElement | null>;
   previousExpiryDateRef: RefObject<HTMLInputElement | null>;
   previousPremiumRef: RefObject<HTMLInputElement | null>;
-  executiveRef: RefObject<HTMLInputElement | null>;
+  /**
+   * Input (modo libre/fijo) o select (modo lista cerrada) de Vendedor —
+   * `undefined` cuando el campo está bloqueado (Freelance): no tiene
+   * sentido precargar un nombre ajeno en un campo fijo al propio.
+   */
+  vendorRef?: RefObject<HTMLInputElement | HTMLSelectElement | null>;
   /** El formulario muestra el bloque de renovación según el tipo de operación (estado de React, no solo el valor del select). */
   onRenewalFound: () => void;
 };
@@ -32,9 +37,9 @@ type Refs = {
  * "Buscar cotización anterior" — retoma BUSCAR_BASE_VEHICULOS del Excel
  * (EXCEL-AUDIT.md §5): busca por cédula/RUC el último vehículo del cliente
  * en nuestra propia base y precarga el formulario, incluida la aseguradora
- * y póliza anterior si hubo una emitida, y el campo EJECUTIVO con el que
+ * y póliza anterior si hubo una emitida, y el campo VENDEDOR con el que
  * ya tenía guardado ese cliente (no con el usuario logueado ahora — puede
- * ser otra persona la que originalmente lo trajo). Nunca bloquea el
+ * ser otra persona la que originalmente lo vendió). Nunca bloquea el
  * formulario — si no encuentra nada, el ejecutivo sigue con una cotización
  * NUEVA normal.
  */
@@ -58,12 +63,12 @@ export function RenewalLookupButton(refs: Refs) {
         return;
       }
       if (result.status === "NO_VEHICLE") {
-        if (refs.executiveRef.current && result.clientExecutive) refs.executiveRef.current.value = result.clientExecutive;
+        if (refs.vendorRef?.current && result.clientVendor) refs.vendorRef.current.value = result.clientVendor;
         setMessage({ kind: "error", text: "Cliente encontrado, pero sin vehículos anteriores" });
         return;
       }
 
-      if (refs.executiveRef.current && result.clientExecutive) refs.executiveRef.current.value = result.clientExecutive;
+      if (refs.vendorRef?.current && result.clientVendor) refs.vendorRef.current.value = result.clientVendor;
 
       const { vehicle } = result;
       if (refs.plateRef.current) refs.plateRef.current.value = vehicle.plate;

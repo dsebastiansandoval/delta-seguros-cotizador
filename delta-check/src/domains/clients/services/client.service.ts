@@ -50,6 +50,7 @@ export const clientService = {
       | "phone"
       | "source"
       | "executive"
+      | "vendor"
     > & { vehicles: VehicleRiskInput[] },
   ) {
     const client = await clientService.upsertByDocument(tx, {
@@ -67,6 +68,7 @@ export const clientService = {
       phone: input.phone,
       source: input.source,
       executive: input.executive,
+      vendor: input.vendor,
       assignedAgentId: agentId,
     });
 
@@ -120,6 +122,7 @@ export const clientService = {
       | "phone"
       | "source"
       | "executive"
+      | "vendor"
     > & { assignedAgentId: string; vehicles: Array<VehicleRiskInput & { vehicleId: string | null }> },
   ) {
     const client = await clientService.upsertByDocument(tx, {
@@ -137,6 +140,7 @@ export const clientService = {
       phone: input.phone,
       source: input.source,
       executive: input.executive,
+      vendor: input.vendor,
       assignedAgentId: input.assignedAgentId,
     });
 

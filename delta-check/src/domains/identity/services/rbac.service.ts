@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, arrayContains, asc, eq } from "drizzle-orm";
 import { getAppSession } from "@/lib/auth";
-import { withOrganization } from "@/db";
+import { withOrganization, type Db } from "@/db";
 import { permissions, rolePermissions, roles, userRoles, users } from "@/db/schema";
 
 export class UnauthenticatedError extends Error {
@@ -54,19 +54,25 @@ export function requireBranch(session: AuthorizedSession, branch: Branch) {
   if (!session.branches.has(branch)) throw new ForbiddenError(`branch:${branch}`);
 }
 
+// resolveExecutive/vendorMode/resolveVendor viven en vendor-assignment.ts
+// (lógica pura, sin esta importar `@/lib/auth`) — re-exportados acá para
+// que nadie más tenga que cambiar de dónde los importa.
+export { resolveExecutive, resolveVendor, vendorMode } from "./vendor-assignment";
+
 /**
- * El campo "Ejecutivo" de una cotización (Autos/Salud) es texto libre, pero
- * solo quien tiene `quote:assign_executive` (ADMIN/SUPERVISOR) puede
- * ponerle el nombre de otra persona — el resto (Agente, Freelance) queda
- * fijo a su propio nombre, sin importar qué haya mandado el formulario.
- * Nunca se confía en que el cliente deshabilitó el campo.
+ * Usuarios activos de la organización que ven el ramo dado — fuente de la
+ * lista de "Vendedor" (y, antes, de "Ejecutivo"): a pedido de Delta sale de
+ * los usuarios reales del sistema, no de un catálogo aparte que se puede
+ * desincronizar (mismo criterio que ya usaba "Ejecutivo" antes de volverse
+ * un campo oculto).
  */
-export function resolveExecutive(
-  session: Pick<AuthorizedSession, "permissions" | "fullName">,
-  submitted: string | undefined,
-): string | undefined {
-  if (session.permissions.has("quote:assign_executive")) return submitted;
-  return session.fullName ?? undefined;
+export async function listActiveUsersByBranch(tx: Db, branch: Branch): Promise<string[]> {
+  const rows = await tx
+    .select({ fullName: users.fullName })
+    .from(users)
+    .where(and(eq(users.isActive, true), arrayContains(users.branches, [branch])))
+    .orderBy(asc(users.fullName));
+  return rows.map((r) => r.fullName).filter((n): n is string => Boolean(n));
 }
 
 /** Para armar la navegación: null si no hay sesión válida, sin lanzar. */

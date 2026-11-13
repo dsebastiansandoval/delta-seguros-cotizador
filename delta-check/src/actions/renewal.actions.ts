@@ -7,10 +7,10 @@ import { audit } from "@/domains/shared/audit";
 
 export type RenewalLookupResult =
   | { status: "NOT_FOUND" }
-  | { status: "NO_VEHICLE"; clientFirstName: string | null; clientLastName: string | null; clientExecutive: string | null }
+  | { status: "NO_VEHICLE"; clientFirstName: string | null; clientLastName: string | null; clientVendor: string | null }
   | {
       status: "FOUND";
-      clientExecutive: string | null;
+      clientVendor: string | null;
       vehicle: {
         plate: string;
         brand: string;
@@ -48,7 +48,7 @@ export async function findRenewalData(documentNumber: string): Promise<RenewalLo
         status: "NO_VEHICLE",
         clientFirstName: result.client.firstName,
         clientLastName: result.client.lastName,
-        clientExecutive: result.client.executive,
+        clientVendor: result.client.vendor,
       };
     }
 
@@ -63,7 +63,7 @@ export async function findRenewalData(documentNumber: string): Promise<RenewalLo
     const { vehicle, previousPolicy } = result;
     return {
       status: "FOUND",
-      clientExecutive: result.client.executive,
+      clientVendor: result.client.vendor,
       vehicle: {
         plate: vehicle.plate,
         brand: vehicle.brand,

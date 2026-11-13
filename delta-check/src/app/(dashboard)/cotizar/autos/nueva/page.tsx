@@ -1,20 +1,20 @@
 import {
   listAutoInsurers,
-  listQuoteExecutives,
   listQuoteSources,
+  listQuoteVendors,
   listVehicleBrands,
   listVehicleModelsByBrand,
 } from "@/actions/catalog.actions";
-import { getAccess } from "@/domains/identity/services/rbac.service";
+import { getAccess, vendorMode } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
 
 export default async function NuevaCotizacionAutosPage() {
-  const [session, brands, modelsByBrand, sources, executives, insurers] = await Promise.all([
+  const [session, brands, modelsByBrand, sources, vendors, insurers] = await Promise.all([
     getAccess(),
     listVehicleBrands(),
     listVehicleModelsByBrand(),
     listQuoteSources(),
-    listQuoteExecutives("AUTOS"),
+    listQuoteVendors("AUTOS"),
     listAutoInsurers(),
   ]);
 
@@ -27,9 +27,9 @@ export default async function NuevaCotizacionAutosPage() {
         brands={brands.map((b) => b.name)}
         modelsByBrand={modelsByBrand}
         sources={sources.map((s) => s.name)}
-        executives={executives.map((e) => e.name)}
-        currentExecutive={session?.fullName ?? ""}
-        canAssignExecutive={session?.permissions.has("quote:assign_executive") ?? false}
+        vendors={vendors}
+        currentVendor={session?.fullName ?? ""}
+        vendorMode={session ? vendorMode(session) : "locked"}
         insurers={insurers}
       />
     </main>

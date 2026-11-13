@@ -1,12 +1,12 @@
-import { listQuoteSources, listQuoteExecutives } from "@/actions/catalog.actions";
-import { getAccess } from "@/domains/identity/services/rbac.service";
+import { listQuoteSources, listQuoteVendors } from "@/actions/catalog.actions";
+import { getAccess, vendorMode } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
-  const [session, sources, executives] = await Promise.all([
+  const [session, sources, vendors] = await Promise.all([
     getAccess(),
     listQuoteSources(),
-    listQuoteExecutives("SALUD"),
+    listQuoteVendors("SALUD"),
   ]);
 
   return (
@@ -20,9 +20,9 @@ export default async function NuevaCotizacionSaludPage() {
       </header>
       <NuevaCotizacionSaludForm
         sources={sources.map((s) => s.name)}
-        executives={executives.map((e) => e.name)}
-        currentExecutive={session?.fullName ?? ""}
-        canAssignExecutive={session?.permissions.has("quote:assign_executive") ?? false}
+        vendors={vendors}
+        currentVendor={session?.fullName ?? ""}
+        vendorMode={session ? vendorMode(session) : "locked"}
       />
     </main>
   );

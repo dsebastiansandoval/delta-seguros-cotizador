@@ -30,9 +30,9 @@ export async function getSettingsOverview() {
   const canManageLists = session.permissions.has("user:manage");
   const canEditRates = session.permissions.has("rate:edit");
   return withOrganization(session.organizationId, async (tx) => ({
-    // EJECUTIVO ya no se edita acá — sale de los usuarios del sistema
-    // (listQuoteExecutives en catalog.actions.ts), a pedido de Delta: una
-    // sola lista de personas, no dos que se podían desincronizar.
+    // VENDEDOR (antes EJECUTIVO) no se edita acá — sale de los usuarios
+    // del sistema (listQuoteVendors en catalog.actions.ts), a pedido de
+    // Delta: una sola lista de personas, no dos que se podían desincronizar.
     lists: canManageLists ? { sources: await formListsService.list(tx, "sources") } : null,
     engineRates: canEditRates ? await engineRatesService.get(tx) : null,
   }));
