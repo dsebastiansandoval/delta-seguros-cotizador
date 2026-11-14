@@ -39,47 +39,61 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
   function handleUpload(file: File) {
     setError(null);
     startUpload(async () => {
-      const prepared = await createClaimAttachmentUploadUrl(claimId, file.name, file.type || "application/octet-stream", file.size);
-      if (!prepared.ok) {
-        setError(prepared.message);
-        return;
-      }
+      // Server Actions que lanzan (permiso faltante, S3 mal configurado,
+      // red) tienen que caer acá — sin este try/catch, la excepción queda
+      // sin manejar y Next.js muestra la pantalla genérica de error en vez
+      // del mensaje (mismo bug ya encontrado y arreglado en /login).
+      try {
+        const prepared = await createClaimAttachmentUploadUrl(claimId, file.name, file.type || "application/octet-stream", file.size);
+        if (!prepared.ok) {
+          setError(prepared.message);
+          return;
+        }
 
-      const putRes = await fetch(prepared.uploadUrl, {
-        method: "PUT",
-        headers: { "Content-Type": file.type || "application/octet-stream" },
-        body: file,
-      });
-      if (!putRes.ok) {
-        setError("No se pudo subir el archivo a S3");
-        return;
-      }
+        const putRes = await fetch(prepared.uploadUrl, {
+          method: "PUT",
+          headers: { "Content-Type": file.type || "application/octet-stream" },
+          body: file,
+        });
+        if (!putRes.ok) {
+          setError("No se pudo subir el archivo a S3");
+          return;
+        }
 
-      const confirmed = await confirmClaimAttachment({
-        claimId,
-        fileName: file.name,
-        contentType: file.type || "application/octet-stream",
-        sizeBytes: file.size,
-        s3Key: prepared.s3Key,
-      });
-      if (!confirmed.ok) {
-        setError("El archivo subió pero no se pudo guardar — intenta de nuevo");
-        return;
-      }
+        const confirmed = await confirmClaimAttachment({
+          claimId,
+          fileName: file.name,
+          contentType: file.type || "application/octet-stream",
+          sizeBytes: file.size,
+          s3Key: prepared.s3Key,
+        });
+        if (!confirmed.ok) {
+          setError("El archivo subió pero no se pudo guardar — intenta de nuevo");
+          return;
+        }
 
-      setAttachments((prev) => [
-        { id: confirmed.value.attachmentId, fileName: file.name, contentType: file.type, sizeBytes: file.size, createdAt: new Date(), uploadedByName: null },
-        ...prev,
-      ]);
-      if (inputRef.current) inputRef.current.value = "";
+        setAttachments((prev) => [
+          { id: confirmed.value.attachmentId, fileName: file.name, contentType: file.type, sizeBytes: file.size, createdAt: new Date(), uploadedByName: null },
+          ...prev,
+        ]);
+        if (inputRef.current) inputRef.current.value = "";
+      } catch {
+        setError("No se pudo subir el archivo — intenta de nuevo");
+      }
     });
   }
 
   async function handleDownload(attachmentId: string) {
     setDownloadingId(attachmentId);
-    const url = await getClaimAttachmentDownloadUrl(attachmentId);
-    setDownloadingId(null);
-    if (url) window.open(url, "_blank", "noopener,noreferrer");
+    try {
+      const url = await getClaimAttachmentDownloadUrl(attachmentId);
+      if (url) window.open(url, "_blank", "noopener,noreferrer");
+      else setError("No se pudo generar el link de descarga");
+    } catch {
+      setError("No se pudo descargar el archivo — intenta de nuevo");
+    } finally {
+      setDownloadingId(null);
+    }
   }
 
   return (
