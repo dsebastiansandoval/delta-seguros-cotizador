@@ -43,43 +43,61 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
       // red) tienen que caer acá — sin este try/catch, la excepción queda
       // sin manejar y Next.js muestra la pantalla genérica de error en vez
       // del mensaje (mismo bug ya encontrado y arreglado en /login).
+      let prepared: Awaited<ReturnType<typeof createClaimAttachmentUploadUrl>>;
       try {
-        const prepared = await createClaimAttachmentUploadUrl(claimId, file.name, file.type || "application/octet-stream", file.size);
-        if (!prepared.ok) {
-          setError(prepared.message);
-          return;
-        }
+        prepared = await createClaimAttachmentUploadUrl(claimId, file.name, file.type || "application/octet-stream", file.size);
+      } catch {
+        setError("Paso 1 (pedir URL a S3) falló — revisa las credenciales/región de AWS en el servidor");
+        return;
+      }
+      if (!prepared.ok) {
+        setError(prepared.message);
+        return;
+      }
 
-        const putRes = await fetch(prepared.uploadUrl, {
+      // El PUT va del navegador directo a S3 (nunca pasa por nuestro
+      // servidor) — si el bucket no tiene habilitado CORS para este
+      // origen, el navegador bloquea la petición antes de que llegue a S3
+      // y `fetch` lanza en vez de devolver una respuesta con status malo.
+      let putRes: Response;
+      try {
+        putRes = await fetch(prepared.uploadUrl, {
           method: "PUT",
           headers: { "Content-Type": file.type || "application/octet-stream" },
           body: file,
         });
-        if (!putRes.ok) {
-          setError("No se pudo subir el archivo a S3");
-          return;
-        }
+      } catch {
+        setError("Paso 2 (subir a S3) falló — probablemente falta configurar CORS en el bucket de S3 para este dominio");
+        return;
+      }
+      if (!putRes.ok) {
+        setError(`Paso 2 (subir a S3) devolvió ${putRes.status} — revisa los permisos del bucket`);
+        return;
+      }
 
-        const confirmed = await confirmClaimAttachment({
+      let confirmed: Awaited<ReturnType<typeof confirmClaimAttachment>>;
+      try {
+        confirmed = await confirmClaimAttachment({
           claimId,
           fileName: file.name,
           contentType: file.type || "application/octet-stream",
           sizeBytes: file.size,
           s3Key: prepared.s3Key,
         });
-        if (!confirmed.ok) {
-          setError("El archivo subió pero no se pudo guardar — intenta de nuevo");
-          return;
-        }
-
-        setAttachments((prev) => [
-          { id: confirmed.value.attachmentId, fileName: file.name, contentType: file.type, sizeBytes: file.size, createdAt: new Date(), uploadedByName: null },
-          ...prev,
-        ]);
-        if (inputRef.current) inputRef.current.value = "";
       } catch {
-        setError("No se pudo subir el archivo — intenta de nuevo");
+        setError("El archivo subió a S3 pero el paso 3 (guardar metadata) falló — intenta de nuevo");
+        return;
       }
+      if (!confirmed.ok) {
+        setError("El archivo subió pero no se pudo guardar — intenta de nuevo");
+        return;
+      }
+
+      setAttachments((prev) => [
+        { id: confirmed.value.attachmentId, fileName: file.name, contentType: file.type, sizeBytes: file.size, createdAt: new Date(), uploadedByName: null },
+        ...prev,
+      ]);
+      if (inputRef.current) inputRef.current.value = "";
     });
   }
 
