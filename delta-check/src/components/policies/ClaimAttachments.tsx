@@ -47,7 +47,7 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
       try {
         prepared = await createClaimAttachmentUploadUrl(claimId, file.name, file.type || "application/octet-stream", file.size);
       } catch {
-        setError("Paso 1 (pedir URL a S3) falló — revisa las credenciales/región de AWS en el servidor");
+        setError("No se pudo iniciar la subida — intenta de nuevo");
         return;
       }
       if (!prepared.ok) {
@@ -55,10 +55,6 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
         return;
       }
 
-      // El PUT va del navegador directo a S3 (nunca pasa por nuestro
-      // servidor) — si el bucket no tiene habilitado CORS para este
-      // origen, el navegador bloquea la petición antes de que llegue a S3
-      // y `fetch` lanza en vez de devolver una respuesta con status malo.
       let putRes: Response;
       try {
         putRes = await fetch(prepared.uploadUrl, {
@@ -67,11 +63,11 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
           body: file,
         });
       } catch {
-        setError("Paso 2 (subir a S3) falló — probablemente falta configurar CORS en el bucket de S3 para este dominio");
+        setError("No se pudo subir el archivo a S3 — intenta de nuevo");
         return;
       }
       if (!putRes.ok) {
-        setError(`Paso 2 (subir a S3) devolvió ${putRes.status} — revisa los permisos del bucket`);
+        setError("No se pudo subir el archivo a S3");
         return;
       }
 
@@ -85,7 +81,7 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
           s3Key: prepared.s3Key,
         });
       } catch {
-        setError("El archivo subió a S3 pero el paso 3 (guardar metadata) falló — intenta de nuevo");
+        setError("El archivo subió pero no se pudo guardar — intenta de nuevo");
         return;
       }
       if (!confirmed.ok) {
