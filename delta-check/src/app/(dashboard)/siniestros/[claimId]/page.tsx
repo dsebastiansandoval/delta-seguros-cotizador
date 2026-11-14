@@ -85,7 +85,7 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
         </p>
       </header>
 
-      <section className="mb-6 grid grid-cols-2 gap-4 rounded-xl border border-border bg-surface p-5 text-sm shadow-sm sm:grid-cols-4">
+      <section className="mb-6 grid grid-cols-2 gap-4 rounded-xl border border-border bg-surface p-5 text-sm shadow-sm sm:grid-cols-4 [&>div]:min-w-0">
         <div>
           <p className="text-xs uppercase tracking-wide text-muted">Estado</p>
           <div className="mt-1"><ClaimStatusForm claimId={claim.id} status={claim.status} /></div>
