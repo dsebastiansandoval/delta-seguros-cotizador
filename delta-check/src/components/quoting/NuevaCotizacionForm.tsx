@@ -33,7 +33,6 @@ export type EditAutoQuoteData = {
     birthDate: string | null;
     maritalStatus: string | null;
     gender: string | null;
-    source: string | null;
     vendor: string | null;
   };
   modality: "ANUAL" | "POR_KM";
@@ -61,7 +60,6 @@ export type EditAutoQuoteData = {
 export function NuevaCotizacionForm({
   brands,
   modelsByBrand,
-  sources,
   vendors,
   currentVendor,
   vendorMode,
@@ -71,8 +69,6 @@ export function NuevaCotizacionForm({
   brands: string[];
   /** Modelo en cascada según la marca — ver ModeloDatalist más abajo. */
   modelsByBrand: Record<string, string[]>;
-  /** FUENTE del Excel (INFO GENERAL!T15:T43) — ver listQuoteSources(). */
-  sources: string[];
   /** Usuarios activos que ven este ramo — ver listQuoteVendors(). */
   vendors: string[];
   /** Nombre del usuario logueado — precarga el campo Vendedor siempre, sea cual sea el modo. */
@@ -444,23 +440,6 @@ export function NuevaCotizacionForm({
             placeholder="—"
             className="rounded-lg border border-border bg-surface px-3 py-2 text-muted"
           />
-        </label>
-
-        <label className="flex flex-col gap-1 text-sm">
-          Fuente
-          <input
-            name="source"
-            list="sources-datalist"
-            defaultValue={editQuote?.client.source ?? ""}
-            placeholder="Escribe o elige de la lista"
-            autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
-          />
-          <datalist id="sources-datalist">
-            {sources.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
         </label>
 
         <div className="flex items-end">

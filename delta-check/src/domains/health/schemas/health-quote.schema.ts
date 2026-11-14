@@ -63,7 +63,6 @@ const baseHealthQuoteSchema = z.object({
   documentNumber: z.string().min(5, "Documento inválido"),
   firstName: optionalText(),
   lastName: optionalText(),
-  source: optionalText(),
   executive: optionalText(),
   vendor: optionalText(),
 

@@ -118,9 +118,9 @@ const baseAutoQuoteSchema = z.object({
   gender: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["MASCULINO", "FEMENINO"]).optional()),
   email: z.preprocess((v) => (v === "" ? undefined : v), z.email().optional()),
   phone: optionalText(),
-  // FUENTE del Excel — lista cerrada de personas (INFO GENERAL!T15:T43),
-  // no texto libre; ver ARCHITECTURE.md §24.
-  source: optionalText(),
+  // FUENTE (ARCHITECTURE.md §24) ya no se pide en el formulario — a pedido
+  // de Delta. `clients.source` se queda en la base para datos viejos, pero
+  // ningún flujo nuevo lo llena (ver client.service.ts).
   // EJECUTIVO del Excel (DATOS VH!D8) — ya no viene del formulario, se
   // fija siempre al usuario autenticado (ver resolveExecutive en
   // rbac.service.ts); el campo sigue acá por si algún día un test manda
@@ -244,7 +244,6 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
       gender: data.personType === "NATURAL" ? data.gender : undefined,
       email: data.email,
       phone: data.phone,
-      source: data.source,
       executive: data.executive,
       vendor: data.vendor,
       vehicles,

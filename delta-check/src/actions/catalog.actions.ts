@@ -3,7 +3,6 @@
 import { and, asc, eq } from "drizzle-orm";
 import { db, withOrganization } from "@/db";
 import { insurers, vehicleBrands, vehicleModels } from "@/db/schema/catalog";
-import { quoteSources } from "@/db/schema/clients";
 import { listActiveUsersByBranch, requirePermission } from "@/domains/identity/services/rbac.service";
 
 /**
@@ -40,22 +39,6 @@ export async function listVehicleModelsByBrand(): Promise<Record<string, string[
     (modelsByBrand[row.brandName] ??= []).push(row.modelName);
   }
   return modelsByBrand;
-}
-
-/**
- * 🏢 FUENTE del Excel (`INFO GENERAL!T15:T43`) — a diferencia de
- * `vehicleBrands`, es la nómina propia de cada tenant (quién trae
- * clientes), no un catálogo compartido — sí pasa por `withOrganization()`.
- */
-export async function listQuoteSources() {
-  const session = await requirePermission("quote:create");
-  return withOrganization(session.organizationId, (tx) =>
-    tx
-      .select({ id: quoteSources.id, name: quoteSources.name })
-      .from(quoteSources)
-      .where(eq(quoteSources.isActive, true))
-      .orderBy(asc(quoteSources.displayOrder)),
-  );
 }
 
 /**

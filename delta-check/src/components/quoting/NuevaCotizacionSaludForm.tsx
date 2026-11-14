@@ -45,12 +45,10 @@ function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRem
 }
 
 export function NuevaCotizacionSaludForm({
-  sources,
   vendors,
   currentVendor,
   vendorMode,
 }: {
-  sources: string[];
   /** Usuarios activos que ven este ramo — ver listQuoteVendors(). */
   vendors: string[];
   /** Nombre del usuario logueado — precarga el campo Vendedor siempre, sea cual sea el modo. */
@@ -176,21 +174,6 @@ export function NuevaCotizacionSaludForm({
         <label className="flex flex-col gap-1 text-sm">
           Apellidos
           <input ref={lastNameRef} name="lastName" className="rounded-lg border border-border bg-surface px-3 py-2" />
-        </label>
-        <label className="flex flex-col gap-1 text-sm">
-          Fuente
-          <input
-            name="source"
-            list="sources-datalist"
-            placeholder="Escribe o elige de la lista"
-            autoComplete="off"
-            className="rounded-lg border border-border bg-surface px-3 py-2"
-          />
-          <datalist id="sources-datalist">
-            {sources.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Región

@@ -1,13 +1,9 @@
-import { listQuoteSources, listQuoteVendors } from "@/actions/catalog.actions";
+import { listQuoteVendors } from "@/actions/catalog.actions";
 import { getAccess, vendorMode } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionSaludForm } from "@/components/quoting/NuevaCotizacionSaludForm";
 
 export default async function NuevaCotizacionSaludPage() {
-  const [session, sources, vendors] = await Promise.all([
-    getAccess(),
-    listQuoteSources(),
-    listQuoteVendors("SALUD"),
-  ]);
+  const [session, vendors] = await Promise.all([getAccess(), listQuoteVendors("SALUD")]);
 
   return (
     <main className="mx-auto max-w-3xl p-8">
@@ -19,7 +15,6 @@ export default async function NuevaCotizacionSaludPage() {
         </p>
       </header>
       <NuevaCotizacionSaludForm
-        sources={sources.map((s) => s.name)}
         vendors={vendors}
         currentVendor={session?.fullName ?? ""}
         vendorMode={session ? vendorMode(session) : "locked"}

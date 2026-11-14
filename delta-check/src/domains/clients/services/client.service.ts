@@ -48,7 +48,6 @@ export const clientService = {
       | "gender"
       | "email"
       | "phone"
-      | "source"
       | "executive"
       | "vendor"
     > & { vehicles: VehicleRiskInput[] },
@@ -66,7 +65,6 @@ export const clientService = {
       gender: input.gender,
       email: input.email || undefined,
       phone: input.phone,
-      source: input.source,
       executive: input.executive,
       vendor: input.vendor,
       assignedAgentId: agentId,
@@ -120,7 +118,6 @@ export const clientService = {
       | "gender"
       | "email"
       | "phone"
-      | "source"
       | "executive"
       | "vendor"
     > & { assignedAgentId: string; vehicles: Array<VehicleRiskInput & { vehicleId: string | null }> },
@@ -138,7 +135,6 @@ export const clientService = {
       gender: input.gender,
       email: input.email || undefined,
       phone: input.phone,
-      source: input.source,
       executive: input.executive,
       vendor: input.vendor,
       assignedAgentId: input.assignedAgentId,
