@@ -37,12 +37,12 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
     ],
   },
   {
+    // Cartera y Comisiones quitadas del menú a pedido del usuario — "no le
+    // vemos uso de momento". El código y las rutas se quedan intactos
+    // (nadie pidió borrarlos), solo no aparecen acá; para volver a
+    // mostrarlos alcanza con agregar de vuelta esos dos links.
     label: "Gestión",
-    links: [
-      { href: "/cartera", label: "Cartera" },
-      { href: "/comisiones", label: "Comisiones" },
-      { href: "/siniestros", label: "Siniestros" },
-    ],
+    links: [{ href: "/siniestros", label: "Siniestros" }],
   },
   {
     label: "Cumplimiento",
