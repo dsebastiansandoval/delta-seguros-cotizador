@@ -121,6 +121,10 @@ export function NuevaCotizacionForm({
   const previousStartDateRef = useRef<HTMLInputElement>(null);
   const previousExpiryDateRef = useRef<HTMLInputElement>(null);
   const previousPremiumRef = useRef<HTMLInputElement>(null);
+  // Admin/Supervisor ven el <select> con todos los usuarios por defecto —
+  // "+ Escribir otro nombre" lo cambia a un <input> libre, para los casos
+  // en que el vendedor no es un usuario del sistema.
+  const [vendorCustom, setVendorCustom] = useState(false);
   const [operationType, setOperationType] = useState<"NUEVA" | "RENOVACION">(editQuote?.operationType ?? "NUEVA");
   const [personType, setPersonType] = useState<"NATURAL" | "JURIDICA">(editQuote?.client.personType ?? "NATURAL");
   const [birthDate, setBirthDate] = useState(editQuote?.client.birthDate ?? "");
@@ -147,11 +151,39 @@ export function NuevaCotizacionForm({
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm">
           Vendedor
-          {vendorMode === "select" ? (
+          {vendorMode === "locked" ? (
+            <input
+              name="vendor"
+              defaultValue={currentVendor}
+              readOnly
+              className="rounded-lg border border-border bg-background px-3 py-2 text-muted"
+            />
+          ) : vendorMode === "free" && vendorCustom ? (
+            <>
+              <input
+                ref={vendorRef as RefObject<HTMLInputElement>}
+                name="vendor"
+                defaultValue={editQuote?.client.vendor ?? currentVendor}
+                placeholder="Escribe el nombre"
+                autoComplete="off"
+                className="rounded-lg border border-border bg-surface px-3 py-2"
+              />
+              <button
+                type="button"
+                onClick={() => setVendorCustom(false)}
+                className="self-start text-xs text-link underline"
+              >
+                Volver a la lista
+              </button>
+            </>
+          ) : (
             <select
               ref={vendorRef as RefObject<HTMLSelectElement>}
               name="vendor"
               defaultValue={editQuote?.client.vendor ?? currentVendor}
+              onChange={(e) => {
+                if (e.target.value === "__otro__") setVendorCustom(true);
+              }}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               {vendors.map((v) => (
@@ -159,25 +191,8 @@ export function NuevaCotizacionForm({
                   {v}
                 </option>
               ))}
+              {vendorMode === "free" && <option value="__otro__">+ Escribir otro nombre…</option>}
             </select>
-          ) : (
-            <input
-              ref={vendorRef as RefObject<HTMLInputElement>}
-              name="vendor"
-              list={vendorMode === "free" ? "vendors-datalist" : undefined}
-              defaultValue={vendorMode === "free" ? (editQuote?.client.vendor ?? currentVendor) : currentVendor}
-              readOnly={vendorMode === "locked"}
-              placeholder={vendorMode === "free" ? "Escribe o elige de la lista" : undefined}
-              autoComplete="off"
-              className={`rounded-lg border border-border px-3 py-2 ${vendorMode === "free" ? "bg-surface" : "bg-background text-muted"}`}
-            />
-          )}
-          {vendorMode === "free" && (
-            <datalist id="vendors-datalist">
-              {vendors.map((v) => (
-                <option key={v} value={v} />
-              ))}
-            </datalist>
           )}
         </label>
 
