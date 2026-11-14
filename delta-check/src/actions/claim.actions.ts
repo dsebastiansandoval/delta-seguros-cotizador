@@ -11,7 +11,7 @@ import { audit } from "@/domains/shared/audit";
 import { sendClaimNoteNotification } from "@/lib/email";
 import { env } from "@/lib/env";
 import { rateLimit } from "@/lib/rate-limit";
-import { attachmentsEnabled, createAttachmentDownloadUrl, createAttachmentUploadUrl } from "@/lib/s3";
+import { attachmentsEnabled, createAttachmentDownloadUrl, createAttachmentUploadUrl, deleteAttachmentObject } from "@/lib/s3";
 import type { ActionResult } from "./quote.actions";
 
 const MAX_ATTACHMENT_BYTES = 20 * 1024 * 1024; // 20 MB — generoso para fotos/facturas escaneadas, sin abrir la puerta a videos enteros
@@ -207,4 +207,39 @@ export async function getClaimAttachmentDownloadUrl(attachmentId: string): Promi
     if (!branch || !session.branches.has(branch)) return null;
     return createAttachmentDownloadUrl(attachment.s3Key);
   });
+}
+
+/**
+ * Borra un adjunto — mismo permiso que subirlo (`claim:manage`, no solo
+ * `quote:read` como la descarga). Primero el objeto en S3, después la fila
+ * de metadata: si el borrado en S3 falla, mejor quedarse con metadata
+ * huérfana (se puede reintentar) que con un objeto en S3 sin fila que lo
+ * referencie (imposible de encontrar de nuevo).
+ */
+export async function deleteClaimAttachment(attachmentId: string): Promise<ActionResult> {
+  if (!attachmentsEnabled) return { ok: false, errors: { form: ["Adjuntos no configurados"] } };
+  const session = await requirePermission("claim:manage");
+
+  const result = await withOrganization(session.organizationId, async (tx) => {
+    const attachment = await claimAttachmentService.getOne(tx, attachmentId);
+    if (!attachment) return { ok: false as const, message: "Adjunto no encontrado" };
+    const branch = await claimService.getBranch(tx, attachment.claimId);
+    if (!branch || !session.branches.has(branch)) return { ok: false as const, message: "Adjunto no encontrado" };
+
+    await deleteAttachmentObject(attachment.s3Key);
+    await claimAttachmentService.delete(tx, attachmentId);
+    await audit(tx, {
+      organizationId: session.organizationId,
+      userId: session.userId,
+      action: "claim.attachment_deleted",
+      entityType: "claim_attachments",
+      entityId: attachmentId,
+      metadata: { fileName: attachment.fileName },
+    });
+    return { ok: true as const, claimId: attachment.claimId };
+  });
+
+  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
+  revalidatePath(`/siniestros/${result.claimId}`);
+  return { ok: true, value: undefined };
 }

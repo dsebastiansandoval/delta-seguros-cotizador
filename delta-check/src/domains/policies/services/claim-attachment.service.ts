@@ -35,4 +35,9 @@ export const claimAttachmentService = {
     const [row] = await tx.select().from(claimAttachments).where(eq(claimAttachments.id, attachmentId));
     return row ?? null;
   },
+
+  /** Borra solo la fila de metadata — el objeto en S3 lo borra quien llama (ver deleteClaimAttachment en claim.actions.ts). */
+  async delete(tx: Db, attachmentId: string) {
+    await tx.delete(claimAttachments).where(eq(claimAttachments.id, attachmentId));
+  },
 };

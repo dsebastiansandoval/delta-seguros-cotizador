@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import {
   confirmClaimAttachment,
   createClaimAttachmentUploadUrl,
+  deleteClaimAttachment,
   getClaimAttachmentDownloadUrl,
 } from "@/actions/claim.actions";
 
@@ -34,6 +35,7 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
   const [error, setError] = useState<string | null>(null);
   const [isUploading, startUpload] = useTransition();
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleUpload(file: File) {
@@ -110,6 +112,24 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
     }
   }
 
+  async function handleDelete(attachmentId: string, fileName: string) {
+    if (!window.confirm(`¿Borrar "${fileName}"? No se puede deshacer.`)) return;
+    setError(null);
+    setDeletingId(attachmentId);
+    try {
+      const result = await deleteClaimAttachment(attachmentId);
+      if (result.ok) {
+        setAttachments((prev) => prev.filter((a) => a.id !== attachmentId));
+      } else {
+        setError("form" in result.errors ? result.errors.form[0] : "No se pudo borrar el archivo");
+      }
+    } catch {
+      setError("No se pudo borrar el archivo — intenta de nuevo");
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   return (
     <section>
       <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted">
@@ -123,14 +143,24 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
             <span className="truncate">
               {a.fileName} <span className="text-xs text-muted">· {formatSize(a.sizeBytes)}</span>
             </span>
-            <button
-              type="button"
-              onClick={() => handleDownload(a.id)}
-              disabled={downloadingId === a.id}
-              className="shrink-0 text-xs font-semibold text-link underline disabled:opacity-60"
-            >
-              {downloadingId === a.id ? "…" : "Descargar"}
-            </button>
+            <span className="flex shrink-0 items-center gap-3">
+              <button
+                type="button"
+                onClick={() => handleDownload(a.id)}
+                disabled={downloadingId === a.id}
+                className="text-xs font-semibold text-link underline disabled:opacity-60"
+              >
+                {downloadingId === a.id ? "…" : "Descargar"}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDelete(a.id, a.fileName)}
+                disabled={deletingId === a.id}
+                className="text-xs font-semibold text-red-600 underline disabled:opacity-60"
+              >
+                {deletingId === a.id ? "…" : "Eliminar"}
+              </button>
+            </span>
           </li>
         ))}
       </ul>
