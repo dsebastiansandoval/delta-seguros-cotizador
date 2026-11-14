@@ -63,6 +63,14 @@ export async function proxy(request: NextRequest) {
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.google.com/recaptcha/${isDev ? " 'unsafe-eval'" : ""}`,
     `style-src 'self' ${isDev ? "'unsafe-inline'" : `'nonce-${nonce}'`}`,
     "img-src 'self' data: https:",
+    // Adjuntos de Siniestros (ClaimAttachments.tsx) suben/bajan directo del
+    // navegador a S3 por URL firmada, nunca por nuestro servidor — sin
+    // `connect-src` acá, CSP cae al `default-src 'self'` de arriba, que
+    // bloquea esa conexión antes de que CORS siquiera se evalúe. Mismo tipo
+    // de bug silencioso que el de script-src (ver comentario de arriba):
+    // `fetch()` no tira un error de CSP visible, solo falla como si fuera
+    // de red. BUG REAL, encontrado probando en un navegador real.
+    "connect-src 'self' https://*.s3.us-east-1.amazonaws.com",
     "frame-ancestors 'none'",
     "object-src 'none'",
     "base-uri 'self'",
