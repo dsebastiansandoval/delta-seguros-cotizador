@@ -34,9 +34,10 @@ const envSchema = z.object({
   EMAIL_FROM: z.string().default("Cotizador Delta Seguros <onboarding@resend.dev>"),
   APP_URL: z.string().default("http://localhost:3000"),
 
-  // Lookup de placa (EcuadorAPI, $0.02/consulta) — opcional: sin esto, el
-  // autocompletado de vehículo por placa queda deshabilitado (ERROR), no
-  // rompe el arranque. Cédula/RUC no la necesitan, van directo al SRI gratis.
+  // EcuadorAPI (placa $0.02/consulta, fecha de nacimiento $0.01/consulta) —
+  // opcional: sin esto, esos autocompletados quedan deshabilitados (ERROR),
+  // no rompe el arranque. Nombres por cédula/RUC no la necesitan, van
+  // directo al SRI gratis.
   ECUADOR_API_KEY: z.string().optional(),
 
   // Fallback de cédula/RUC cuando el SRI no encuentra a la persona

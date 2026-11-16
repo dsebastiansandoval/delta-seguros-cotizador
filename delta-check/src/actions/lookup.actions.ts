@@ -5,14 +5,17 @@ import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { SriCedulaLookupAdapter } from "@/domains/lookup/gateways/sri-cedula-lookup.adapter";
 import { WebServicesEcCedulaLookupAdapter } from "@/domains/lookup/gateways/webservices-ec-cedula-lookup.adapter";
 import { EcuadorApiPlateLookupAdapter } from "@/domains/lookup/gateways/ecuadorapi-plate-lookup.adapter";
+import { EcuadorApiBirthDateLookupAdapter } from "@/domains/lookup/gateways/ecuadorapi-birthdate-lookup.adapter";
 import type { DocumentLookupResult } from "@/domains/lookup/gateways/cedula-lookup.gateway";
 import type { VehiclePlateLookupResult } from "@/domains/lookup/gateways/vehicle-plate-lookup.gateway";
+import type { BirthDateLookupResult } from "@/domains/lookup/gateways/birthdate-lookup.gateway";
 import { audit } from "@/domains/shared/audit";
 import { rateLimit } from "@/lib/rate-limit";
 
 const documentGateway = new SriCedulaLookupAdapter();
 const documentFallbackGateway = new WebServicesEcCedulaLookupAdapter();
 const plateGateway = new EcuadorApiPlateLookupAdapter();
+const birthDateGateway = new EcuadorApiBirthDateLookupAdapter();
 
 /**
  * Autocompletar nombres/razón social desde cédula o RUC — primero el SRI
@@ -54,6 +57,34 @@ export async function lookupPersonByDocument(
         action: "document.lookup",
         entityType: source,
         metadata: { documentNumber, documentType },
+      }),
+    );
+  }
+
+  return result;
+}
+
+/**
+ * Autocompletar fecha de nacimiento desde la cédula (EcuadorAPI, consulta
+ * paga, $0.01) — dispara junto con `lookupPersonByDocument` al perder foco
+ * el campo "Documento" (ver `useDocumentLookup.ts`), solo cédula o los
+ * primeros 10 dígitos de un RUC de persona natural (no existe para
+ * Jurídica). Mismo permiso que el lookup de identidad: es un dato de PII.
+ */
+export async function lookupBirthDateByDocument(cedula: string): Promise<BirthDateLookupResult> {
+  const session = await requirePermission("client:read_pii");
+  await rateLimit(`lookup:${session.userId}`, { limit: 20, window: "1 m" });
+
+  const result = await birthDateGateway.lookupBirthDate(cedula);
+
+  if (result.status === "FOUND") {
+    await withOrganization(session.organizationId, (tx) =>
+      audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "document.birthdate_lookup",
+        entityType: "external:ecuadorapi",
+        metadata: { documentNumber: cedula },
       }),
     );
   }

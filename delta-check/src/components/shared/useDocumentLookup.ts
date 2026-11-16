@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition, type FocusEvent, type RefObject } from "react";
-import { lookupPersonByDocument } from "@/actions/lookup.actions";
+import { lookupBirthDateByDocument, lookupPersonByDocument } from "@/actions/lookup.actions";
 import { isNaturalPersonRuc, isValidCedula, isValidRuc, provinceFromCedula } from "@/domains/lookup/cedula.validator";
 
 /**
@@ -16,6 +16,16 @@ import { isNaturalPersonRuc, isValidCedula, isValidRuc, provinceFromCedula } fro
  * no espera la respuesta del SRI, que solo hace falta para Nombres/
  * Apellidos. Así no depende de que el SRI esté arriba ni de la latencia de
  * esa consulta.
+ *
+ * Si viene `onBirthDate`, además dispara en paralelo (nunca bloquea al SRI,
+ * ni al revés) una consulta paga a EcuadorAPI por la fecha de nacimiento y
+ * la pasa a ese callback cuando se encuentra — nunca se llama si no hay
+ * dato. Cada formulario decide cómo usarla y respeta lo que el usuario ya
+ * haya escrito a mano. Solo aplica a cédula o RUC de persona natural
+ * (Jurídica no tiene fecha de nacimiento). Un callback en vez de exponer el
+ * resultado como estado propio: así cada formulario lo aplica directo
+ * dentro del mismo evento (onBlur), sin necesitar un efecto aparte que
+ * reaccione al cambio.
  */
 export function useDocumentLookup({
   documentTypeRef,
@@ -23,6 +33,7 @@ export function useDocumentLookup({
   lastNameRef,
   provinceRef,
   businessNameRef,
+  onBirthDate,
 }: {
   documentTypeRef: RefObject<HTMLSelectElement | null>;
   firstNameRef: RefObject<HTMLInputElement | null>;
@@ -30,6 +41,7 @@ export function useDocumentLookup({
   provinceRef?: RefObject<HTMLInputElement | null>;
   /** Jurídica (DATOS VH!C10 "NOMBRE:") — distinto de Nombres/Apellidos, que no aplican. */
   businessNameRef?: RefObject<HTMLInputElement | null>;
+  onBirthDate?: (birthDate: string) => void;
 }) {
   const [message, setMessage] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [pending, startTransition] = useTransition();
@@ -45,15 +57,19 @@ export function useDocumentLookup({
     const lookupKey = `${documentType}:${value}`;
     if (lookupKey === lastLookedUp.current) return;
 
-    // Provincia: local, instantánea, sin esperar al SRI — los 2 primeros
-    // dígitos ya la determinan. Para RUC de sociedad no aplica (no hay
-    // cédula detrás), queda como estaba.
+    // Los 2 primeros dígitos de la cédula determinan la provincia (local,
+    // instantánea, sin esperar al SRI) y son el mismo dato que necesita la
+    // fecha de nacimiento — para RUC de sociedad ninguno de los dos aplica
+    // (no hay cédula detrás).
+    const cedulaDigits = documentType === "CEDULA" ? value : isNaturalPersonRuc(value) ? value.slice(0, 10) : null;
     if (provinceRef?.current) {
-      const cedulaDigits = documentType === "CEDULA" ? value : isNaturalPersonRuc(value) ? value.slice(0, 10) : null;
       provinceRef.current.value = cedulaDigits ? (provinceFromCedula(cedulaDigits) ?? "") : "";
     }
 
     startTransition(async () => {
+      const birthDatePromise =
+        onBirthDate && cedulaDigits ? lookupBirthDateByDocument(cedulaDigits).catch(() => null) : null;
+
       try {
         const result = await lookupPersonByDocument(value, documentType);
         lastLookedUp.current = lookupKey;
@@ -73,6 +89,11 @@ export function useDocumentLookup({
         }
       } catch {
         setMessage({ kind: "error", text: "No se pudo consultar el documento — digita el nombre a mano" });
+      }
+
+      if (birthDatePromise) {
+        const birthResult = await birthDatePromise;
+        if (birthResult?.status === "FOUND") onBirthDate?.(birthResult.birthDate);
       }
     });
   }

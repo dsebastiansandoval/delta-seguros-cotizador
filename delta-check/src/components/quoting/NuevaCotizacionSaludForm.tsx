@@ -4,6 +4,7 @@ import { useActionState, useRef, useState } from "react";
 import { createHealthQuote } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
+import { useGenderSuggestion } from "@/components/shared/useGenderSuggestion";
 import { AgeOrBirthDateField } from "@/components/shared/AgeOrBirthDateField";
 import { MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 
@@ -21,13 +22,13 @@ function DependentFields({ fieldNumber, onRemove }: { fieldNumber: number; onRem
   return (
     <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2 border-t border-border pt-4">
       {/* `<legend>` no respeta `display:flex` de forma consistente entre
-          navegadores — el botón "Quitar" vive afuera, en un div normal, para
+          navegadores — el botón "Retirar" vive afuera, en un div normal, para
           que `justify-between` sí lo mande al final de la línea siempre. */}
       <div className="col-span-full flex items-center justify-between">
         <legend className="text-sm font-semibold">Dependiente {fieldNumber}</legend>
         {onRemove && (
           <button type="button" onClick={onRemove} className="text-xs font-semibold text-link underline">
-            Quitar
+            Retirar
           </button>
         )}
       </div>
@@ -65,7 +66,18 @@ export function NuevaCotizacionSaludForm({
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
-  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef });
+  const titularGenderRef = useRef<HTMLSelectElement>(null);
+  // Sugerencia de EcuadorAPI al perder foco "Documento" — AgeOrBirthDateField
+  // decide si la usa (nunca pisa lo que el usuario ya haya tocado a mano).
+  const [titularAutoBirthDate, setTitularAutoBirthDate] = useState<string | null>(null);
+  const documentLookup = useDocumentLookup({
+    documentTypeRef,
+    firstNameRef,
+    lastNameRef,
+    provinceRef,
+    onBirthDate: setTitularAutoBirthDate,
+  });
+  const genderSuggestion = useGenderSuggestion(titularGenderRef);
 
   // IDs estables para React (nunca se reutilizan, aunque se agregue y
   // quite varias veces) — distintos del número de campo (ver
@@ -169,7 +181,12 @@ export function NuevaCotizacionSaludForm({
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Nombres
-          <input ref={firstNameRef} name="firstName" className="rounded-lg border border-border bg-surface px-3 py-2" />
+          <input
+            ref={firstNameRef}
+            name="firstName"
+            onBlur={(e) => genderSuggestion.onFirstNameBlur(e.target.value)}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          />
         </label>
         <label className="flex flex-col gap-1 text-sm">
           Apellidos
@@ -187,13 +204,26 @@ export function NuevaCotizacionSaludForm({
 
       <fieldset className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <legend className="col-span-full text-sm font-semibold">Titular</legend>
-        <AgeOrBirthDateField namePrefix="titular" required />
+        <AgeOrBirthDateField namePrefix="titular" required autoBirthDate={titularAutoBirthDate} />
         <label className="flex flex-col gap-1 text-sm">
           Sexo
-          <select name="titularGender" defaultValue="MASCULINO" className="rounded-lg border border-border bg-surface px-3 py-2">
+          <select
+            ref={titularGenderRef}
+            name="titularGender"
+            required
+            defaultValue=""
+            onChange={genderSuggestion.onGenderChange}
+            className="rounded-lg border border-border bg-surface px-3 py-2"
+          >
+            <option value="" disabled>
+              —
+            </option>
             <option value="MASCULINO">Masculino</option>
             <option value="FEMENINO">Femenino</option>
           </select>
+          {genderSuggestion.suggested && (
+            <p className="text-xs text-muted">Sugerido según el nombre — puedes cambiarlo</p>
+          )}
         </label>
       </fieldset>
 

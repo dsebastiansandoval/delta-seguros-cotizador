@@ -3,6 +3,7 @@
 import { useActionState, useRef, useState, type RefObject } from "react";
 import { createAutoQuote, saveAutoQuoteDraft, updateAutoQuote, type ActionResult } from "@/actions/quote.actions";
 import { useDocumentLookup } from "@/components/shared/useDocumentLookup";
+import { useGenderSuggestion } from "@/components/shared/useGenderSuggestion";
 import { usePlateLookup } from "@/components/shared/usePlateLookup";
 import { PatioTuercaReferenceLink } from "@/components/shared/PatioTuercaReferenceLink";
 import { RenewalLookupButton } from "@/components/shared/RenewalLookupButton";
@@ -97,6 +98,7 @@ export function NuevaCotizacionForm({
   const lastNameRef = useRef<HTMLInputElement>(null);
   const businessNameRef = useRef<HTMLInputElement>(null);
   const provinceRef = useRef<HTMLInputElement>(null);
+  const genderRef = useRef<HTMLSelectElement>(null);
   const brandRef = useRef<HTMLInputElement>(null);
   const modelRef = useRef<HTMLInputElement>(null);
   const modelDatalistRef = useRef<HTMLDataListElement>(null);
@@ -125,7 +127,19 @@ export function NuevaCotizacionForm({
   const [personType, setPersonType] = useState<"NATURAL" | "JURIDICA">(editQuote?.client.personType ?? "NATURAL");
   const [birthDate, setBirthDate] = useState(editQuote?.client.birthDate ?? "");
   const age = birthDate ? calculateAge(birthDate) : null;
-  const documentLookup = useDocumentLookup({ documentTypeRef, firstNameRef, lastNameRef, provinceRef, businessNameRef });
+  const documentLookup = useDocumentLookup({
+    documentTypeRef,
+    firstNameRef,
+    lastNameRef,
+    provinceRef,
+    businessNameRef,
+    // Sugerencia de EcuadorAPI al perder foco "Documento" — nunca pisa una
+    // fecha que el usuario ya haya escrito a mano (o que venga de editar un
+    // borrador): el callback usa la forma funcional de setBirthDate para no
+    // depender de un valor de `birthDate` capturado en un render viejo.
+    onBirthDate: (date) => setBirthDate((current) => current || date),
+  });
+  const genderSuggestion = useGenderSuggestion(genderRef);
   const plateLookup = usePlateLookup({ brandRef, modelRef, yearRef, colorRef, bodyTypeRef, provinceRef: vehicleProvinceRef });
 
   // Riesgo 1 siempre existe; Riesgo 2/3/4 son bloques que el agente agrega
@@ -341,6 +355,7 @@ export function NuevaCotizacionForm({
                 ref={firstNameRef}
                 name="firstName"
                 defaultValue={editQuote?.client.firstName ?? ""}
+                onBlur={(e) => genderSuggestion.onFirstNameBlur(e.target.value)}
                 className="rounded-lg border border-border bg-surface px-3 py-2"
               />
             </label>
@@ -421,14 +436,19 @@ export function NuevaCotizacionForm({
           <label className="flex flex-col gap-1 text-sm">
             Género
             <select
+              ref={genderRef}
               name="gender"
               defaultValue={editQuote?.client.gender ?? ""}
+              onChange={genderSuggestion.onGenderChange}
               className="rounded-lg border border-border bg-surface px-3 py-2"
             >
               <option value="">—</option>
               <option value="FEMENINO">Femenino</option>
               <option value="MASCULINO">Masculino</option>
             </select>
+            {genderSuggestion.suggested && (
+              <p className="text-xs text-muted">Sugerido según el nombre — puedes cambiarlo</p>
+            )}
           </label>
         )}
 
@@ -507,7 +527,7 @@ export function NuevaCotizacionForm({
               }}
               className="rounded-lg px-3.5 py-1.5 text-xs font-bold text-link underline"
             >
-              Quitar riesgo {riskCount}
+              Retirar riesgo {riskCount}
             </button>
           )}
         </div>
