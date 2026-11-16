@@ -145,7 +145,7 @@ export function EngineRatesEditor({
                         <button
                           type="button"
                           onClick={() => update((d) => void d.latina[body].splice(i, 1))}
-                          aria-label="Quitar tramo"
+                          aria-label="Retirar tramo"
                           className={removeClass}
                         >
                           ✕
@@ -229,7 +229,7 @@ export function EngineRatesEditor({
                       <button
                         type="button"
                         onClick={() => update((d) => void d.condor[body].splice(i, 1))}
-                        aria-label="Quitar tramo"
+                        aria-label="Retirar tramo"
                         className={removeClass}
                       >
                         ✕

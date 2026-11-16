@@ -55,7 +55,7 @@ function OptionList({
               className="text-xs text-red-600"
               disabled={options.length <= 1}
             >
-              Quitar
+              Retirar
             </button>
           </div>
         ))}
@@ -90,7 +90,7 @@ function PartsList({ label, parts, setParts, name }: { label: string; parts: str
               className="text-xs text-red-600"
               disabled={parts.length <= 1}
             >
-              Quitar
+              Retirar
             </button>
           </div>
         ))}
