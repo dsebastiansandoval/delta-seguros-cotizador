@@ -10,9 +10,8 @@ import {
 } from "@/domains/backoffice/services/back-office";
 import { recentMonths } from "@/domains/dashboard/services/agent-report";
 import { getAccess } from "@/domains/identity/services/rbac.service";
+import { CLAIM_STATUS_LABEL } from "@/domains/policies/claim-status-labels";
 import { formatUSD } from "@/domains/shared/money";
-
-const CLAIM_LABEL: Record<string, string> = { REPORTADO: "Reportado", APROBADO: "Aprobado", REPARADO: "Reparado" };
 
 /** Tarjeta de "Módulos de gestión interna" (Cotizador-Delta-MVP-visual.html, `.module-card`). */
 function ModuleCard({
@@ -103,7 +102,7 @@ export default async function BackOfficePage({ searchParams }: { searchParams: P
   const maxClaims = Math.max(1, ...claimsByStatus.map((c) => c.total));
   const claimRows = ["REPORTADO", "APROBADO", "REPARADO"].map((status) => {
     const n = claimsByStatus.find((c) => c.status === status)?.total ?? 0;
-    return { label: CLAIM_LABEL[status], width: share(n, maxClaims), value: String(n) };
+    return { label: CLAIM_STATUS_LABEL[status], width: share(n, maxClaims), value: String(n) };
   });
 
   const maxCommission = Math.max(1, ...(commissions?.byInsurer ?? []).map((r) => r.amountCents));

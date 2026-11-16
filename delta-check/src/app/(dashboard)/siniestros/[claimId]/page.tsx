@@ -5,13 +5,7 @@ import { ClaimAttachments } from "@/components/policies/ClaimAttachments";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
 import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
-
-const STATUS_LABEL: Record<string, string> = {
-  REPORTADO: "Reportado",
-  APROBADO: "Aprobado",
-  REPARADO: "Reparado",
-  ENTREGADO: "Entregado",
-};
+import { CLAIM_STATUS_LABEL as STATUS_LABEL } from "@/domains/policies/claim-status-labels";
 
 function formatDateTime(value: Date) {
   return new Intl.DateTimeFormat("es-EC", { dateStyle: "medium", timeStyle: "short" }).format(value);
@@ -106,6 +100,12 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
           <p className="text-xs uppercase tracking-wide text-muted">Valor</p>
           <p className="mt-1">{claim.claimValueCents != null ? formatUSD(claim.claimValueCents) : "—"}</p>
         </div>
+        {claim.deductibleAppliedCents != null && (
+          <div>
+            <p className="text-xs uppercase tracking-wide text-muted">Deducible aplicado</p>
+            <p className="mt-1">{formatUSD(claim.deductibleAppliedCents)}</p>
+          </div>
+        )}
         {hasVehicle && (
           <div className="col-span-full">
             <p className="text-xs uppercase tracking-wide text-muted">Vehículo</p>
@@ -138,6 +138,12 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">RC — placa tercero</p>
             <p className="mt-1">{claim.thirdPartyPlate || "—"}</p>
+          </div>
+        )}
+        {claim.hasThirdPartyLiability && claim.thirdPartyValueCents != null && (
+          <div>
+            <p className="text-xs uppercase tracking-wide text-muted">RC — valor del tercero</p>
+            <p className="mt-1">{formatUSD(claim.thirdPartyValueCents)}</p>
           </div>
         )}
         {claim.description && (

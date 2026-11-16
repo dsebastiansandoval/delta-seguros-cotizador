@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { addClaimNote } from "@/actions/claim.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 
@@ -10,8 +10,21 @@ const initial: ActionResult | null = null;
 export function AddClaimNoteForm({ claimId }: { claimId: string }) {
   const [state, formAction, pending] = useActionState(addClaimNote, initial);
   const formRef = useRef<HTMLFormElement>(null);
+  // El botón avisa si va a notificar o no antes de enviar — el campo de
+  // correo queda debajo del botón en el layout, así que esto no se nota
+  // con solo mirar el formulario sin este estado.
+  const [hasEmail, setHasEmail] = useState(false);
+  // "Ajustar estado durante el render" en vez de un efecto (react.dev,
+  // evita el setState-en-efecto) — apenas `state` cambia a un envío
+  // exitoso, se nota en el mismo render y se apaga `hasEmail` ahí mismo.
+  const [lastHandledState, setLastHandledState] = useState(state);
+  if (state !== lastHandledState) {
+    setLastHandledState(state);
+    if (state?.ok) setHasEmail(false);
+  }
 
-  // Solo limpia el textarea cuando la novedad se guardó — si hubo error, el texto se queda para corregirlo.
+  // Limpiar el textarea/correo del DOM sí es un efecto legítimo (sincroniza
+  // con el formulario real, no con estado de React) — solo cuando se guardó.
   useEffect(() => {
     if (state?.ok) formRef.current?.reset();
   }, [state]);
@@ -31,13 +44,14 @@ export function AddClaimNoteForm({ claimId }: { claimId: string }) {
           disabled={pending}
           className="rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
         >
-          {pending ? "…" : "Agregar"}
+          {pending ? "…" : hasEmail ? "Agregar y Notificar" : "Agregar"}
         </button>
       </div>
       <input
         type="email"
         name="notifyEmail"
         placeholder="Notificar por correo a (opcional) — ej. cliente@correo.com"
+        onChange={(e) => setHasEmail(e.target.value.trim() !== "")}
         className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-xs"
       />
       {state?.ok === false && "note" in state.errors && (
