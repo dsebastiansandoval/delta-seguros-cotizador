@@ -155,8 +155,42 @@ export default async function DashboardPage({
   searchParams: Promise<{ mes?: string; ramo?: string }>;
 }) {
   const { mes, ramo } = await searchParams;
-  const [access, summary] = await Promise.all([getAccess(), getDashboardSummary()]);
+  const access = await getAccess();
   const branches = access?.branches ?? new Set<"AUTOS" | "SALUD">();
+
+  // El dashboard agregado (cotizaciones/pólizas/producción de TODOS los
+  // agentes) requiere quote:read_all — Admin/Supervisor. Agente/Freelance
+  // no lo tienen (ven solo lo suyo, en "Mis cotizaciones"): antes esto
+  // tiraba un ForbiddenError sin manejar y rompía la primera pantalla que
+  // ve cualquiera al entrar. Mientras no exista una versión personal de
+  // este tablero, se les muestra un landing simple en vez de la agregada.
+  const canSeeAggregate = access?.permissions.has("quote:read_all") ?? false;
+
+  if (!canSeeAggregate) {
+    return (
+      <main className="mx-auto max-w-xl p-8">
+        <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
+        <p className="mt-2 text-sm text-muted">
+          El resumen agregado de toda la organización lo ven Administrador y Supervisor. Para ver o cargar tus
+          propias cotizaciones:
+        </p>
+        <div className="mt-4 flex flex-col gap-2">
+          {branches.has("AUTOS") && (
+            <a href="/cotizar/autos" className="font-semibold text-link underline">
+              Autos — mis cotizaciones
+            </a>
+          )}
+          {branches.has("SALUD") && (
+            <a href="/cotizar/salud" className="font-semibold text-link underline">
+              Salud AM — mis cotizaciones
+            </a>
+          )}
+        </div>
+      </main>
+    );
+  }
+
+  const summary = await getDashboardSummary();
 
   if (!summary) {
     return (
