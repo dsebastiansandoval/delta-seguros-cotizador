@@ -53,9 +53,15 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
       <input type="hidden" name="quoteId" value={quoteId} />
       <p className="text-sm text-muted">{included.size} planes marcados para la oferta.</p>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      {/* Columnas en vez de grid: con grid, una fila de 2 columnas estira la
+          tarjeta corta a la altura de la más alta (align-items: stretch por
+          default), dejando espacio en blanco adentro — las aseguradoras
+          tienen muy distinto número de planes entre sí. `columns` arma cada
+          tarjeta a su propia altura y la siguiente fluye a la columna con
+          espacio libre (como Pinterest), sin huecos. */}
+      <div className="columns-1 gap-4 lg:columns-2">
         {[...byInsurer.entries()].map(([insurerName, plans]) => (
-          <section key={insurerName} className="rounded-xl border border-border bg-surface shadow-sm">
+          <section key={insurerName} className="mb-4 break-inside-avoid rounded-xl border border-border bg-surface shadow-sm">
             <h2 className="border-b border-border px-4 py-2 text-xs font-bold uppercase tracking-wide">{insurerName}</h2>
             <ul className="divide-y divide-border">
               {plans.map((row) => (
