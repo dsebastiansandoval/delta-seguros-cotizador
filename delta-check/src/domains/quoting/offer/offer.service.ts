@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, isNotNull } from "drizzle-orm";
+import { and, asc, eq, inArray, isNotNull, notInArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
 import { quoteInsurerSettings, quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
@@ -184,13 +184,28 @@ export const offerService = {
     if (rows.length) await tx.insert(quoteInsurerSettings).values(rows);
   },
 
-  /** Al crear la cotización, muestra en la oferta las aseguradoras que el motor ya cotizó. */
+  /**
+   * Al crear la cotización, muestra en la oferta las aseguradoras que ya
+   * tenían una prima digitada de antes (ej. un borrador retomado). Excluye
+   * Latina/Cóndor a propósito: esas se calculan solas apenas se genera la
+   * comparativa (`repriceEngines`, llamado justo antes de esto), así que
+   * siempre "ya tienen prima" sin que el agente las haya elegido — sin este
+   * filtro quedaban precargadas en "Configurar oferta" aunque nadie las
+   * pidiera.
+   */
   async includePricedInsurers(tx: Db, quoteId: string) {
     const priced = await tx
       .selectDistinct({ insurerId: quoteOptions.insurerId })
       .from(quoteOptions)
       .innerJoin(quoteRisks, eq(quoteRisks.id, quoteOptions.quoteRiskId))
-      .where(and(eq(quoteRisks.quoteId, quoteId), isNotNull(quoteOptions.netPremiumCents)));
+      .innerJoin(insurers, eq(insurers.id, quoteOptions.insurerId))
+      .where(
+        and(
+          eq(quoteRisks.quoteId, quoteId),
+          isNotNull(quoteOptions.netPremiumCents),
+          notInArray(insurers.code, [...ENGINE_CODES]),
+        ),
+      );
     if (!priced.length) return;
     await tx
       .update(quoteInsurerSettings)
@@ -354,7 +369,11 @@ export const offerService = {
     }
 
     const columns = config.columns
-      .filter((c) => c.settings.included)
+      // Marcada como incluida pero sin ninguna prima neta digitada todavía
+      // (Latina/Cóndor siempre tienen la suya ya calculada — esto solo
+      // afecta a las manuales que el agente marcó pero no llenó) no debe
+      // aparecer en la comparativa: mostraría una columna vacía/engañosa.
+      .filter((c) => c.settings.included && c.premiums.some((p) => p.netPremiumCents != null))
       .map((c) =>
         buildOfferColumn({
           insurerId: c.insurerId,
@@ -370,7 +389,10 @@ export const offerService = {
           })),
         }),
       );
-    return { kind: "ANUAL", generated: config.columns.length > 0, quote: config.quote, risks: config.risks, columns };
+    // "Generada" = ya hay al menos una aseguradora incluida con prima neta
+    // (no solo que existan filas — esas se crean todas desde el inicio,
+    // vacías, al generar la comparativa por primera vez).
+    return { kind: "ANUAL", generated: columns.length > 0, quote: config.quote, risks: config.risks, columns };
   },
 };
 

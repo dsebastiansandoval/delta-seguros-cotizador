@@ -8,6 +8,16 @@ export default async function ConfigurarOfertaPage({ params }: { params: Promise
   const config = await getOfferConfiguration(quoteId);
   if (!config) notFound();
 
+  // Mismo criterio que offerService.getOfferSheet: "ya hay comparativa" =
+  // al menos una aseguradora incluida con prima neta digitada, no solo que
+  // existan filas (esas se crean vacías desde el inicio). Evita el link
+  // "Ver comparativa" la primera vez que se entra a configurar, cuando
+  // todavía no se ha guardado ningún precio.
+  const hasComparativa =
+    config.quote.modality === "POR_KM"
+      ? config.columns.some((c) => c.premiums.length > 0)
+      : config.columns.some((c) => c.settings.included && c.premiums.some((p) => p.netPremiumCents != null));
+
   return (
     <main className="mx-auto max-w-[1400px] p-8">
       <header className="mb-6 flex items-start justify-between gap-4">
@@ -28,9 +38,11 @@ export default async function ConfigurarOfertaPage({ params }: { params: Promise
               Editar datos
             </Link>
           )}
-          <Link href={`/cotizar/autos/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
-            Ver comparativa
-          </Link>
+          {hasComparativa && (
+            <Link href={`/cotizar/autos/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
+              Ver comparativa
+            </Link>
+          )}
         </div>
       </header>
       {config.columns.length === 0 ? (
