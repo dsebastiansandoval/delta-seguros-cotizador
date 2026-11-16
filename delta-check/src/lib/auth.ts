@@ -27,6 +27,15 @@ export class InvalidEmailSignin extends CredentialsSignin {
 export class InvalidPasswordSignin extends CredentialsSignin {
   code = "clave-incorrecta";
 }
+/**
+ * La cuenta existe y está activa, pero todavía no tiene clave creada
+ * (recién dada de alta, esperando la invitación) — antes esto entraba por
+ * InvalidEmailSignin ("ese correo no existe"), un mensaje falso para una
+ * cuenta real. /login redirige directo a /recuperar-clave con este código.
+ */
+export class NoPasswordSignin extends CredentialsSignin {
+  code = "sin-clave";
+}
 
 /**
  * Providers según ARCHITECTURE.md §1/§11.3: Microsoft Entra ID (Delta ya
@@ -76,7 +85,7 @@ providers.push(
     async authorize(credentials, request) {
       const email = typeof credentials?.email === "string" ? credentials.email.trim().toLowerCase() : null;
       const password = typeof credentials?.password === "string" ? credentials.password : null;
-      if (!email || !password) return null;
+      if (!email) return null;
 
       // ARCHITECTURE.md §8.2 — 5/min/IP. `x-forwarded-for` es lo que pone
       // Vercel; en local, sin ese header, se limita por una clave fija (un
@@ -90,7 +99,12 @@ providers.push(
       }
 
       const [user] = await db.select().from(users).where(eq(users.email, email)).limit(1);
-      if (!user || !user.isActive || !user.passwordHash) throw new InvalidEmailSignin();
+      if (!user || !user.isActive) throw new InvalidEmailSignin();
+      // Cuenta real, recién creada, sin clave todavía — distinto de "no
+      // existe" (antes del cambio, el formulario tampoco dejaba mandar la
+      // clave vacía, así que esta rama nunca se alcanzaba).
+      if (!user.passwordHash) throw new NoPasswordSignin();
+      if (!password) throw new InvalidPasswordSignin();
 
       const valid = await verifyPassword(password, user.passwordHash);
       if (!valid) throw new InvalidPasswordSignin();

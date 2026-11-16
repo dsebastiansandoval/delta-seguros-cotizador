@@ -22,6 +22,10 @@ const ERROR_MESSAGES: Record<string, string> = {
   credentials: "Correo o contraseña incorrectos.",
   "correo-no-existe": "Ese correo no tiene una cuenta en Cotizador Delta Seguros.",
   "clave-incorrecta": "La contraseña es incorrecta.",
+  // No debería mostrarse nunca en la práctica — el formulario redirige
+  // directo a /recuperar-clave antes de llegar a pintar este mensaje (ver
+  // el `redirect` en el action de abajo). Queda como respaldo por si acaso.
+  "sin-clave": "Esa cuenta todavía no tiene clave creada — te mandamos un link para crearla.",
 };
 
 export default async function LoginPage({
@@ -84,22 +88,31 @@ export default async function LoginPage({
           <form
             action={async (formData) => {
               "use server";
+              const email = formData.get("email");
               try {
                 await signIn("credentials", {
-                  email: formData.get("email"),
+                  email,
                   password: formData.get("password"),
                   redirectTo: "/",
                 });
               } catch (error) {
-                // `authorize` lanza InvalidEmailSignin/InvalidPasswordSignin
-                // (auth.ts) en vez de devolver null -> next-auth lanza
-                // AuthError en vez de redirigir solo — sin este catch, esa
-                // excepción llegaba sin manejar y Next.js mostraba la
-                // pantalla genérica de error de servidor en vez del mensaje
-                // de /login?error=... Se usa `code` (no `type`) para
-                // distinguir correo-no-existe de clave-incorrecta.
+                // `authorize` lanza InvalidEmailSignin/InvalidPasswordSignin/
+                // NoPasswordSignin (auth.ts) en vez de devolver null ->
+                // next-auth lanza AuthError en vez de redirigir solo — sin
+                // este catch, esa excepción llegaba sin manejar y Next.js
+                // mostraba la pantalla genérica de error de servidor en vez
+                // del mensaje de /login?error=... Se usa `code` (no `type`)
+                // para distinguir correo-no-existe de clave-incorrecta.
                 if (error instanceof AuthError) {
                   const reason = error instanceof CredentialsSignin ? error.code : error.type;
+                  // Cuenta real sin clave todavía — en vez de mostrar un
+                  // mensaje y esperar que el usuario encuentre "Olvidé mi
+                  // contraseña", lo manda directo ahí con el correo ya
+                  // puesto (pedido explícito: entrar con el correo y que lo
+                  // mande solo a crear su clave inicial).
+                  if (reason === "sin-clave" && typeof email === "string") {
+                    redirect(`/recuperar-clave?email=${encodeURIComponent(email)}&motivo=sin-clave`);
+                  }
                   redirect(`/login?error=${reason}`);
                 }
                 throw error;
@@ -119,7 +132,17 @@ export default async function LoginPage({
                 className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
               />
             </div>
-            <PasswordField id="login-password" name="password" label="Contraseña" autoComplete="current-password" />
+            {/* No required: dejar la clave en blanco y mandar el correo
+                es justo cómo una cuenta recién creada detecta que no tiene
+                clave todavía y se la redirige a crearla (ver el `action`
+                de abajo y `NoPasswordSignin` en auth.ts). */}
+            <PasswordField
+              id="login-password"
+              name="password"
+              label="Contraseña"
+              required={false}
+              autoComplete="current-password"
+            />
             <button
               type="submit"
               className="rounded-lg bg-delta-navy px-3 py-2.5 text-sm font-semibold text-white"

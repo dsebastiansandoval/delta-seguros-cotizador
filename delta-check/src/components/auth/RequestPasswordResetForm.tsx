@@ -7,7 +7,7 @@ import type { ActionResult } from "@/actions/quote.actions";
 const initial: ActionResult | null = null;
 
 /** Mensaje de éxito siempre igual, exista o no la cuenta — ver password.actions.ts. */
-export function RequestPasswordResetForm() {
+export function RequestPasswordResetForm({ defaultEmail }: { defaultEmail?: string }) {
   const [state, formAction, pending] = useActionState(requestPasswordReset, initial);
 
   if (state?.ok) {
@@ -29,6 +29,7 @@ export function RequestPasswordResetForm() {
           name="email"
           type="email"
           required
+          defaultValue={defaultEmail}
           className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm"
         />
         {state?.ok === false && "email" in state.errors && (
