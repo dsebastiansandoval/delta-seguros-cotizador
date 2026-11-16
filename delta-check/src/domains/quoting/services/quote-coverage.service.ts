@@ -1,6 +1,6 @@
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
 import type { Db } from "@/db";
-import { coverages, insurers } from "@/db/schema/catalog";
+import { coverages, healthPlanCoverages, insurers } from "@/db/schema/catalog";
 import { quoteOptionCoverages, quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { vehicles } from "@/db/schema/clients";
 
@@ -14,9 +14,19 @@ export type CoverageRow = {
   textValue: string | null;
 };
 
+/** Fila real del catálogo `health_plan_coverages` (aseguradora+plan, no por cotización) — ver `getHealthPlanCoverageRows`. */
+export type HealthPlanCoverageRow = {
+  section: string;
+  label: string;
+  copago: string | null;
+  sublimite: string | null;
+  carencia: string | null;
+};
+
 export type QuoteOptionContext = {
   quoteId: string;
   quoteCode: string;
+  insurerId: string;
   insurerName: string;
   /** Solo Autos — undefined en Salud (el riesgo no tiene vehículo, usa insuredGroupId). */
   vehicleLabel?: string;
@@ -39,6 +49,7 @@ export const quoteCoverageService = {
       .select({
         quoteId: quotes.id,
         quoteCode: quotes.code,
+        insurerId: insurers.id,
         insurerName: insurers.name,
         branch: quotes.branch,
         planCode: quoteOptions.planCode,
@@ -60,11 +71,34 @@ export const quoteCoverageService = {
     return {
       quoteId: row.quoteId,
       quoteCode: row.quoteCode,
+      insurerId: row.insurerId,
       insurerName: row.insurerName,
       branch: row.branch,
       planCode: row.planCode ?? undefined,
       vehicleLabel: row.brand ? `${row.brand} ${row.model} ${row.year}` : undefined,
     };
+  },
+
+  /**
+   * Grilla real de coberturas por beneficio (`health_plan_coverages`,
+   * aseguradora+plan — la misma que arma la comparativa en
+   * `caratula-am.service.ts`). A diferencia de `listForOption`, esto NO es
+   * por cotización: es dato de catálogo, de solo lectura acá. Vacío si el
+   * plan no tiene la grilla sembrada todavía (nunca se fabrica una).
+   */
+  async getHealthPlanCoverageRows(tx: Db, insurerId: string, planCode: string | undefined): Promise<HealthPlanCoverageRow[]> {
+    if (!planCode) return [];
+    return tx
+      .select({
+        section: healthPlanCoverages.section,
+        label: healthPlanCoverages.label,
+        copago: healthPlanCoverages.copago,
+        sublimite: healthPlanCoverages.sublimite,
+        carencia: healthPlanCoverages.carencia,
+      })
+      .from(healthPlanCoverages)
+      .where(and(eq(healthPlanCoverages.insurerId, insurerId), eq(healthPlanCoverages.planCode, planCode)))
+      .orderBy(asc(healthPlanCoverages.displayOrder));
   },
 
   async listForOption(tx: Db, quoteOptionId: string, branch: "AUTOS" | "SALUD"): Promise<CoverageRow[]> {

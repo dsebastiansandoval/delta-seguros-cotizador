@@ -16,13 +16,26 @@ import type { ActionResult } from "./quote.actions";
  * que `setManualPremium`: cualquiera que pueda cotizar puede cargar esto,
  * no hace falta un rol nuevo.
  */
+/**
+ * Salud no usa la grilla manual genérica — sus 3 campos (Copago/Sublímite/
+ * Carencia) son un valor único por cotización, mientras que el catálogo
+ * real (`health_plan_coverages`) tiene muchas filas por beneficio
+ * (Hospitalización, Maternidad…), cada una con su propio copago/sublímite/
+ * carencia: no hay un único valor del catálogo que calce en esos 3 campos.
+ * Por eso Salud muestra el catálogo real, de solo lectura (`mode: "CATALOG"`)
+ * en vez de la grilla editable genérica (`mode: "GENERIC"`, solo Autos).
+ */
 export async function getQuoteOptionCoverages(quoteOptionId: string) {
   const session = await requirePermission("quote:read");
   return withOrganization(session.organizationId, async (tx) => {
     const context = await quoteCoverageService.getContext(tx, quoteOptionId);
     if (!context || !session.branches.has(context.branch)) return null;
+    if (context.branch === "SALUD") {
+      const planCoverages = await quoteCoverageService.getHealthPlanCoverageRows(tx, context.insurerId, context.planCode);
+      return { context, mode: "CATALOG" as const, planCoverages };
+    }
     const coverages = await quoteCoverageService.listForOption(tx, quoteOptionId, context.branch);
-    return { context, coverages };
+    return { context, mode: "GENERIC" as const, coverages };
   });
 }
 
