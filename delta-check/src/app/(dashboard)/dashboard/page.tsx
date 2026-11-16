@@ -177,7 +177,7 @@ export default async function DashboardPage({
         </p>
       </header>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Kpi
           label="Cotizaciones · este mes"
           value={String(summary.monthly.quotes.total)}
@@ -193,11 +193,6 @@ export default async function DashboardPage({
           value={String(summary.monthly.renovacionesProximas30Dias)}
           delta={{ percent: null, note: "próximos 30 días" }}
         />
-        <Kpi
-          label="Comisión generada · este mes"
-          value={formatUSD(summary.monthly.comisionGeneradaCents.total)}
-          delta={{ percent: summary.monthly.comisionGeneradaCents.deltaPercent, note: "vs. mes anterior" }}
-        />
       </div>
 
       <AgentReport mes={mes} ramo={ramo} branches={branches} />
@@ -208,20 +203,6 @@ export default async function DashboardPage({
           label="Conversión a póliza"
           value={`${(summary.conversion.rate * 100).toFixed(1)}%`}
           sub={`${summary.conversion.policiesEmitidas} de ${summary.conversion.quotesTotal} cotizaciones`}
-        />
-        <Card label="Prima vigente en cartera" value={formatUSD(summary.cartera.primaVigenteCents)} />
-      </div>
-
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <Card
-          label="Pólizas vigentes"
-          value={String(summary.cartera.vigentes)}
-          sub={`${summary.cartera.canceladas} canceladas`}
-        />
-        <Card
-          label="Comisiones pendientes"
-          value={formatUSD(summary.comisiones.pendienteCents)}
-          sub={`${formatUSD(summary.comisiones.comisionadaCents)} ya comisionadas`}
         />
         <Card label="Valor total de siniestros" value={formatUSD(summary.siniestros.valorTotalCents)} />
       </div>
