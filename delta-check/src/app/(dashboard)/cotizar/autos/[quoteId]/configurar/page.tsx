@@ -33,11 +33,9 @@ export default async function ConfigurarOfertaPage({ params }: { params: Promise
           </p>
         </div>
         <div className="flex shrink-0 gap-4">
-          {config.quote.status === "BORRADOR" && (
-            <Link href={`/cotizar/autos/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
-              Editar datos
-            </Link>
-          )}
+          <Link href={`/cotizar/autos/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
+            {config.quote.status === "BORRADOR" ? "Editar datos" : "Editar cliente"}
+          </Link>
           {hasComparativa && (
             <Link href={`/cotizar/autos/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
               Ver comparativa
