@@ -3,13 +3,12 @@ import { listAutoInsurers, listQuoteVendors, listVehicleBrands, listVehicleModel
 import { getAutoQuoteForEdit } from "@/actions/quote.actions";
 import { getAccess, vendorMode } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
-import { EditClientOnlyForm } from "@/components/quoting/EditClientOnlyForm";
 
 /**
- * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada — ver
- * getAutoQuoteForEdit/updateAutoQuote en quote.actions.ts. Antes de esto no
- * había forma de volver a los datos ya guardados: "Atrás" en el navegador
- * solo llevaba a /nueva en blanco.
+ * Corrige cliente + vehículo(s) de una cotización, sin importar el
+ * estado — ver getAutoQuoteForEdit/updateAutoQuote en quote.actions.ts.
+ * Antes de esto no había forma de volver a los datos ya guardados:
+ * "Atrás" en el navegador solo llevaba a /nueva en blanco.
  */
 export default async function EditarCotizacionAutosPage({ params }: { params: Promise<{ quoteId: string }> }) {
   const { quoteId } = await params;
@@ -24,21 +23,6 @@ export default async function EditarCotizacionAutosPage({ params }: { params: Pr
   ]);
 
   if (!edit) notFound();
-
-  if (edit.locked) {
-    return (
-      <main className="mx-auto max-w-xl p-8">
-        <header className="mb-6">
-          <h1 className="text-xl font-bold tracking-tight">Editar cliente — {edit.quoteCode}</h1>
-          <p className="mt-1 text-sm text-muted">
-            Esta cotización ya se envió — el vehículo y los valores quedan fijos. Puedes corregir los datos del
-            cliente.
-          </p>
-        </header>
-        <EditClientOnlyForm quoteId={edit.quoteId} client={edit.client} />
-      </main>
-    );
-  }
 
   return (
     <main className="mx-auto max-w-3xl p-8">

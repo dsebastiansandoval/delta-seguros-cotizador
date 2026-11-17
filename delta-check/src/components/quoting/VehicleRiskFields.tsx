@@ -24,7 +24,7 @@ export function VehicleRiskFields({
   suffix: string;
   brands: string[];
   modelsByBrand: Record<string, string[]>;
-  /** Precarga al editar una cotización BORRADOR ya creada — ver NuevaCotizacionForm. */
+  /** Precarga al editar una cotización ya creada — ver NuevaCotizacionForm. */
   initialValue?: {
     plate: string;
     brand: string;

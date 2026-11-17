@@ -183,10 +183,10 @@ export const healthComparisonService = {
    * Borra la comparativa de un riesgo para volver a correrla desde cero
    * con `runComparisonForRisk` — `runComparisonForRisk` solo INSERTA, así
    * que llamarla dos veces sin pasar por acá antes duplicaría las
-   * opciones. Se usa cuando cambia edad/género del titular (el factor de
-   * tarifa) al "editar cliente" de una cotización ya enviada — mismo
-   * criterio que `resetForModalityChange` en Autos. Bloqueado si ya salió
-   * una póliza de alguna de esas opciones.
+   * opciones. Se usa cuando cambian los factores de tarifa (edad, género,
+   * región o dependientes) al editar una cotización — mismo criterio que
+   * `resetForModalityChange` en Autos. Bloqueado si ya salió una póliza de
+   * alguna de esas opciones.
    */
   async resetForRisk(tx: Db, quoteRiskId: string) {
     const stale = await tx.select({ id: quoteOptions.id }).from(quoteOptions).where(eq(quoteOptions.quoteRiskId, quoteRiskId));

@@ -17,7 +17,7 @@ import {
   vendorMode,
 } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
-import { newAutoQuoteSchema, editClientOnlySchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
+import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService, QuoteDeleteError } from "@/domains/quoting/services/quote.service";
 import { comparisonService } from "@/domains/quoting/services/comparison.service";
 import { offerService } from "@/domains/quoting/offer/offer.service";
@@ -209,12 +209,11 @@ export async function runQuoteComparison(
 
 /**
  * Precarga para `/cotizar/autos/[quoteId]/editar` — null si no existe o es
- * de otro ramo; `{ locked: true, client }` si ya no es BORRADOR — una vez
- * enviada, el vehículo y los precios quedan fijos (mismo criterio que "un
- * borrador sin enviar no es producción todavía", ARCHITECTURE.md §14.1),
- * pero el cliente sigue corregible con `updateQuoteClientInfo` (pedido de
- * Delta: un error de tipeo en el cliente no debía obligar a "hacer una
- * cotización nueva" para corregirlo).
+ * de otro ramo. Se puede editar todo (cliente, vehículo(s), modalidad,
+ * tipo) sin importar el estado — pedido explícito de Delta (17-nov):
+ * antes, una vez ENVIADA, el vehículo/precio quedaban fijos y solo se
+ * podía corregir el cliente; ahora updateAutoQuote permite lo mismo que
+ * "Nueva cotización" en cualquier momento.
  */
 export async function getAutoQuoteForEdit(quoteId: string) {
   const session = await requirePermission("quote:create");
@@ -223,27 +222,8 @@ export async function getAutoQuoteForEdit(quoteId: string) {
   return withOrganization(session.organizationId, async (tx) => {
     const data = await quoteService.getEditData(tx, quoteId);
     if (!data || data.quote.branch !== "AUTOS") return null;
-    if (data.quote.status !== "BORRADOR") {
-      return {
-        locked: true as const,
-        quoteId: data.quote.id,
-        quoteCode: data.quote.code,
-        client: {
-          personType: data.client.personType,
-          documentType: data.client.documentType,
-          documentNumber: data.client.documentNumber,
-          firstName: data.client.firstName,
-          lastName: data.client.lastName,
-          businessName: data.client.businessName,
-          birthDate: data.client.birthDate,
-          maritalStatus: data.client.maritalStatus,
-          gender: data.client.gender,
-        },
-      };
-    }
 
     return {
-      locked: false as const,
       quoteId: data.quote.id,
       quoteCode: data.quote.code,
       client: {
@@ -286,15 +266,19 @@ export async function getAutoQuoteForEdit(quoteId: string) {
 }
 
 /**
- * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada — lo
+ * Corrige cliente + vehículo(s) de una cotización, sin importar su
+ * estado (pedido explícito de Delta, 17-nov: "editar cotización" debe
+ * dejar cambiar todo lo que se ve en "Nueva", en cualquier momento) — lo
  * que le faltaba al flujo de "Generar comparativa": antes, volver atrás en
  * el navegador no ofrecía ninguna forma de corregir lo ya guardado (se veía
- * como si se hubiera perdido, aunque seguía intacto en la base). No cambia
- * el número de vehículos — eso exige una cotización nueva. Si ya se había
- * generado la comparativa, Latina/Cóndor se recalculan con los datos
+ * como si se hubiera perdido, aunque seguía intacto en la base). Si ya se
+ * había generado la comparativa, Latina/Cóndor se recalculan con los datos
  * nuevos (`repriceEngines`); las primas que el resto de aseguradoras ya
  * tenía digitadas a mano no se tocan — no hay forma de "recalcularlas"
- * nosotros, son cotizaciones manuales de otro portal.
+ * nosotros, son cotizaciones manuales de otro portal. Bloqueado si ya hay
+ * una póliza emitida de alguna opción de la cotización
+ * (QuoteDeleteError, quoteService.assertEditable), antes de tocar riesgos
+ * u opciones — no solo al quitar un vehículo.
  */
 export async function updateAutoQuote(
   _prevState: ActionResult<{ quoteId: string }> | null,
@@ -324,9 +308,10 @@ export async function updateAutoQuote(
 
     const quote = await quoteService.findById(tx, quoteId);
     if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
-    if (quote.status !== "BORRADOR") return { ok: false as const, message: "Esta cotización ya no se puede editar" };
 
     try {
+      await quoteService.assertEditable(tx, quoteId);
+
       const existingRisks = await quoteService.findRisksByQuote(tx, quoteId);
       const hadComparativa = existingRisks.length > 0 && (await comparisonService.hasOptions(tx, existingRisks[0].id));
       const modalityChanged = quote.modality !== input.modality;
@@ -432,55 +417,6 @@ export async function updateAutoQuote(
 
   revalidatePath("/cotizar/autos");
   redirect(`/cotizar/autos/${quoteId}/configurar`);
-}
-
-/**
- * Corrige solo los datos del cliente (nombre, nacimiento, estado civil,
- * género) de una cotización que ya se envió — vehículo y precios quedan
- * fijos, no se tocan acá. Antes de esto, un error de tipeo en el cliente
- * de una cotización ya enviada no tenía forma de corregirse salvo
- * creando una cotización nueva (ver getAutoQuoteForEdit, más arriba).
- */
-export async function updateQuoteClientInfo(
-  _prevState: ActionResult<{ quoteId: string }> | null,
-  formData: FormData,
-): Promise<ActionResult<{ quoteId: string }>> {
-  const session = await requirePermission("quote:create");
-  requireBranch(session, "AUTOS");
-  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
-
-  const quoteId = formData.get("quoteId");
-  if (typeof quoteId !== "string" || !quoteId) {
-    return { ok: false, errors: { form: ["Cotización inválida"] } };
-  }
-
-  const parsed = editClientOnlySchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) {
-    return { ok: false, errors: parsed.error.flatten().fieldErrors };
-  }
-
-  const result = await withOrganization(session.organizationId, async (tx) => {
-    const quote = await quoteService.findById(tx, quoteId);
-    if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
-
-    await clientService.updateClientFields(tx, quote.clientId, parsed.data);
-
-    await audit(tx, {
-      organizationId: session.organizationId,
-      userId: session.userId,
-      action: "quote.client_edited",
-      entityType: "clients",
-      entityId: quote.clientId,
-    });
-
-    return { ok: true as const, quoteId };
-  });
-
-  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
-
-  revalidatePath(`/cotizar/autos/${quoteId}/editar`);
-  revalidatePath("/cotizar/autos");
-  return { ok: true, value: { quoteId: result.quoteId } };
 }
 
 /**

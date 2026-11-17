@@ -91,14 +91,14 @@ export const comparisonService = {
 
   /**
    * Borra las opciones (y su `quote_option_coverages`) y la configuración de
-   * aseguradoras de una cotización BORRADOR cuando cambia de modalidad
+   * aseguradoras de una cotización cuando cambia de modalidad
    * (ANUAL ↔ POR_KM) al editarla — las filas viejas tienen la forma de la
    * modalidad anterior (ANUAL: una por aseguradora, sin `km_bracket`; POR_KM:
    * una por rango de km de AIG) y no sirven para la nueva. Sin esto, la
    * grilla de "Configurar oferta" queda con filas sin `kmBracket`/ajenas a
    * la modalidad nueva y la pantalla muestra "—" en todas las celdas.
-   * `updateAutoQuote` ya exige `status === "BORRADOR"` antes de llamar
-   * esto, así que nunca hay una póliza emitida sobre estas opciones.
+   * `updateAutoQuote` llama antes a `quoteService.assertEditable()`, así que
+   * nunca se llega acá con una póliza emitida sobre estas opciones.
    */
   async resetForModalityChange(tx: Db, quoteId: string, riskIds: string[]) {
     if (riskIds.length) {

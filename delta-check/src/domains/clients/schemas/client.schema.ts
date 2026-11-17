@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { resolveAge } from "@/domains/shared/age";
 
 /**
  * Un input de texto opcional de un <input> HTML manda `""` cuando queda
@@ -254,64 +253,3 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
 export type NewAutoQuoteInput = z.infer<typeof newAutoQuoteSchema>;
 export type VehicleRiskInput = NewAutoQuoteInput["vehicles"][number];
 
-/**
- * Datos del cliente, solos — para corregir una cotización ya ENVIADA
- * (vehículo y precios quedan fijos, ver updateQuoteClientInfo en
- * quote.actions.ts). Mismos campos y reglas que la porción "Cliente" de
- * `baseAutoQuoteSchema`, sin personType/documentType/documentNumber (esos
- * no se tocan nunca al editar, igual que en editableClientUpdates).
- */
-export const editClientOnlySchema = z.object({
-  personType: z.enum(["NATURAL", "JURIDICA"]),
-  firstName: optionalText(),
-  lastName: optionalText(),
-  businessName: optionalText(),
-  birthDate: optionalDate().refine((v) => !v || v <= new Date().toISOString().slice(0, 10), "La fecha no puede ser futura"),
-  maritalStatus: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.enum(["CASADO", "DIVORCIADO", "SOLTERO", "UNION_DE_HECHO", "VIUDO"]).optional(),
-  ),
-  gender: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["MASCULINO", "FEMENINO"]).optional()),
-}).transform((data) => ({
-  firstName: data.personType === "NATURAL" ? data.firstName : undefined,
-  lastName: data.personType === "NATURAL" ? data.lastName : undefined,
-  businessName: data.personType === "JURIDICA" ? data.businessName : undefined,
-  birthDate: data.birthDate,
-  maritalStatus: data.personType === "NATURAL" ? data.maritalStatus : undefined,
-  gender: data.personType === "NATURAL" ? data.gender : undefined,
-}));
-
-export type EditClientOnlyInput = z.infer<typeof editClientOnlySchema>;
-
-/**
- * Cliente de una cotización de Salud — nombre/apellido (viven en
- * `clients`) y edad/nacimiento/género del titular (viven en
- * `insured_members`, son el factor de tarifa — EXCEL-AUDIT.md §2.3). A
- * pedido explícito de Delta, SÍ se pueden corregir aunque la cotización
- * ya se envió: si edad o género cambian, `updateHealthQuoteClientInfo`
- * recalcula la comparativa entera con los valores nuevos (mismo criterio
- * que el cambio de modalidad en Autos). Documento no se toca, mismo
- * criterio que `editClientOnlySchema`. Mismo patrón fecha-o-edad-directa
- * que `baseHealthQuoteSchema` (titularBirthDate/titularAgeInput).
- */
-export const editHealthClientSchema = z
-  .object({
-    firstName: optionalText(),
-    lastName: optionalText(),
-    titularBirthDate: optionalDate(),
-    titularAgeInput: optionalText(),
-    titularGender: z.enum(["MASCULINO", "FEMENINO"]),
-  })
-  .refine((data) => resolveAge(data.titularBirthDate, data.titularAgeInput) != null, {
-    message: "Fecha de nacimiento o edad del titular requerida",
-    path: ["titularBirthDate"],
-  })
-  .transform((data) => ({
-    firstName: data.firstName,
-    lastName: data.lastName,
-    titularBirthDate: data.titularBirthDate,
-    titularAge: resolveAge(data.titularBirthDate, data.titularAgeInput)!,
-    titularGender: data.titularGender,
-  }));
-
-export type EditHealthClientInput = z.infer<typeof editHealthClientSchema>;

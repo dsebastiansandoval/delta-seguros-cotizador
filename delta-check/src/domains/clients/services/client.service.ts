@@ -31,19 +31,6 @@ export const clientService = {
     return { ...existing, ...updates };
   },
 
-  /**
-   * Corrige solo los datos propios del cliente (nombre, nacimiento, estado
-   * civil, género) sin tocar vehículos ni la cotización — para cuando la
-   * cotización ya se envió y el vehículo/precio quedan fijos, pero hubo un
-   * error de tipeo en el cliente (ver updateQuoteClientInfo en
-   * quote.actions.ts).
-   */
-  async updateClientFields(tx: Db, clientId: string, data: Partial<NewClient>) {
-    const updates = editableClientUpdates(data);
-    if (!Object.keys(updates).length) return;
-    await clientRepository.update(tx, clientId, updates);
-  },
-
   async createClientWithVehicles(
     tx: Db,
     organizationId: string,
@@ -107,7 +94,7 @@ export const clientService = {
   },
 
   /**
-   * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada
+   * Corrige cliente + vehículo(s) de una cotización ya creada
    * (ver updateAutoQuote en quote.actions.ts). A diferencia de
    * createClientWithVehicles, acá los vehículos ya existen — se actualizan
    * en el lugar (mismo id), nunca se crean filas nuevas. Si el documento

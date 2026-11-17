@@ -53,11 +53,11 @@ function DependentFields({
 }
 
 /**
- * Edición completa de una cotización de Salud BORRADOR — mismos campos
- * que NuevaCotizacionSaludForm (puede agregar/quitar dependientes,
- * cambiar región), pero precargada y apuntando a updateHealthQuote en
- * vez de createHealthQuote. Solo se usa mientras sigue BORRADOR — una
- * vez enviada, la página cae a EditHealthClientForm (más angosto).
+ * Edición completa de una cotización de Salud — mismos campos que
+ * NuevaCotizacionSaludForm (puede agregar/quitar dependientes, cambiar
+ * región), pero precargada y apuntando a updateHealthQuote en vez de
+ * createHealthQuote. Se usa en cualquier estado; si hay póliza emitida,
+ * el servicio bloquea cualquier recálculo de la comparativa.
  */
 export function EditHealthQuoteForm({
   quoteId,

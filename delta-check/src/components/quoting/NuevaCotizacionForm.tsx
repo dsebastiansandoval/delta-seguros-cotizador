@@ -21,7 +21,7 @@ function FieldError({ errors, name }: { errors: Extract<ActionResult, { ok: fals
   return <p className="text-xs text-red-600">{fieldErrors[0]}</p>;
 }
 
-/** Precarga para corregir una cotización BORRADOR ya creada (getAutoQuoteForEdit) — ver quote.actions.ts. */
+/** Precarga para corregir una cotización ya creada (getAutoQuoteForEdit) — ver quote.actions.ts. */
 export type EditAutoQuoteData = {
   quoteId: string;
   client: {
@@ -83,9 +83,9 @@ export function NuevaCotizacionForm({
   /** Aseguradoras de Autos para "aseguradora anterior" en una renovación. */
   insurers: Array<{ id: string; name: string }>;
   /**
-   * Si viene, el formulario corrige esta cotización BORRADOR en vez de crear
-   * una nueva — mismo formulario, solo cambia la acción y los valores
-   * iniciales. No soporta cambiar el número de vehículos (ver EditarPage).
+   * Si viene, el formulario corrige esta cotización en vez de crear una
+   * nueva — mismo formulario, solo cambia la acción y los valores
+   * iniciales, en cualquier estado (ver EditarPage y quote.actions.ts).
    */
   editQuote?: EditAutoQuoteData;
 }) {

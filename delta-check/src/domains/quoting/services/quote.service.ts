@@ -103,10 +103,10 @@ export const quoteService = {
   },
 
   /**
-   * Agrega UN riesgo a una cotización BORRADOR ya creada — "agregar
-   * riesgo" al editar (ver updateAutoQuote en quote.actions.ts). El
-   * vehículo ya viene creado (clientService.editClientAndVehicles); acá
-   * solo se arma la fila de `quote_risks` que lo conecta con la cotización.
+   * Agrega UN riesgo a una cotización ya creada — "agregar riesgo" al
+   * editar (ver updateAutoQuote en quote.actions.ts). El vehículo ya viene
+   * creado (clientService.editClientAndVehicles); acá solo se arma la fila
+   * de `quote_risks` que lo conecta con la cotización.
    */
   async addRisk(
     tx: Db,
@@ -127,10 +127,11 @@ export const quoteService = {
   },
 
   /**
-   * Corrige una cotización BORRADOR ya creada (ver updateAutoQuote en
-   * quote.actions.ts) — cliente y número de riesgos no cambian acá, solo
-   * sus valores. `risks` viene ya emparejado 1 a 1 por posición con los
-   * `quote_risks` existentes (mismo orden, mismo riskNumber).
+   * Corrige una cotización ya creada (ver updateAutoQuote en
+   * quote.actions.ts) — cliente y número de riesgos se resuelven en la
+   * action; acá solo se actualizan los riesgos que quedan. `risks` viene
+   * emparejado 1 a 1 por posición con los `quote_risks` existentes (mismo
+   * orden, mismo riskNumber).
    */
   async updateAutoQuote(
     tx: Db,
@@ -192,6 +193,39 @@ export const quoteService = {
       .update(quotes)
       .set({ status: "ACEPTADA", updatedAt: new Date() })
       .where(and(eq(quotes.id, quoteId), inArray(quotes.status, ["BORRADOR", "ENVIADA"])));
+  },
+
+  /**
+   * Guard de "se puede editar" para las cotizaciones que ya no están en
+   * BORRADOR (ARCHITECTURE.md §36). Antes `updateAutoQuote` ni entraba si
+   * el status no era BORRADOR, así que bastaba con el guard de borrado de
+   * `deleteRisk`; ahora que se edita en cualquier estado, un cambio de
+   * modalidad o de vehículo puede tocar opciones con póliza emitida. Se
+   * llama ANTES de cualquier mutación de riesgos/opciones y bloquea la
+   * edición completa si alguna opción ya salió en una póliza.
+   */
+  async assertEditable(tx: Db, quoteId: string) {
+    const risks = await tx
+      .select({ id: quoteRisks.id })
+      .from(quoteRisks)
+      .where(eq(quoteRisks.quoteId, quoteId));
+    const riskIds = risks.map((r) => r.id);
+    if (!riskIds.length) return;
+
+    const options = await tx
+      .select({ id: quoteOptions.id })
+      .from(quoteOptions)
+      .where(inArray(quoteOptions.quoteRiskId, riskIds));
+    if (!options.length) return;
+
+    const [linkedPolicy] = await tx
+      .select({ id: policies.id })
+      .from(policies)
+      .where(inArray(policies.quoteOptionId, options.map((o) => o.id)))
+      .limit(1);
+    if (linkedPolicy) {
+      throw new QuoteDeleteError("Esta cotización ya tiene una póliza emitida — no se puede editar.");
+    }
   },
 
   /**

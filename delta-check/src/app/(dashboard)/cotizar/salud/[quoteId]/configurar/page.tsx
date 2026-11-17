@@ -20,7 +20,7 @@ export default async function ConfigurarOfertaSaludPage({ params }: { params: Pr
         </div>
         <div className="flex shrink-0 gap-4">
           <Link href={`/cotizar/salud/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
-            Editar cliente
+            Editar cotización
           </Link>
           <Link href={`/cotizar/salud/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
             Ver comparativa
