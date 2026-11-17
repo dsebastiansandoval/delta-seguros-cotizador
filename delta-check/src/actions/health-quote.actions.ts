@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
+import { clients } from "@/db/schema/clients";
 import {
   listActiveUsersByBranch,
   requireBranch,
@@ -279,8 +280,10 @@ export async function listMyHealthQuotes() {
         status: quotes.status,
         operationType: quotes.operationType,
         createdAt: quotes.createdAt,
+        documentNumber: clients.documentNumber,
       })
       .from(quotes)
+      .innerJoin(clients, eq(clients.id, quotes.clientId))
       .where(and(eq(quotes.agentId, session.userId), eq(quotes.branch, "SALUD")))
       .orderBy(desc(quotes.createdAt))
       .limit(50),

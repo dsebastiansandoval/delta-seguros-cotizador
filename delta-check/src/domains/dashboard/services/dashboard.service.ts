@@ -60,11 +60,16 @@ export const dashboardService = {
       .where(and(eq(commissions.organizationId, organizationId), inArray(policies.branch, branches)))
       .groupBy(commissions.status);
 
+    // `claims.branch` es columna propia (no siempre hay policyId — un
+    // siniestro reportado sin vincular a una póliza de Cartera es un caso
+    // real y frecuente, ver claims.policyId "solo si no hay policyId" en
+    // el schema) — un innerJoin a policies acá dejaba FUERA del dashboard
+    // justo a esos, que son la mayoría. BUG REAL, encontrado porque el
+    // dashboard decía "sin datos" con 23 siniestros reales ya cargados.
     const siniestrosByStatus = await tx
       .select({ status: claims.status, total: count(), valorCents: sum(claims.claimValueCents) })
       .from(claims)
-      .innerJoin(policies, eq(policies.id, claims.policyId))
-      .where(and(eq(claims.organizationId, organizationId), inArray(policies.branch, branches)))
+      .where(and(eq(claims.organizationId, organizationId), inArray(claims.branch, branches)))
       .groupBy(claims.status);
 
     // Fila de KPI del mockup visual (Cotizador-Delta-MVP-visual.html,

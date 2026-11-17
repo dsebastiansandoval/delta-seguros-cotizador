@@ -258,7 +258,9 @@ export function UserRow({
         {state?.ok === true && <span className="text-xs font-semibold text-good">Guardado.</span>}
         <Errors state={state} />
         <span className="ml-auto text-xs text-muted">
-          {user.lastLoginAt ? `Último ingreso ${user.lastLoginAt.toLocaleDateString("es-EC")}` : "Nunca ingresó"}
+          {user.lastLoginAt
+            ? `Último ingreso ${user.lastLoginAt.toLocaleDateString("es-EC")} ${user.lastLoginAt.toLocaleTimeString("es-EC", { hour: "2-digit", minute: "2-digit" })}`
+            : "Nunca ingresó"}
         </span>
       </form>
       <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-border pt-2">

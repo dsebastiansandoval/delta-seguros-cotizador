@@ -205,10 +205,7 @@ export default async function DashboardPage({
     <main className="mx-auto max-w-5xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
-        <p className="mt-1 text-sm text-muted">
-          Métricas propias de Cotizador Delta Seguros — el Excel original no traía un tablero real que
-          reproducir (hojas DASHBOARD/BASE DASHBOARD vacías).
-        </p>
+        <p className="mt-1 text-sm text-muted">Métricas</p>
       </header>
 
       <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">

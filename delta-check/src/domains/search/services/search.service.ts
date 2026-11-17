@@ -20,6 +20,33 @@ export type SearchResultClient = {
  * es una lista de coincidencias con links directos a lo que sí existe:
  * sus cotizaciones y sus pólizas.
  */
+/**
+ * Una palabra por nombre/apellido/razón social (AND entre palabras, OR
+ * entre campos) — para que "Juan Araujo" encuentre a alguien con
+ * firstName "Juan" y lastName "Araujo", algo que un solo `ilike('%Juan
+ * Araujo%')` nunca iba a matchear (ningún campo trae los dos juntos).
+ */
+function nameWordConditions(words: string[]) {
+  return words.map((word) => {
+    const like = `%${word}%`;
+    return or(ilike(clients.firstName, like), ilike(clients.lastName, like), ilike(clients.businessName, like))!;
+  });
+}
+
+/**
+ * Número de cotización en cualquier forma corta — "COT-2026-00009",
+ * "00009", o solo "09" ("cot 09"): se toma la ÚLTIMA racha de dígitos de
+ * lo que escribió (el correlativo, no el año — ver nextQuoteCode en
+ * quote-code.service.ts, formato COT-<año>-00001), se rellena con ceros a
+ * la izquierda hasta 5 dígitos, y se busca qué código TERMINA así.
+ */
+function quoteCodeSuffix(query: string): string | null {
+  const digitRuns = query.match(/\d+/g);
+  if (!digitRuns?.length) return null;
+  const last = digitRuns[digitRuns.length - 1];
+  return last.length <= 5 ? last.padStart(5, "0") : null;
+}
+
 export const searchService = {
   async search(
     tx: Db,
@@ -29,8 +56,9 @@ export const searchService = {
     if (!q) return [];
 
     const scopeFilter = params.scopeToAgentId ? eq(clients.assignedAgentId, params.scopeToAgentId) : undefined;
+    const words = q.split(/\s+/).filter(Boolean);
 
-    // Coincidencia por datos del cliente (nombre, razón social, documento).
+    // Coincidencia por datos del cliente (nombre completo por palabras, razón social, documento).
     const byClient = await tx
       .select({ id: clients.id })
       .from(clients)
@@ -38,12 +66,7 @@ export const searchService = {
         and(
           eq(clients.organizationId, params.organizationId),
           scopeFilter,
-          or(
-            ilike(clients.firstName, `%${q}%`),
-            ilike(clients.lastName, `%${q}%`),
-            ilike(clients.businessName, `%${q}%`),
-            ilike(clients.documentNumber, `%${q}%`),
-          ),
+          or(ilike(clients.documentNumber, `%${q}%`), and(...nameWordConditions(words)))!,
         ),
       );
 
@@ -55,8 +78,22 @@ export const searchService = {
       .innerJoin(clients, eq(clients.id, vehicles.clientId))
       .where(and(eq(vehicles.organizationId, params.organizationId), scopeFilter, ilike(vehicles.plate, `%${q}%`)));
 
+    // Coincidencia por número de cotización — mismo scope, pero por
+    // quotes.agentId (es lo que de verdad limita "mis cotizaciones" en
+    // listMyAutoQuotes/listMyHealthQuotes), no por clients.assignedAgentId.
+    const codeSuffix = quoteCodeSuffix(q);
+    const quoteScopeFilter = params.scopeToAgentId ? eq(quotes.agentId, params.scopeToAgentId) : undefined;
+    const byQuoteCode = codeSuffix
+      ? await tx
+          .select({ id: quotes.clientId })
+          .from(quotes)
+          .where(
+            and(eq(quotes.organizationId, params.organizationId), quoteScopeFilter, ilike(quotes.code, `%${codeSuffix}`)),
+          )
+      : [];
+
     const plateByClientId = new Map(byPlate.map((r) => [r.id, r.plate]));
-    const clientIds = [...new Set([...byClient.map((r) => r.id), ...byPlate.map((r) => r.id)])];
+    const clientIds = [...new Set([...byClient.map((r) => r.id), ...byPlate.map((r) => r.id), ...byQuoteCode.map((r) => r.id)])];
     if (clientIds.length === 0) return [];
 
     const clientRows = await tx.select().from(clients).where(inArray(clients.id, clientIds));

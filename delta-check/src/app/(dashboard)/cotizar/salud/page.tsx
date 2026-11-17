@@ -1,21 +1,7 @@
 import Link from "next/link";
 import { listMyHealthQuotes } from "@/actions/health-quote.actions";
-import { DeleteQuoteButton } from "@/components/quoting/DeleteQuoteButton";
+import { MyQuotesTable } from "@/components/quoting/MyQuotesTable";
 import { getAccess } from "@/domains/identity/services/rbac.service";
-
-const STATUS_LABEL: Record<string, string> = {
-  BORRADOR: "Borrador",
-  ENVIADA: "Enviada",
-  ACEPTADA: "Aceptada",
-  VENCIDA: "Vencida",
-};
-
-const STATUS_STYLE: Record<string, string> = {
-  BORRADOR: "bg-warn-bg text-warn",
-  ENVIADA: "bg-accent-100 text-highlight",
-  ACEPTADA: "bg-good-bg text-good",
-  VENCIDA: "bg-bad-bg text-bad",
-};
 
 /**
  * "Mis cotizaciones — Salud" — mismo patrón exacto que la página
@@ -47,41 +33,7 @@ export default async function MisCotizacionesSaludPage() {
           Todavía no tienes ninguna cotización de Salud.
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-sm">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
-                <th className="px-4 py-3">Código</th>
-                <th className="px-4 py-3">Tipo</th>
-                <th className="px-4 py-3">Estado</th>
-                <th className="px-4 py-3">Creada</th>
-                <th className="px-4 py-3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((q) => (
-                <tr key={q.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3 font-medium">{q.code}</td>
-                  <td className="px-4 py-3 text-muted">{q.operationType === "RENOVACION" ? "Renovación" : "Nueva"}</td>
-                  <td className="px-4 py-3">
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLE[q.status]}`}>
-                      {STATUS_LABEL[q.status] ?? q.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-muted">{new Date(q.createdAt).toLocaleDateString("es-EC")}</td>
-                  <td className="px-4 py-3 text-right">
-                    <span className="inline-flex items-center gap-3">
-                      <Link href={`/cotizar/salud/${q.id}/comparar`} className="text-xs font-semibold text-link underline">
-                        {q.status === "BORRADOR" ? "Continuar" : "Ver"}
-                      </Link>
-                      {canDelete && <DeleteQuoteButton quoteId={q.id} quoteCode={q.code} />}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <MyQuotesTable items={items} branch="salud" canDelete={canDelete} />
       )}
     </main>
   );

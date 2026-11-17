@@ -2,7 +2,7 @@ import { and, asc, eq, inArray, isNotNull, notInArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
 import { quoteInsurerSettings, quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
-import { vehicles } from "@/db/schema/clients";
+import { clients, vehicles } from "@/db/schema/clients";
 import { comparisonService } from "../services/comparison.service";
 import { breakdownForNet, type PremiumBreakdown } from "../services/premium.calculator";
 import type { CoverageType } from "./excel-rates";
@@ -68,7 +68,13 @@ export type ConfigurationColumn = {
 };
 
 export type OfferConfiguration = {
-  quote: { id: string; code: string; modality: "ANUAL" | "POR_KM"; status: "BORRADOR" | "ENVIADA" | "ACEPTADA" | "VENCIDA" };
+  quote: {
+    id: string;
+    code: string;
+    modality: "ANUAL" | "POR_KM";
+    status: "BORRADOR" | "ENVIADA" | "ACEPTADA" | "VENCIDA";
+    clientName: string | null;
+  };
   risks: ConfigurationRisk[];
   columns: ConfigurationColumn[];
 };
@@ -226,6 +232,15 @@ export const offerService = {
     if (!quote) return null;
     const isKm = quote.modality === "POR_KM";
 
+    const [client] = await tx
+      .select({ firstName: clients.firstName, lastName: clients.lastName, businessName: clients.businessName })
+      .from(clients)
+      .where(eq(clients.id, quote.clientId))
+      .limit(1);
+    const clientName = client
+      ? (client.businessName ?? [client.firstName, client.lastName].filter(Boolean).join(" ")) || null
+      : null;
+
     const risks = await loadRisks(tx, quoteId);
 
     const settingsRows = await tx
@@ -273,7 +288,11 @@ export const offerService = {
       }))
       .sort((a, b) => order.indexOf(a.code) - order.indexOf(b.code));
 
-    return { quote: { id: quote.id, code: quote.code, modality: quote.modality, status: quote.status }, risks, columns };
+    return {
+      quote: { id: quote.id, code: quote.code, modality: quote.modality, status: quote.status, clientName },
+      risks,
+      columns,
+    };
   },
 
   /**

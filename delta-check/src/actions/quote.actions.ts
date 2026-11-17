@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
+import { clients } from "@/db/schema/clients";
 import {
   listActiveUsersByBranch,
   requireBranch,
@@ -492,8 +493,10 @@ export async function listMyAutoQuotes() {
         status: quotes.status,
         operationType: quotes.operationType,
         createdAt: quotes.createdAt,
+        documentNumber: clients.documentNumber,
       })
       .from(quotes)
+      .innerJoin(clients, eq(clients.id, quotes.clientId))
       .where(and(eq(quotes.agentId, session.userId), eq(quotes.branch, "AUTOS")))
       .orderBy(desc(quotes.createdAt))
       .limit(50),

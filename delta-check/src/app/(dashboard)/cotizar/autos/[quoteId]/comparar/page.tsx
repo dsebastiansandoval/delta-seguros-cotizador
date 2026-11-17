@@ -24,11 +24,18 @@ export default async function CompararPage({ params }: { params: Promise<{ quote
             {sheet.kind === "KM" && <span className="text-muted"> (Auto x Km)</span>}
           </h1>
           <p className="mt-1 text-sm text-muted">
+            {sheet.quote.clientName ? `${sheet.quote.clientName} — ` : ""}
             {sheet.risks.length > 1 ? `${sheet.risks.length} riesgos en esta cotización` : "1 riesgo en esta cotización"}
           </p>
         </div>
         {generated && (
           <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href={`/cotizar/autos/${quoteId}/editar`}
+              className="rounded-lg border border-border px-4 py-2 text-sm font-semibold"
+            >
+              Editar cotización
+            </Link>
             <Link
               href={`/cotizar/autos/${quoteId}/configurar`}
               className="rounded-lg border border-border px-4 py-2 text-sm font-semibold"

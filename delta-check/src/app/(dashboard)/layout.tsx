@@ -16,6 +16,13 @@ import { getAccess, type AuthorizedSession } from "@/domains/identity/services/r
  */
 function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
   const branches = access?.branches ?? new Set();
+  // Agente/Freelance no van a tener nunca ninguno de estos tres permisos —
+  // mostrarles el grupo entero solo con links en "Pronto" no sirve de
+  // nada, mejor que no aparezca (pedido explícito del usuario).
+  const canSeeAdmin =
+    access?.permissions.has("user:manage") ||
+    access?.permissions.has("rate:edit") ||
+    access?.permissions.has("quote:read_all");
   return [
   {
     links: [{ href: "/dashboard", label: "Dashboard" }],
@@ -49,27 +56,33 @@ function sidebarGroups(access: AuthorizedSession | null): NavGroup[] {
     label: "Cumplimiento",
     links: [{ href: "/cumplimiento", label: "Derechos ARCO" }],
   },
-  {
-    label: "Administración",
-    links: [
-      // Sin permiso, el link queda deshabilitado en vez de llevar a "Sin acceso".
-      access?.permissions.has("user:manage")
-        ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
-        : { href: "#", label: "Usuarios", disabled: true },
-      ...(access?.permissions.has("rate:edit")
-        ? [
-            { href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" },
-            { href: "/admin/deducibles", label: "Deducibles Autos", activePrefix: "/admin/deducibles" },
-          ]
-        : []),
-      access?.permissions.has("user:manage") || access?.permissions.has("rate:edit")
-        ? { href: "/admin/configuracion", label: "Configuración", activePrefix: "/admin/configuracion" }
-        : { href: "#", label: "Configuración", disabled: true },
-      access?.permissions.has("quote:read_all")
-        ? { href: "/back-office", label: "Back-office", activePrefix: "/back-office" }
-        : { href: "#", label: "Back-office", disabled: true },
-    ],
-  },
+  ...(canSeeAdmin
+    ? [
+        {
+          label: "Administración",
+          links: [
+            // Sin permiso puntual, el link queda deshabilitado en vez de
+            // llevar a "Sin acceso" — el grupo entero ya solo aparece para
+            // quien tiene al menos uno de los tres permisos de arriba.
+            access?.permissions.has("user:manage")
+              ? { href: "/admin/usuarios", label: "Usuarios", activePrefix: "/admin/usuarios" }
+              : { href: "#", label: "Usuarios", disabled: true },
+            ...(access?.permissions.has("rate:edit")
+              ? [
+                  { href: "/admin/tarifas-salud", label: "Tarifas Salud", activePrefix: "/admin/tarifas-salud" },
+                  { href: "/admin/deducibles", label: "Deducibles Autos", activePrefix: "/admin/deducibles" },
+                ]
+              : []),
+            access?.permissions.has("user:manage") || access?.permissions.has("rate:edit")
+              ? { href: "/admin/configuracion", label: "Configuración", activePrefix: "/admin/configuracion" }
+              : { href: "#", label: "Configuración", disabled: true },
+            access?.permissions.has("quote:read_all")
+              ? { href: "/back-office", label: "Back-office", activePrefix: "/back-office" }
+              : { href: "#", label: "Back-office", disabled: true },
+          ],
+        },
+      ]
+    : []),
   ];
 }
 

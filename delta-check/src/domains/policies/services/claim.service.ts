@@ -134,13 +134,26 @@ export const claimService = {
       conditions.push(ne(claims.status, "ENTREGADO"));
     } else {
       const like = `%${term}%`;
+      // Una palabra por nombre/apellido (AND entre palabras, OR entre
+      // campos) — para que "Juan Araujo" encuentre firstName "Juan" +
+      // lastName "Araujo", igual que en search.service.ts (buscador del
+      // topbar): un solo ilike('%Juan Araujo%') nunca matchea eso.
+      const words = term.split(/\s+/).filter(Boolean);
+      const nameConditions = words.map((word) => {
+        const wordLike = `%${word}%`;
+        return or(
+          ilike(clients.firstName, wordLike),
+          ilike(clients.lastName, wordLike),
+          ilike(clients.businessName, wordLike),
+          ilike(claims.clientName, wordLike),
+        )!;
+      });
       conditions.push(
         or(
           ilike(sql`coalesce(${policies.policyNumber}, ${claims.policyNumber})`, like),
-          ilike(clients.firstName, like),
-          ilike(clients.lastName, like),
-          ilike(clients.businessName, like),
-          ilike(claims.clientName, like),
+          ilike(clients.documentNumber, like),
+          ilike(claims.clientDocumentNumber, like),
+          and(...nameConditions),
         )!,
       );
     }
