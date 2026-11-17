@@ -11,6 +11,7 @@ export type MyQuoteRow = {
   operationType: "NUEVA" | "RENOVACION";
   createdAt: Date | string;
   documentNumber: string;
+  agentName: string | null;
 };
 
 const STATUS_LABEL: Record<string, string> = {
@@ -53,19 +54,23 @@ function SortHeader({
 }
 
 /**
- * "Mis cotizaciones" (Autos y Salud comparten la misma forma de fila) —
- * filtro de estado + orden por columna, todo en el cliente: son como
- * mucho 50 filas (el límite de listMyAutoQuotes/listMyHealthQuotes), no
- * vale la pena un roundtrip al servidor por esto.
+ * "Mis cotizaciones"/"Cotizaciones" (Autos y Salud comparten la misma
+ * forma de fila) — filtro de estado + orden por columna, todo en el
+ * cliente: como mucho 200 filas (el límite de
+ * listMyAutoQuotes/listMyHealthQuotes), no vale la pena un roundtrip al
+ * servidor por esto.
  */
 export function MyQuotesTable({
   items,
   branch,
   canDelete,
+  showAgent,
 }: {
   items: MyQuoteRow[];
   branch: "autos" | "salud";
   canDelete: boolean;
+  /** quote:read_all (ADMIN/SUPERVISOR) ve la de todos — ahí sí importa de quién es cada una. */
+  showAgent: boolean;
 }) {
   const [statusFilter, setStatusFilter] = useState<string>("TODOS");
   const [sortKey, setSortKey] = useState<SortKey>("createdAt");
@@ -123,6 +128,7 @@ export function MyQuotesTable({
               <tr className="border-b border-border text-left text-xs font-semibold uppercase tracking-wide text-muted">
                 <SortHeader label="Código" k="code" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} />
                 <SortHeader label="Cédula" k="documentNumber" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} />
+                {showAgent && <th className="px-4 py-3">Agente</th>}
                 <th className="px-4 py-3">Tipo</th>
                 <SortHeader label="Estado" k="status" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} />
                 <SortHeader label="Creada" k="createdAt" sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} />
@@ -134,6 +140,7 @@ export function MyQuotesTable({
                 <tr key={q.id} className="border-b border-border last:border-0">
                   <td className="px-4 py-3 font-medium">{q.code}</td>
                   <td className="px-4 py-3 text-muted">{q.documentNumber}</td>
+                  {showAgent && <td className="px-4 py-3 text-muted">{q.agentName ?? "—"}</td>}
                   <td className="px-4 py-3 text-muted">{q.operationType === "RENOVACION" ? "Renovación" : "Nueva"}</td>
                   <td className="px-4 py-3">
                     <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLE[q.status]}`}>

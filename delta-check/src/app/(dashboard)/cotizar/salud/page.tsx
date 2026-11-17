@@ -5,19 +5,19 @@ import { getAccess } from "@/domains/identity/services/rbac.service";
 
 /**
  * "Mis cotizaciones — Salud" — mismo patrón exacto que la página
- * equivalente de Autos (cotizar/autos/page.tsx). El link "Salud AM" del
- * sidebar apunta acá (no directo al formulario) para que el agente pueda
- * ver y retomar sus cotizaciones existentes, no solo crear una nueva.
+ * equivalente de Autos (cotizar/autos/page.tsx), incluido el cambio a
+ * "Cotizaciones" a secas (toda la organización) con `quote:read_all`.
  */
 export default async function MisCotizacionesSaludPage() {
   const [items, access] = await Promise.all([listMyHealthQuotes(), getAccess()]);
   const canDelete = access?.permissions.has("quote:delete") ?? false;
+  const seeAll = access?.permissions.has("quote:read_all") ?? false;
 
   return (
-    <main className="mx-auto max-w-4xl p-8">
+    <main className="mx-auto max-w-5xl p-8">
       <header className="mb-6 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">Mis cotizaciones — Salud</h1>
+          <h1 className="text-xl font-bold tracking-tight">{seeAll ? "Cotizaciones — Salud" : "Mis cotizaciones — Salud"}</h1>
           <p className="mt-1 text-sm text-muted">Incluye borradores guardados sin terminar de comparar.</p>
         </div>
         <Link
@@ -30,10 +30,10 @@ export default async function MisCotizacionesSaludPage() {
 
       {items.length === 0 ? (
         <div className="rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-muted">
-          Todavía no tienes ninguna cotización de Salud.
+          Todavía no hay ninguna cotización de Salud.
         </div>
       ) : (
-        <MyQuotesTable items={items} branch="salud" canDelete={canDelete} />
+        <MyQuotesTable items={items} branch="salud" canDelete={canDelete} showAgent={seeAll} />
       )}
     </main>
   );

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
 import { clients } from "@/db/schema/clients";
+import { users } from "@/db/schema/identity";
 import {
   ensureVendorExists,
   listActiveUsersByBranch,
@@ -483,14 +484,6 @@ export async function updateQuoteClientInfo(
 }
 
 /**
- * "Mis cotizaciones" — lo que le faltaba a "Guardar borrador" para no ser
- * un callejón sin salida: sin esto, guardar un borrador significa perder
- * la cotización de vista hasta acordarse de la URL exacta. Se filtra por
- * el propio agente, no por toda la organización — es una lista de trabajo
- * personal, no un reporte gerencial (para eso está quote:read_all en el
- * dashboard, ARCHITECTURE.md §14.1).
- */
-/**
  * "Eliminar" en Mis cotizaciones (Autos y Salud, misma tabla `quotes`) —
  * solo ADMIN/SUPERVISOR (quote:delete, seed.ts). Nunca borra cliente ni
  * vehículo/grupo asegurado — son del cliente, no de la cotización (ver
@@ -526,9 +519,18 @@ export async function deleteQuote(quoteId: string): Promise<ActionResult<void>> 
   return { ok: true, value: undefined };
 }
 
+/**
+ * "Mis cotizaciones" — lo que le faltaba a "Guardar borrador" para no ser
+ * un callejón sin salida: sin esto, guardar un borrador significa perder
+ * la cotización de vista hasta acordarse de la URL exacta. Por defecto es
+ * una lista de trabajo personal (filtrada por el propio agente); con
+ * `quote:read_all` (ADMIN/SUPERVISOR, mismo criterio que el dashboard y
+ * back-office) se ve la de toda la organización, con quién la cargó.
+ */
 export async function listMyAutoQuotes() {
   const session = await requirePermission("quote:read");
   requireBranch(session, "AUTOS");
+  const seeAll = session.permissions.has("quote:read_all");
 
   return withOrganization(session.organizationId, (tx) =>
     tx
@@ -539,11 +541,13 @@ export async function listMyAutoQuotes() {
         operationType: quotes.operationType,
         createdAt: quotes.createdAt,
         documentNumber: clients.documentNumber,
+        agentName: users.fullName,
       })
       .from(quotes)
       .innerJoin(clients, eq(clients.id, quotes.clientId))
-      .where(and(eq(quotes.agentId, session.userId), eq(quotes.branch, "AUTOS")))
+      .innerJoin(users, eq(users.id, quotes.agentId))
+      .where(seeAll ? eq(quotes.branch, "AUTOS") : and(eq(quotes.agentId, session.userId), eq(quotes.branch, "AUTOS")))
       .orderBy(desc(quotes.createdAt))
-      .limit(50),
+      .limit(seeAll ? 200 : 50),
   );
 }

@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { withOrganization } from "@/db";
 import { quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients } from "@/db/schema/clients";
+import { users } from "@/db/schema/identity";
 import {
   ensureVendorExists,
   listActiveUsersByBranch,
@@ -436,9 +437,11 @@ export async function getHealthOfferSheet(quoteId: string) {
  * agente (filtra por `agentId`, no toda la organización), no un reporte
  * gerencial.
  */
+/** "Mis cotizaciones — Salud" — mismo criterio que listMyAutoQuotes (quote:read_all ve todo el ramo, con quién la cargó). */
 export async function listMyHealthQuotes() {
   const session = await requirePermission("quote:read");
   requireBranch(session, "SALUD");
+  const seeAll = session.permissions.has("quote:read_all");
 
   return withOrganization(session.organizationId, (tx) =>
     tx
@@ -449,12 +452,14 @@ export async function listMyHealthQuotes() {
         operationType: quotes.operationType,
         createdAt: quotes.createdAt,
         documentNumber: clients.documentNumber,
+        agentName: users.fullName,
       })
       .from(quotes)
       .innerJoin(clients, eq(clients.id, quotes.clientId))
-      .where(and(eq(quotes.agentId, session.userId), eq(quotes.branch, "SALUD")))
+      .innerJoin(users, eq(users.id, quotes.agentId))
+      .where(seeAll ? eq(quotes.branch, "SALUD") : and(eq(quotes.agentId, session.userId), eq(quotes.branch, "SALUD")))
       .orderBy(desc(quotes.createdAt))
-      .limit(50),
+      .limit(seeAll ? 200 : 50),
   );
 }
 
