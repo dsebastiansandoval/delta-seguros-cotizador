@@ -105,7 +105,7 @@ export default function IntegracionesPage() {
             rows={[
               { campo: "Autenticación", detalle: "API key, OAuth, certificado — y si hay un ambiente de pruebas (sandbox) separado de producción" },
               { campo: "Formato", detalle: "REST/JSON (ideal) o SOAP/XML" },
-              { campo: "Documentación", detalle: "Swagger/Postman/colección de pruebas — no solo un PDF descriptivo" },
+              { campo: "Documentación", detalle: "Swagger/Postman/colección de pruebas — API contract" },
               { campo: "Costo por transacción", detalle: "Si cobran por consulta/cotización, y si hay límite de uso (rate limit)" },
               { campo: "Soporte", detalle: "Tiempo de respuesta esperado y contacto técnico si la integración falla" },
             ]}
