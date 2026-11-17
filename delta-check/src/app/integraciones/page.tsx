@@ -104,7 +104,7 @@ export default function IntegracionesPage() {
           <FieldTable
             rows={[
               { campo: "¿Existe endpoint de emisión?", detalle: "O la emisión sigue siendo manual (portal web, correo) aunque la cotización sea por API" },
-              { campo: "Documentos requeridos", detalle: "Fotos del vehículo, cédula del cliente, firma — qué hace falta adjuntar para emitir" },
+              { campo: "Documentos requeridos", detalle: "Qué necesitan adjuntar de nuestro lado para poder emitir" },
               { campo: "Respuesta de emisión", detalle: "Número de póliza, PDF/anexo de la póliza emitida" },
               { campo: "Forma de pago", detalle: "Contado o tarjeta (con o sin interés), cuotas de 6, 9 o 12 — si la API acepta elegir la forma de pago al emitir" },
             ]}
