@@ -14,7 +14,10 @@ import { auth } from "@/lib/auth";
  *  2. Nonce de CSP por request — ver más abajo, corrige un bug real.
  *  3. Headers de seguridad en cada response.
  */
-const PUBLIC_PATHS = ["/login", "/api/auth", "/recuperar-clave", "/crear-clave"];
+// /integraciones: especificación de API para el equipo técnico de cada
+// aseguradora (reuniones nov-2026) — se comparte con externos que nunca
+// van a tener cuenta en el Cotizador, así que no puede pedir sesión.
+const PUBLIC_PATHS = ["/login", "/api/auth", "/recuperar-clave", "/crear-clave", "/integraciones"];
 
 export async function proxy(request: NextRequest) {
   const url = new URL(request.url);
