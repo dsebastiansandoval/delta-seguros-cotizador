@@ -14,7 +14,7 @@ import {
 } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, editClientOnlySchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
-import { quoteService } from "@/domains/quoting/services/quote.service";
+import { quoteService, QuoteDeleteError } from "@/domains/quoting/services/quote.service";
 import { comparisonService } from "@/domains/quoting/services/comparison.service";
 import { offerService } from "@/domains/quoting/offer/offer.service";
 import { dollarsToCents } from "@/domains/shared/money";
@@ -444,6 +444,42 @@ export async function updateQuoteClientInfo(
  * personal, no un reporte gerencial (para eso está quote:read_all en el
  * dashboard, ARCHITECTURE.md §14.1).
  */
+/**
+ * "Eliminar" en Mis cotizaciones (Autos y Salud, misma tabla `quotes`) —
+ * solo ADMIN/SUPERVISOR (quote:delete, seed.ts). Nunca borra cliente ni
+ * vehículo/grupo asegurado — son del cliente, no de la cotización (ver
+ * quoteService.deleteQuote). Bloqueado si ya tiene una póliza emitida.
+ */
+export async function deleteQuote(quoteId: string): Promise<ActionResult<void>> {
+  const session = await requirePermission("quote:delete");
+
+  try {
+    await withOrganization(session.organizationId, async (tx) => {
+      const quote = await quoteService.findById(tx, quoteId);
+      if (!quote) throw new QuoteDeleteError("Cotización no encontrada.");
+      if (!session.branches.has(quote.branch)) throw new QuoteDeleteError("No tienes acceso a ese ramo.");
+
+      await quoteService.deleteQuote(tx, quoteId);
+
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "quote.deleted",
+        entityType: "quotes",
+        entityId: quoteId,
+        metadata: { code: quote.code, branch: quote.branch },
+      });
+    });
+  } catch (error) {
+    if (error instanceof QuoteDeleteError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+
+  revalidatePath("/cotizar/autos");
+  revalidatePath("/cotizar/salud");
+  return { ok: true, value: undefined };
+}
+
 export async function listMyAutoQuotes() {
   const session = await requirePermission("quote:read");
   requireBranch(session, "AUTOS");

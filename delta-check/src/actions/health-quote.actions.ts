@@ -14,6 +14,8 @@ import {
   resolveVendor,
 } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
+import { clientRepository } from "@/domains/clients/repositories/client.repository";
+import { editHealthClientSchema } from "@/domains/clients/schemas/client.schema";
 import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
 import { healthComparisonService } from "@/domains/health/services/health-comparison.service";
@@ -85,6 +87,79 @@ export async function createHealthQuote(
 
   revalidatePath("/cotizar/salud");
   redirect(`/cotizar/salud/${quoteId}/configurar`);
+}
+
+/**
+ * Precarga para "Editar cliente" de una cotización de Salud — a
+ * diferencia de Autos, acá no hay vehículo/precio que bloquear ni
+ * `locked`: edad/género/nacimiento del titular no se tocan nunca desde
+ * acá (ver editHealthClientSchema), así que no importa si la cotización
+ * ya se envió.
+ */
+export async function getHealthQuoteClientForEdit(quoteId: string) {
+  const session = await requirePermission("quote:create");
+  requireBranch(session, "SALUD");
+
+  return withOrganization(session.organizationId, async (tx) => {
+    const quote = await healthQuoteService.findById(tx, quoteId);
+    if (!quote || quote.branch !== "SALUD") return null;
+    const client = await clientRepository.findById(tx, quote.clientId);
+    if (!client) return null;
+
+    return {
+      quoteId: quote.id,
+      quoteCode: quote.code,
+      client: {
+        documentType: client.documentType,
+        documentNumber: client.documentNumber,
+        firstName: client.firstName,
+        lastName: client.lastName,
+      },
+    };
+  });
+}
+
+/** Guarda "Editar cliente" de Salud (ver getHealthQuoteClientForEdit). */
+export async function updateHealthQuoteClientInfo(
+  _prevState: ActionResult<{ quoteId: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ quoteId: string }>> {
+  const session = await requirePermission("quote:create");
+  requireBranch(session, "SALUD");
+  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
+
+  const quoteId = formData.get("quoteId");
+  if (typeof quoteId !== "string" || !quoteId) {
+    return { ok: false, errors: { form: ["Cotización inválida"] } };
+  }
+
+  const parsed = editHealthClientSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) {
+    return { ok: false, errors: parsed.error.flatten().fieldErrors };
+  }
+
+  const result = await withOrganization(session.organizationId, async (tx) => {
+    const quote = await healthQuoteService.findById(tx, quoteId);
+    if (!quote || quote.branch !== "SALUD") return { ok: false as const, message: "Cotización no encontrada" };
+
+    await clientService.updateClientFields(tx, quote.clientId, parsed.data);
+
+    await audit(tx, {
+      organizationId: session.organizationId,
+      userId: session.userId,
+      action: "quote.client_edited",
+      entityType: "clients",
+      entityId: quote.clientId,
+    });
+
+    return { ok: true as const, quoteId };
+  });
+
+  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
+
+  revalidatePath(`/cotizar/salud/${quoteId}/editar`);
+  revalidatePath("/cotizar/salud");
+  return { ok: true, value: { quoteId: result.quoteId } };
 }
 
 const money = z.union([z.literal(""), z.coerce.number().positive("La prima debe ser mayor a 0")]);

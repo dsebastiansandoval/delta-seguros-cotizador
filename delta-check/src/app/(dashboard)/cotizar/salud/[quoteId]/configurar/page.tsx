@@ -18,9 +18,14 @@ export default async function ConfigurarOfertaSaludPage({ params }: { params: Pr
             tiene tabla (BUPA), digita la prima neta del grupo; los cargos se suman solos.
           </p>
         </div>
-        <Link href={`/cotizar/salud/${quoteId}/comparar`} className="shrink-0 text-sm font-semibold text-link underline">
-          Ver comparativa
-        </Link>
+        <div className="flex shrink-0 gap-4">
+          <Link href={`/cotizar/salud/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
+            Editar cliente
+          </Link>
+          <Link href={`/cotizar/salud/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
+            Ver comparativa
+          </Link>
+        </div>
       </header>
       <HealthOfferConfigurationForm quoteId={quoteId} rows={data.rows} />
     </main>

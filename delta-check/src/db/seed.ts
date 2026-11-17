@@ -73,6 +73,7 @@ async function seedRoles() {
     "quote:read_all", // supervisor: ve las de todos los agentes
     "quote:assign_vendor", // escribir cualquier nombre en "Vendedor" (ADMIN/SUPERVISOR)
     "quote:select_vendor", // elegir "Vendedor" de la lista completa, sin poder agregar uno nuevo (Agente)
+    "quote:delete", // "Eliminar" en Mis cotizaciones — solo ADMIN/SUPERVISOR
     "rate:edit",
     "commission:read_own",
     "commission:read_all",
@@ -99,6 +100,7 @@ async function seedRoles() {
       "quote:read",
       "quote:read_all",
       "quote:assign_vendor",
+      "quote:delete",
       "commission:read_own",
       "commission:read_all",
       "commission:manage",

@@ -281,3 +281,18 @@ export const editClientOnlySchema = z.object({
 }));
 
 export type EditClientOnlyInput = z.infer<typeof editClientOnlySchema>;
+
+/**
+ * Cliente de una cotización de Salud — solo nombre/apellido. A diferencia
+ * de Autos, acá edad/género/nacimiento del titular no viven en `clients`
+ * sino en `insured_members` (son el factor de tarifa, EXCEL-AUDIT.md
+ * §2.3) y no se tocan al "editar cliente": cambiarlos invalidaría la
+ * comparativa ya generada/enviada, igual que el vehículo en Autos.
+ * Documento tampoco se toca, mismo criterio que `editClientOnlySchema`.
+ */
+export const editHealthClientSchema = z.object({
+  firstName: optionalText(),
+  lastName: optionalText(),
+});
+
+export type EditHealthClientInput = z.infer<typeof editHealthClientSchema>;

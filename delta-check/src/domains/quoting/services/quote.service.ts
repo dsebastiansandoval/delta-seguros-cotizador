@@ -1,8 +1,11 @@
 import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
-import { quoteRisks, quotes } from "@/db/schema/quoting";
+import { paymentOptions, quoteInsurerSettings, quoteOptionCoverages, quoteOptions, quoteRisks, quotes } from "@/db/schema/quoting";
 import { clients, vehicles } from "@/db/schema/clients";
+import { policies } from "@/db/schema/policies";
 import { nextQuoteCode } from "./quote-code.service";
+
+export class QuoteDeleteError extends Error {}
 
 export const quoteService = {
   /**
@@ -165,5 +168,42 @@ export const quoteService = {
       .update(quotes)
       .set({ status: "ACEPTADA", updatedAt: new Date() })
       .where(and(eq(quotes.id, quoteId), inArray(quotes.status, ["BORRADOR", "ENVIADA"])));
+  },
+
+  /**
+   * Borra una cotización entera (Autos o Salud, misma tabla) — "Eliminar"
+   * en Mis cotizaciones, solo ADMIN/SUPERVISOR (quote.actions.ts). Nunca
+   * borra el cliente ni el vehículo/grupo asegurado: son del cliente, no
+   * de la cotización, y pueden estar en uso de otra (renovación, otro
+   * riesgo). Bloqueada si ya salió una póliza de alguna de sus opciones —
+   * ahí ya no es "una cotización que sobra", es un contrato real.
+   */
+  async deleteQuote(tx: Db, quoteId: string) {
+    const risks = await tx.select({ id: quoteRisks.id }).from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId));
+    const riskIds = risks.map((r) => r.id);
+
+    const options = riskIds.length
+      ? await tx.select({ id: quoteOptions.id }).from(quoteOptions).where(inArray(quoteOptions.quoteRiskId, riskIds))
+      : [];
+    const optionIds = options.map((o) => o.id);
+
+    if (optionIds.length) {
+      const [linkedPolicy] = await tx
+        .select({ id: policies.id })
+        .from(policies)
+        .where(inArray(policies.quoteOptionId, optionIds))
+        .limit(1);
+      if (linkedPolicy) {
+        throw new QuoteDeleteError("Esta cotización ya tiene una póliza emitida — no se puede eliminar.");
+      }
+
+      await tx.delete(quoteOptionCoverages).where(inArray(quoteOptionCoverages.quoteOptionId, optionIds));
+      await tx.delete(paymentOptions).where(inArray(paymentOptions.quoteOptionId, optionIds));
+      await tx.delete(quoteOptions).where(inArray(quoteOptions.id, optionIds));
+    }
+
+    await tx.delete(quoteInsurerSettings).where(eq(quoteInsurerSettings.quoteId, quoteId));
+    await tx.delete(quoteRisks).where(eq(quoteRisks.quoteId, quoteId));
+    await tx.delete(quotes).where(eq(quotes.id, quoteId));
   },
 };

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { listMyHealthQuotes } from "@/actions/health-quote.actions";
+import { DeleteQuoteButton } from "@/components/quoting/DeleteQuoteButton";
+import { getAccess } from "@/domains/identity/services/rbac.service";
 
 const STATUS_LABEL: Record<string, string> = {
   BORRADOR: "Borrador",
@@ -22,7 +24,8 @@ const STATUS_STYLE: Record<string, string> = {
  * ver y retomar sus cotizaciones existentes, no solo crear una nueva.
  */
 export default async function MisCotizacionesSaludPage() {
-  const items = await listMyHealthQuotes();
+  const [items, access] = await Promise.all([listMyHealthQuotes(), getAccess()]);
+  const canDelete = access?.permissions.has("quote:delete") ?? false;
 
   return (
     <main className="mx-auto max-w-4xl p-8">
@@ -67,9 +70,12 @@ export default async function MisCotizacionesSaludPage() {
                   </td>
                   <td className="px-4 py-3 text-muted">{new Date(q.createdAt).toLocaleDateString("es-EC")}</td>
                   <td className="px-4 py-3 text-right">
-                    <Link href={`/cotizar/salud/${q.id}/comparar`} className="text-xs font-semibold text-link underline">
-                      {q.status === "BORRADOR" ? "Continuar" : "Ver"}
-                    </Link>
+                    <span className="inline-flex items-center gap-3">
+                      <Link href={`/cotizar/salud/${q.id}/comparar`} className="text-xs font-semibold text-link underline">
+                        {q.status === "BORRADOR" ? "Continuar" : "Ver"}
+                      </Link>
+                      {canDelete && <DeleteQuoteButton quoteId={q.id} quoteCode={q.code} />}
+                    </span>
                   </td>
                 </tr>
               ))}
