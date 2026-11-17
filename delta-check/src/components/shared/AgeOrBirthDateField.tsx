@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
  * Marcando el checkbox cambia el campo de fecha por uno de edad en años;
  * solo uno de los dos se envía (tienen nombres distintos), nunca ambos.
  * El backend resuelve la edad final desde cualquiera de los dos
- * (health-quote.schema.ts, `resolveAge`) — la edad directa manda si está.
+ * (shared/age.ts, `resolveAge`) — la edad directa manda si está.
  */
 export function AgeOrBirthDateField({
   namePrefix,

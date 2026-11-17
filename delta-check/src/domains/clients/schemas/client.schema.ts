@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { resolveAge } from "@/domains/shared/age";
 
 /**
  * Un input de texto opcional de un <input> HTML manda `""` cuando queda
@@ -283,16 +284,34 @@ export const editClientOnlySchema = z.object({
 export type EditClientOnlyInput = z.infer<typeof editClientOnlySchema>;
 
 /**
- * Cliente de una cotización de Salud — solo nombre/apellido. A diferencia
- * de Autos, acá edad/género/nacimiento del titular no viven en `clients`
- * sino en `insured_members` (son el factor de tarifa, EXCEL-AUDIT.md
- * §2.3) y no se tocan al "editar cliente": cambiarlos invalidaría la
- * comparativa ya generada/enviada, igual que el vehículo en Autos.
- * Documento tampoco se toca, mismo criterio que `editClientOnlySchema`.
+ * Cliente de una cotización de Salud — nombre/apellido (viven en
+ * `clients`) y edad/nacimiento/género del titular (viven en
+ * `insured_members`, son el factor de tarifa — EXCEL-AUDIT.md §2.3). A
+ * pedido explícito de Delta, SÍ se pueden corregir aunque la cotización
+ * ya se envió: si edad o género cambian, `updateHealthQuoteClientInfo`
+ * recalcula la comparativa entera con los valores nuevos (mismo criterio
+ * que el cambio de modalidad en Autos). Documento no se toca, mismo
+ * criterio que `editClientOnlySchema`. Mismo patrón fecha-o-edad-directa
+ * que `baseHealthQuoteSchema` (titularBirthDate/titularAgeInput).
  */
-export const editHealthClientSchema = z.object({
-  firstName: optionalText(),
-  lastName: optionalText(),
-});
+export const editHealthClientSchema = z
+  .object({
+    firstName: optionalText(),
+    lastName: optionalText(),
+    titularBirthDate: optionalDate(),
+    titularAgeInput: optionalText(),
+    titularGender: z.enum(["MASCULINO", "FEMENINO"]),
+  })
+  .refine((data) => resolveAge(data.titularBirthDate, data.titularAgeInput) != null, {
+    message: "Fecha de nacimiento o edad del titular requerida",
+    path: ["titularBirthDate"],
+  })
+  .transform((data) => ({
+    firstName: data.firstName,
+    lastName: data.lastName,
+    titularBirthDate: data.titularBirthDate,
+    titularAge: resolveAge(data.titularBirthDate, data.titularAgeInput)!,
+    titularGender: data.titularGender,
+  }));
 
 export type EditHealthClientInput = z.infer<typeof editHealthClientSchema>;

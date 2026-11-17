@@ -18,7 +18,8 @@ import { clientRepository } from "@/domains/clients/repositories/client.reposito
 import { editHealthClientSchema } from "@/domains/clients/schemas/client.schema";
 import { newHealthQuoteSchema, MAX_DEPENDENTS } from "@/domains/health/schemas/health-quote.schema";
 import { healthQuoteService, type NewMemberInput } from "@/domains/health/services/health-quote.service";
-import { healthComparisonService } from "@/domains/health/services/health-comparison.service";
+import { healthComparisonService, HealthComparisonError } from "@/domains/health/services/health-comparison.service";
+import { insuredGroupRepository } from "@/domains/health/repositories/insured-group.repository";
 import { getCaratulaAMData } from "@/domains/health/services/caratula-am.service";
 import { audit } from "@/domains/shared/audit";
 import { dollarsToCents } from "@/domains/shared/money";
@@ -91,10 +92,10 @@ export async function createHealthQuote(
 
 /**
  * Precarga para "Editar cliente" de una cotización de Salud — a
- * diferencia de Autos, acá no hay vehículo/precio que bloquear ni
- * `locked`: edad/género/nacimiento del titular no se tocan nunca desde
- * acá (ver editHealthClientSchema), así que no importa si la cotización
- * ya se envió.
+ * diferencia de Autos, nunca queda `locked`: edad/género del titular SÍ
+ * se pueden corregir aunque ya se haya enviado (pedido explícito de
+ * Delta), a costa de recalcular la comparativa si cambian (ver
+ * updateHealthQuoteClientInfo).
  */
 export async function getHealthQuoteClientForEdit(quoteId: string) {
   const session = await requirePermission("quote:create");
@@ -106,6 +107,9 @@ export async function getHealthQuoteClientForEdit(quoteId: string) {
     const client = await clientRepository.findById(tx, quote.clientId);
     if (!client) return null;
 
+    const [risk] = await tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId)).limit(1);
+    const titular = risk?.insuredGroupId ? await insuredGroupRepository.findTitular(tx, risk.insuredGroupId) : null;
+
     return {
       quoteId: quote.id,
       quoteCode: quote.code,
@@ -115,11 +119,17 @@ export async function getHealthQuoteClientForEdit(quoteId: string) {
         firstName: client.firstName,
         lastName: client.lastName,
       },
+      titular: titular ? { age: titular.age, gender: titular.gender, birthDate: titular.birthDate } : null,
     };
   });
 }
 
-/** Guarda "Editar cliente" de Salud (ver getHealthQuoteClientForEdit). */
+/**
+ * Guarda "Editar cliente" de Salud (ver getHealthQuoteClientForEdit). Si
+ * edad o género del titular cambiaron, borra y vuelve a correr la
+ * comparativa de ese riesgo con los valores nuevos — bloqueado si ya
+ * salió una póliza (HealthComparisonError, health-comparison.service.ts).
+ */
 export async function updateHealthQuoteClientInfo(
   _prevState: ActionResult<{ quoteId: string }> | null,
   formData: FormData,
@@ -138,22 +148,53 @@ export async function updateHealthQuoteClientInfo(
     return { ok: false, errors: parsed.error.flatten().fieldErrors };
   }
 
-  const result = await withOrganization(session.organizationId, async (tx) => {
-    const quote = await healthQuoteService.findById(tx, quoteId);
-    if (!quote || quote.branch !== "SALUD") return { ok: false as const, message: "Cotización no encontrada" };
+  let result: { ok: true; quoteId: string } | { ok: false; message: string };
+  try {
+    result = await withOrganization(session.organizationId, async (tx) => {
+      const quote = await healthQuoteService.findById(tx, quoteId);
+      if (!quote || quote.branch !== "SALUD") return { ok: false as const, message: "Cotización no encontrada" };
 
-    await clientService.updateClientFields(tx, quote.clientId, parsed.data);
+      await clientService.updateClientFields(tx, quote.clientId, {
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+      });
 
-    await audit(tx, {
-      organizationId: session.organizationId,
-      userId: session.userId,
-      action: "quote.client_edited",
-      entityType: "clients",
-      entityId: quote.clientId,
+      const [risk] = await tx.select().from(quoteRisks).where(eq(quoteRisks.quoteId, quoteId)).limit(1);
+      const titular = risk?.insuredGroupId ? await insuredGroupRepository.findTitular(tx, risk.insuredGroupId) : null;
+
+      if (risk && titular && (titular.age !== parsed.data.titularAge || titular.gender !== parsed.data.titularGender)) {
+        await healthComparisonService.resetForRisk(tx, risk.id);
+        await insuredGroupRepository.updateMember(tx, titular.id, {
+          age: parsed.data.titularAge,
+          gender: parsed.data.titularGender,
+          birthDate: parsed.data.titularBirthDate ?? null,
+        });
+        await healthComparisonService.runComparisonForRisk(tx, session.organizationId, risk.id);
+
+        await audit(tx, {
+          organizationId: session.organizationId,
+          userId: session.userId,
+          action: "health_quote.titular_recomputed",
+          entityType: "quotes",
+          entityId: quote.id,
+          metadata: { previousAge: titular.age, newAge: parsed.data.titularAge },
+        });
+      }
+
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "quote.client_edited",
+        entityType: "clients",
+        entityId: quote.clientId,
+      });
+
+      return { ok: true as const, quoteId };
     });
-
-    return { ok: true as const, quoteId };
-  });
+  } catch (error) {
+    if (error instanceof HealthComparisonError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
 
   if (!result.ok) return { ok: false, errors: { form: [result.message] } };
 

@@ -1,12 +1,15 @@
 import { and, eq, inArray } from "drizzle-orm";
 import type { Db } from "@/db";
 import { insurers } from "@/db/schema/catalog";
-import { quoteOptions, quoteRisks } from "@/db/schema/quoting";
+import { paymentOptions, quoteOptionCoverages, quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { insuredGroups, insuredMembers } from "@/db/schema/clients";
+import { policies } from "@/db/schema/policies";
 import { HealthRateTableAdapter } from "../gateways/health-rate-table.adapter";
 import type { HealthPlanQuote } from "../gateways/health-insurer.gateway";
 import { healthPremium, otrosCargosCents } from "./health-premium";
 import { HEALTH_PLANS } from "../health-plans.generated";
+
+export class HealthComparisonError extends Error {}
 
 export type HealthComparisonRow = {
   quoteOptionId: string;
@@ -174,5 +177,29 @@ export const healthComparisonService = {
         .set({ includedInOffer: true })
         .where(and(eq(quoteOptions.quoteRiskId, quoteRiskId), inArray(quoteOptions.id, input.includedIds)));
     }
+  },
+
+  /**
+   * Borra la comparativa de un riesgo para volver a correrla desde cero
+   * con `runComparisonForRisk` — `runComparisonForRisk` solo INSERTA, así
+   * que llamarla dos veces sin pasar por acá antes duplicaría las
+   * opciones. Se usa cuando cambia edad/género del titular (el factor de
+   * tarifa) al "editar cliente" de una cotización ya enviada — mismo
+   * criterio que `resetForModalityChange` en Autos. Bloqueado si ya salió
+   * una póliza de alguna de esas opciones.
+   */
+  async resetForRisk(tx: Db, quoteRiskId: string) {
+    const stale = await tx.select({ id: quoteOptions.id }).from(quoteOptions).where(eq(quoteOptions.quoteRiskId, quoteRiskId));
+    const staleIds = stale.map((o) => o.id);
+    if (!staleIds.length) return;
+
+    const [linkedPolicy] = await tx.select({ id: policies.id }).from(policies).where(inArray(policies.quoteOptionId, staleIds)).limit(1);
+    if (linkedPolicy) {
+      throw new HealthComparisonError("Esta cotización ya tiene una póliza emitida — no se puede recalcular.");
+    }
+
+    await tx.delete(quoteOptionCoverages).where(inArray(quoteOptionCoverages.quoteOptionId, staleIds));
+    await tx.delete(paymentOptions).where(inArray(paymentOptions.quoteOptionId, staleIds));
+    await tx.delete(quoteOptions).where(inArray(quoteOptions.id, staleIds));
   },
 };

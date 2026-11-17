@@ -15,3 +15,18 @@ export function calculateAge(birthDateIso: string, asOf: Date = new Date()): num
 
   return age;
 }
+
+/**
+ * `ageInput` (edad digitada directa) gana si está presente; si no, se
+ * calcula desde `birthDate` — mismo criterio en los dos lugares que piden
+ * "fecha de nacimiento O edad" (alta y edición de titular/dependiente de
+ * Salud, health-quote.schema.ts y client.schema.ts).
+ */
+export function resolveAge(birthDate: string | undefined, ageInput: string | undefined): number | undefined {
+  if (ageInput != null) {
+    const n = Number(ageInput);
+    return Number.isFinite(n) && n >= 0 ? n : undefined;
+  }
+  if (birthDate) return calculateAge(birthDate);
+  return undefined;
+}

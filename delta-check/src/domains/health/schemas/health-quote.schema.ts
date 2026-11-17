@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { calculateAge } from "@/domains/shared/age";
+import { resolveAge } from "@/domains/shared/age";
 
 function optionalText() {
   return z.preprocess((v) => (v === "" ? undefined : v), z.string().min(1).optional());
@@ -73,16 +73,6 @@ const baseHealthQuoteSchema = z.object({
 
   ...dependentsShape,
 });
-
-/** `ageInput` gana si está presente (edad digitada directa); si no, se calcula desde `birthDate`. */
-function resolveAge(birthDate: string | undefined, ageInput: string | undefined): number | undefined {
-  if (ageInput != null) {
-    const n = Number(ageInput);
-    return Number.isFinite(n) && n >= 0 ? n : undefined;
-  }
-  if (birthDate) return calculateAge(birthDate);
-  return undefined;
-}
 
 export const newHealthQuoteSchema = baseHealthQuoteSchema
   .refine((data) => resolveAge(data.titularBirthDate, data.titularAgeInput) != null, {

@@ -12,11 +12,9 @@ export default async function EditarClienteSaludPage({ params }: { params: Promi
     <main className="mx-auto max-w-xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Editar cliente — {edit.quoteCode}</h1>
-        <p className="mt-1 text-sm text-muted">
-          Corrige el nombre del titular. Edad, género y el resto de la cotización no se tocan acá.
-        </p>
+        <p className="mt-1 text-sm text-muted">Corrige los datos del titular de esta cotización.</p>
       </header>
-      <EditHealthClientForm quoteId={edit.quoteId} client={edit.client} />
+      <EditHealthClientForm quoteId={edit.quoteId} client={edit.client} titular={edit.titular} />
     </main>
   );
 }
