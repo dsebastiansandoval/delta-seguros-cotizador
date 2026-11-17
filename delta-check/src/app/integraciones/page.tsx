@@ -70,9 +70,10 @@ export default function IntegracionesPage() {
         <Section n="0." title="Qué buscamos">
           <p>
             Hoy el Cotizador calcula la prima de la mayoría de aseguradoras con tasas digitadas a mano por nuestro
-            equipo, y la emisión de la póliza es 100% manual. El objetivo de esta integración es que, para su
-            aseguradora, la cotización (y en lo posible la emisión) salga directo de su sistema en tiempo real —
-            más rápido para el cliente final y sin margen de error de digitación de nuestro lado.
+            equipo. El objetivo de esta integración es que, para su aseguradora, la cotización salga directo de su
+            sistema en tiempo real — más rápido para el cliente final y sin margen de error de digitación de
+            nuestro lado. Emisión, seguimiento de póliza y comisiones quedan fuera de este alcance por ahora — a
+            futuro se resuelven con la integración a SoftSeguros, no aquí.
           </p>
         </Section>
 
@@ -99,36 +100,7 @@ export default function IntegracionesPage() {
           />
         </Section>
 
-        <Section n="2." title="Emisión">
-          <p>Esto es lo que de verdad cambia el negocio — no solo cotizar más rápido, sino emitir sin pasos manuales.</p>
-          <FieldTable
-            rows={[
-              { campo: "¿Existe endpoint de emisión?", detalle: "O la emisión sigue siendo manual (portal web, correo) aunque la cotización sea por API" },
-              { campo: "Documentos requeridos", detalle: "Qué necesitan adjuntar de nuestro lado para poder emitir" },
-              { campo: "Respuesta de emisión", detalle: "Número de póliza, PDF/anexo de la póliza emitida" },
-              { campo: "Forma de pago", detalle: "Contado o tarjeta (con o sin interés), cuotas de 6, 9 o 12 — si la API acepta elegir la forma de pago al emitir" },
-            ]}
-          />
-        </Section>
-
-        <Section n="3." title="Seguimiento">
-          <FieldTable
-            rows={[
-              { campo: "Consulta de póliza", detalle: "Estado (vigente, cancelación pendiente o cancelada) de una póliza ya emitida por número de póliza" },
-              { campo: "Siniestros", detalle: "¿Hay API o webhook para reportar un siniestro o consultar su estado? Ya tenemos un módulo de Siniestros propio — si hay integración acá evitamos doble digitación" },
-              { campo: "Endosos/renovación", detalle: "¿Se puede modificar o renovar una póliza existente por API, o es cotización nueva cada vez?" },
-            ]}
-          />
-        </Section>
-
-        <Section n="4." title="Comisiones">
-          <p>
-            ¿La API devuelve el % de comisión del bróker por esta póliza/plan, o eso se sigue manejando aparte por
-            convenio comercial, sin pasar por el sistema?
-          </p>
-        </Section>
-
-        <Section n="5." title="Especificaciones técnicas">
+        <Section n="2." title="Especificaciones técnicas">
           <FieldTable
             rows={[
               { campo: "Autenticación", detalle: "API key, OAuth, certificado — y si hay un ambiente de pruebas (sandbox) separado de producción" },
@@ -140,15 +112,11 @@ export default function IntegracionesPage() {
           />
         </Section>
 
-        <Section n="6." title="Checklist rápido">
+        <Section n="3." title="Checklist rápido">
           <p className="text-muted">Para marcar en la reunión qué existe hoy de su lado:</p>
           <ul className="flex flex-col gap-2.5">
             <Check>Cotización (prima + desglose) por API</Check>
             <Check>Deducibles y coberturas dinámicos (no fijos)</Check>
-            <Check>Emisión de póliza por API</Check>
-            <Check>Consulta de estado de póliza</Check>
-            <Check>Siniestros (reportar o consultar) por API</Check>
-            <Check>Comisión del bróker vía API</Check>
             <Check>Ambiente de pruebas (sandbox) disponible</Check>
             <Check>Documentación técnica (Swagger/Postman)</Check>
           </ul>
