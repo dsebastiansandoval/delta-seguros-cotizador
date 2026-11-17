@@ -62,7 +62,7 @@ export default function IntegracionesPage() {
         <p className="mt-2 text-sm text-muted">
           Especificación de lo que necesitamos de la API de su aseguradora para integrarla al Cotizador de Delta
           Seguros. Documento vivo — no todas las secciones aplican igual a todas las aseguradoras; la idea es
-          marcar qué existe hoy y qué no, para definir el alcance real del piloto.
+          marcar qué existe hoy y qué no, para definir el alcance real.
         </p>
       </header>
 
@@ -77,8 +77,8 @@ export default function IntegracionesPage() {
         </Section>
 
         <Section n="1." title="Cotización (rating)">
-          <p>Lo mínimo para reemplazar la tasa manual por una llamada en vivo a su sistema.</p>
-          <p className="font-semibold">Lo que les enviamos</p>
+          <p>Terminos para reemplazar la tasa manual por una llamada API a su sistema.</p>
+          <p className="font-semibold">Lo disponible para ENVIO</p>
           <FieldTable
             rows={[
               { campo: "Vehículo", detalle: "Marca, modelo, año, valor comercial, ciudad, si tiene rastreo satelital" },
