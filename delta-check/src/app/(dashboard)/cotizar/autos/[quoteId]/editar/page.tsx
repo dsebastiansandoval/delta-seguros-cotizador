@@ -3,6 +3,7 @@ import { listAutoInsurers, listQuoteVendors, listVehicleBrands, listVehicleModel
 import { getAutoQuoteForEdit } from "@/actions/quote.actions";
 import { getAccess, vendorMode } from "@/domains/identity/services/rbac.service";
 import { NuevaCotizacionForm } from "@/components/quoting/NuevaCotizacionForm";
+import { EditClientOnlyForm } from "@/components/quoting/EditClientOnlyForm";
 
 /**
  * Corrige cliente + vehículo(s) de una cotización BORRADOR ya creada — ver
@@ -27,10 +28,14 @@ export default async function EditarCotizacionAutosPage({ params }: { params: Pr
   if (edit.locked) {
     return (
       <main className="mx-auto max-w-xl p-8">
-        <h1 className="text-xl font-bold tracking-tight">No se puede editar</h1>
-        <p className="mt-2 text-sm text-muted">
-          Esta cotización ya no está en borrador — una vez enviada, sus datos quedan fijos.
-        </p>
+        <header className="mb-6">
+          <h1 className="text-xl font-bold tracking-tight">Editar cliente — {edit.quoteCode}</h1>
+          <p className="mt-1 text-sm text-muted">
+            Esta cotización ya se envió — el vehículo y los valores quedan fijos. Puedes corregir los datos del
+            cliente.
+          </p>
+        </header>
+        <EditClientOnlyForm quoteId={edit.quoteId} client={edit.client} />
       </main>
     );
   }

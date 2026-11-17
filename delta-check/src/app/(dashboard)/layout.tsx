@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getAppSession, signOut } from "@/lib/auth";
 import { AccountMenu } from "@/components/shared/AccountMenu";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+import { ImpersonationBanner } from "@/components/shared/ImpersonationBanner";
 import { NuevaCotizacionMenu } from "@/components/shared/NuevaCotizacionMenu";
 import { SidebarNav, type NavGroup } from "@/components/shared/DashboardNav";
 import { getAccess, type AuthorizedSession } from "@/domains/identity/services/rbac.service";
@@ -96,6 +97,12 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
+      {access?.impersonatedBy && (
+        <ImpersonationBanner
+          adminName={access.impersonatedBy.fullName ?? access.impersonatedBy.email}
+          viewingAsName={access.fullName}
+        />
+      )}
       <header className="sticky top-0 z-20 border-b border-border bg-surface">
         <div className="flex items-center justify-between gap-5 px-7 py-3.5">
           <div className="flex items-center gap-6">
@@ -120,8 +127,8 @@ export default async function DashboardLayout({ children }: LayoutProps<"/">) {
             </form>
 
             <AccountMenu
-              email={session.email}
-              fullName={session.fullName}
+              email={access?.impersonatedBy ? access.email : session.email}
+              fullName={access?.impersonatedBy ? access.fullName : session.fullName}
               signOutAction={async () => {
                 "use server";
                 await signOut({ redirectTo: "/login" });

@@ -2,6 +2,7 @@ import { and, arrayContains, asc, eq } from "drizzle-orm";
 import { getAppSession } from "@/lib/auth";
 import { withOrganization, type Db } from "@/db";
 import { permissions, rolePermissions, roles, userRoles, users } from "@/db/schema";
+import { getImpersonationTargetUserId } from "./impersonation";
 
 export class UnauthenticatedError extends Error {
   constructor() {
@@ -26,6 +27,8 @@ export type AuthorizedSession = {
   fullName: string | null;
   permissions: Set<string>;
   branches: Set<Branch>;
+  /** Presente solo mientras alguien con `user:impersonate` está "viendo como" este usuario. */
+  impersonatedBy?: { userId: string; email: string; fullName: string | null };
 };
 
 /**
@@ -80,40 +83,79 @@ export async function getAccess(): Promise<AuthorizedSession | null> {
   return loadGrants();
 }
 
+async function loadUserGrants(tx: Db, email: string) {
+  const [user] = await tx.select().from(users).where(eq(users.email, email)).limit(1);
+  if (!user || !user.isActive) return null;
+
+  const rows = await tx
+    .select({ code: permissions.code })
+    .from(userRoles)
+    .innerJoin(roles, eq(roles.id, userRoles.roleId))
+    .innerJoin(rolePermissions, eq(rolePermissions.roleId, roles.id))
+    .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
+    .where(eq(userRoles.userId, user.id));
+
+  return {
+    userId: user.id,
+    email: user.email,
+    fullName: user.fullName,
+    codes: rows.map((r) => r.code),
+    branches: user.branches,
+  };
+}
+
 /**
  * Un usuario desactivado pierde el acceso en su siguiente request, aunque
  * su JWT siga vigente — por eso isActive se revisa acá y no solo al login.
+ *
+ * Suplantación ("ver como este usuario", user.actions.ts): se resuelve acá,
+ * en el único lugar del que depende el resto de la app, para que ningún
+ * otro archivo tenga que enterarse — si la sesión REAL tiene
+ * `user:impersonate` y hay una cookie de suplantación vigente apuntando a
+ * otro usuario activo de la misma organización, se devuelven los permisos
+ * de ESE usuario en vez de los propios. `impersonatedBy` siempre lleva
+ * quién es el admin real, para el aviso en pantalla y para auditoría.
  */
 async function loadGrants(): Promise<AuthorizedSession | null> {
   const session = await getAppSession();
   if (!session?.organizationId) return null;
 
   const organizationId = session.organizationId;
-  const email = session.email;
+  const realEmail = session.email;
 
-  const grants = await withOrganization(organizationId, async (tx) => {
-    const [user] = await tx.select().from(users).where(eq(users.email, email)).limit(1);
-    if (!user || !user.isActive) return null;
+  const resolved = await withOrganization(organizationId, async (tx) => {
+    const real = await loadUserGrants(tx, realEmail);
+    if (!real) return null;
 
-    const rows = await tx
-      .select({ code: permissions.code })
-      .from(userRoles)
-      .innerJoin(roles, eq(roles.id, userRoles.roleId))
-      .innerJoin(rolePermissions, eq(rolePermissions.roleId, roles.id))
-      .innerJoin(permissions, eq(permissions.id, rolePermissions.permissionId))
-      .where(eq(userRoles.userId, user.id));
+    const targetUserId = real.codes.includes("user:impersonate") ? await getImpersonationTargetUserId() : null;
+    if (!targetUserId || targetUserId === real.userId) {
+      return { grants: real, impersonatedBy: null };
+    }
 
-    return { userId: user.id, fullName: user.fullName, codes: rows.map((r) => r.code), branches: user.branches };
+    const [targetUser] = await tx.select().from(users).where(eq(users.id, targetUserId)).limit(1);
+    if (!targetUser || !targetUser.isActive || targetUser.organizationId !== organizationId) {
+      return { grants: real, impersonatedBy: null };
+    }
+
+    const target = await loadUserGrants(tx, targetUser.email);
+    if (!target) return { grants: real, impersonatedBy: null };
+
+    return {
+      grants: target,
+      impersonatedBy: { userId: real.userId, email: real.email, fullName: real.fullName },
+    };
   });
 
-  if (!grants) return null;
+  if (!resolved) return null;
+  const { grants, impersonatedBy } = resolved;
 
   return {
     userId: grants.userId,
     organizationId,
-    email,
+    email: grants.email,
     fullName: grants.fullName,
     permissions: new Set(grants.codes),
     branches: new Set(grants.branches),
+    ...(impersonatedBy ? { impersonatedBy } : {}),
   };
 }

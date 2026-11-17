@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Project rules
+
+Repo layout, commands, architecture, tenancy and database conventions live in [`../AGENTS.md`](../AGENTS.md). Run npm commands from this directory and use Node ≥ 20.9 (`nvm use 24` if `node -v` shows 16).

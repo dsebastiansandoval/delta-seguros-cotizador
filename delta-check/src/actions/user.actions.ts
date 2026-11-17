@@ -1,10 +1,14 @@
 "use server";
 
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { withOrganization } from "@/db";
+import { users } from "@/db/schema";
+import { getAppSession } from "@/lib/auth";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { UserAdminError, userAdminService } from "@/domains/identity/services/user-admin.service";
 import { createUserSchema, updateUserSchema, userFormToObject } from "@/domains/identity/schemas/user.schema";
+import { clearImpersonationCookie, setImpersonationCookie } from "@/domains/identity/services/impersonation";
 import { audit } from "@/domains/shared/audit";
 import { sendPasswordSetupEmail } from "@/lib/email";
 import { env } from "@/lib/env";
@@ -110,6 +114,59 @@ export async function createUser(_prevState: ActionResult | null, formData: Form
   }
 
   revalidatePath("/admin/usuarios");
+  return { ok: true, value: undefined };
+}
+
+/**
+ * "Ver como este usuario" — arranca la suplantación (rbac.service.ts,
+ * loadGrants resuelve el resto). Queda registrado en audit_logs con el
+ * admin real como actor, para poder revisar después quién vio como quién
+ * y cuándo.
+ */
+export async function startImpersonation(targetUserId: string): Promise<ActionResult<{ fullName: string }>> {
+  const session = await requirePermission("user:impersonate");
+  if (targetUserId === session.userId) {
+    return { ok: false, errors: { form: ["Ya eres tú — no hace falta suplantarte."] } };
+  }
+
+  try {
+    const target = await withOrganization(session.organizationId, async (tx) => {
+      const [user] = await tx.select().from(users).where(eq(users.id, targetUserId)).limit(1);
+      if (!user || !user.isActive) throw new UserAdminError("Ese usuario no existe o está desactivado.");
+      await audit(tx, {
+        organizationId: session.organizationId,
+        userId: session.userId,
+        action: "user.impersonate_start",
+        entityType: "users",
+        entityId: targetUserId,
+        metadata: { targetEmail: user.email },
+      });
+      return user;
+    });
+
+    await setImpersonationCookie(targetUserId);
+    revalidatePath("/", "layout");
+    return { ok: true, value: { fullName: target.fullName } };
+  } catch (error) {
+    if (error instanceof UserAdminError) return { ok: false, errors: { form: [error.message] } };
+    throw error;
+  }
+}
+
+/**
+ * "Salir" del aviso de suplantación — a propósito NO pasa por
+ * requirePermission: mientras se está suplantando a alguien, los permisos
+ * resueltos son los DE ESE usuario (loadGrants), que seguramente no tiene
+ * `user:impersonate` — exigirlo acá dejaría sin forma de salir. Solo
+ * confirma que hay una sesión real de next-auth (cualquiera) y borra la
+ * cookie; si no se estaba suplantando a nadie, no hace nada.
+ */
+export async function stopImpersonation(): Promise<ActionResult<void>> {
+  const session = await getAppSession();
+  if (!session) return { ok: false, errors: { form: ["No hay sesión activa."] } };
+
+  await clearImpersonationCookie();
+  revalidatePath("/", "layout");
   return { ok: true, value: undefined };
 }
 

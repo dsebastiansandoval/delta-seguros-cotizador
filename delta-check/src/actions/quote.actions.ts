@@ -13,7 +13,7 @@ import {
   resolveVendor,
 } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
-import { newAutoQuoteSchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
+import { newAutoQuoteSchema, editClientOnlySchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
 import { quoteService } from "@/domains/quoting/services/quote.service";
 import { comparisonService } from "@/domains/quoting/services/comparison.service";
 import { offerService } from "@/domains/quoting/offer/offer.service";
@@ -202,9 +202,12 @@ export async function runQuoteComparison(
 
 /**
  * Precarga para `/cotizar/autos/[quoteId]/editar` — null si no existe o es
- * de otro ramo; `{ locked: true }` si ya no es BORRADOR (una vez enviada,
- * los datos quedan fijos — mismo criterio que "un borrador sin enviar no
- * es producción todavía", ARCHITECTURE.md §14.1).
+ * de otro ramo; `{ locked: true, client }` si ya no es BORRADOR — una vez
+ * enviada, el vehículo y los precios quedan fijos (mismo criterio que "un
+ * borrador sin enviar no es producción todavía", ARCHITECTURE.md §14.1),
+ * pero el cliente sigue corregible con `updateQuoteClientInfo` (pedido de
+ * Delta: un error de tipeo en el cliente no debía obligar a "hacer una
+ * cotización nueva" para corregirlo).
  */
 export async function getAutoQuoteForEdit(quoteId: string) {
   const session = await requirePermission("quote:create");
@@ -213,7 +216,24 @@ export async function getAutoQuoteForEdit(quoteId: string) {
   return withOrganization(session.organizationId, async (tx) => {
     const data = await quoteService.getEditData(tx, quoteId);
     if (!data || data.quote.branch !== "AUTOS") return null;
-    if (data.quote.status !== "BORRADOR") return { locked: true as const };
+    if (data.quote.status !== "BORRADOR") {
+      return {
+        locked: true as const,
+        quoteId: data.quote.id,
+        quoteCode: data.quote.code,
+        client: {
+          personType: data.client.personType,
+          documentType: data.client.documentType,
+          documentNumber: data.client.documentNumber,
+          firstName: data.client.firstName,
+          lastName: data.client.lastName,
+          businessName: data.client.businessName,
+          birthDate: data.client.birthDate,
+          maritalStatus: data.client.maritalStatus,
+          gender: data.client.gender,
+        },
+      };
+    }
 
     return {
       locked: false as const,
@@ -365,6 +385,55 @@ export async function updateAutoQuote(
 
   revalidatePath("/cotizar/autos");
   redirect(`/cotizar/autos/${quoteId}/configurar`);
+}
+
+/**
+ * Corrige solo los datos del cliente (nombre, nacimiento, estado civil,
+ * género) de una cotización que ya se envió — vehículo y precios quedan
+ * fijos, no se tocan acá. Antes de esto, un error de tipeo en el cliente
+ * de una cotización ya enviada no tenía forma de corregirse salvo
+ * creando una cotización nueva (ver getAutoQuoteForEdit, más arriba).
+ */
+export async function updateQuoteClientInfo(
+  _prevState: ActionResult<{ quoteId: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ quoteId: string }>> {
+  const session = await requirePermission("quote:create");
+  requireBranch(session, "AUTOS");
+  await rateLimit(`quote:${session.userId}`, { limit: 30, window: "1 m" });
+
+  const quoteId = formData.get("quoteId");
+  if (typeof quoteId !== "string" || !quoteId) {
+    return { ok: false, errors: { form: ["Cotización inválida"] } };
+  }
+
+  const parsed = editClientOnlySchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) {
+    return { ok: false, errors: parsed.error.flatten().fieldErrors };
+  }
+
+  const result = await withOrganization(session.organizationId, async (tx) => {
+    const quote = await quoteService.findById(tx, quoteId);
+    if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
+
+    await clientService.updateClientFields(tx, quote.clientId, parsed.data);
+
+    await audit(tx, {
+      organizationId: session.organizationId,
+      userId: session.userId,
+      action: "quote.client_edited",
+      entityType: "clients",
+      entityId: quote.clientId,
+    });
+
+    return { ok: true as const, quoteId };
+  });
+
+  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
+
+  revalidatePath(`/cotizar/autos/${quoteId}/editar`);
+  revalidatePath("/cotizar/autos");
+  return { ok: true, value: { quoteId: result.quoteId } };
 }
 
 /**

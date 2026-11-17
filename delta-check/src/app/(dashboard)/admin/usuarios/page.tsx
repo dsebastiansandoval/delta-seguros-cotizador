@@ -37,7 +37,12 @@ export default async function UsuariosPage() {
         </h2>
         <ul className="divide-y divide-border">
           {users.map((user) => (
-            <UserRow key={user.id} user={user} isSelf={user.id === access.userId} />
+            <UserRow
+              key={user.id}
+              user={user}
+              isSelf={user.id === access.userId}
+              canImpersonate={access.permissions.has("user:impersonate")}
+            />
           ))}
         </ul>
       </section>

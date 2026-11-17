@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState, useState, useTransition } from "react";
-import { createUser, generateInviteLink, sendInviteEmail, updateUser } from "@/actions/user.actions";
+import { useRouter } from "next/navigation";
+import { createUser, generateInviteLink, sendInviteEmail, startImpersonation, updateUser } from "@/actions/user.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import { ASSIGNABLE_ROLES, ROLE_LABELS } from "@/domains/identity/schemas/user.schema";
 
@@ -177,6 +178,39 @@ function GenerateLinkButton({ userId }: { userId: string }) {
   );
 }
 
+/** Botón "Ver como" — arranca la suplantación y navega directo al dashboard de ese usuario. */
+function ImpersonateButton({ userId }: { userId: string }) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+
+  function handleClick() {
+    startTransition(async () => {
+      const result = await startImpersonation(userId);
+      if (result.ok) {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setError(Object.values(result.errors).flat()[0] ?? "No se pudo suplantar");
+      }
+    });
+  }
+
+  return (
+    <span className="inline-flex items-center gap-2">
+      <button
+        type="button"
+        onClick={handleClick}
+        disabled={pending}
+        className="rounded-md border border-border px-3 py-1 text-xs font-semibold disabled:opacity-60"
+      >
+        {pending ? "…" : "Ver como"}
+      </button>
+      {error && <span className="text-xs text-bad">{error}</span>}
+    </span>
+  );
+}
+
 export type UserRowData = {
   id: string;
   email: string;
@@ -187,7 +221,15 @@ export type UserRowData = {
   lastLoginAt: Date | null;
 };
 
-export function UserRow({ user, isSelf }: { user: UserRowData; isSelf: boolean }) {
+export function UserRow({
+  user,
+  isSelf,
+  canImpersonate,
+}: {
+  user: UserRowData;
+  isSelf: boolean;
+  canImpersonate: boolean;
+}) {
   const [state, formAction, pending] = useActionState(updateUser, null);
   return (
     <li className={`px-5 py-3 ${user.isActive ? "" : "opacity-60"}`}>
@@ -219,8 +261,9 @@ export function UserRow({ user, isSelf }: { user: UserRowData; isSelf: boolean }
           {user.lastLoginAt ? `Último ingreso ${user.lastLoginAt.toLocaleDateString("es-EC")}` : "Nunca ingresó"}
         </span>
       </form>
-      <div className="mt-2 border-t border-border pt-2">
+      <div className="mt-2 flex flex-wrap items-center gap-2 border-t border-border pt-2">
         <GenerateLinkButton userId={user.id} />
+        {canImpersonate && !isSelf && user.isActive && <ImpersonateButton userId={user.id} />}
       </div>
     </li>
   );

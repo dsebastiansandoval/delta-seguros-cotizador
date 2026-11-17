@@ -252,3 +252,32 @@ export const newAutoQuoteSchema = baseAutoQuoteSchema
 
 export type NewAutoQuoteInput = z.infer<typeof newAutoQuoteSchema>;
 export type VehicleRiskInput = NewAutoQuoteInput["vehicles"][number];
+
+/**
+ * Datos del cliente, solos — para corregir una cotización ya ENVIADA
+ * (vehículo y precios quedan fijos, ver updateQuoteClientInfo en
+ * quote.actions.ts). Mismos campos y reglas que la porción "Cliente" de
+ * `baseAutoQuoteSchema`, sin personType/documentType/documentNumber (esos
+ * no se tocan nunca al editar, igual que en editableClientUpdates).
+ */
+export const editClientOnlySchema = z.object({
+  personType: z.enum(["NATURAL", "JURIDICA"]),
+  firstName: optionalText(),
+  lastName: optionalText(),
+  businessName: optionalText(),
+  birthDate: optionalDate().refine((v) => !v || v <= new Date().toISOString().slice(0, 10), "La fecha no puede ser futura"),
+  maritalStatus: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.enum(["CASADO", "DIVORCIADO", "SOLTERO", "UNION_DE_HECHO", "VIUDO"]).optional(),
+  ),
+  gender: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["MASCULINO", "FEMENINO"]).optional()),
+}).transform((data) => ({
+  firstName: data.personType === "NATURAL" ? data.firstName : undefined,
+  lastName: data.personType === "NATURAL" ? data.lastName : undefined,
+  businessName: data.personType === "JURIDICA" ? data.businessName : undefined,
+  birthDate: data.birthDate,
+  maritalStatus: data.personType === "NATURAL" ? data.maritalStatus : undefined,
+  gender: data.personType === "NATURAL" ? data.gender : undefined,
+}));
+
+export type EditClientOnlyInput = z.infer<typeof editClientOnlySchema>;

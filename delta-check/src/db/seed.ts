@@ -82,6 +82,7 @@ async function seedRoles() {
     "compliance:manage", // procesar solicitud ARCO (rectificar/anonimizar/oposición) — Fase 3
     "client:read_pii",
     "user:manage",
+    "user:impersonate", // "Ver como este usuario" en /admin/usuarios — solo ADMIN/PLATFORM_ADMIN
     "org:manage", // PLATFORM_ADMIN
   ];
   await db

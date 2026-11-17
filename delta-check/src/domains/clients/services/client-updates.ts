@@ -7,7 +7,7 @@ import type { NewClient } from "../repositories/client.repository";
  * actualiza en cada cotización a propósito — a diferencia de `source`,
  * refleja quién vendió ESTA venta, no un atributo fijo del cliente.
  */
-export function editableClientUpdates(data: NewClient): Partial<NewClient> {
+export function editableClientUpdates(data: Partial<NewClient>): Partial<NewClient> {
   const fields = [
     "firstName",
     "lastName",
