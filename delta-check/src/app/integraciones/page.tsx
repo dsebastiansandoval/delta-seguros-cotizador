@@ -112,11 +112,29 @@ export default function IntegracionesPage() {
           />
         </Section>
 
-        <Section n="3." title="Checklist rápido">
+        <Section n="3." title="Siniestros">
+          <p className="font-semibold">Lo que ya manejamos hoy</p>
+          <p>
+            Tenemos un módulo propio de Siniestros con 4 estados: <strong>Reportado → Autorizado → En reparación →
+            Entregado</strong>. Por cada siniestro guardamos vehículo (placa, marca, modelo, año, color), taller,
+            asesor y teléfono de contacto, deducible aplicado, valor del siniestro, y si hay responsabilidad civil
+            (con la placa y el valor del tercero).
+          </p>
+          <p className="font-semibold">Cómo podría integrarse</p>
+          <FieldTable
+            rows={[
+              { campo: "Reportar siniestro", detalle: "¿Se puede reportar un siniestro nuevo por API directo desde acá, en vez de hacerlo aparte en su portal?" },
+              { campo: "Estado del siniestro", detalle: "¿Tienen API o webhook para avisar cuando cambia de estado, y cómo mapea su estado a nuestros 4?" },
+            ]}
+          />
+        </Section>
+
+        <Section n="4." title="Checklist rápido">
           <p className="text-muted">Para marcar en la reunión qué existe hoy de su lado:</p>
           <ul className="flex flex-col gap-2.5">
             <Check>Cotización (prima + desglose) por API</Check>
             <Check>Deducibles y coberturas dinámicos (no fijos)</Check>
+            <Check>Siniestros por API (reportar o estado)</Check>
             <Check>Ambiente de pruebas (sandbox) disponible</Check>
             <Check>Documentación técnica (Swagger/Postman)</Check>
           </ul>
