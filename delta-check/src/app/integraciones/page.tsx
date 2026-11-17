@@ -83,7 +83,6 @@ export default function IntegracionesPage() {
             rows={[
               { campo: "Vehículo", detalle: "Marca, modelo, año, valor comercial, ciudad, si tiene rastreo satelital" },
               { campo: "Modalidad", detalle: "Anual o por kilómetro (Auto x Km)" },
-              { campo: "Deducible deseado", detalle: "Si su aseguradora maneja más de un deducible por plan" },
               { campo: "Cliente", detalle: "Tipo de persona, cédula/RUC, para Salud también edad y género" },
               { campo: "Renovación", detalle: "Si aplica: aseguradora anterior, póliza anterior, prima anterior" },
             ]}
@@ -92,11 +91,10 @@ export default function IntegracionesPage() {
           <FieldTable
             rows={[
               { campo: "Prima neta", detalle: "Antes de cargos — es la base de toda la comparativa" },
-              { campo: "Cargos por separado", detalle: "Derecho de emisión, SSC/campesino — para armar el desglose igual que con Latina y Cóndor hoy" },
+              { campo: "Cargos por separado", detalle: "Derecho de emisión, Superintendencia de Bancos y Seguro Campesino — para armar el desglose igual que con Latina y Cóndor hoy" },
               { campo: "IVA", detalle: "Si ya viene incluido en algún monto o si lo calculamos nosotros" },
-              { campo: "Deducibles disponibles", detalle: "Con sus montos — hoy esto vive fijo en nuestro código, necesitamos que venga dinámico de ustedes" },
-              { campo: "Coberturas del plan", detalle: "RC, AP, GM, auto sustituto, amparo patrimonial — cuáles incluye cada plan ofrecido" },
-              { campo: "Vigencia de la cotización", detalle: "Cuánto tiempo es válida esa prima antes de tener que volver a cotizar" },
+              { campo: "Deducibles disponibles", detalle: "Con sus montos — hoy lo mantiene a mano nuestro equipo, necesitamos que venga dinámico de ustedes" },
+              { campo: "Coberturas del plan", detalle: "RC, AP, GM, auto sustituto, amparo patrimonial, entre otras — cuáles incluye cada plan ofrecido" },
             ]}
           />
         </Section>
@@ -108,7 +106,7 @@ export default function IntegracionesPage() {
               { campo: "¿Existe endpoint de emisión?", detalle: "O la emisión sigue siendo manual (portal web, correo) aunque la cotización sea por API" },
               { campo: "Documentos requeridos", detalle: "Fotos del vehículo, cédula del cliente, firma — qué hace falta adjuntar para emitir" },
               { campo: "Respuesta de emisión", detalle: "Número de póliza, PDF/anexo de la póliza emitida" },
-              { campo: "Forma de pago", detalle: "Contado o con interés, cuotas (6/9/12) — si la API acepta elegir la forma de pago al emitir" },
+              { campo: "Forma de pago", detalle: "Contado o tarjeta (con o sin interés), cuotas de 6, 9 o 12 — si la API acepta elegir la forma de pago al emitir" },
             ]}
           />
         </Section>
@@ -116,7 +114,7 @@ export default function IntegracionesPage() {
         <Section n="3." title="Seguimiento">
           <FieldTable
             rows={[
-              { campo: "Consulta de póliza", detalle: "Estado (vigente/vencida/anulada) de una póliza ya emitida por número de póliza" },
+              { campo: "Consulta de póliza", detalle: "Estado (vigente, cancelación pendiente o cancelada) de una póliza ya emitida por número de póliza" },
               { campo: "Siniestros", detalle: "¿Hay API o webhook para reportar un siniestro o consultar su estado? Ya tenemos un módulo de Siniestros propio — si hay integración acá evitamos doble digitación" },
               { campo: "Endosos/renovación", detalle: "¿Se puede modificar o renovar una póliza existente por API, o es cotización nueva cada vez?" },
             ]}
