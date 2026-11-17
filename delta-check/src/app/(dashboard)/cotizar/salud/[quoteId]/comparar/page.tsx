@@ -42,6 +42,9 @@ export default async function CompararSaludPage({ params }: { params: Promise<{ 
           <p className="mt-1 text-sm text-muted">{offers.length} planes en la oferta</p>
         </div>
         <div className="flex shrink-0 items-center gap-3">
+          <Link href={`/cotizar/salud/${quoteId}/editar`} className="rounded-lg border border-border px-4 py-2 text-sm font-semibold">
+            Editar cotización
+          </Link>
           <Link href={`/cotizar/salud/${quoteId}/configurar`} className="rounded-lg border border-border px-4 py-2 text-sm font-semibold">
             Configurar oferta
           </Link>

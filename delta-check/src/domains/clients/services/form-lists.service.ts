@@ -1,11 +1,12 @@
 import { and, asc, eq, max, ne, sql } from "drizzle-orm";
 import type { Db } from "@/db";
-import { quoteExecutives, quoteSources } from "@/db/schema/clients";
+import { quoteExecutives, quoteSources, quoteVendors } from "@/db/schema/clients";
 
-/** Las dos listas cerradas del formulario de cotización (INFO GENERAL del Excel). */
+/** Las listas cerradas del formulario de cotización (INFO GENERAL del Excel, y VENDEDOR, agregado después). */
 export const FORM_LISTS = {
   executives: { table: quoteExecutives, label: "Ejecutivos", field: "EJECUTIVO" },
   sources: { table: quoteSources, label: "Fuentes", field: "FUENTE" },
+  vendors: { table: quoteVendors, label: "Vendedores", field: "VENDEDOR" },
 } as const;
 export type FormListKind = keyof typeof FORM_LISTS;
 

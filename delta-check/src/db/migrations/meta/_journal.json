@@ -225,6 +225,13 @@
       "when": 1794609844639,
       "tag": "0031_typical_abomination",
       "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1794937179936,
+      "tag": "0032_opposite_shatterstar",
+      "breakpoints": true
     }
   ]
 }

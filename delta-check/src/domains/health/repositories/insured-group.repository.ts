@@ -17,6 +17,11 @@ export const insuredGroupRepository = {
     return member;
   },
 
+  async findById(tx: Db, groupId: string) {
+    const [group] = await tx.select().from(insuredGroups).where(eq(insuredGroups.id, groupId)).limit(1);
+    return group ?? null;
+  },
+
   async findTitular(tx: Db, groupId: string) {
     const [member] = await tx
       .select()
@@ -28,5 +33,17 @@ export const insuredGroupRepository = {
 
   async updateMember(tx: Db, id: string, data: Partial<NewInsuredMember>) {
     await tx.update(insuredMembers).set(data).where(eq(insuredMembers.id, id));
+  },
+
+  async findMembers(tx: Db, groupId: string) {
+    return tx.select().from(insuredMembers).where(eq(insuredMembers.groupId, groupId));
+  },
+
+  async deleteMember(tx: Db, id: string) {
+    await tx.delete(insuredMembers).where(eq(insuredMembers.id, id));
+  },
+
+  async updateRegion(tx: Db, groupId: string, region: "SIERRA" | "COSTA" | "AUSTRO") {
+    await tx.update(insuredGroups).set({ region, updatedAt: new Date() }).where(eq(insuredGroups.id, groupId));
   },
 };

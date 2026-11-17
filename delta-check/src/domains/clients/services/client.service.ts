@@ -153,24 +153,49 @@ export const clientService = {
       assignedAgentId: input.assignedAgentId,
     });
 
+    // `vehicleId` nulo = riesgo agregado al editar (antes no existía) —
+    // se crea en vez de actualizar. El vehicleId final de cada posición se
+    // devuelve en el mismo orden para que quien llama arme/borre los
+    // `quote_risks` que correspondan (ver updateAutoQuote en
+    // quote.actions.ts, que es quien decide cuántos riesgos quedan).
+    const vehicleIds: string[] = [];
     for (const v of input.vehicles) {
-      if (!v.vehicleId) continue;
-      await clientRepository.updateVehicle(tx, v.vehicleId, {
-        clientId: client.id,
-        plate: v.plate.toUpperCase(),
-        brand: v.brand,
-        model: v.model,
-        year: v.year,
-        bodyType: v.bodyType,
-        color: v.color,
-        commercialValueCents: dollarsToCents(v.commercialValueDollars),
-        extrasValueCents: dollarsToCents(v.extrasValueDollars),
-        hasTracker: v.hasTracker,
-        city: v.city,
-        province: v.province,
-      });
+      if (v.vehicleId) {
+        await clientRepository.updateVehicle(tx, v.vehicleId, {
+          clientId: client.id,
+          plate: v.plate.toUpperCase(),
+          brand: v.brand,
+          model: v.model,
+          year: v.year,
+          bodyType: v.bodyType,
+          color: v.color,
+          commercialValueCents: dollarsToCents(v.commercialValueDollars),
+          extrasValueCents: dollarsToCents(v.extrasValueDollars),
+          hasTracker: v.hasTracker,
+          city: v.city,
+          province: v.province,
+        });
+        vehicleIds.push(v.vehicleId);
+      } else {
+        const vehicle = await clientRepository.createVehicle(tx, {
+          organizationId,
+          clientId: client.id,
+          plate: v.plate.toUpperCase(),
+          brand: v.brand,
+          model: v.model,
+          year: v.year,
+          bodyType: v.bodyType,
+          color: v.color,
+          commercialValueCents: dollarsToCents(v.commercialValueDollars),
+          extrasValueCents: dollarsToCents(v.extrasValueDollars),
+          hasTracker: v.hasTracker,
+          city: v.city,
+          province: v.province,
+        });
+        vehicleIds.push(vehicle.id);
+      }
     }
 
-    return client;
+    return { client, vehicleIds };
   },
 };

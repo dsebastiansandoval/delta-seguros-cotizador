@@ -14,13 +14,18 @@ export function AgeOrBirthDateField({
   namePrefix,
   required,
   autoBirthDate,
+  defaultAge,
+  defaultBirthDate,
 }: {
   namePrefix: string;
   required?: boolean;
   /** Sugerencia de EcuadorAPI al buscar por cédula — nunca pisa lo que el usuario ya haya tocado a mano. */
   autoBirthDate?: string | null;
+  /** Precarga al editar un miembro ya existente — si no hay fecha guardada, arranca en modo "Edad". */
+  defaultAge?: number;
+  defaultBirthDate?: string | null;
 }) {
-  const [useAge, setUseAge] = useState(false);
+  const [useAge, setUseAge] = useState(defaultAge != null && !defaultBirthDate);
   const dateRef = useRef<HTMLInputElement>(null);
   const touched = useRef(false);
 
@@ -53,6 +58,7 @@ export function AgeOrBirthDateField({
           min={0}
           max={120}
           required={required}
+          defaultValue={defaultAge}
           placeholder="Edad en años"
           onChange={() => {
             touched.current = true;
@@ -65,6 +71,7 @@ export function AgeOrBirthDateField({
           name={`${namePrefix}BirthDate`}
           type="date"
           required={required}
+          defaultValue={defaultBirthDate ?? undefined}
           onChange={() => {
             touched.current = true;
           }}

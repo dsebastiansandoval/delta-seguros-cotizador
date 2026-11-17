@@ -504,7 +504,7 @@ export function NuevaCotizacionForm({
               Riesgo {n}
             </button>
           ))}
-          {!isEditing && riskCount < 4 && (
+          {riskCount < 4 && (
             <button
               type="button"
               onClick={() => {
@@ -517,7 +517,7 @@ export function NuevaCotizacionForm({
               + Añadir riesgo
             </button>
           )}
-          {!isEditing && riskCount > 1 && (
+          {riskCount > 1 && (
             <button
               type="button"
               onClick={() => {
@@ -531,12 +531,6 @@ export function NuevaCotizacionForm({
             </button>
           )}
         </div>
-        {isEditing && (
-          <p className="text-xs text-muted">
-            No se puede cambiar el número de vehículos al editar — para eso, crea una cotización nueva.
-          </p>
-        )}
-
         <div hidden={activeTab !== 1} className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <label className="flex flex-col gap-1 text-sm">
             Placa

@@ -1,7 +1,7 @@
-import { and, arrayContains, asc, eq } from "drizzle-orm";
+import { and, arrayContains, asc, eq, ilike } from "drizzle-orm";
 import { getAppSession } from "@/lib/auth";
 import { withOrganization, type Db } from "@/db";
-import { permissions, rolePermissions, roles, userRoles, users } from "@/db/schema";
+import { permissions, rolePermissions, roles, userRoles, users, quoteVendors } from "@/db/schema";
 import { getImpersonationTargetUserId } from "./impersonation";
 
 export class UnauthenticatedError extends Error {
@@ -63,19 +63,46 @@ export function requireBranch(session: AuthorizedSession, branch: Branch) {
 export { resolveExecutive, resolveVendor, vendorMode } from "./vendor-assignment";
 
 /**
- * Usuarios activos de la organización que ven el ramo dado — fuente de la
- * lista de "Vendedor" (y, antes, de "Ejecutivo"): a pedido de Delta sale de
- * los usuarios reales del sistema, no de un catálogo aparte que se puede
- * desincronizar (mismo criterio que ya usaba "Ejecutivo" antes de volverse
- * un campo oculto).
+ * Lista cerrada de "Vendedor" para Agente (`quote:select_vendor`) — unión
+ * de los usuarios reales activos que ven ese ramo (fuente original, a
+ * pedido de Delta: nunca se desincroniza con la nómina) MÁS el catálogo
+ * `quoteVendors` (externos sin cuenta propia, que ADMIN/SUPERVISOR hace
+ * crecer solo al escribir uno nuevo — ver ensureVendorExists más abajo).
  */
 export async function listActiveUsersByBranch(tx: Db, branch: Branch): Promise<string[]> {
-  const rows = await tx
+  const userRows = await tx
     .select({ fullName: users.fullName })
     .from(users)
     .where(and(eq(users.isActive, true), arrayContains(users.branches, [branch])))
     .orderBy(asc(users.fullName));
-  return rows.map((r) => r.fullName).filter((n): n is string => Boolean(n));
+  const vendorRows = await tx
+    .select({ name: quoteVendors.name })
+    .from(quoteVendors)
+    .where(eq(quoteVendors.isActive, true))
+    .orderBy(asc(quoteVendors.name));
+  const names = [...userRows.map((r) => r.fullName), ...vendorRows.map((r) => r.name)].filter(
+    (n): n is string => Boolean(n),
+  );
+  return [...new Set(names)].sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Hace crecer el catálogo `quoteVendors` solo al escribir un nombre nuevo
+ * en modo "free" (ver resolveVendor, vendor-assignment.ts) — idempotente:
+ * si ya existe (por nombre, sin importar mayúsculas), no hace nada. No usa
+ * formListsService.create() a propósito: esa función tira error si el
+ * nombre ya existe (pensada para el ABM de /admin/configuracion, donde sí
+ * es un error); acá un nombre repetido es el caso normal y esperado.
+ */
+export async function ensureVendorExists(tx: Db, organizationId: string, name: string): Promise<void> {
+  const trimmed = name.trim();
+  if (!trimmed) return;
+  const [existing] = await tx
+    .select({ id: quoteVendors.id })
+    .from(quoteVendors)
+    .where(and(eq(quoteVendors.organizationId, organizationId), ilike(quoteVendors.name, trimmed)));
+  if (existing) return;
+  await tx.insert(quoteVendors).values({ organizationId, name: trimmed }).onConflictDoNothing();
 }
 
 /** Para armar la navegación: null si no hay sesión válida, sin lanzar. */

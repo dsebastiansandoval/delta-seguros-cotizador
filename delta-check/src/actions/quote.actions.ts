@@ -7,11 +7,13 @@ import { withOrganization, type Db } from "@/db";
 import { quotes } from "@/db/schema/quoting";
 import { clients } from "@/db/schema/clients";
 import {
+  ensureVendorExists,
   listActiveUsersByBranch,
   requireBranch,
   requirePermission,
   resolveExecutive,
   resolveVendor,
+  vendorMode,
 } from "@/domains/identity/services/rbac.service";
 import { clientService } from "@/domains/clients/services/client.service";
 import { newAutoQuoteSchema, editClientOnlySchema, type VehicleRiskInput } from "@/domains/clients/schemas/client.schema";
@@ -71,6 +73,9 @@ async function createQuoteFromForm(
 
   const quoteId = await withOrganization(session.organizationId, async (tx) => {
     input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "AUTOS"));
+    if (vendorMode(session) === "free" && input.vendor) {
+      await ensureVendorExists(tx, session.organizationId, input.vendor);
+    }
 
     const { client, vehicles: createdVehicles } = await clientService.createClientWithVehicles(
       tx,
@@ -312,63 +317,103 @@ export async function updateAutoQuote(
 
   const result = await withOrganization(session.organizationId, async (tx) => {
     input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "AUTOS"));
+    if (vendorMode(session) === "free" && input.vendor) {
+      await ensureVendorExists(tx, session.organizationId, input.vendor);
+    }
 
     const quote = await quoteService.findById(tx, quoteId);
     if (!quote || quote.branch !== "AUTOS") return { ok: false as const, message: "Cotización no encontrada" };
     if (quote.status !== "BORRADOR") return { ok: false as const, message: "Esta cotización ya no se puede editar" };
 
-    const risks = await quoteService.findRisksByQuote(tx, quoteId);
-    if (risks.length !== input.vehicles.length) {
-      return { ok: false as const, message: "No se puede cambiar el número de vehículos al editar — usa una cotización nueva" };
-    }
-    const modalityChanged = quote.modality !== input.modality;
+    try {
+      const existingRisks = await quoteService.findRisksByQuote(tx, quoteId);
+      const hadComparativa = existingRisks.length > 0 && (await comparisonService.hasOptions(tx, existingRisks[0].id));
+      const modalityChanged = quote.modality !== input.modality;
 
-    const client = await clientService.editClientAndVehicles(tx, session.organizationId, {
-      personType: input.personType,
-      documentType: input.documentType,
-      documentNumber: input.documentNumber,
-      firstName: input.firstName,
-      lastName: input.lastName,
-      businessName: input.businessName,
-      birthDate: input.birthDate,
-      maritalStatus: input.maritalStatus,
-      gender: input.gender,
-      email: input.email,
-      phone: input.phone,
-      executive: input.executive,
-      vendor: input.vendor,
-      assignedAgentId: quote.agentId,
-      vehicles: input.vehicles.map((v, i) => ({ ...v, vehicleId: risks[i].vehicleId })),
-    });
+      // Riesgos de más que ya no vienen en el formulario (se quitó un
+      // vehículo) — se borran antes de tocar el resto, con el mismo guard
+      // de póliza que "Eliminar" en Mis cotizaciones (quoteService.deleteRisk).
+      for (let i = input.vehicles.length; i < existingRisks.length; i++) {
+        await quoteService.deleteRisk(tx, existingRisks[i].id);
+      }
 
-    await quoteService.updateAutoQuote(tx, quoteId, {
-      clientId: client.id,
-      modality: input.modality,
-      operationType: input.operationType,
-      previousInsurerId: input.previousInsurerId,
-      previousPolicyNumber: input.previousPolicyNumber,
-      previousStartDate: input.previousStartDate,
-      previousExpiryDate: input.previousExpiryDate,
-      previousPremiumCents: input.previousPremiumDollars != null ? dollarsToCents(input.previousPremiumDollars) : undefined,
-      risks: risks.map((r, i) => ({
-        quoteRiskId: r.id,
-        insuredValueCents: dollarsToCents(input.vehicles[i].commercialValueDollars),
-        extrasValueCents: dollarsToCents(input.vehicles[i].extrasValueDollars),
-      })),
-    });
+      // `vehicleId: null` para cualquier posición nueva (se agregó un
+      // vehículo) — editClientAndVehicles crea el vehículo y devuelve su id.
+      const { client, vehicleIds } = await clientService.editClientAndVehicles(tx, session.organizationId, {
+        personType: input.personType,
+        documentType: input.documentType,
+        documentNumber: input.documentNumber,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        businessName: input.businessName,
+        birthDate: input.birthDate,
+        maritalStatus: input.maritalStatus,
+        gender: input.gender,
+        email: input.email,
+        phone: input.phone,
+        executive: input.executive,
+        vendor: input.vendor,
+        assignedAgentId: quote.agentId,
+        vehicles: input.vehicles.map((v, i) => ({ ...v, vehicleId: existingRisks[i]?.vehicleId ?? null })),
+      });
 
-    if (modalityChanged) {
-      // Las opciones y la configuración de aseguradoras ya guardadas tienen la
-      // forma de la modalidad anterior (ver resetForModalityChange) — se
-      // descartan y se regeneran desde cero para la modalidad nueva.
-      await comparisonService.resetForModalityChange(
-        tx,
-        quoteId,
-        risks.map((r) => r.id),
-      );
-      await generateComparison(tx, session.organizationId, quoteId, input.modality, risks);
-    } else if (risks.length && (await comparisonService.hasOptions(tx, risks[0].id))) {
-      await comparisonService.repriceEngines(tx, quoteId);
+      const keepCount = Math.min(existingRisks.length, input.vehicles.length);
+      await quoteService.updateAutoQuote(tx, quoteId, {
+        clientId: client.id,
+        modality: input.modality,
+        operationType: input.operationType,
+        previousInsurerId: input.previousInsurerId,
+        previousPolicyNumber: input.previousPolicyNumber,
+        previousStartDate: input.previousStartDate,
+        previousExpiryDate: input.previousExpiryDate,
+        previousPremiumCents: input.previousPremiumDollars != null ? dollarsToCents(input.previousPremiumDollars) : undefined,
+        risks: existingRisks.slice(0, keepCount).map((r, i) => ({
+          quoteRiskId: r.id,
+          insuredValueCents: dollarsToCents(input.vehicles[i].commercialValueDollars),
+          extrasValueCents: dollarsToCents(input.vehicles[i].extrasValueDollars),
+        })),
+      });
+
+      // Riesgos de más que sí vienen en el formulario (se agregó un
+      // vehículo) — se crean después de actualizar lo demás, en orden.
+      const newRisks = [];
+      for (let i = existingRisks.length; i < input.vehicles.length; i++) {
+        newRisks.push(
+          await quoteService.addRisk(tx, {
+            organizationId: session.organizationId,
+            quoteId,
+            riskNumber: i + 1,
+            vehicleId: vehicleIds[i],
+            insuredValueCents: dollarsToCents(input.vehicles[i].commercialValueDollars),
+            extrasValueCents: dollarsToCents(input.vehicles[i].extrasValueDollars),
+          }),
+        );
+      }
+
+      const currentRisks = [...existingRisks.slice(0, keepCount), ...newRisks];
+
+      if (modalityChanged) {
+        // Las opciones y la configuración de aseguradoras ya guardadas tienen la
+        // forma de la modalidad anterior (ver resetForModalityChange) — se
+        // descartan y se regeneran desde cero para la modalidad nueva.
+        await comparisonService.resetForModalityChange(
+          tx,
+          quoteId,
+          currentRisks.map((r) => r.id),
+        );
+        await generateComparison(tx, session.organizationId, quoteId, input.modality, currentRisks);
+      } else if (newRisks.length && hadComparativa) {
+        // Riesgo nuevo en una cotización que ya tenía comparativa —
+        // generateComparison salta los riesgos que ya tienen opciones, así
+        // que esto solo calcula precio para el/los riesgo(s) recién
+        // agregado(s), sin tocar lo que el resto ya tenía.
+        await generateComparison(tx, session.organizationId, quoteId, input.modality, currentRisks);
+      } else if (currentRisks.length && hadComparativa) {
+        await comparisonService.repriceEngines(tx, quoteId);
+      }
+    } catch (error) {
+      if (error instanceof QuoteDeleteError) return { ok: false as const, message: error.message };
+      throw error;
     }
 
     await audit(tx, {

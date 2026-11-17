@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
 import { parseThemeValue, type ThemePreference } from "@/domains/shared/theme";
 import { initialsFrom } from "@/domains/shared/initials";
 
@@ -128,14 +129,23 @@ export function AccountMenu({
             ))}
           </div>
 
-          <form action={signOutAction} className="mt-3 border-t border-border pt-3">
-            <button
-              type="submit"
-              className="w-full rounded-md border border-border px-2 py-1.5 text-left font-medium hover:bg-background"
+          <div className="mt-3 flex flex-col gap-1 border-t border-border pt-3">
+            <Link
+              href="/cuenta"
+              onClick={() => setOpen(false)}
+              className="rounded-md px-2 py-1.5 font-medium hover:bg-background"
             >
-              Cerrar sesión
-            </button>
-          </form>
+              Perfil
+            </Link>
+            <form action={signOutAction}>
+              <button
+                type="submit"
+                className="w-full rounded-md border border-border px-2 py-1.5 text-left font-medium hover:bg-background"
+              >
+                Cerrar sesión
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

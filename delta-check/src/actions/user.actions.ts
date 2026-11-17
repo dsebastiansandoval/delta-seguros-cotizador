@@ -3,7 +3,7 @@
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { withOrganization } from "@/db";
-import { users } from "@/db/schema";
+import { users, roles, userRoles } from "@/db/schema";
 import { getAppSession } from "@/lib/auth";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { UserAdminError, userAdminService } from "@/domains/identity/services/user-admin.service";
@@ -166,6 +166,38 @@ export async function stopImpersonation(): Promise<ActionResult<void>> {
   if (!session) return { ok: false, errors: { form: ["No hay sesión activa."] } };
 
   await clearImpersonationCookie();
+  revalidatePath("/", "layout");
+  return { ok: true, value: undefined };
+}
+
+/** "Perfil" (menú de la cuenta, /cuenta) — nombre, correo y rol de quien está logueado. */
+export async function getMyProfile() {
+  const session = await requirePermission("quote:read");
+  return withOrganization(session.organizationId, async (tx) => {
+    const [row] = await tx
+      .select({ fullName: users.fullName, email: users.email, roleCode: roles.code })
+      .from(users)
+      .leftJoin(userRoles, eq(userRoles.userId, users.id))
+      .leftJoin(roles, eq(roles.id, userRoles.roleId))
+      .where(eq(users.id, session.userId))
+      .limit(1);
+    return row ?? null;
+  });
+}
+
+/** Guarda el nombre desde /cuenta — a diferencia de updateUser, cualquiera puede corregir el suyo propio, sin `user:manage`. */
+export async function updateMyProfile(_prevState: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  const session = await requirePermission("quote:read");
+
+  const fullName = formData.get("fullName");
+  if (typeof fullName !== "string" || !fullName.trim()) {
+    return { ok: false, errors: { fullName: ["Ingresa el nombre"] } };
+  }
+
+  await withOrganization(session.organizationId, (tx) =>
+    tx.update(users).set({ fullName: fullName.trim() }).where(eq(users.id, session.userId)),
+  );
+
   revalidatePath("/", "layout");
   return { ok: true, value: undefined };
 }

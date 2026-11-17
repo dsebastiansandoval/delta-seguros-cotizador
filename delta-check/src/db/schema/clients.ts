@@ -106,6 +106,30 @@ export const quoteExecutives = pgTable(
   (t) => [uniqueIndex("quote_executives_org_name_idx").on(t.organizationId, t.name)],
 );
 
+/**
+ * 🏢 Catálogo de VENDEDOR — gente que vende pero nunca va a tener cuenta
+ * propia en el Cotizador (referidos, externos sin login). ADMIN/SUPERVISOR
+ * (`quote:assign_vendor`, texto libre) crece esta lista sola la primera
+ * vez que escriben un nombre nuevo (ver ensureExists más abajo y
+ * resolveVendor en vendor-assignment.ts); Agente (`quote:select_vendor`)
+ * elige de acá. A diferencia de EJECUTIVO/FUENTE, esto NO reemplaza a los
+ * usuarios reales del sistema como fuente de "Vendedor" — los complementa:
+ * un Agente real sigue apareciendo porque también puede vender, pero un
+ * externo sin cuenta ya no se pierde la próxima vez (pedido 17-nov,
+ * encontrado por el usuario: "esos vendedores no se quedan registrados").
+ */
+export const quoteVendors = pgTable(
+  "quote_vendors",
+  {
+    id: id(),
+    organizationId: organizationId(),
+    name: text("name").notNull(),
+    isActive: boolean("is_active").notNull().default(true),
+    displayOrder: integer("display_order").notNull().default(0),
+  },
+  (t) => [uniqueIndex("quote_vendors_org_name_idx").on(t.organizationId, t.name)],
+);
+
 /** 🏢 Grupo familiar de salud — titular + dependientes. */
 export const insuredGroups = pgTable("insured_groups", {
   id: id(),

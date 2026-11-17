@@ -46,9 +46,16 @@ export default async function ConfiguracionPage() {
               hint="Campo FUENTE: quién trajo al cliente."
               items={lists.sources}
             />
+            <FormListEditor
+              kind="vendors"
+              title="Vendedores externos"
+              hint="Vendedores sin cuenta propia en el sistema — se agregan solos la primera vez que Admin/Supervisor escribe uno nuevo al cotizar; acá se pueden desactivar o corregir."
+              items={lists.vendors}
+            />
           </div>
           <p className="mt-3 text-xs text-muted">
-            El campo EJECUTIVO sale de los usuarios activos del sistema —{" "}
+            El campo EJECUTIVO sale de los usuarios activos del sistema, y VENDEDOR también incluye a cualquier
+            Agente/Freelance real —{" "}
             <a href="/admin/usuarios" className="text-link hover:underline">
               administrar en Usuarios
             </a>

@@ -44,7 +44,7 @@ export default async function EditarCotizacionAutosPage({ params }: { params: Pr
     <main className="mx-auto max-w-3xl p-8">
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">Editar cotización — {edit.quoteCode}</h1>
-        <p className="mt-1 text-sm text-muted">Corrige los datos del cliente o del vehículo. No cambia el número de riesgos.</p>
+        <p className="mt-1 text-sm text-muted">Corrige los datos del cliente o del vehículo — también puedes agregar o retirar un riesgo.</p>
       </header>
       <NuevaCotizacionForm
         brands={brands.map((b) => b.name)}

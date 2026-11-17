@@ -15,8 +15,12 @@ const PATH = "/admin/configuracion";
 // Listas del formulario: quién aparece como EJECUTIVO/FUENTE es parte de la nómina → user:manage.
 // Tablas de tasas → rate:edit, el mismo permiso que la carga de tarifas de Salud.
 
-const kindSchema = z.enum(["executives", "sources"]) satisfies z.ZodType<FormListKind>;
-const ENTITY_TYPE: Record<FormListKind, string> = { executives: "quote_executives", sources: "quote_sources" };
+const kindSchema = z.enum(["executives", "sources", "vendors"]) satisfies z.ZodType<FormListKind>;
+const ENTITY_TYPE: Record<FormListKind, string> = {
+  executives: "quote_executives",
+  sources: "quote_sources",
+  vendors: "quote_vendors",
+};
 
 const nameSchema = z
   .string()
@@ -30,10 +34,13 @@ export async function getSettingsOverview() {
   const canManageLists = session.permissions.has("user:manage");
   const canEditRates = session.permissions.has("rate:edit");
   return withOrganization(session.organizationId, async (tx) => ({
-    // VENDEDOR (antes EJECUTIVO) no se edita acá — sale de los usuarios
-    // del sistema (listQuoteVendors en catalog.actions.ts), a pedido de
-    // Delta: una sola lista de personas, no dos que se podían desincronizar.
-    lists: canManageLists ? { sources: await formListsService.list(tx, "sources") } : null,
+    // VENDEDOR es la unión de los usuarios reales activos (nunca se
+    // desincroniza con la nómina) MÁS este catálogo — para vendedores
+    // externos sin cuenta propia, que antes se perdían al escribirlos
+    // como texto libre (ver ensureVendorExists, rbac.service.ts).
+    lists: canManageLists
+      ? { sources: await formListsService.list(tx, "sources"), vendors: await formListsService.list(tx, "vendors") }
+      : null,
     engineRates: canEditRates ? await engineRatesService.get(tx) : null,
   }));
 }

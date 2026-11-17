@@ -103,6 +103,30 @@ export const quoteService = {
   },
 
   /**
+   * Agrega UN riesgo a una cotización BORRADOR ya creada — "agregar
+   * riesgo" al editar (ver updateAutoQuote en quote.actions.ts). El
+   * vehículo ya viene creado (clientService.editClientAndVehicles); acá
+   * solo se arma la fila de `quote_risks` que lo conecta con la cotización.
+   */
+  async addRisk(
+    tx: Db,
+    params: { organizationId: string; quoteId: string; riskNumber: number; vehicleId: string; insuredValueCents: number; extrasValueCents: number },
+  ) {
+    const [risk] = await tx
+      .insert(quoteRisks)
+      .values({
+        organizationId: params.organizationId,
+        quoteId: params.quoteId,
+        riskNumber: params.riskNumber,
+        vehicleId: params.vehicleId,
+        insuredValueCents: params.insuredValueCents,
+        extrasValueCents: params.extrasValueCents,
+      })
+      .returning();
+    return risk;
+  },
+
+  /**
    * Corrige una cotización BORRADOR ya creada (ver updateAutoQuote en
    * quote.actions.ts) — cliente y número de riesgos no cambian acá, solo
    * sus valores. `risks` viene ya emparejado 1 a 1 por posición con los
@@ -168,6 +192,35 @@ export const quoteService = {
       .update(quotes)
       .set({ status: "ACEPTADA", updatedAt: new Date() })
       .where(and(eq(quotes.id, quoteId), inArray(quotes.status, ["BORRADOR", "ENVIADA"])));
+  },
+
+  /**
+   * Borra UN riesgo sobrante al editar (se redujo el número de vehículos,
+   * ver updateAutoQuote en quote.actions.ts) — mismo criterio y mismo
+   * guard de póliza que deleteQuote, pero acotado a un solo `quote_risk`
+   * en vez de toda la cotización. Nunca borra el vehículo (vehicles.ts):
+   * es del cliente, no del riesgo.
+   */
+  async deleteRisk(tx: Db, riskId: string) {
+    const options = await tx.select({ id: quoteOptions.id }).from(quoteOptions).where(eq(quoteOptions.quoteRiskId, riskId));
+    const optionIds = options.map((o) => o.id);
+
+    if (optionIds.length) {
+      const [linkedPolicy] = await tx
+        .select({ id: policies.id })
+        .from(policies)
+        .where(inArray(policies.quoteOptionId, optionIds))
+        .limit(1);
+      if (linkedPolicy) {
+        throw new QuoteDeleteError("Uno de los vehículos que quitaste ya tiene una póliza emitida — no se puede editar así.");
+      }
+
+      await tx.delete(quoteOptionCoverages).where(inArray(quoteOptionCoverages.quoteOptionId, optionIds));
+      await tx.delete(paymentOptions).where(inArray(paymentOptions.quoteOptionId, optionIds));
+      await tx.delete(quoteOptions).where(inArray(quoteOptions.id, optionIds));
+    }
+
+    await tx.delete(quoteRisks).where(eq(quoteRisks.id, riskId));
   },
 
   /**
