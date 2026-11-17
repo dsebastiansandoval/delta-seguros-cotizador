@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getClaimDetail, listClaimAttachments } from "@/actions/claim.actions";
 import { AddClaimNoteForm } from "@/components/policies/AddClaimNoteForm";
@@ -53,6 +54,9 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
 
   return (
     <main className="mx-auto max-w-3xl p-8">
+      <Link href="/siniestros" className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-link underline">
+        ← Volver a Siniestros
+      </Link>
       <header className="mb-6">
         <h1 className="text-xl font-bold tracking-tight">
           Siniestro {claim.claimNumber || `— ${clientName || "sin cliente"}`}

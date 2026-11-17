@@ -4,6 +4,7 @@ import { Document, Image, Page, Text, View, StyleSheet } from "@react-pdf/render
 import type { CaratulaAMData } from "../services/caratula-am.service";
 import { formatUSD } from "@/domains/shared/money";
 import { coverageRows, coverageValueFor, memberLabels, planLabel } from "../services/health-offer-format";
+import { salutationFor } from "@/domains/quoting/services/caratula-salutation";
 
 /**
  * Portada real de Salud/AM (`xl/media/image60.jpeg` dentro de COTIZADOR
@@ -162,7 +163,9 @@ function CaratulaAMLetterPage({ data }: { data: CaratulaAMData }) {
         <Image src={DELTA_LOGO} style={logoSize} />
       </View>
 
-      <Text>Señores</Text>
+      <Text>
+        {salutationFor({ personType: data.clientPersonType, gender: data.clientGender, maritalStatus: null })}
+      </Text>
       <Text style={{ marginBottom: 4 }}>{data.clientName}</Text>
       <Text style={{ marginBottom: 8 }}>Presente.-</Text>
 

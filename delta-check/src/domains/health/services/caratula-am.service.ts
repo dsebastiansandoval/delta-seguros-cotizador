@@ -44,6 +44,8 @@ export type CaratulaAMData = {
   date: string;
   clientName: string;
   clientDocument: string;
+  clientPersonType: "NATURAL" | "JURIDICA";
+  clientGender: "MASCULINO" | "FEMENINO" | null;
   region: "SIERRA" | "COSTA" | "AUSTRO";
   members: CaratulaAMMember[];
   coverPageValidity: { from: string; to: string };
@@ -171,11 +173,15 @@ export async function getCaratulaAMData(tx: Db, quoteId: string): Promise<Caratu
   const ddmmyyyy = (d: Date) =>
     `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
 
+  const titular = memberRows.find((m) => m.relation === "TITULAR");
+
   return {
     quoteCode: quote.code,
     date: new Date().toLocaleDateString("es-EC", { year: "numeric", month: "long", day: "numeric" }),
     clientName,
     clientDocument: client.documentNumber,
+    clientPersonType: client.personType,
+    clientGender: titular?.gender ?? null,
     region: group.region,
     members: memberRows.map((m) => ({ relation: m.relation, age: m.age, gender: m.gender })),
     coverPageValidity: { from: ddmmyyyy(today), to: ddmmyyyy(nextYear) },
