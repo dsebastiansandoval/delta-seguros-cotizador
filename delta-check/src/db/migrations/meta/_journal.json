@@ -232,6 +232,13 @@
       "when": 1794937179936,
       "tag": "0032_opposite_shatterstar",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "7",
+      "when": 1794959193999,
+      "tag": "0033_closed_sersi",
+      "breakpoints": true
     }
   ]
 }

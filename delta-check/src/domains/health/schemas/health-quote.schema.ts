@@ -59,8 +59,14 @@ const dependentsShape = Object.assign(
 // asumido) — documentType sigue aceptando RUC porque una persona natural
 // también puede tener uno (cédula + "001").
 const baseHealthQuoteSchema = z.object({
-  documentType: z.enum(["CEDULA", "RUC", "PASAPORTE"]),
-  documentNumber: z.string().min(5, "Documento inválido"),
+  // A pedido de Delta (17-nov): la cédula NO es obligatoria para Asistencia
+  // Médica (a diferencia de Autos, donde el vehículo sí la exige) — basta
+  // nombre + fecha de nacimiento del titular. Sin documento, el cliente se
+  // busca/crea por nombre+fecha de nacimiento (ver clientService.upsertClient
+  // en health-quote.actions.ts), por eso el refine de abajo exige fecha
+  // exacta (no solo edad) cuando no hay documento.
+  documentType: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["CEDULA", "RUC", "PASAPORTE"]).optional()),
+  documentNumber: z.preprocess((v) => (v === "" ? undefined : v), z.string().min(5, "Documento inválido").optional()),
   firstName: optionalText(),
   lastName: optionalText(),
   executive: optionalText(),
@@ -78,6 +84,15 @@ export const newHealthQuoteSchema = baseHealthQuoteSchema
   .refine((data) => resolveAge(data.titularBirthDate, data.titularAgeInput) != null, {
     message: "Fecha de nacimiento o edad del titular requerida",
     path: ["titularBirthDate"],
+  })
+  // path: ["form"] a propósito, no ["titularBirthDate"] — a diferencia del
+  // refine de arriba (nunca se dispara en la práctica porque el campo ya es
+  // `required` en el HTML), este SÍ es alcanzable desde la UI (cédula en
+  // blanco + checkbox "Edad" marcado) y el formulario solo muestra
+  // `state.errors.form`, no errores por campo.
+  .refine((data) => data.documentNumber != null || data.titularBirthDate != null, {
+    message: "Sin cédula, la fecha de nacimiento exacta del titular es obligatoria (no solo la edad)",
+    path: ["form"],
   })
   .transform((data) => {
     const result = {

@@ -147,19 +147,20 @@ export function NuevaCotizacionSaludForm({
           <select
             ref={documentTypeRef}
             name="documentType"
-            defaultValue="CEDULA"
+            defaultValue=""
             className="rounded-lg border border-border bg-surface px-3 py-2"
           >
+            <option value="">Sin documento</option>
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
             <option value="PASAPORTE">Pasaporte</option>
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Documento
+          Documento (opcional)
           <input
             name="documentNumber"
-            required
+            placeholder="Sin cédula, se identifica por nombre + fecha de nacimiento"
             onBlur={documentLookup.onBlur}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           />

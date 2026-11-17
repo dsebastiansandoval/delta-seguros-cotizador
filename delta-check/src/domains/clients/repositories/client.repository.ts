@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, ilike, isNull } from "drizzle-orm";
 import type { Db } from "@/db";
 import { clients, vehicles } from "@/db/schema/clients";
 
@@ -22,6 +22,30 @@ export const clientRepository = {
 
   async findById(tx: Db, id: string) {
     const [client] = await tx.select().from(clients).where(eq(clients.id, id)).limit(1);
+    return client ?? null;
+  },
+
+  /**
+   * Clave de reutilización cuando no hay cédula (Salud/Asistencia Médica,
+   * pedido de Delta 17-nov) — nombre + fecha de nacimiento, solo contra
+   * otros clientes TAMBIÉN sin documento (`IS NULL`): nunca se reutiliza
+   * por este camino el registro de un cliente que sí tiene cédula real, ni
+   * aunque el nombre+fecha coincidan, para no mezclar por error dos
+   * personas distintas con el mismo nombre.
+   */
+  async findByNameAndBirthDate(tx: Db, firstName: string, lastName: string, birthDate: string) {
+    const [client] = await tx
+      .select()
+      .from(clients)
+      .where(
+        and(
+          isNull(clients.documentNumber),
+          ilike(clients.firstName, firstName),
+          ilike(clients.lastName, lastName),
+          eq(clients.birthDate, birthDate),
+        ),
+      )
+      .limit(1);
     return client ?? null;
   },
 

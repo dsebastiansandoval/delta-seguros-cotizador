@@ -43,7 +43,7 @@ export type CaratulaAMData = {
   quoteCode: string;
   date: string;
   clientName: string;
-  clientDocument: string;
+  clientDocument: string | null;
   clientPersonType: "NATURAL" | "JURIDICA";
   clientGender: "MASCULINO" | "FEMENINO" | null;
   region: "SIERRA" | "COSTA" | "AUSTRO";

@@ -8,8 +8,12 @@ export const clients = pgTable("clients", {
   id: id(),
   organizationId: organizationId(),
   personType: personTypeEnum("person_type").notNull(),
-  documentType: documentTypeEnum("document_type").notNull(),
-  documentNumber: text("document_number").notNull(),
+  // Nulo solo en Salud, cuando el cliente se cotizó sin cédula (pedido de
+  // Delta, 17-nov: "Asistencia Médica" no la exige, a diferencia de Autos,
+  // donde sigue siendo obligatoria) — ese cliente se identifica por
+  // nombre+fecha de nacimiento (ver clientRepository.findByNameAndBirthDate).
+  documentType: documentTypeEnum("document_type"),
+  documentNumber: text("document_number"),
   firstName: text("first_name"),
   lastName: text("last_name"),
   businessName: text("business_name"),

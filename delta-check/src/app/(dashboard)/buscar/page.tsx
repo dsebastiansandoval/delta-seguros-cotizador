@@ -59,7 +59,7 @@ export default async function BuscarPage({
           <div key={r.clientId} className="rounded-xl border border-border bg-surface p-5 shadow-sm">
             <div className="flex items-baseline justify-between gap-4">
               <p className="font-semibold">{r.displayName}</p>
-              <p className="text-xs text-muted">{r.documentNumber}</p>
+              <p className="text-xs text-muted">{r.documentNumber ?? "sin documento"}</p>
             </div>
             {r.matchedPlate && <p className="mt-1 text-xs text-muted">Placa: {r.matchedPlate}</p>}
 

@@ -28,6 +28,65 @@ import { audit } from "@/domains/shared/audit";
 import { dollarsToCents } from "@/domains/shared/money";
 import { rateLimit } from "@/lib/rate-limit";
 import type { ActionResult } from "./quote.actions";
+import type { Db } from "@/db";
+
+/**
+ * Cliente de Salud por cédula, o por nombre+fecha de nacimiento cuando no
+ * hay cédula (pedido de Delta, 17-nov — ver newHealthQuoteSchema). El
+ * refine del schema ya exige `titularBirthDate` cuando no hay documento,
+ * pero zod no lo refleja en el tipo — de ahí el chequeo explícito acá.
+ */
+async function upsertHealthClient(
+  tx: Db,
+  params: {
+    organizationId: string;
+    documentType: "CEDULA" | "RUC" | "PASAPORTE" | undefined;
+    documentNumber: string | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    titularBirthDate: string | undefined;
+    executive: string | undefined;
+    vendor: string | undefined;
+    assignedAgentId: string;
+  },
+) {
+  if (params.documentNumber) {
+    return {
+      ok: true as const,
+      client: await clientService.upsertByDocument(tx, {
+        organizationId: params.organizationId,
+        personType: "NATURAL",
+        documentType: params.documentType ?? "CEDULA",
+        documentNumber: params.documentNumber,
+        firstName: params.firstName,
+        lastName: params.lastName,
+        executive: params.executive,
+        vendor: params.vendor,
+        assignedAgentId: params.assignedAgentId,
+      }),
+    };
+  }
+
+  if (!params.firstName || !params.lastName || !params.titularBirthDate) {
+    return { ok: false as const, message: "Sin cédula, nombre, apellido y fecha de nacimiento son obligatorios" };
+  }
+
+  return {
+    ok: true as const,
+    client: await clientService.upsertByNameAndBirthDate(tx, {
+      organizationId: params.organizationId,
+      personType: "NATURAL",
+      documentType: null,
+      documentNumber: null,
+      firstName: params.firstName,
+      lastName: params.lastName,
+      birthDate: params.titularBirthDate,
+      executive: params.executive,
+      vendor: params.vendor,
+      assignedAgentId: params.assignedAgentId,
+    }),
+  };
+}
 
 export async function createHealthQuote(
   _prevState: ActionResult<{ quoteId: string }> | null,
@@ -51,23 +110,25 @@ export async function createHealthQuote(
     if (age != null && gender) members.push({ relation: "DEPENDIENTE", age, gender });
   }
 
-  const quoteId = await withOrganization(session.organizationId, async (tx) => {
+  const result = await withOrganization(session.organizationId, async (tx) => {
     input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "SALUD"));
     if (vendorMode(session) === "free" && input.vendor) {
       await ensureVendorExists(tx, session.organizationId, input.vendor);
     }
 
-    const client = await clientService.upsertByDocument(tx, {
+    const clientResult = await upsertHealthClient(tx, {
       organizationId: session.organizationId,
-      personType: "NATURAL",
       documentType: input.documentType,
       documentNumber: input.documentNumber,
       firstName: input.firstName,
       lastName: input.lastName,
+      titularBirthDate: input.titularBirthDate,
       executive: input.executive,
       vendor: input.vendor,
       assignedAgentId: session.userId,
     });
+    if (!clientResult.ok) return clientResult;
+    const client = clientResult.client;
 
     const { quote, risk } = await healthQuoteService.createHealthQuote(tx, {
       organizationId: session.organizationId,
@@ -89,11 +150,13 @@ export async function createHealthQuote(
       metadata: { members: members.length },
     });
 
-    return quote.id;
+    return { ok: true as const, quoteId: quote.id };
   });
 
+  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
+
   revalidatePath("/cotizar/salud");
-  redirect(`/cotizar/salud/${quoteId}/configurar`);
+  redirect(`/cotizar/salud/${result.quoteId}/configurar`);
 }
 
 /**
@@ -150,17 +213,19 @@ export async function updateHealthQuote(
       const group = await insuredGroupRepository.findById(tx, risk.insuredGroupId);
       if (!group) return { ok: false as const, message: "Grupo asegurado no encontrado" };
 
-      const client = await clientService.upsertByDocument(tx, {
+      const clientResult = await upsertHealthClient(tx, {
         organizationId: session.organizationId,
-        personType: "NATURAL",
         documentType: input.documentType,
         documentNumber: input.documentNumber,
         firstName: input.firstName,
         lastName: input.lastName,
+        titularBirthDate: input.titularBirthDate,
         executive: input.executive,
         vendor: input.vendor,
         assignedAgentId: quote.agentId,
       });
+      if (!clientResult.ok) return clientResult;
+      const client = clientResult.client;
       if (client.id !== quote.clientId) {
         await tx.update(quotes).set({ clientId: client.id, updatedAt: new Date() }).where(eq(quotes.id, quoteId));
       }

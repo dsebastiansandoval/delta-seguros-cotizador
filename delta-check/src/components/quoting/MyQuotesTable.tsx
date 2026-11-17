@@ -10,7 +10,8 @@ export type MyQuoteRow = {
   status: "BORRADOR" | "ENVIADA" | "ACEPTADA" | "VENCIDA";
   operationType: "NUEVA" | "RENOVACION";
   createdAt: Date | string;
-  documentNumber: string;
+  // Nulo en Salud sin cédula (pedido de Delta, 17-nov) — en Autos siempre viene.
+  documentNumber: string | null;
   agentName: string | null;
 };
 
@@ -90,7 +91,7 @@ export function MyQuotesTable({
     const sorted = [...rows].sort((a, b) => {
       let cmp = 0;
       if (sortKey === "createdAt") cmp = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      else cmp = a[sortKey].localeCompare(b[sortKey]);
+      else cmp = (a[sortKey] ?? "").localeCompare(b[sortKey] ?? "");
       return sortDir === "asc" ? cmp : -cmp;
     });
     return sorted;
@@ -139,7 +140,7 @@ export function MyQuotesTable({
               {filtered.map((q) => (
                 <tr key={q.id} className="border-b border-border last:border-0">
                   <td className="px-4 py-3 font-medium">{q.code}</td>
-                  <td className="px-4 py-3 text-muted">{q.documentNumber}</td>
+                  <td className="px-4 py-3 text-muted">{q.documentNumber ?? "—"}</td>
                   {showAgent && <td className="px-4 py-3 text-muted">{q.agentName ?? "—"}</td>}
                   <td className="px-4 py-3 text-muted">{q.operationType === "RENOVACION" ? "Renovación" : "Nueva"}</td>
                   <td className="px-4 py-3">

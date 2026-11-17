@@ -7,7 +7,7 @@ import { policies } from "@/db/schema/policies";
 export type SearchResultClient = {
   clientId: string;
   displayName: string;
-  documentNumber: string;
+  documentNumber: string | null;
   matchedPlate: string | null;
   quotes: Array<{ id: string; code: string; branch: "AUTOS" | "SALUD"; status: string }>;
   policies: Array<{ id: string; policyNumber: string | null; lifecycleStatus: string }>;

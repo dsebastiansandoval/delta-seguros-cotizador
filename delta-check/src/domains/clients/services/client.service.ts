@@ -21,8 +21,25 @@ export const clientService = {
    * ramo) se reutiliza y se actualiza con lo que el ejecutivo digitó ahora,
    * que es lo que sale en la portada de la cotización.
    */
-  async upsertByDocument(tx: Db, data: NewClient) {
+  async upsertByDocument(tx: Db, data: NewClient & { documentNumber: string }) {
     const existing = await clientRepository.findByDocument(tx, data.documentNumber);
+    if (!existing) return clientRepository.create(tx, data);
+
+    const updates = editableClientUpdates(data);
+    if (!Object.keys(updates).length) return existing;
+    await clientRepository.update(tx, existing.id, updates);
+    return { ...existing, ...updates };
+  },
+
+  /**
+   * Mismo patrón que upsertByDocument, para cuando no hay cédula (Salud,
+   * ver findByNameAndBirthDate) — `birthDate` es obligatorio acá aunque sea
+   * opcional en el esquema general: es la clave de reutilización, así que
+   * nunca se llama sin ella (health-quote.actions.ts ya lo exige en el
+   * esquema cuando no hay documento).
+   */
+  async upsertByNameAndBirthDate(tx: Db, data: NewClient & { firstName: string; lastName: string; birthDate: string }) {
+    const existing = await clientRepository.findByNameAndBirthDate(tx, data.firstName, data.lastName, data.birthDate);
     if (!existing) return clientRepository.create(tx, data);
 
     const updates = editableClientUpdates(data);

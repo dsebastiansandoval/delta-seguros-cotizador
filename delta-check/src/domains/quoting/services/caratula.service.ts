@@ -74,7 +74,8 @@ export async function getCaratulaData(tx: Db, quoteId: string): Promise<Caratula
     quoteCode: quote.code,
     date: today.toLocaleDateString("es-EC", { year: "numeric", month: "long", day: "numeric" }),
     clientName,
-    clientDocument: client.documentNumber,
+    // Autos siempre exige cédula/RUC (a diferencia de Salud) — nunca es null en la práctica.
+    clientDocument: client.documentNumber ?? "",
     salutation: salutationFor(client),
     vehicles: sheet.risks.map((r) => ({
       label: r.label,

@@ -425,6 +425,33 @@ function PricingTablePage({ data }: { data: CaratulaAMData }) {
             </Text>
           ))}
         </View>
+        <View style={tableStyles.sectionRow}>
+          <Text style={[tableStyles.sectionLabelCell, { width: "100%" }]}>VALOR ANUAL</Text>
+        </View>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total sin descuento</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.amberDataCell}>
+              {formatUSD(o.sinDescuentoCents * 12)}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total con descuento especial</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.amberDataCell}>
+              {o.conDescuentoEspecialCents != null ? formatUSD(o.conDescuentoEspecialCents * 12) : "N/A"}
+            </Text>
+          ))}
+        </View>
+        <View style={tableStyles.amberRow}>
+          <Text style={tableStyles.amberLabelCell}>Total con descuento de contado</Text>
+          {data.offers.map((o, i) => (
+            <Text key={i} style={tableStyles.amberDataCell}>
+              {o.conDescuentoContadoCents != null ? formatUSD(o.conDescuentoContadoCents * 12) : "N/A"}
+            </Text>
+          ))}
+        </View>
         <View style={tableStyles.row}>
           <Text style={tableStyles.labelCell}>Efectivo o transferencia</Text>
           {data.offers.map((o, i) => (

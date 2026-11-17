@@ -33,6 +33,8 @@ export default async function CompararSaludPage({ params }: { params: Promise<{ 
   const markedWithoutPremium = comparison.rows.filter((r) => r.includedInOffer && r.totalPremiumCents == null);
 
   const money = (cents: number | null) => (cents != null ? formatUSD(cents) : "N/A");
+  // Valor mensual × 12 — pedido de Delta (17-nov) junto al valor mensual real (verificado contra el Excel/PDF de la aseguradora), no en su lugar.
+  const annual = (cents: number | null) => (cents != null ? cents * 12 : null);
 
   return (
     <main className="mx-auto max-w-[1400px] p-8">
@@ -148,6 +150,26 @@ export default async function CompararSaludPage({ params }: { params: Promise<{ 
                 <th className={labelCell}>Total con descuento de contado</th>
                 {offers.map((o) => (
                   <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(o.conDescuentoContadoCents)}</td>
+                ))}
+              </tr>
+
+              <Section title="Valor anual" span={span} />
+              <tr>
+                <th className={labelCell}>Total sin descuento</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(annual(o.sinDescuentoCents))}</td>
+                ))}
+              </tr>
+              <tr>
+                <th className={labelCell}>Total con descuento especial</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(annual(o.conDescuentoEspecialCents))}</td>
+                ))}
+              </tr>
+              <tr>
+                <th className={labelCell}>Total con descuento de contado</th>
+                {offers.map((o) => (
+                  <td key={o.quoteOptionId} className={`${dataCell} tabular-nums`}>{money(annual(o.conDescuentoContadoCents))}</td>
                 ))}
               </tr>
 

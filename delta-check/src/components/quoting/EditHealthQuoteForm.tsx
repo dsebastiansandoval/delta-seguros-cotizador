@@ -73,7 +73,7 @@ export function EditHealthQuoteForm({
   vendors: string[];
   currentVendor: string;
   vendorMode: "free" | "select" | "locked";
-  client: { documentType: string; documentNumber: string; firstName: string | null; lastName: string | null };
+  client: { documentType: string | null; documentNumber: string | null; firstName: string | null; lastName: string | null };
   titular: { age: number; gender: "MASCULINO" | "FEMENINO"; birthDate: string | null };
   region: "SIERRA" | "COSTA" | "AUSTRO";
   dependents: Dependent[];
@@ -155,20 +155,21 @@ export function EditHealthQuoteForm({
           <select
             ref={documentTypeRef}
             name="documentType"
-            defaultValue={client.documentType}
+            defaultValue={client.documentType ?? ""}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           >
+            <option value="">Sin documento</option>
             <option value="CEDULA">Cédula</option>
             <option value="RUC">RUC</option>
             <option value="PASAPORTE">Pasaporte</option>
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          Documento
+          Documento (opcional)
           <input
             name="documentNumber"
-            required
-            defaultValue={client.documentNumber}
+            defaultValue={client.documentNumber ?? ""}
+            placeholder="Sin cédula, se identifica por nombre + fecha de nacimiento"
             onBlur={documentLookup.onBlur}
             className="rounded-lg border border-border bg-surface px-3 py-2"
           />

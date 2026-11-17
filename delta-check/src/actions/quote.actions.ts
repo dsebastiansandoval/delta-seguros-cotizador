@@ -228,8 +228,11 @@ export async function getAutoQuoteForEdit(quoteId: string) {
       quoteCode: data.quote.code,
       client: {
         personType: data.client.personType,
-        documentType: data.client.documentType,
-        documentNumber: data.client.documentNumber,
+        // Autos siempre exige cédula/RUC (a diferencia de Salud, ver
+        // health-quote.schema.ts) — el fallback es solo para el tipo, nunca
+        // ocurre en la práctica.
+        documentType: data.client.documentType ?? "CEDULA",
+        documentNumber: data.client.documentNumber ?? "",
         firstName: data.client.firstName,
         lastName: data.client.lastName,
         businessName: data.client.businessName,
