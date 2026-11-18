@@ -33,10 +33,9 @@ export const clientService = {
 
   /**
    * Mismo patrón que upsertByDocument, para cuando no hay cédula (Salud,
-   * ver findByNameAndBirthDate) — `birthDate` es obligatorio acá aunque sea
-   * opcional en el esquema general: es la clave de reutilización, así que
-   * nunca se llama sin ella (health-quote.actions.ts ya lo exige en el
-   * esquema cuando no hay documento).
+   * ver findByNameAndBirthDate) — `birthDate` es obligatorio acá porque es
+   * la clave de reutilización; `upsertHealthClient` (health-quote.actions.ts)
+   * solo llama esto cuando sí hay fecha exacta del titular.
    */
   async upsertByNameAndBirthDate(tx: Db, data: NewClient & { firstName: string; lastName: string; birthDate: string }) {
     const existing = await clientRepository.findByNameAndBirthDate(tx, data.firstName, data.lastName, data.birthDate);
@@ -45,6 +44,22 @@ export const clientService = {
     const updates = editableClientUpdates(data);
     if (!Object.keys(updates).length) return existing;
     await clientRepository.update(tx, existing.id, updates);
+    return { ...existing, ...updates };
+  },
+
+  /**
+   * Edición de un cliente de Salud ya identificado por la cotización
+   * (`quote.clientId`), sin cédula nueva que buscar — nunca falla por falta
+   * de fecha de nacimiento exacta, a diferencia de upsertByNameAndBirthDate
+   * (esa sí la necesita porque busca "a ciegas" por nombre+fecha).
+   */
+  async updateClientById(tx: Db, clientId: string, data: Partial<NewClient>) {
+    const existing = await clientRepository.findById(tx, clientId);
+    if (!existing) throw new Error("Cliente no encontrado");
+
+    const updates = editableClientUpdates(data);
+    if (!Object.keys(updates).length) return existing;
+    await clientRepository.update(tx, clientId, updates);
     return { ...existing, ...updates };
   },
 

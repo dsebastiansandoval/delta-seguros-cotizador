@@ -31,10 +31,13 @@ import type { ActionResult } from "./quote.actions";
 import type { Db } from "@/db";
 
 /**
- * Cliente de Salud por cédula, o por nombre+fecha de nacimiento cuando no
- * hay cédula (pedido de Delta, 17-nov — ver newHealthQuoteSchema). El
- * refine del schema ya exige `titularBirthDate` cuando no hay documento,
- * pero zod no lo refleja en el tipo — de ahí el chequeo explícito acá.
+ * Cliente de Salud por cédula, o — sin cédula (pedido de Delta, 17-nov) —
+ * por nombre+fecha de nacimiento exacta cuando se conoce, o aparte si no
+ * (muchas cotizaciones viejas solo tienen la edad, nunca la fecha, ver
+ * AgeOrBirthDateField). Nunca bloquea el guardado por esto: al EDITAR
+ * (`existingClientId`) el cliente ya está identificado por la cotización
+ * misma, así que sin cédula nueva solo se actualiza ese mismo registro —
+ * nunca hace falta "volver a encontrarlo".
  */
 async function upsertHealthClient(
   tx: Db,
@@ -48,44 +51,51 @@ async function upsertHealthClient(
     executive: string | undefined;
     vendor: string | undefined;
     assignedAgentId: string;
+    existingClientId?: string;
   },
 ) {
   if (params.documentNumber) {
-    return {
-      ok: true as const,
-      client: await clientService.upsertByDocument(tx, {
-        organizationId: params.organizationId,
-        personType: "NATURAL",
-        documentType: params.documentType ?? "CEDULA",
-        documentNumber: params.documentNumber,
-        firstName: params.firstName,
-        lastName: params.lastName,
-        executive: params.executive,
-        vendor: params.vendor,
-        assignedAgentId: params.assignedAgentId,
-      }),
-    };
-  }
-
-  if (!params.firstName || !params.lastName || !params.titularBirthDate) {
-    return { ok: false as const, message: "Sin cédula, nombre, apellido y fecha de nacimiento son obligatorios" };
-  }
-
-  return {
-    ok: true as const,
-    client: await clientService.upsertByNameAndBirthDate(tx, {
+    return clientService.upsertByDocument(tx, {
       organizationId: params.organizationId,
       personType: "NATURAL",
-      documentType: null,
-      documentNumber: null,
+      documentType: params.documentType ?? "CEDULA",
+      documentNumber: params.documentNumber,
       firstName: params.firstName,
       lastName: params.lastName,
-      birthDate: params.titularBirthDate,
       executive: params.executive,
       vendor: params.vendor,
       assignedAgentId: params.assignedAgentId,
-    }),
+    });
+  }
+
+  const commonFields = {
+    organizationId: params.organizationId,
+    personType: "NATURAL" as const,
+    documentType: null,
+    documentNumber: null,
+    firstName: params.firstName,
+    lastName: params.lastName,
+    executive: params.executive,
+    vendor: params.vendor,
+    assignedAgentId: params.assignedAgentId,
   };
+
+  if (params.existingClientId) {
+    return clientService.updateClientById(tx, params.existingClientId, commonFields);
+  }
+
+  if (params.firstName && params.lastName && params.titularBirthDate) {
+    return clientService.upsertByNameAndBirthDate(tx, {
+      ...commonFields,
+      firstName: params.firstName,
+      lastName: params.lastName,
+      birthDate: params.titularBirthDate,
+    });
+  }
+
+  // Sin cédula ni fecha exacta del titular, nada confiable con qué buscar
+  // un duplicado — se crea aparte en vez de bloquear el guardado.
+  return clientRepository.create(tx, commonFields);
 }
 
 export async function createHealthQuote(
@@ -110,13 +120,13 @@ export async function createHealthQuote(
     if (age != null && gender) members.push({ relation: "DEPENDIENTE", age, gender });
   }
 
-  const result = await withOrganization(session.organizationId, async (tx) => {
+  const quoteId = await withOrganization(session.organizationId, async (tx) => {
     input.vendor = resolveVendor(session, input.vendor, await listActiveUsersByBranch(tx, "SALUD"));
     if (vendorMode(session) === "free" && input.vendor) {
       await ensureVendorExists(tx, session.organizationId, input.vendor);
     }
 
-    const clientResult = await upsertHealthClient(tx, {
+    const client = await upsertHealthClient(tx, {
       organizationId: session.organizationId,
       documentType: input.documentType,
       documentNumber: input.documentNumber,
@@ -127,8 +137,6 @@ export async function createHealthQuote(
       vendor: input.vendor,
       assignedAgentId: session.userId,
     });
-    if (!clientResult.ok) return clientResult;
-    const client = clientResult.client;
 
     const { quote, risk } = await healthQuoteService.createHealthQuote(tx, {
       organizationId: session.organizationId,
@@ -150,13 +158,11 @@ export async function createHealthQuote(
       metadata: { members: members.length },
     });
 
-    return { ok: true as const, quoteId: quote.id };
+    return quote.id;
   });
 
-  if (!result.ok) return { ok: false, errors: { form: [result.message] } };
-
   revalidatePath("/cotizar/salud");
-  redirect(`/cotizar/salud/${result.quoteId}/configurar`);
+  redirect(`/cotizar/salud/${quoteId}/configurar`);
 }
 
 /**
@@ -213,7 +219,7 @@ export async function updateHealthQuote(
       const group = await insuredGroupRepository.findById(tx, risk.insuredGroupId);
       if (!group) return { ok: false as const, message: "Grupo asegurado no encontrado" };
 
-      const clientResult = await upsertHealthClient(tx, {
+      const client = await upsertHealthClient(tx, {
         organizationId: session.organizationId,
         documentType: input.documentType,
         documentNumber: input.documentNumber,
@@ -223,9 +229,8 @@ export async function updateHealthQuote(
         executive: input.executive,
         vendor: input.vendor,
         assignedAgentId: quote.agentId,
+        existingClientId: quote.clientId,
       });
-      if (!clientResult.ok) return clientResult;
-      const client = clientResult.client;
       if (client.id !== quote.clientId) {
         await tx.update(quotes).set({ clientId: client.id, updatedAt: new Date() }).where(eq(quotes.id, quoteId));
       }
