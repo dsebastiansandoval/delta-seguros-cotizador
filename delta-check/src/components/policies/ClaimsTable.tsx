@@ -4,7 +4,13 @@ import { useMemo, useState } from "react";
 import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
 import { CLAIM_STATUSES, CLAIM_STATUS_LABEL } from "@/domains/policies/claim-status-labels";
-import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
+
+const STATUS_STYLE: Record<string, string> = {
+  REPORTADO: "bg-warn-bg text-warn",
+  APROBADO: "bg-accent-100 text-highlight",
+  REPARADO: "bg-accent-100 text-highlight",
+  ENTREGADO: "bg-good-bg text-good",
+};
 
 export type ClaimRow = {
   id: string;
@@ -169,11 +175,13 @@ export function ClaimsTable({ claims }: { claims: ClaimRow[] }) {
                   {c.claimValueCents != null ? formatUSD(c.claimValueCents) : "—"}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3">
-                  <ClaimStatusForm claimId={c.id} status={c.status} />
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${STATUS_STYLE[c.status] ?? ""}`}>
+                    {CLAIM_STATUS_LABEL[c.status] ?? c.status}
+                  </span>
                 </td>
                 <td className="whitespace-nowrap px-4 py-3">
                   <a href={`/siniestros/${c.id}`} className="text-xs font-semibold text-link underline">
-                    Historial
+                    Gestionar
                   </a>
                 </td>
               </tr>
