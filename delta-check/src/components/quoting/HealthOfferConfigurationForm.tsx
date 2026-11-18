@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useActionState, useState } from "react";
+import { startTransition, useActionState, useState, type ChangeEvent } from "react";
 import { saveHealthOfferConfiguration } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import type { HealthComparisonRow } from "@/domains/health/services/health-comparison.service";
@@ -16,7 +16,54 @@ function isManualRow(row: HealthComparisonRow) {
 }
 import { formatUSD } from "@/domains/shared/money";
 
-/** Equivalente a los botones MOSTRAR/OCULTAR de cada plan en OFERTA AM, agrupados por aseguradora. */
+/**
+ * Interruptor MOSTRAR/OCULTAR — mismo look que los switches reales de
+ * OFERTA AM (confirmado en el .xlsm: son shapes agrupadas tipo switch, una
+ * por columna de plan, nunca por persona — toda la familia comparte el
+ * mismo plan dentro de una aseguradora). Checkbox real por debajo
+ * (accesible, mismo `name`/`value`/`onChange` de siempre), solo se le
+ * cambia el estilo visual.
+ */
+function ToggleSwitch({
+  checked,
+  disabled,
+  title,
+  ariaLabel,
+  name,
+  value,
+  onChange,
+  readOnly,
+}: {
+  checked: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
+  title?: string;
+  ariaLabel: string;
+  name?: string;
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+}) {
+  return (
+    <label className={`relative inline-flex h-5 w-9 shrink-0 items-center ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"}`}>
+      <input
+        type="checkbox"
+        name={name}
+        value={value}
+        checked={checked}
+        disabled={disabled}
+        readOnly={readOnly}
+        onChange={onChange}
+        title={title}
+        aria-label={ariaLabel}
+        className="peer sr-only"
+      />
+      <span className="absolute inset-0 rounded-full bg-border-strong transition-colors peer-checked:bg-good peer-focus-visible:ring-2 peer-focus-visible:ring-link" />
+      <span className="absolute left-0.5 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-4" />
+    </label>
+  );
+}
+
+/** Equivalente a los switches MOSTRAR/OCULTAR de cada plan en OFERTA AM, agrupados por aseguradora. */
 export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: string; rows: HealthComparisonRow[] }) {
   const [state, formAction, pending] = useActionState<ActionResult | null, FormData>(saveHealthOfferConfiguration, null);
   // Un plan manual sin prima nunca puede salir en la comparativa (caratula-am.service.ts
@@ -61,31 +108,29 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
           espacio libre (como Pinterest), sin huecos. */}
       <div className="columns-1 gap-4 lg:columns-2">
         {[...byInsurer.entries()].map(([insurerName, plans]) => (
-          <section key={insurerName} className="mb-4 break-inside-avoid rounded-xl border border-border bg-surface shadow-sm">
-            <h2 className="border-b border-border px-4 py-2 text-xs font-bold uppercase tracking-wide">{insurerName}</h2>
-            <ul className="divide-y divide-border">
+          <section key={insurerName} className="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-border shadow-sm">
+            <h2 className="bg-delta-navy px-4 py-2 text-xs font-bold uppercase tracking-wide text-white">{insurerName}</h2>
+            <ul className="divide-y divide-border bg-surface">
               {plans.map((row) => (
-                <li key={row.quoteOptionId} className="flex items-center gap-3 px-4 py-2 text-sm">
+                <li key={row.quoteOptionId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
                   {manualIds.has(row.quoteOptionId) ? (
                     // Sin tabla de tarifas: no se puede marcar "a mano" sin prima — quedaría
                     // marcado pero invisible en la comparativa (caratula-am.service.ts exige
                     // totalPremiumCents). Se marca solo, al digitar la prima, más abajo.
-                    <input
-                      type="checkbox"
+                    <ToggleSwitch
                       checked={included.has(row.quoteOptionId)}
                       disabled
                       readOnly
                       title="Se marca solo al digitar la prima neta"
-                      aria-label={`Mostrar ${planLabel(row.planCode)}`}
+                      ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
                     />
                   ) : (
-                    <input
-                      type="checkbox"
+                    <ToggleSwitch
                       name="included"
                       value={row.quoteOptionId}
                       checked={included.has(row.quoteOptionId)}
                       onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
-                      aria-label={`Mostrar ${planLabel(row.planCode)}`}
+                      ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
                     />
                   )}
                   <span className="flex-1">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</span>
