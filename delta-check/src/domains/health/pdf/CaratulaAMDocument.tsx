@@ -5,6 +5,7 @@ import type { CaratulaAMData } from "../services/caratula-am.service";
 import { formatUSD } from "@/domains/shared/money";
 import { coverageRows, coverageValueFor, memberLabels, planLabel } from "../services/health-offer-format";
 import { salutationFor } from "@/domains/quoting/services/caratula-salutation";
+import { insurerLogo } from "./insurer-logos";
 
 /**
  * Portada real de Salud/AM (`xl/media/image60.jpeg` dentro de COTIZADOR
@@ -23,33 +24,6 @@ const PORTADA_SIZE: [number, number] = [560, 792];
  */
 const DELTA_LOGO = readFileSync(join(process.cwd(), "src/domains/quoting/pdf/assets/delta-logo-stacked.png"));
 const DELTA_LOGO_ASPECT = 303 / 346;
-
-/**
- * Logos de las aseguradoras de Salud, extraídos de `COTIZADOR
- * ACTUALIZADO.xlsm` (hoja DATOS AM y las hojas propias BUPA/CONFIAMED/
- * HUMANA/PRO/VB — recortados a su bounding box real, sin el badge de
- * "Vitality" que trae pegado el de SaludSA en el Excel) — mismos logos que
- * ya usa Delta en el PDF real que manda al cliente. SALUD (genérica) no
- * tiene un logo propio embebido en ningún lado del libro — cae al nombre
- * en texto, mismo criterio de respaldo que ya usa Autos para aseguradoras
- * sin logo en `INSURER_LOGO_ASPECT`.
- */
-const INSURER_LOGO_ASPECT: Record<string, number> = {
-  BMI: 456 / 181,
-  HUMANA: 351 / 102,
-  CONFIAMED: 382 / 113,
-  SALUDSA: 432 / 103,
-  BUPA: 337 / 137,
-  PRO: 426 / 101,
-  VB: 448 / 117,
-};
-
-const INSURER_LOGOS: Record<string, Buffer> = Object.fromEntries(
-  Object.keys(INSURER_LOGO_ASPECT).map((code) => [
-    code,
-    readFileSync(join(process.cwd(), `src/domains/health/pdf/assets/insurer-logos/${code}.png`)),
-  ]),
-);
 
 /** Ajusta un logo a una caja (alto objetivo, ancho máximo) sin deformarlo — igual que Autos. */
 function fitLogo(aspect: number, targetHeight: number, maxWidth: number) {
@@ -259,13 +233,13 @@ function OfferTableHeader({ data }: { data: CaratulaAMData }) {
       <View style={tableStyles.row}>
         <Text style={tableStyles.labelCell}> </Text>
         {data.offers.map((o, i) => {
-          const aspect = INSURER_LOGO_ASPECT[o.insurerCode];
-          const logo = aspect ? fitLogo(aspect, 20, 90) : null;
+          const logo = insurerLogo(o.insurerCode);
+          const size = logo ? fitLogo(logo.aspect, 20, 90) : null;
           return (
             <View key={i} style={tableStyles.logoCell}>
-              {logo ? (
+              {logo && size ? (
                 // eslint-disable-next-line jsx-a11y/alt-text -- <Image> acá es el componente de @react-pdf/renderer (PDF, no DOM); no tiene prop `alt`.
-                <Image src={INSURER_LOGOS[o.insurerCode]} style={logo} />
+                <Image src={logo.src} style={size} />
               ) : (
                 <Text style={{ fontWeight: 700 }}>{o.insurerName}</Text>
               )}
