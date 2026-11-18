@@ -165,6 +165,8 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
         ))}
       </ul>
 
+      {/* El input queda oculto y un botón con el estilo del resto de la app
+          lo dispara — el control nativo de archivos no se ve como botón. */}
       <input
         ref={inputRef}
         type="file"
@@ -173,9 +175,16 @@ export function ClaimAttachments({ claimId, initialAttachments }: { claimId: str
           if (file) handleUpload(file);
         }}
         disabled={isUploading}
-        className="text-sm"
+        className="hidden"
       />
-      {isUploading && <p className="mt-1 text-xs text-muted">Subiendo…</p>}
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={isUploading}
+        className="rounded-lg bg-delta-navy px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+      >
+        {isUploading ? "Subiendo…" : "Adjuntar archivo"}
+      </button>
       {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </section>
   );
