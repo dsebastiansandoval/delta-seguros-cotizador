@@ -8,6 +8,14 @@ export default async function ConfigurarOfertaSaludPage({ params }: { params: Pr
   const data = await getHealthQuoteComparison(quoteId);
   if (!data) notFound();
 
+  // Mismo criterio que cotizar/autos/[quoteId]/configurar: "ya hay
+  // comparativa" = al menos un plan incluido con prima digitada, no solo
+  // que existan filas (se crean vacías desde el inicio). Antes este link
+  // salía siempre, aunque nada se hubiera guardado todavía — llevaba a una
+  // comparativa vacía/vieja en vez de guardar lo que se acababa de marcar
+  // abajo (eso sí lo hace el botón "Ver comparativa →" del formulario).
+  const hasComparativa = data.rows.some((r) => r.includedInOffer && r.totalPremiumCents != null);
+
   return (
     <main className="mx-auto max-w-6xl p-8">
       <header className="mb-6 flex items-start justify-between gap-4">
@@ -22,9 +30,11 @@ export default async function ConfigurarOfertaSaludPage({ params }: { params: Pr
           <Link href={`/cotizar/salud/${quoteId}/editar`} className="text-sm font-semibold text-link underline">
             Editar cotización
           </Link>
-          <Link href={`/cotizar/salud/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
-            Ver comparativa
-          </Link>
+          {hasComparativa && (
+            <Link href={`/cotizar/salud/${quoteId}/comparar`} className="text-sm font-semibold text-link underline">
+              Ver comparativa
+            </Link>
+          )}
         </div>
       </header>
       <HealthOfferConfigurationForm quoteId={quoteId} rows={data.rows} />
