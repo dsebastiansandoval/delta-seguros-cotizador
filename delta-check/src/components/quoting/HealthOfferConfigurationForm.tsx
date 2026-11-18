@@ -1,11 +1,23 @@
 "use client";
 
-import { startTransition, useActionState, useState, type ChangeEvent } from "react";
+import { Fragment, startTransition, useActionState, useState, type ChangeEvent } from "react";
 import { saveHealthOfferConfiguration } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import type { HealthComparisonRow } from "@/domains/health/services/health-comparison.service";
-import { planLabel } from "@/domains/health/services/health-offer-format";
+import { groupHealthPlansByFamily, planLabel } from "@/domains/health/services/health-offer-format";
 import { HEALTH_PLANS } from "@/domains/health/health-plans.generated";
+
+/**
+ * "SALUD" (STAR/SKY/PRO) y "SALUDSA" (UNICO/ESENCIAL/PRACTICO/...) son dos
+ * códigos de aseguradora distintos en la base, pero son la misma empresa —
+ * confirmado en el .xlsm real: esos planes están en las macros
+ * `SALUDSA_MOSTRAR_OCULTAR_STAR_...`/`..._SKY_...`/`..._PRO_...`, nunca
+ * bajo un nombre "SALUD" aparte. Solo se unifica la categoría visual acá;
+ * no se tocan los insurerId/insurerCode reales de cada tabla de tarifas.
+ */
+function displayInsurerName(row: HealthComparisonRow): string {
+  return row.insurerCode === "SALUD" ? "SALUDSA" : row.insurerName;
+}
 
 function isManualPlan(row: HealthComparisonRow) {
   return HEALTH_PLANS.some((p) => p.insurerCode === row.insurerCode && p.planCode === row.planCode && p.manual);
@@ -86,7 +98,10 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
   const [manualIds] = useState(() => new Set(rows.filter(isManualRow).map((r) => r.quoteOptionId)));
 
   const byInsurer = new Map<string, HealthComparisonRow[]>();
-  for (const row of rows) byInsurer.set(row.insurerName, [...(byInsurer.get(row.insurerName) ?? []), row]);
+  for (const row of rows) {
+    const name = displayInsurerName(row);
+    byInsurer.set(name, [...(byInsurer.get(name) ?? []), row]);
+  }
 
   // Se envía a mano para que React no reinicie el formulario tras la acción.
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -100,71 +115,94 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
       <input type="hidden" name="quoteId" value={quoteId} />
       <p className="text-sm text-muted">{included.size} planes marcados para la oferta.</p>
 
-      {/* Columnas en vez de grid: con grid, una fila de 2 columnas estira la
-          tarjeta corta a la altura de la más alta (align-items: stretch por
-          default), dejando espacio en blanco adentro — las aseguradoras
-          tienen muy distinto número de planes entre sí. `columns` arma cada
-          tarjeta a su propia altura y la siguiente fluye a la columna con
-          espacio libre (como Pinterest), sin huecos. */}
-      <div className="columns-1 gap-4 lg:columns-2">
-        {[...byInsurer.entries()].map(([insurerName, plans]) => (
-          <section key={insurerName} className="mb-4 break-inside-avoid overflow-hidden rounded-xl border border-border shadow-sm">
-            <h2 className="bg-delta-navy px-4 py-2 text-xs font-bold uppercase tracking-wide text-white">{insurerName}</h2>
-            <ul className="divide-y divide-border bg-surface">
-              {plans.map((row) => (
-                <li key={row.quoteOptionId} className="flex items-center gap-3 px-4 py-2.5 text-sm">
-                  {manualIds.has(row.quoteOptionId) ? (
-                    // Sin tabla de tarifas: no se puede marcar "a mano" sin prima — quedaría
-                    // marcado pero invisible en la comparativa (caratula-am.service.ts exige
-                    // totalPremiumCents). Se marca solo, al digitar la prima, más abajo.
-                    <ToggleSwitch
-                      checked={included.has(row.quoteOptionId)}
-                      disabled
-                      readOnly
-                      title="Se marca solo al digitar la prima neta"
-                      ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
-                    />
-                  ) : (
-                    <ToggleSwitch
-                      name="included"
-                      value={row.quoteOptionId}
-                      checked={included.has(row.quoteOptionId)}
-                      onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
-                      ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
-                    />
-                  )}
-                  <span className="flex-1">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</span>
-                  {!manualIds.has(row.quoteOptionId) ? (
-                    <>
-                      <span className="font-semibold tabular-nums">{formatUSD(row.totalPremiumCents ?? 0)}</span>
-                      <a
-                        href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
-                        className="text-xs font-semibold text-link underline"
-                      >
-                        Detalles
-                      </a>
-                    </>
-                  ) : (
-                    <>
-                      {included.has(row.quoteOptionId) && <input type="hidden" name="included" value={row.quoteOptionId} />}
-                      <input type="hidden" name="premiumOptionId" value={row.quoteOptionId} />
-                      <input
-                        name={`premium:${row.quoteOptionId}`}
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        defaultValue={row.netPremiumCents != null ? row.netPremiumCents / 100 : ""}
-                        placeholder="Prima neta USD"
-                        onChange={(e) => toggle(row.quoteOptionId, e.target.value !== "")}
-                        className="w-32 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
-                      />
-                    </>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))}
+      {/* Una sola tabla (antes 2 columnas de tarjetas tipo Pinterest) — más
+          fácil de leer de punta a punta, como OFERTA AM. Aseguradora y
+          familia de plan (ej. "STAR 15 70" agrupa sus 3 deducibles) van
+          como filas de encabezado dentro de la misma tabla, igual que las
+          barras de sección del Excel real. */}
+      <div className="overflow-x-auto rounded-xl border border-border shadow-sm">
+        <table className="w-full text-sm">
+          <tbody className="divide-y divide-border bg-surface">
+            {[...byInsurer.entries()].map(([insurerName, plans]) => (
+              <Fragment key={insurerName}>
+                <tr>
+                  <th colSpan={4} className="bg-delta-navy px-4 py-2 text-left text-xs font-bold uppercase tracking-wide text-white">
+                    {insurerName}
+                  </th>
+                </tr>
+                {groupHealthPlansByFamily(plans).map(({ family, rows: familyRows }) => (
+                  <Fragment key={`${insurerName}-${family}`}>
+                    {familyRows.length > 1 && (
+                      <tr key={`${insurerName}-${family}`}>
+                        <td colSpan={4} className="bg-background px-4 py-1 text-xs font-semibold uppercase tracking-wide text-muted">
+                          {family}
+                        </td>
+                      </tr>
+                    )}
+                    {familyRows.map((row) => (
+                      <tr key={row.quoteOptionId}>
+                        <td className="w-12 px-4 py-2.5">
+                          {manualIds.has(row.quoteOptionId) ? (
+                            // Sin tabla de tarifas: no se puede marcar "a mano" sin prima —
+                            // quedaría marcado pero invisible en la comparativa
+                            // (caratula-am.service.ts exige totalPremiumCents). Se marca
+                            // solo, al digitar la prima, más abajo.
+                            <ToggleSwitch
+                              checked={included.has(row.quoteOptionId)}
+                              disabled
+                              readOnly
+                              title="Se marca solo al digitar la prima neta"
+                              ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
+                            />
+                          ) : (
+                            <ToggleSwitch
+                              name="included"
+                              value={row.quoteOptionId}
+                              checked={included.has(row.quoteOptionId)}
+                              onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
+                              ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
+                            />
+                          )}
+                        </td>
+                        <td className="px-2 py-2.5">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</td>
+                        <td className="px-2 py-2.5 text-right">
+                          {!manualIds.has(row.quoteOptionId) ? (
+                            <span className="font-semibold tabular-nums">{formatUSD(row.totalPremiumCents ?? 0)}</span>
+                          ) : (
+                            <>
+                              {included.has(row.quoteOptionId) && <input type="hidden" name="included" value={row.quoteOptionId} />}
+                              <input type="hidden" name="premiumOptionId" value={row.quoteOptionId} />
+                              <input
+                                name={`premium:${row.quoteOptionId}`}
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                defaultValue={row.netPremiumCents != null ? row.netPremiumCents / 100 : ""}
+                                placeholder="Prima neta USD"
+                                onChange={(e) => toggle(row.quoteOptionId, e.target.value !== "")}
+                                className="w-32 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
+                              />
+                            </>
+                          )}
+                        </td>
+                        <td className="px-4 py-2.5 text-right">
+                          {!manualIds.has(row.quoteOptionId) && (
+                            <a
+                              href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
+                              className="text-xs font-semibold text-link underline"
+                            >
+                              Detalles
+                            </a>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </Fragment>
+                ))}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">

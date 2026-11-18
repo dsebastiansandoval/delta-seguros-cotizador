@@ -31,6 +31,54 @@ export function planLabel(planCode: string | null): string {
   return (planCode ?? "—").replace(/_/g, " ");
 }
 
+/**
+ * Agrupa los planes de una aseguradora por familia base, cuando varios
+ * códigos son el mismo plan con distinto deducible — p.ej. STAR_15_70,
+ * STAR_15_70_1500 y STAR_15_70_2500 son la misma familia "STAR 15 70" con
+ * 3 deducibles (pedido de Delta: verlos juntos, ej. "STAR 15"). No es una
+ * estructura que exista en el Excel real — sus encabezados de columna son
+ * planos, sin celda combinada que agrupe estas variantes (confirmado
+ * revisando OFERTA AM!8:8 y sus macros MOSTRAR_OCULTAR, una por columna,
+ * sin jerarquía) — se deriva acá por patrón de nombre: un código es
+ * "variante" de otro código más corto de la misma aseguradora si es ese
+ * código + "_" + solo dígitos (el deducible). CON_MATERNIDAD/SIN_MATERNIDAD
+ * no cuenta para esto — se ignora al comparar, así ambas variantes caen en
+ * la misma familia.
+ */
+export function groupHealthPlansByFamily<T extends { planCode: string | null }>(
+  rows: T[],
+): Array<{ family: string; rows: T[] }> {
+  const stripMaternidad = (code: string) => code.replace(/_(CON|SIN)_MATERNIDAD$/, "");
+  const baseCodes = new Set(
+    rows.map((r) => (r.planCode ? stripMaternidad(r.planCode) : null)).filter((c): c is string => c != null),
+  );
+
+  function familyOf(planCode: string | null): string {
+    if (!planCode) return "—";
+    const base = stripMaternidad(planCode);
+    let best: string | null = null;
+    for (const candidate of baseCodes) {
+      if (candidate === base) continue;
+      if (base.startsWith(`${candidate}_`) && /^\d+$/.test(base.slice(candidate.length + 1))) {
+        if (!best || candidate.length > best.length) best = candidate;
+      }
+    }
+    return (best ?? base).replace(/_/g, " ");
+  }
+
+  const order: string[] = [];
+  const byFamily = new Map<string, T[]>();
+  for (const row of rows) {
+    const family = familyOf(row.planCode);
+    if (!byFamily.has(family)) {
+      byFamily.set(family, []);
+      order.push(family);
+    }
+    byFamily.get(family)!.push(row);
+  }
+  return order.map((family) => ({ family, rows: byFamily.get(family)! }));
+}
+
 /** Filas de cobertura de todos los planes, en el orden del Excel, marcando dónde empieza cada sección. */
 export function coverageRows(offers: CaratulaAMOffer[]) {
   const byLabel = new Map<string, { section: string; displayOrder: number }>();
