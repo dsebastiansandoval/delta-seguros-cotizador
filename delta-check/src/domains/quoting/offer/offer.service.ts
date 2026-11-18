@@ -11,6 +11,7 @@ import {
   KM_OFFER_PROFILE,
   KM_OFFER_ROWS,
   OFFER_COVERAGE_ROWS,
+  effectiveRcAmountCents,
   type InsurerOfferProfile,
   type OfferCell,
   type OfferCoverageKey,
@@ -269,23 +270,27 @@ export const offerService = {
     // Mismo orden de columnas que DATOS OFERTA (C..O).
     const order = Object.keys(INSURER_OFFER_PROFILES);
     const columns = settingsRows
-      .map(({ settings, code, name }) => ({
-        insurerId: settings.insurerId,
-        code,
-        name,
-        isEngine: !isKm && ENGINE_CODES.has(code),
-        settings: {
-          included: settings.included,
-          coverageType: settings.coverageType,
-          amparoPatrimonial: settings.amparoPatrimonial,
-          rcAmountCents: settings.rcAmountCents,
-          gmAmountCents: settings.gmAmountCents,
-          partialDeductible: settings.partialDeductible,
-          totalLossDeductible: settings.totalLossDeductible,
-        },
-        options: isKm ? kmOptions : (annualProfile(code, overrides, settings.insurerId)?.options ?? {}),
-        premiums: premiumRows.filter((p) => p.insurerId === settings.insurerId),
-      }))
+      .map(({ settings, code, name }) => {
+        const profile = isKm ? null : annualProfile(code, overrides, settings.insurerId);
+        const options = isKm ? kmOptions : (profile?.options ?? {});
+        return {
+          insurerId: settings.insurerId,
+          code,
+          name,
+          isEngine: !isKm && ENGINE_CODES.has(code),
+          settings: {
+            included: settings.included,
+            coverageType: settings.coverageType,
+            amparoPatrimonial: settings.amparoPatrimonial,
+            rcAmountCents: effectiveRcAmountCents(profile, options, settings.rcAmountCents),
+            gmAmountCents: settings.gmAmountCents,
+            partialDeductible: settings.partialDeductible,
+            totalLossDeductible: settings.totalLossDeductible,
+          },
+          options,
+          premiums: premiumRows.filter((p) => p.insurerId === settings.insurerId),
+        };
+      })
       .sort((a, b) => order.indexOf(a.code) - order.indexOf(b.code));
 
     return {

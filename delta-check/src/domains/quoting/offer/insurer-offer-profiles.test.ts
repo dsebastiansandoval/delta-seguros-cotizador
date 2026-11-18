@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { INSURER_OFFER_PROFILES } from "./insurer-offer-profiles";
+import { INSURER_OFFER_PROFILES, effectiveRcAmountCents } from "./insurer-offer-profiles";
 
 /** Acta 17-nov-2026 con Delta (ARCHITECTURE.md §37) — valores que no están en el Excel del repo. */
 describe("perfiles de oferta — ajustes de RSC y deducible", () => {
@@ -19,5 +19,15 @@ describe("perfiles de oferta — ajustes de RSC y deducible", () => {
     expect(sesa.rows.RC.amount).toBe(80000);
     expect(sesa.defaults.rcAmount).toBe(80000);
     expect(sesa.options.rc).toBeUndefined();
+  });
+
+  it("Equisuiza muestra 80.000 aunque la cotización guardara el 35.000 anterior al acta", () => {
+    const sesa = INSURER_OFFER_PROFILES.SESA;
+    expect(effectiveRcAmountCents(sesa, sesa.options, 3_500_000)).toBe(8_000_000);
+  });
+
+  it("con selector se respeta el monto guardado", () => {
+    const aig = INSURER_OFFER_PROFILES.AIG;
+    expect(effectiveRcAmountCents(aig, aig.options, 5_000_000)).toBe(5_000_000);
   });
 });

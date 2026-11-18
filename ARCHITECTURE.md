@@ -1193,3 +1193,7 @@ Cambios en `insurer-offer-profiles.ts`:
 **Alcance:** los cambios de perfil afectan **configuraciones nuevas**. Las cotizaciones ya existentes conservan el `rc_amount_cents` guardado en `quote_insurer_settings` — no se reescriben valores emitidos ni se alteran ofertas en curso.
 
 **Verificación:** `npm run typecheck`/`lint`/`test` limpios (27 archivos, 153 tests). `insurer-offer-profiles.test.ts` cubre las 7 RSC de Sweaden, el 15% VS con default 12% y la RC fija de 80.000 sin selector de Equisuiza.
+
+## 38. RC fija — valor vigente también en cotizaciones existentes
+
+Se corrige el **alcance** de §37 para los montos sin selector. El perfil de SESA/EQUISUIZA ya tenía RC fija de 80.000, pero las cotizaciones creadas antes del acta seguían mostrando el 35.000 guardado en `quote_insurer_settings` (verificado en Neon: `COT-2026-00002`…`00013` con `rc_amount_cents = 3500000`). Como "fija" es una propiedad de la aseguradora y no una elección del agente, `getConfiguration()` usa `effectiveRcAmountCents()`: si el perfil no ofrece `options.rc`, el monto mostrado (en "Configurar oferta" y en la hoja/PDF de oferta) sale del perfil, sin reescribir la BD. Con selector se respeta lo guardado, que es una elección real. Cubre a todas las aseguradoras con RC fija, no solo Equisuiza. Sin migración de datos: el histórico sigue intacto y se despliega solo con código.

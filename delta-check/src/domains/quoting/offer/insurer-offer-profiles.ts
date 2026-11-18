@@ -499,3 +499,17 @@ export const KM_OFFER_PROFILE = {
     partialDeductible: ["* 10% VS, 1% VA, mínimo USD 150 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 200 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 250 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 300 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 350 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 500 (el que sea mayor)", "* 10% VS, 1% VA, mínimo USD 550 (el que sea mayor)"],
   },
 };
+
+/**
+ * RC vigente de una columna. Si el perfil no tiene selector, el monto es fijo:
+ * manda el valor del perfil aunque la cotización se creó antes de un cambio de
+ * acta (EquiSuiza/SESA pasó de 35.000 a 80.000). Con selector se respeta lo
+ * guardado, que es lo que el ag eligió entre las opciones del Excel.
+ */
+export function effectiveRcAmountCents(
+  profile: InsurerOfferProfile | null,
+  options: InsurerOfferProfile["options"],
+  storedCents: number | null,
+): number | null {
+  return profile && !options.rc?.length ? profile.defaults.rcAmount * 100 : storedCents;
+}
