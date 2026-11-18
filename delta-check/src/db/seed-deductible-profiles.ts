@@ -21,12 +21,13 @@ export async function seedDeductibleProfiles(organizationId: string) {
     const profile = INSURER_OFFER_PROFILES[insurer.code];
     if (!profile) continue;
 
-    // Acta 17-nov (ARCHITECTURE.md §37): Sweaden incorporó 15% VS. Como este
-    // seed respeta filas ya editadas desde /admin/deducibles, una fila
-    // preexistente se quedaría sin la opción nueva (el override tapa al
-    // perfil hardcodeado). Mergeamos solo el fragmento `vs`, sin tocar el
-    // resto de la fila ni a otras aseguradoras; es idempotente.
-    if (insurer.code === "SWEADEN" && profile.options.partialDeductibleParts) {
+    // Acta 17-nov (ARCHITECTURE.md §37/§39): Sweaden incorporó 15% VS y 30%
+    // en pérdida total. Como este seed respeta filas ya editadas desde
+    // /admin/deducibles, una fila preexistente se quedaría sin las opciones
+    // nuevas (el override tapa al perfil hardcodeado). Mergeamos solo esas
+    // listas, sin tocar el resto de la fila ni a otras aseguradoras; es
+    // idempotente.
+    if (insurer.code === "SWEADEN") {
       const where = and(
         eq(insurerDeductibleProfiles.organizationId, organizationId),
         eq(insurerDeductibleProfiles.insurerId, insurer.id),
@@ -36,17 +37,32 @@ export async function seedDeductibleProfiles(organizationId: string) {
         .from(insurerDeductibleProfiles)
         .where(where)
         .limit(1);
-      const existingParts = existing?.partialParts as DeductibleParts | null | undefined;
-      if (existingParts) {
-        const vs = Array.from(
-          new Set([...existingParts.vs, ...profile.options.partialDeductibleParts.vs]),
+      if (existing) {
+        const patch: {
+          partialParts?: DeductibleParts;
+          totalLossOptions?: string[];
+          updatedAt: Date;
+        } = { updatedAt: new Date() };
+        const existingParts = existing.partialParts as DeductibleParts | null | undefined;
+        if (existingParts && profile.options.partialDeductibleParts) {
+          const vs = Array.from(
+            new Set([...existingParts.vs, ...profile.options.partialDeductibleParts.vs]),
+          );
+          if (vs.length !== existingParts.vs.length) {
+            patch.partialParts = { ...existingParts, vs };
+            console.log("  SWEADEN: agregado 15% VS al override existente");
+          }
+        }
+        const existingTotal = (existing.totalLossOptions as string[] | null) ?? [];
+        const totalLossOptions = Array.from(
+          new Set([...existingTotal, ...(profile.options.totalLossDeductible ?? [])]),
         );
-        if (vs.length !== existingParts.vs.length) {
-          await db
-            .update(insurerDeductibleProfiles)
-            .set({ partialParts: { ...existingParts, vs }, updatedAt: new Date() })
-            .where(where);
-          console.log("  SWEADEN: agregado 15% VS al override existente");
+        if (totalLossOptions.length !== existingTotal.length) {
+          patch.totalLossOptions = totalLossOptions;
+          console.log("  SWEADEN: agregado 30% pérdida total al override existente");
+        }
+        if (patch.partialParts || patch.totalLossOptions) {
+          await db.update(insurerDeductibleProfiles).set(patch).where(where);
         }
       }
     }

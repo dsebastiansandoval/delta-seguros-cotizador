@@ -227,7 +227,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       totalLossDeductible: "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital",
       amparoPatrimonial: true,
     },
-    options: { rc: [10000, 15000, 20000, 25000, 30000, 35000, 50000], gm: [2000, 3000, 5000], partialDeductibleParts: {"vs": ["* 10% VS, ", "* 11% VS, ", "* 12% VS, ", "* 15% VS, "], "va": ["1% VA,mínimo USD ", "1.5% VA,mínimo USD ", "2% VA,mínimo USD "], "min": ["250 (el que sea mayor)", "350 (el que sea mayor)", "400 (el que sea mayor)", "450 (el que sea mayor)"]}, totalLossDeductible: ["* 15% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 20% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital"] },
+    options: { rc: [10000, 15000, 20000, 25000, 30000, 35000, 50000], gm: [2000, 3000, 5000], partialDeductibleParts: {"vs": ["* 10% VS, ", "* 11% VS, ", "* 12% VS, ", "* 15% VS, "], "va": ["1% VA,mínimo USD ", "1.5% VA,mínimo USD ", "2% VA,mínimo USD "], "min": ["250 (el que sea mayor)", "350 (el que sea mayor)", "400 (el que sea mayor)", "450 (el que sea mayor)"]}, totalLossDeductible: ["* 15% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 20% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 30% del VA por robo, Sweaden no exige dispositivo de rastreo satelital"] },
   },
   ATLANTIDA: {
     rows: {

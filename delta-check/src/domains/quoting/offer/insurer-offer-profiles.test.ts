@@ -14,6 +14,13 @@ describe("perfiles de oferta — ajustes de RSC y deducible", () => {
     expect(INSURER_OFFER_PROFILES.SWEADEN.defaults.partialDeductible).toContain("12% VS");
   });
 
+  it("Sweaden ofrece el 30% en pérdida total sin cambiar el default 25%", () => {
+    expect(INSURER_OFFER_PROFILES.SWEADEN.options.totalLossDeductible).toContain(
+      "* 30% del VA por robo, Sweaden no exige dispositivo de rastreo satelital",
+    );
+    expect(INSURER_OFFER_PROFILES.SWEADEN.defaults.totalLossDeductible).toContain("25%");
+  });
+
   it("Equisuiza (código SESA) tiene RC fija de 80.000 y sin selector", () => {
     const sesa = INSURER_OFFER_PROFILES.SESA;
     expect(sesa.rows.RC.amount).toBe(80000);
