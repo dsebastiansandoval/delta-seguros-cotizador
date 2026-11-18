@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, startTransition, useActionState, useState, type ChangeEvent } from "react";
+import { startTransition, useActionState, useState, type ChangeEvent } from "react";
 import { saveHealthOfferConfiguration } from "@/actions/health-quote.actions";
 import type { ActionResult } from "@/actions/quote.actions";
 import type { HealthComparisonRow } from "@/domains/health/services/health-comparison.service";
@@ -103,6 +103,15 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
     byInsurer.set(name, [...(byInsurer.get(name) ?? []), row]);
   }
 
+  // "PRO" (planes PLAN 5000/10000/15000) al final a pedido de Delta — el
+  // resto mantiene el orden en que aparecieron (la más barata primero,
+  // mismo criterio que ya traía getComparisonForRisk).
+  const insurerNames = [...byInsurer.keys()];
+  const proIndex = insurerNames.indexOf("PRO");
+  if (proIndex !== -1) insurerNames.push(...insurerNames.splice(proIndex, 1));
+
+  const [activeInsurer, setActiveInsurer] = useState(insurerNames[0]);
+
   // Se envía a mano para que React no reinicie el formulario tras la acción.
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -115,95 +124,103 @@ export function HealthOfferConfigurationForm({ quoteId, rows }: { quoteId: strin
       <input type="hidden" name="quoteId" value={quoteId} />
       <p className="text-sm text-muted">{included.size} planes marcados para la oferta.</p>
 
-      {/* Una sola tabla (antes 2 columnas de tarjetas tipo Pinterest) — más
-          fácil de leer de punta a punta, como OFERTA AM. Aseguradora y
-          familia de plan (ej. "STAR 15 70" agrupa sus 3 deducibles) van
-          como filas de encabezado dentro de la misma tabla, igual que las
-          barras de sección del Excel real. */}
-      <div className="overflow-x-auto rounded-xl border border-border shadow-sm">
-        <table className="w-full text-sm">
-          <tbody className="divide-y divide-border bg-surface">
-            {[...byInsurer.entries()].map(([insurerName, plans]) => (
-              <Fragment key={insurerName}>
-                <tr>
-                  <th colSpan={4} className="bg-delta-navy px-4 py-2 text-left text-xs font-bold uppercase tracking-wide text-white">
-                    {insurerName}
-                  </th>
-                </tr>
-                {groupHealthPlansByFamily(plans).map(({ family, rows: familyRows }) => (
-                  <Fragment key={`${insurerName}-${family}`}>
-                    {familyRows.length > 1 && (
-                      <tr key={`${insurerName}-${family}`}>
-                        <td colSpan={4} className="bg-background px-4 py-1 text-xs font-semibold uppercase tracking-wide text-muted">
-                          {family}
-                        </td>
-                      </tr>
-                    )}
-                    {familyRows.map((row) => (
-                      <tr key={row.quoteOptionId}>
-                        <td className="w-12 px-4 py-2.5">
-                          {manualIds.has(row.quoteOptionId) ? (
-                            // Sin tabla de tarifas: no se puede marcar "a mano" sin prima —
-                            // quedaría marcado pero invisible en la comparativa
-                            // (caratula-am.service.ts exige totalPremiumCents). Se marca
-                            // solo, al digitar la prima, más abajo.
-                            <ToggleSwitch
-                              checked={included.has(row.quoteOptionId)}
-                              disabled
-                              readOnly
-                              title="Se marca solo al digitar la prima neta"
-                              ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
-                            />
-                          ) : (
-                            <ToggleSwitch
-                              name="included"
-                              value={row.quoteOptionId}
-                              checked={included.has(row.quoteOptionId)}
-                              onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
-                              ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
-                            />
-                          )}
-                        </td>
-                        <td className="px-2 py-2.5">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</td>
-                        <td className="px-2 py-2.5 text-right">
-                          {!manualIds.has(row.quoteOptionId) ? (
-                            <span className="font-semibold tabular-nums">{formatUSD(row.totalPremiumCents ?? 0)}</span>
-                          ) : (
-                            <>
-                              {included.has(row.quoteOptionId) && <input type="hidden" name="included" value={row.quoteOptionId} />}
-                              <input type="hidden" name="premiumOptionId" value={row.quoteOptionId} />
-                              <input
-                                name={`premium:${row.quoteOptionId}`}
-                                type="number"
-                                step="0.01"
-                                min="0"
-                                defaultValue={row.netPremiumCents != null ? row.netPremiumCents / 100 : ""}
-                                placeholder="Prima neta USD"
-                                onChange={(e) => toggle(row.quoteOptionId, e.target.value !== "")}
-                                className="w-32 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
-                              />
-                            </>
-                          )}
-                        </td>
-                        <td className="px-4 py-2.5 text-right">
-                          {!manualIds.has(row.quoteOptionId) && (
-                            <a
-                              href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
-                              className="text-xs font-semibold text-link underline"
-                            >
-                              Detalles
-                            </a>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </Fragment>
-                ))}
-              </Fragment>
-            ))}
-          </tbody>
-        </table>
+      {/* Pestañas por aseguradora, como las hojas del Excel real (BMI,
+          HUMANA, SALUDSA, CONFIAMED...). Cada pestaña se queda montada
+          (solo se oculta con CSS) para que sus checkboxes sigan en el
+          <form> y no se pierda la selección al cambiar de pestaña. */}
+      <div className="flex flex-wrap gap-1 border-b border-border">
+        {insurerNames.map((insurerName) => (
+          <button
+            key={insurerName}
+            type="button"
+            onClick={() => setActiveInsurer(insurerName)}
+            className={`rounded-t-lg border border-b-0 px-4 py-2 text-xs font-bold uppercase tracking-wide ${
+              insurerName === activeInsurer
+                ? "border-delta-navy bg-delta-navy text-white"
+                : "border-border bg-background text-muted hover:bg-surface"
+            }`}
+          >
+            {insurerName}
+          </button>
+        ))}
       </div>
+
+      {insurerNames.map((insurerName) => (
+        <div
+          key={insurerName}
+          className={`columns-1 gap-3 sm:columns-2 lg:columns-3 ${insurerName === activeInsurer ? "" : "hidden"}`}
+        >
+          {groupHealthPlansByFamily(byInsurer.get(insurerName)!).map(({ family, rows: familyRows }) => (
+            <div key={family} className="mb-3 break-inside-avoid overflow-hidden rounded-lg border border-border shadow-sm">
+              {familyRows.length > 1 && (
+                <div className="bg-background px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted">{family}</div>
+              )}
+              <table className="w-full text-sm">
+                <tbody className="divide-y divide-border bg-surface">
+                  {familyRows.map((row) => (
+                    <tr key={row.quoteOptionId}>
+                      <td className="w-10 py-2 pl-3">
+                        {manualIds.has(row.quoteOptionId) ? (
+                          // Sin tabla de tarifas: no se puede marcar "a mano" sin prima —
+                          // quedaría marcado pero invisible en la comparativa
+                          // (caratula-am.service.ts exige totalPremiumCents). Se marca
+                          // solo, al digitar la prima, más abajo.
+                          <ToggleSwitch
+                            checked={included.has(row.quoteOptionId)}
+                            disabled
+                            readOnly
+                            title="Se marca solo al digitar la prima neta"
+                            ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
+                          />
+                        ) : (
+                          <ToggleSwitch
+                            name="included"
+                            value={row.quoteOptionId}
+                            checked={included.has(row.quoteOptionId)}
+                            onChange={(e) => toggle(row.quoteOptionId, e.target.checked)}
+                            ariaLabel={`Mostrar ${planLabel(row.planCode)}`}
+                          />
+                        )}
+                      </td>
+                      <td className="px-2 py-2 text-xs">{row.planCode ? planLabel(row.planCode) : "Prima neta del grupo"}</td>
+                      <td className="px-2 py-2 text-right">
+                        {!manualIds.has(row.quoteOptionId) ? (
+                          <span className="text-xs font-semibold tabular-nums">{formatUSD(row.totalPremiumCents ?? 0)}</span>
+                        ) : (
+                          <>
+                            {included.has(row.quoteOptionId) && <input type="hidden" name="included" value={row.quoteOptionId} />}
+                            <input type="hidden" name="premiumOptionId" value={row.quoteOptionId} />
+                            <input
+                              name={`premium:${row.quoteOptionId}`}
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              defaultValue={row.netPremiumCents != null ? row.netPremiumCents / 100 : ""}
+                              placeholder="Prima neta USD"
+                              onChange={(e) => toggle(row.quoteOptionId, e.target.value !== "")}
+                              className="w-28 rounded-md border border-border bg-surface px-2 py-1 text-right text-xs"
+                            />
+                          </>
+                        )}
+                      </td>
+                      <td className="py-2 pr-3 text-right">
+                        {!manualIds.has(row.quoteOptionId) && (
+                          <a
+                            href={`/cotizar/salud/${quoteId}/opciones/${row.quoteOptionId}/coberturas`}
+                            className="text-xs font-semibold text-link underline"
+                          >
+                            Detalles
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
+        </div>
+      ))}
 
       <div className="flex flex-wrap items-center gap-3">
         <button type="submit" name="intent" value="save" disabled={pending} className="rounded-lg border border-border px-4 py-2 text-sm font-semibold disabled:opacity-60">
