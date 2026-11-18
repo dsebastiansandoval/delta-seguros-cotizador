@@ -1177,3 +1177,19 @@ Pedido explícito de Delta (17-nov): "Editar cotización" debe dejar corregir **
 **Guard de póliza emitida.** Como `status !== "BORRADOR"` ya no es barrera, en Autos un cambio de modalidad podía borrar opciones con póliza (`comparisonService.resetForModalityChange`) y un reprice podía pisar primas emitidas. Se agregó `quoteService.assertEditable(tx, quoteId)`, que se llama al principio de `updateAutoQuote`, antes de cualquier mutación de riesgos/u opciones, y lanza `QuoteDeleteError` si alguna opción del quote ya tiene póliza. El guard viejo de `deleteRisk()` queda como defensa en profundidad para el caso puntual de retirar un vehículo. En Salud, `healthComparisonService.resetForRisk()` sigue siendo el guard: bloquea la recomputación completa si alguna opción tiene póliza; los cambios que no afectan tarifa (por ejemplo, corregir un nombre) siguen permitidos.
 
 **Verificación:** `npm run typecheck`/`lint`/`test` limpios (25 archivos, 145 tests). Los 3 casos nuevos de `quote.service.test.ts` cubren el guard sin base de datos: sin opciones, con opciones sin póliza y con una opción ya emitida. Queda pendiente la prueba visual en navegador con una cotización ENVIADA de cada ramo.
+
+## 37. RSC y deducibles — ajustes del acta de nov-2026
+
+Reunión con Delta (17-nov): ajustar Responsabilidad Civil y deducibles para poder probar ofertas (hoy siguen cotizando en Excel). **Fuente de verdad elegida: el acta, no el Excel del repo.** Se contrastó `COTIZADOR DELTA.xlsm` (hojas `OFERTA`/`DATOS OFERTA` y módulo VBA `Sheet4`) y **no** contiene los valores del acta: Sweaden tiene botones solo hasta 35.000 y 12% VS (`OptionButton26`–`31` y `34`–`36`), y SESA/Equisuiza tiene `OFERTA!K17 = 35000`. El único `80000` del libro está en `OFERTA AM!FH12`, que es cobertura de Salud. Es decir: no había desfase app↔Excel; el acta registra valores nuevos (o un Excel más nuevo que no llegó al repo).
+
+Cambios en `insurer-offer-profiles.ts`:
+
+- **Sweaden:** `options.rc` pasa de 6 a 7 valores (se agrega **50.000**) y `partialDeductibleParts.vs` gana **`* 15% VS, `**. El default sigue siendo 12% VS y la pérdida total sigue con 15/20/25% — el 15% nuevo es una *opción*, no el valor inicial.
+- **SESA (nombre visible EQUISUIZA):** RC fija de **80.000** en `rows.RC` y `defaults.rcAmount`. Se mantiene `options: {}` → sin selector, porque el acta la describe como monto fijo y el Excel tampoco tiene botones de RC para esa aseguradora.
+- **Forma de configuración:** se mantienen **listas cerradas** (el modelo del Excel), no monto manual. Quedó definido así en esta decisión.
+
+**Override de deducibles en BD.** `insurer_deductible_profiles` tapa al perfil hardcodeado cuando existe fila (y `db:seed:deducibles` la siembra para las 13 aseguradoras). Sin un ajuste, Sweaden seguiría mostrando 10/11/12% aunque el código ya tuviera 15%. Se extendió `seedDeductibleProfiles` con un merge idempotente que agrega el fragmento `vs` faltante **solo** a la fila de SWEADEN existente, sin tocar otros campos, otras aseguradoras ni `updatedBy`. Hay que correr `npm run db:seed:deducibles` en cada entorno donde ya se hubiera ejecutado el seed. Se corrió contra la Neon que usa Vercel (`DATABASE_URL` de `delta-check/.env.local`, ver §35) y la fila de SWEADEN quedó con `["* 10% VS, ", "* 11% VS, ", "* 12% VS, ", "* 15% VS, "]` — verificado con `psql`. Equisuiza no necesita cambio de override: su RC no vive en esa tabla.
+
+**Alcance:** los cambios de perfil afectan **configuraciones nuevas**. Las cotizaciones ya existentes conservan el `rc_amount_cents` guardado en `quote_insurer_settings` — no se reescriben valores emitidos ni se alteran ofertas en curso.
+
+**Verificación:** `npm run typecheck`/`lint`/`test` limpios (27 archivos, 153 tests). `insurer-offer-profiles.test.ts` cubre las 7 RSC de Sweaden, el 15% VS con default 12% y la RC fija de 80.000 sin selector de Equisuiza.

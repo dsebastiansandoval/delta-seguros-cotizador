@@ -8,11 +8,11 @@
  * Uso: npm run db:seed:deducibles
  */
 import { pathToFileURL } from "node:url";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "./index";
 import { insurers, insurerDeductibleProfiles } from "./schema/catalog";
 import { organizations } from "./schema/organizations";
-import { INSURER_OFFER_PROFILES } from "../domains/quoting/offer/insurer-offer-profiles";
+import { INSURER_OFFER_PROFILES, type DeductibleParts } from "../domains/quoting/offer/insurer-offer-profiles";
 
 export async function seedDeductibleProfiles(organizationId: string) {
   const autoInsurers = await db.select().from(insurers).where(eq(insurers.branch, "AUTOS"));
@@ -20,6 +20,37 @@ export async function seedDeductibleProfiles(organizationId: string) {
   for (const insurer of autoInsurers) {
     const profile = INSURER_OFFER_PROFILES[insurer.code];
     if (!profile) continue;
+
+    // Acta 17-nov (ARCHITECTURE.md §37): Sweaden incorporó 15% VS. Como este
+    // seed respeta filas ya editadas desde /admin/deducibles, una fila
+    // preexistente se quedaría sin la opción nueva (el override tapa al
+    // perfil hardcodeado). Mergeamos solo el fragmento `vs`, sin tocar el
+    // resto de la fila ni a otras aseguradoras; es idempotente.
+    if (insurer.code === "SWEADEN" && profile.options.partialDeductibleParts) {
+      const where = and(
+        eq(insurerDeductibleProfiles.organizationId, organizationId),
+        eq(insurerDeductibleProfiles.insurerId, insurer.id),
+      );
+      const [existing] = await db
+        .select()
+        .from(insurerDeductibleProfiles)
+        .where(where)
+        .limit(1);
+      const existingParts = existing?.partialParts as DeductibleParts | null | undefined;
+      if (existingParts) {
+        const vs = Array.from(
+          new Set([...existingParts.vs, ...profile.options.partialDeductibleParts.vs]),
+        );
+        if (vs.length !== existingParts.vs.length) {
+          await db
+            .update(insurerDeductibleProfiles)
+            .set({ partialParts: { ...existingParts, vs }, updatedAt: new Date() })
+            .where(where);
+          console.log("  SWEADEN: agregado 15% VS al override existente");
+        }
+      }
+    }
+
     await db
       .insert(insurerDeductibleProfiles)
       .values({

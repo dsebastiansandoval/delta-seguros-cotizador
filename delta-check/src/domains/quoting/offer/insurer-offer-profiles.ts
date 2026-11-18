@@ -23,6 +23,13 @@
  * OptionButton de RC/deducible en el Excel — su valor es fijo — pero tenían
  * un menú de opciones inventado; ahora `options: {}`, igual que SESA,
  * CONSTITUCION, UNIDOS y LATINA (los otros sin selector real).
+ *
+ * Tercera pasada (17-nov-2026, ARCHITECTURE.md §37): según el acta de la
+ * reunión con Delta se corrigen tres valores que **no** coinciden con el
+ * Excel que tenemos en el repo (COTIZADOR DELTA.xlsm sigue con los valores
+ * viejos): SWEADEN gana RC 50.000 y deducible 15% VS; SESA (visible como
+ * EQUISUIZA) pasa de RC 35.000 a 80.000 fija. Se mantiene el modelo del
+ * Excel: lista cerrada donde hay botones y monto fijo donde no los hay.
  */
 export const OFFER_COVERAGE_ROWS = [
   { key: "PERDIDA_PARCIAL", label: "Pérdida Parcial por Daño", section: "PRINCIPALES" },
@@ -108,7 +115,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       PERDIDA_TOTAL: { text: "Sí otorga" },
       ROBO_PARCIAL: { text: "Sí otorga" },
       ROBO_TOTAL: { text: "Sí otorga" },
-      RC: { amount: 35000, text: "sin costo" },
+      RC: { amount: 80000, text: "sin costo" },
       AP: { amount: 5000, text: "sin costo" },
       GM: { amount: 3000, text: "sin costo" },
       HONORARIOS_LEGALES: { text: "Sí otorga" },
@@ -124,7 +131,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       AMPARO_PATRIMONIAL: { text: "Sí otorga" },
     },
     defaults: {
-      rcAmount: 35000,
+      rcAmount: 80000,
       gmAmount: 3000,
       partialDeductible: "* 10% VS, 1% VA, mínimo USD 200 (el que sea mayor)",
       totalLossDeductible: "* 10% del VA por robo con dispositivo\n* 10% del VA por robo menores a USD 30,000 sin dispositivo\n* 20% del VA por robo mayores a USD 30,000 sin dispositivo",
@@ -220,7 +227,7 @@ export const INSURER_OFFER_PROFILES: Record<string, InsurerOfferProfile> = {
       totalLossDeductible: "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital",
       amparoPatrimonial: true,
     },
-    options: { rc: [10000, 15000, 20000, 25000, 30000, 35000], gm: [2000, 3000, 5000], partialDeductibleParts: {"vs": ["* 10% VS, ", "* 11% VS, ", "* 12% VS, "], "va": ["1% VA,mínimo USD ", "1.5% VA,mínimo USD ", "2% VA,mínimo USD "], "min": ["250 (el que sea mayor)", "350 (el que sea mayor)", "400 (el que sea mayor)", "450 (el que sea mayor)"]}, totalLossDeductible: ["* 15% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 20% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital"] },
+    options: { rc: [10000, 15000, 20000, 25000, 30000, 35000, 50000], gm: [2000, 3000, 5000], partialDeductibleParts: {"vs": ["* 10% VS, ", "* 11% VS, ", "* 12% VS, ", "* 15% VS, "], "va": ["1% VA,mínimo USD ", "1.5% VA,mínimo USD ", "2% VA,mínimo USD "], "min": ["250 (el que sea mayor)", "350 (el que sea mayor)", "400 (el que sea mayor)", "450 (el que sea mayor)"]}, totalLossDeductible: ["* 15% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 20% del VA por robo, Sweaden no exige dispositivo de rastreo satelital", "* 25% del VA por robo, Sweaden no exige dispositivo de rastreo satelital"] },
   },
   ATLANTIDA: {
     rows: {
