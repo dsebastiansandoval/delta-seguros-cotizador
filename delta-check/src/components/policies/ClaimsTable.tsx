@@ -13,7 +13,7 @@ import { CLAIM_STATUSES, CLAIM_STATUS_LABEL } from "@/domains/policies/claim-sta
 // depender del tema.
 const STATUS_STYLE: Record<string, string> = {
   REPORTADO: "bg-[#fcd34d] text-[#78350f]",
-  APROBADO: "bg-[#60a5fa] text-[#1e3a8a]",
+  APROBADO: "bg-[#2563eb] text-white",
   REPARADO: "bg-[#c084fc] text-[#581c87]",
   ENTREGADO: "bg-[#4ade80] text-[#14532d]",
 };
