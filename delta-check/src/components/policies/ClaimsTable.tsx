@@ -5,14 +5,17 @@ import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
 import { CLAIM_STATUSES, CLAIM_STATUS_LABEL } from "@/domains/policies/claim-status-labels";
 
-// Un color por estado, bien diferenciado a simple vista (pedido real del
-// usuario — con REPARADO compartiendo color con APROBADO, dos de las 4
-// etiquetas se veían iguales en la lista de Siniestros).
+// Colores fijos (no los tokens --warn/--good/--bad/--highlight, que son
+// tenues a propósito para texto normal en toda la app) — pedido explícito
+// del usuario de que las etiquetas de estado sean "de colores diferentes y
+// llamativos" / "más vivos". Fondo saturado + texto oscuro del mismo tono:
+// se ve igual de vívido sobre el fondo claro u oscuro de la página, sin
+// depender del tema.
 const STATUS_STYLE: Record<string, string> = {
-  REPORTADO: "bg-warn-bg text-warn",
-  APROBADO: "bg-accent-100 text-highlight",
-  REPARADO: "bg-progress-bg text-progress",
-  ENTREGADO: "bg-good-bg text-good",
+  REPORTADO: "bg-[#fcd34d] text-[#78350f]",
+  APROBADO: "bg-[#60a5fa] text-[#1e3a8a]",
+  REPARADO: "bg-[#c084fc] text-[#581c87]",
+  ENTREGADO: "bg-[#4ade80] text-[#14532d]",
 };
 
 export type ClaimRow = {
