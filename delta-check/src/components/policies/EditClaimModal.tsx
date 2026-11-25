@@ -7,6 +7,10 @@ import { centsToDollars } from "@/domains/shared/money";
 
 const initial: ActionResult | null = null;
 
+const inputClass = "rounded-lg border border-border-strong bg-surface px-3 py-2 text-sm";
+const sectionClass = "flex flex-col gap-3 rounded-lg border border-border bg-background p-3";
+const sectionTitleClass = "text-xs font-semibold uppercase tracking-wide text-muted";
+
 type ClaimForEdit = {
   id: string;
   claimNumber: string | null;
@@ -30,6 +34,12 @@ type ClaimForEdit = {
  * controles sueltos. El vehículo solo se edita acá cuando el siniestro es
  * standalone (`isStandalone`) — si viene de una póliza, su vehículo real
  * vive en `vehicles` vía la póliza/cotización, no en `claims`.
+ *
+ * `m-auto` en el <dialog> es necesario a propósito: el Preflight de
+ * Tailwind resetea `margin` a 0 en todos los elementos, lo que anula el
+ * `margin: auto` que el navegador usa para centrar un <dialog> abierto con
+ * `showModal()` — sin esto, el pop-up queda pegado a la esquina superior
+ * izquierda (bug real reportado por el usuario).
  */
 export function EditClaimModal({
   claim,
@@ -59,196 +69,144 @@ export function EditClaimModal({
 
       <dialog
         ref={dialogRef}
-        className="w-full max-w-2xl rounded-xl border border-border bg-surface p-0 shadow-lg backdrop:bg-black/40"
+        className="m-auto w-full max-w-2xl rounded-xl border border-border-strong bg-surface p-0 shadow-2xl backdrop:bg-black/70"
       >
         <form action={formAction} className="flex max-h-[85vh] flex-col">
           <input type="hidden" name="claimId" value={claim.id} />
 
-          <div className="flex items-center justify-between border-b border-border px-5 py-3">
-            <h2 className="text-sm font-bold uppercase tracking-wide">Editar siniestro</h2>
+          <div className="flex items-center justify-between rounded-t-xl bg-delta-navy px-5 py-3">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-white">Editar siniestro</h2>
             <button
               type="button"
               onClick={() => dialogRef.current?.close()}
-              className="text-sm text-muted hover:text-foreground"
+              className="text-sm text-white/80 hover:text-white"
             >
               ✕
             </button>
           </div>
 
           <div className="flex flex-col gap-4 overflow-y-auto px-5 py-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className={sectionClass}>
+              <p className={sectionTitleClass}>Datos del siniestro</p>
+              <div className="grid grid-cols-2 gap-4">
+                <label className="flex flex-col gap-1 text-sm">
+                  N° de siniestro
+                  <input name="claimNumber" defaultValue={claim.claimNumber ?? ""} className={inputClass} />
+                </label>
+                <label className="flex flex-col gap-1 text-sm">
+                  Valor del siniestro (USD)
+                  <input
+                    name="claimValueDollars"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    defaultValue={claim.claimValueCents != null ? centsToDollars(claim.claimValueCents) : ""}
+                    className={inputClass}
+                  />
+                </label>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <label className="flex flex-col gap-1 text-sm">
+                  Fecha del siniestro
+                  <input type="date" name="occurredAt" defaultValue={claim.occurredAt ?? ""} className={inputClass} />
+                </label>
+                <label className="flex flex-col gap-1 text-sm">
+                  Fecha de reporte
+                  <input type="date" name="reportedAt" defaultValue={claim.reportedAt ?? ""} className={inputClass} />
+                </label>
+              </div>
               <label className="flex flex-col gap-1 text-sm">
-                N° de siniestro
-                <input
-                  name="claimNumber"
-                  defaultValue={claim.claimNumber ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
+                Descripción
+                <textarea name="description" rows={3} defaultValue={claim.description ?? ""} className={inputClass} />
               </label>
               <label className="flex flex-col gap-1 text-sm">
-                Valor del siniestro (USD)
+                Deducible aplicado (USD)
                 <input
-                  name="claimValueDollars"
+                  name="deductibleAppliedDollars"
                   type="number"
                   step="0.01"
                   min="0"
-                  defaultValue={claim.claimValueCents != null ? centsToDollars(claim.claimValueCents) : ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
-              </label>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <label className="flex flex-col gap-1 text-sm">
-                Fecha del siniestro
-                <input
-                  type="date"
-                  name="occurredAt"
-                  defaultValue={claim.occurredAt ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
-              </label>
-              <label className="flex flex-col gap-1 text-sm">
-                Fecha de reporte
-                <input
-                  type="date"
-                  name="reportedAt"
-                  defaultValue={claim.reportedAt ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
+                  defaultValue={claim.deductibleAppliedCents != null ? centsToDollars(claim.deductibleAppliedCents) : ""}
+                  className={inputClass}
                 />
               </label>
             </div>
 
             {isStandalone && (
-              <>
-                <p className="text-xs font-semibold uppercase tracking-wide text-muted">Vehículo</p>
+              <div className={sectionClass}>
+                <p className={sectionTitleClass}>Vehículo</p>
                 <div className="grid grid-cols-2 gap-4">
                   <label className="flex flex-col gap-1 text-sm">
                     Placa
-                    <input
-                      name="vehiclePlate"
-                      defaultValue={vehicle.plate ?? ""}
-                      className="rounded-lg border border-border bg-surface px-3 py-2"
-                    />
+                    <input name="vehiclePlate" defaultValue={vehicle.plate ?? ""} className={inputClass} />
                   </label>
                   <label className="flex flex-col gap-1 text-sm">
                     Marca
-                    <input
-                      name="vehicleBrand"
-                      defaultValue={vehicle.brand ?? ""}
-                      className="rounded-lg border border-border bg-surface px-3 py-2"
-                    />
+                    <input name="vehicleBrand" defaultValue={vehicle.brand ?? ""} className={inputClass} />
                   </label>
                 </div>
                 <div className="grid grid-cols-3 gap-4">
                   <label className="flex flex-col gap-1 text-sm">
                     Modelo
-                    <input
-                      name="vehicleModel"
-                      defaultValue={vehicle.model ?? ""}
-                      className="rounded-lg border border-border bg-surface px-3 py-2"
-                    />
+                    <input name="vehicleModel" defaultValue={vehicle.model ?? ""} className={inputClass} />
                   </label>
                   <label className="flex flex-col gap-1 text-sm">
                     Año
-                    <input
-                      name="vehicleYear"
-                      type="number"
-                      defaultValue={vehicle.year ?? ""}
-                      className="rounded-lg border border-border bg-surface px-3 py-2"
-                    />
+                    <input name="vehicleYear" type="number" defaultValue={vehicle.year ?? ""} className={inputClass} />
                   </label>
                   <label className="flex flex-col gap-1 text-sm">
                     Color
-                    <input
-                      name="vehicleColor"
-                      defaultValue={vehicle.color ?? ""}
-                      className="rounded-lg border border-border bg-surface px-3 py-2"
-                    />
+                    <input name="vehicleColor" defaultValue={vehicle.color ?? ""} className={inputClass} />
                   </label>
                 </div>
-              </>
+              </div>
             )}
 
-            <label className="flex flex-col gap-1 text-sm">
-              Descripción
-              <textarea
-                name="description"
-                rows={3}
-                defaultValue={claim.description ?? ""}
-                className="rounded-lg border border-border bg-surface px-3 py-2"
-              />
-            </label>
-
-            <div className="grid grid-cols-2 gap-4">
+            <div className={sectionClass}>
+              <p className={sectionTitleClass}>Taller y contacto</p>
+              <div className="grid grid-cols-2 gap-4">
+                <label className="flex flex-col gap-1 text-sm">
+                  Taller
+                  <input name="workshop" defaultValue={claim.workshop ?? ""} className={inputClass} />
+                </label>
+                <label className="flex flex-col gap-1 text-sm">
+                  Asesor
+                  <input name="advisorName" defaultValue={claim.advisorName ?? ""} className={inputClass} />
+                </label>
+              </div>
               <label className="flex flex-col gap-1 text-sm">
-                Taller
-                <input
-                  name="workshop"
-                  defaultValue={claim.workshop ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
-              </label>
-              <label className="flex flex-col gap-1 text-sm">
-                Asesor
-                <input
-                  name="advisorName"
-                  defaultValue={claim.advisorName ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
+                Contacto
+                <input name="contactPhone" defaultValue={claim.contactPhone ?? ""} className={inputClass} />
               </label>
             </div>
 
-            <label className="flex flex-col gap-1 text-sm">
-              Contacto
-              <input
-                name="contactPhone"
-                defaultValue={claim.contactPhone ?? ""}
-                className="rounded-lg border border-border bg-surface px-3 py-2"
-              />
-            </label>
-
-            <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" name="hasThirdPartyLiability" defaultChecked={claim.hasThirdPartyLiability} />
-              Involucra RC (responsabilidad civil a terceros)
-            </label>
-
-            <div className="grid grid-cols-2 gap-4">
-              <label className="flex flex-col gap-1 text-sm">
-                Placa del tercero (RC)
-                <input
-                  name="thirdPartyPlate"
-                  defaultValue={claim.thirdPartyPlate ?? ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
+            <div className={sectionClass}>
+              <p className={sectionTitleClass}>Responsabilidad civil (RC)</p>
+              <label className="flex items-center gap-2 text-sm">
+                <input type="checkbox" name="hasThirdPartyLiability" defaultChecked={claim.hasThirdPartyLiability} />
+                Involucra RC (responsabilidad civil a terceros)
               </label>
-              <label className="flex flex-col gap-1 text-sm">
-                Valor del tercero — RC (USD)
-                <input
-                  name="thirdPartyValueDollars"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  defaultValue={claim.thirdPartyValueCents != null ? centsToDollars(claim.thirdPartyValueCents) : ""}
-                  className="rounded-lg border border-border bg-surface px-3 py-2"
-                />
-              </label>
+              <div className="grid grid-cols-2 gap-4">
+                <label className="flex flex-col gap-1 text-sm">
+                  Placa del tercero
+                  <input name="thirdPartyPlate" defaultValue={claim.thirdPartyPlate ?? ""} className={inputClass} />
+                </label>
+                <label className="flex flex-col gap-1 text-sm">
+                  Valor del tercero (USD)
+                  <input
+                    name="thirdPartyValueDollars"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    defaultValue={claim.thirdPartyValueCents != null ? centsToDollars(claim.thirdPartyValueCents) : ""}
+                    className={inputClass}
+                  />
+                </label>
+              </div>
             </div>
-
-            <label className="flex flex-col gap-1 text-sm">
-              Deducible aplicado (USD)
-              <input
-                name="deductibleAppliedDollars"
-                type="number"
-                step="0.01"
-                min="0"
-                defaultValue={claim.deductibleAppliedCents != null ? centsToDollars(claim.deductibleAppliedCents) : ""}
-                className="rounded-lg border border-border bg-surface px-3 py-2"
-              />
-            </label>
 
             {state?.ok === false && "form" in state.errors && (
-              <p className="text-sm text-red-600">{state.errors.form[0]}</p>
+              <p className="text-sm text-bad">{state.errors.form[0]}</p>
             )}
           </div>
 
