@@ -31,7 +31,10 @@ const DELTA_LOGO = readFileSync(join(process.cwd(), "src/domains/quoting/pdf/ass
 const DELTA_LOGO_ASPECT = 303 / 346;
 
 const INSURER_LOGO_ASPECT: Record<string, number> = {
-  AIG: 228 / 126,
+  // Recortado al contenido real — el PNG original (228×126) traía casi
+  // 70% de margen en blanco arriba/abajo, así que con la misma altura
+  // objetivo que las demás aseguradoras el logo visible salía diminuto.
+  AIG: 228 / 52,
   SESA: 582 / 116,
   GENERALI: 600 / 81,
   ZURICH: 512 / 120,
