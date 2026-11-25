@@ -98,12 +98,18 @@ export const healthComparisonService = {
         // Un plan solo se ofrece completo si TODOS los miembros tienen precio en él.
         if (prices.size !== members.length) continue;
         // `health_rate_rules.premium_cents` es la prima MENSUAL de cada
-        // miembro (verificado contra un PDF real de Delta: $193,71 titular
-        // 61F + $106,76 dependiente 41M, SaludSA Práctico 3D — coincide
-        // exacto con la tabla sembrada). PRIMA NETA de OFERTA AM es la
-        // ANUAL (×12) — de ahí sale "Total sin descuento" = PRIMA TOTAL/12,
-        // que sin este ×12 quedaba 12 veces más chico de lo real.
-        const netPremiumCents = [...prices.values()].reduce((sum, p) => sum + p, 0) * 12;
+        // miembro para casi todas las aseguradoras (verificado contra un PDF
+        // real de Delta: $193,71 titular 61F + $106,76 dependiente 41M,
+        // SaludSA Práctico 3D — coincide exacto con la tabla sembrada).
+        // PRIMA NETA de OFERTA AM es la ANUAL (×12) — de ahí sale "Total sin
+        // descuento" = PRIMA TOTAL/12. BMI es la única excepción: su tabla
+        // (BASES ASEGURADORAS AM, hoja BMI) ya viene anual — las columnas
+        // dicen literalmente "ANUAL 150"/"ANUAL 250"/etc., no hay ×12 que
+        // aplicar ahí (aplicarlo la infla otras 12 veces).
+        const netPremiumCents =
+          insurer.code === "BMI"
+            ? [...prices.values()].reduce((sum, p) => sum + p, 0)
+            : [...prices.values()].reduce((sum, p) => sum + p, 0) * 12;
         const planCode = plan.deductibleCode ? `${plan.planCode}_${plan.deductibleCode}` : plan.planCode;
 
         // `emissionFeeCents` guarda OTROS CARGOS (mismo concepto que derechos de emisión en Autos).
