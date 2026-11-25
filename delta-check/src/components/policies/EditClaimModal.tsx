@@ -40,6 +40,12 @@ type ClaimForEdit = {
  * `margin: auto` que el navegador usa para centrar un <dialog> abierto con
  * `showModal()` — sin esto, el pop-up queda pegado a la esquina superior
  * izquierda (bug real reportado por el usuario).
+ *
+ * `text-foreground` en el <dialog> también es necesario a propósito: la
+ * hoja de estilos del navegador le pone `color: CanvasText` a <dialog> por
+ * defecto, un color de sistema que no sigue nuestras variables de tema —
+ * sin esto el texto salía negro encima del fondo oscuro del pop-up en modo
+ * oscuro (bug real reportado por el usuario, "sigo viendo oscuro el texto").
  */
 export function EditClaimModal({
   claim,
@@ -69,7 +75,7 @@ export function EditClaimModal({
 
       <dialog
         ref={dialogRef}
-        className="m-auto w-full max-w-2xl rounded-xl border border-border-strong bg-surface-elevated p-0 shadow-2xl backdrop:bg-black/80"
+        className="m-auto w-full max-w-2xl rounded-xl border border-border-strong bg-surface-elevated p-0 text-foreground shadow-2xl backdrop:bg-black/80"
       >
         <form action={formAction} className="flex max-h-[85vh] flex-col">
           <input type="hidden" name="claimId" value={claim.id} />
