@@ -4,7 +4,7 @@ import { getClaimDetail, listClaimAttachments } from "@/actions/claim.actions";
 import { AddClaimNoteForm } from "@/components/policies/AddClaimNoteForm";
 import { ClaimAttachments } from "@/components/policies/ClaimAttachments";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
-import { ClaimWorkshopForm } from "@/components/policies/ClaimWorkshopForm";
+import { EditClaimModal } from "@/components/policies/EditClaimModal";
 import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
 import { CLAIM_STATUS_LABEL as STATUS_LABEL } from "@/domains/policies/claim-status-labels";
@@ -58,30 +58,33 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
       <Link href="/siniestros" className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-link underline">
         ← Volver a Siniestros
       </Link>
-      <header className="mb-6">
-        <h1 className="text-xl font-bold tracking-tight">
-          Siniestro {claim.claimNumber || `— ${clientName || "sin cliente"}`}
-        </h1>
-        <p className="mt-1 text-sm text-muted">
-          {effectiveInsurerName} · {clientName || "—"}
-          {claim.policyId ? (
-            <>
-              {" · "}
-              <a href={`/cartera/${claim.policyId}`} className="text-link underline">
-                {policyNumber || "(sin número)"}
-              </a>
-            </>
-          ) : (
-            <>
-              {" · "}
-              {policyNumber || "(sin número de póliza)"}
-              {claim.clientDocumentNumber && <> · {claim.clientDocumentNumber}</>}
-              <span className="ml-1 text-xs" title="Reportado sin vincular a una póliza de Cartera">
-                (sin póliza en Cartera)
-              </span>
-            </>
-          )}
-        </p>
+      <header className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-bold tracking-tight">
+            Siniestro {claim.claimNumber || `— ${clientName || "sin cliente"}`}
+          </h1>
+          <p className="mt-1 text-sm text-muted">
+            {effectiveInsurerName} · {clientName || "—"}
+            {claim.policyId ? (
+              <>
+                {" · "}
+                <a href={`/cartera/${claim.policyId}`} className="text-link underline">
+                  {policyNumber || "(sin número)"}
+                </a>
+              </>
+            ) : (
+              <>
+                {" · "}
+                {policyNumber || "(sin número de póliza)"}
+                {claim.clientDocumentNumber && <> · {claim.clientDocumentNumber}</>}
+                <span className="ml-1 text-xs" title="Reportado sin vincular a una póliza de Cartera">
+                  (sin póliza en Cartera)
+                </span>
+              </>
+            )}
+          </p>
+        </div>
+        <EditClaimModal claim={claim} isStandalone={!claim.policyId} vehicle={vehicle} />
       </header>
 
       <section className="mb-6 grid grid-cols-2 gap-4 rounded-xl border border-border bg-surface p-5 text-sm shadow-sm sm:grid-cols-4 [&>div]:min-w-0">
@@ -121,10 +124,12 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
             </p>
           </div>
         )}
-        <div>
-          <p className="text-xs uppercase tracking-wide text-muted">Taller</p>
-          <div className="mt-1"><ClaimWorkshopForm claimId={claim.id} workshop={claim.workshop} /></div>
-        </div>
+        {claim.workshop && (
+          <div>
+            <p className="text-xs uppercase tracking-wide text-muted">Taller</p>
+            <p className="mt-1">{claim.workshop}</p>
+          </div>
+        )}
         {claim.advisorName && (
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">Asesor</p>

@@ -154,9 +154,43 @@ export const updateClaimStatusSchema = z.object({
   status: z.enum(["REPORTADO", "APROBADO", "REPARADO", "ENTREGADO"]),
 });
 
-export const updateClaimWorkshopSchema = z.object({
+/**
+ * Edición completa del siniestro desde el pop-up "Editar siniestro" — mismos
+ * campos opcionales que `reportClaimSchema` para lo que se puede corregir
+ * después de reportarlo (nunca el ramo/aseguradora/cliente/póliza, eso no
+ * cambia una vez reportado). Los campos de vehículo solo aplican a un
+ * siniestro standalone (sin `policyId`) — `claimService.updateDetails` los
+ * ignora si el siniestro sí tiene póliza, nunca confía en que el cliente no
+ * los haya mandado igual.
+ */
+export const updateClaimDetailsSchema = z.object({
   claimId: z.uuid(),
+  claimNumber: optionalText(),
+  occurredAt: optionalDate(),
+  reportedAt: optionalDate(),
+  description: optionalText(),
   workshop: optionalText(),
+  advisorName: optionalText(),
+  contactPhone: optionalText(),
+  hasThirdPartyLiability: z.preprocess((v) => v === "on" || v === "true", z.boolean()).default(false),
+  thirdPartyPlate: optionalText(),
+  vehiclePlate: optionalText(),
+  vehicleBrand: optionalText(),
+  vehicleModel: optionalText(),
+  vehicleYear: optionalNumber(),
+  vehicleColor: optionalText(),
+  claimValueDollars: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.coerce.number().nonnegative().optional(),
+  ),
+  thirdPartyValueDollars: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.coerce.number().nonnegative().optional(),
+  ),
+  deductibleAppliedDollars: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.coerce.number().nonnegative().optional(),
+  ),
 });
 
 /** Novedad escrita a mano en el historial del siniestro — el "chat" que reemplaza la celda de observaciones del Excel. */

@@ -6,7 +6,7 @@ import { withOrganization } from "@/db";
 import { requirePermission } from "@/domains/identity/services/rbac.service";
 import { claimService } from "@/domains/policies/services/claim.service";
 import { claimAttachmentService } from "@/domains/policies/services/claim-attachment.service";
-import { addClaimNoteSchema, reportClaimSchema, updateClaimStatusSchema, updateClaimWorkshopSchema } from "@/domains/policies/schemas/policy.schema";
+import { addClaimNoteSchema, reportClaimSchema, updateClaimDetailsSchema, updateClaimStatusSchema } from "@/domains/policies/schemas/policy.schema";
 import { audit } from "@/domains/shared/audit";
 import { sendClaimNoteNotification } from "@/lib/email";
 import { env } from "@/lib/env";
@@ -67,27 +67,27 @@ export async function updateClaimStatus(
   return { ok: true, value: undefined };
 }
 
-export async function updateClaimWorkshop(
+export async function updateClaimDetails(
   _prevState: ActionResult | null,
   formData: FormData,
 ): Promise<ActionResult> {
   const session = await requirePermission("claim:manage");
 
-  const parsed = updateClaimWorkshopSchema.safeParse(Object.fromEntries(formData));
+  const parsed = updateClaimDetailsSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, errors: parsed.error.flatten().fieldErrors };
 
   await withOrganization(session.organizationId, async (tx) => {
-    await claimService.updateWorkshop(tx, parsed.data.claimId, parsed.data.workshop);
+    await claimService.updateDetails(tx, parsed.data.claimId, parsed.data);
     await audit(tx, {
       organizationId: session.organizationId,
       userId: session.userId,
-      action: "claim.workshop_updated",
+      action: "claim.details_updated",
       entityType: "claims",
       entityId: parsed.data.claimId,
-      metadata: { workshop: parsed.data.workshop ?? null },
     });
   });
 
+  revalidatePath("/siniestros");
   revalidatePath(`/siniestros/${parsed.data.claimId}`);
   return { ok: true, value: undefined };
 }

@@ -8,9 +8,10 @@ import { quoteOptions, quoteRisks } from "@/db/schema/quoting";
 import { users } from "@/db/schema/identity";
 import { dollarsToCents } from "@/domains/shared/money";
 import type { z } from "zod";
-import type { reportClaimSchema } from "../schemas/policy.schema";
+import type { reportClaimSchema, updateClaimDetailsSchema } from "../schemas/policy.schema";
 
 type ReportClaimInput = z.infer<typeof reportClaimSchema>;
+type UpdateClaimDetailsInput = z.infer<typeof updateClaimDetailsSchema>;
 type ClaimStatus = "REPORTADO" | "APROBADO" | "REPARADO" | "ENTREGADO";
 
 // Siniestro reportado directo desde Siniestros (sin policyId): "sus" datos
@@ -80,9 +81,46 @@ export const claimService = {
     return updated;
   },
 
-  /** Taller asignado — editable en cualquier momento (puede cambiar de taller durante la reparación). */
-  async updateWorkshop(tx: Db, claimId: string, workshop: string | undefined) {
-    const [updated] = await tx.update(claims).set({ workshop: workshop ?? null }).where(eq(claims.id, claimId)).returning();
+  /**
+   * Edición completa desde el pop-up "Editar siniestro" (Valor, Vehículo,
+   * Taller, etc. — todo lo que no sea el ramo/aseguradora/cliente/póliza
+   * original). Los campos de vehículo solo se aplican si el siniestro es
+   * standalone (`policyId` nulo) — si tiene póliza, el vehículo real sale
+   * del join a `vehicles` en `getDetail` y se edita desde ahí, nunca desde
+   * acá, así que se ignoran en vez de confiar en lo que mande el cliente.
+   */
+  async updateDetails(tx: Db, claimId: string, input: UpdateClaimDetailsInput) {
+    const [current] = await tx.select({ policyId: claims.policyId }).from(claims).where(eq(claims.id, claimId));
+    if (!current) return null;
+    const standalone = !current.policyId;
+
+    const [updated] = await tx
+      .update(claims)
+      .set({
+        claimNumber: input.claimNumber ?? null,
+        occurredAt: input.occurredAt ?? null,
+        reportedAt: input.reportedAt ?? null,
+        description: input.description ?? null,
+        workshop: input.workshop ?? null,
+        advisorName: input.advisorName ?? null,
+        contactPhone: input.contactPhone ?? null,
+        hasThirdPartyLiability: input.hasThirdPartyLiability,
+        thirdPartyPlate: input.thirdPartyPlate ?? null,
+        claimValueCents: input.claimValueDollars != null ? dollarsToCents(input.claimValueDollars) : null,
+        thirdPartyValueCents: input.thirdPartyValueDollars != null ? dollarsToCents(input.thirdPartyValueDollars) : null,
+        deductibleAppliedCents: input.deductibleAppliedDollars != null ? dollarsToCents(input.deductibleAppliedDollars) : null,
+        ...(standalone
+          ? {
+              vehiclePlate: input.vehiclePlate ?? null,
+              vehicleBrand: input.vehicleBrand ?? null,
+              vehicleModel: input.vehicleModel ?? null,
+              vehicleYear: input.vehicleYear ?? null,
+              vehicleColor: input.vehicleColor ?? null,
+            }
+          : {}),
+      })
+      .where(eq(claims.id, claimId))
+      .returning();
     return updated;
   },
 
