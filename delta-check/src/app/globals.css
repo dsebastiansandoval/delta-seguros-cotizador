@@ -14,6 +14,12 @@
   --background: #eef0f5;
   --foreground: #182338;
   --surface: #ffffff;
+  /* Tarjeta "flotante" sobre el resto (pop-ups) — en modo claro no hace
+     falta distinguirla de --surface, pero en modo oscuro --background y
+     --surface son casi el mismo tono casi negro: un pop-up con --surface
+     se mezclaba con el fondo oscurecido detrás (bug real reportado por el
+     usuario, "en modo oscuro es donde no se ve bien"). Solo se usa acá. */
+  --surface-elevated: #ffffff;
   --border: #d4d7df;
   --muted: #6b6f76;
   /* Color de links (tablas, listas) — separado de --color-delta-navy a
@@ -44,6 +50,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-link: var(--link);
@@ -72,6 +79,7 @@
     --background: #0b1220;
     --foreground: #e7ebf3;
     --surface: #111a2c;
+    --surface-elevated: #1c2a44;
     --border: #26324a;
     --muted: #9aa3b5;
     --link: #7fb0e8;
@@ -92,6 +100,7 @@
   --background: #0b1220;
   --foreground: #e7ebf3;
   --surface: #111a2c;
+  --surface-elevated: #1c2a44;
   --border: #26324a;
   --muted: #9aa3b5;
   --link: #7fb0e8;

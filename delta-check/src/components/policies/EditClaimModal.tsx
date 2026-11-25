@@ -69,7 +69,7 @@ export function EditClaimModal({
 
       <dialog
         ref={dialogRef}
-        className="m-auto w-full max-w-2xl rounded-xl border border-border-strong bg-surface p-0 shadow-2xl backdrop:bg-black/70"
+        className="m-auto w-full max-w-2xl rounded-xl border border-border-strong bg-surface-elevated p-0 shadow-2xl backdrop:bg-black/80"
       >
         <form action={formAction} className="flex max-h-[85vh] flex-col">
           <input type="hidden" name="claimId" value={claim.id} />
