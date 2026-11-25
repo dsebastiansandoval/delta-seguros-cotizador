@@ -5,10 +5,13 @@ import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
 import { CLAIM_STATUSES, CLAIM_STATUS_LABEL } from "@/domains/policies/claim-status-labels";
 
+// Un color por estado, bien diferenciado a simple vista (pedido real del
+// usuario — con REPARADO compartiendo color con APROBADO, dos de las 4
+// etiquetas se veían iguales en la lista de Siniestros).
 const STATUS_STYLE: Record<string, string> = {
   REPORTADO: "bg-warn-bg text-warn",
   APROBADO: "bg-accent-100 text-highlight",
-  REPARADO: "bg-accent-100 text-highlight",
+  REPARADO: "bg-progress-bg text-progress",
   ENTREGADO: "bg-good-bg text-good",
 };
 

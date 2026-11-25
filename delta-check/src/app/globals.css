@@ -44,6 +44,12 @@
   --warn-bg: #f7e8c5;
   --bad: #af3a26;
   --bad-bg: #f6ddd6;
+  /* Estado "En reparación" de Siniestros — separado de --highlight (que ya
+     usa "Autorizado") para que las etiquetas de estado se distingan a
+     simple vista (pedido real del usuario: "deben ser de colores
+     diferentes y llamativos", las 4 etiquetas se veían solo ámbar/azul). */
+  --progress: #6d28d9;
+  --progress-bg: #ece3fb;
 }
 
 @theme inline {
@@ -64,6 +70,8 @@
   --color-warn-bg: var(--warn-bg);
   --color-bad: var(--bad);
   --color-bad-bg: var(--bad-bg);
+  --color-progress: var(--progress);
+  --color-progress-bg: var(--progress-bg);
 
   --color-delta-navy: var(--color-delta-navy);
   --color-delta-navy-2: var(--color-delta-navy-2);
@@ -93,6 +101,8 @@
     --warn-bg: #2c2311;
     --bad: #e2695a;
     --bad-bg: #301917;
+    --progress: #b794f6;
+    --progress-bg: #241b40;
   }
 }
 
@@ -114,6 +124,8 @@
   --warn-bg: #2c2311;
   --bad: #e2695a;
   --bad-bg: #301917;
+  --progress: #b794f6;
+  --progress-bg: #241b40;
 }
 
 body {
