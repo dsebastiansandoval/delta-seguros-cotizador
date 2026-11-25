@@ -80,6 +80,12 @@ export const claimService = {
     return updated;
   },
 
+  /** Taller asignado — editable en cualquier momento (puede cambiar de taller durante la reparación). */
+  async updateWorkshop(tx: Db, claimId: string, workshop: string | undefined) {
+    const [updated] = await tx.update(claims).set({ workshop: workshop ?? null }).where(eq(claims.id, claimId)).returning();
+    return updated;
+  },
+
   /** Agrega una novedad al historial — el "chat" que reemplaza la celda de observaciones del Excel compartido. */
   async addNote(tx: Db, organizationId: string, claimId: string, userId: string, note: string) {
     const [event] = await tx

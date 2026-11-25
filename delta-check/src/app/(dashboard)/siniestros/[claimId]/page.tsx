@@ -4,6 +4,7 @@ import { getClaimDetail, listClaimAttachments } from "@/actions/claim.actions";
 import { AddClaimNoteForm } from "@/components/policies/AddClaimNoteForm";
 import { ClaimAttachments } from "@/components/policies/ClaimAttachments";
 import { ClaimStatusForm } from "@/components/policies/ClaimStatusForm";
+import { ClaimWorkshopForm } from "@/components/policies/ClaimWorkshopForm";
 import { formatUSD } from "@/domains/shared/money";
 import { daysSince } from "@/domains/shared/days-since";
 import { CLAIM_STATUS_LABEL as STATUS_LABEL } from "@/domains/policies/claim-status-labels";
@@ -120,12 +121,10 @@ export default async function ClaimDetailPage({ params }: { params: Promise<{ cl
             </p>
           </div>
         )}
-        {claim.workshop && (
-          <div>
-            <p className="text-xs uppercase tracking-wide text-muted">Taller</p>
-            <p className="mt-1">{claim.workshop}</p>
-          </div>
-        )}
+        <div>
+          <p className="text-xs uppercase tracking-wide text-muted">Taller</p>
+          <div className="mt-1"><ClaimWorkshopForm claimId={claim.id} workshop={claim.workshop} /></div>
+        </div>
         {claim.advisorName && (
           <div>
             <p className="text-xs uppercase tracking-wide text-muted">Asesor</p>

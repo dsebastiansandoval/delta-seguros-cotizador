@@ -154,6 +154,11 @@ export const updateClaimStatusSchema = z.object({
   status: z.enum(["REPORTADO", "APROBADO", "REPARADO", "ENTREGADO"]),
 });
 
+export const updateClaimWorkshopSchema = z.object({
+  claimId: z.uuid(),
+  workshop: optionalText(),
+});
+
 /** Novedad escrita a mano en el historial del siniestro — el "chat" que reemplaza la celda de observaciones del Excel. */
 export const addClaimNoteSchema = z.object({
   claimId: z.uuid(),
