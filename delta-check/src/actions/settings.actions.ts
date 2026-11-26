@@ -22,12 +22,20 @@ const ENTITY_TYPE: Record<FormListKind, string> = {
   vendors: "quote_vendors",
 };
 
+// Mayúscula la primera letra de cada nombre/apellido, resto en minúscula
+// (ej. "JUAN CARLOS MONTENEGRO" -> "Juan Carlos Montenegro") — convención
+// pedida por el usuario; antes todo quedaba en mayúsculas, como en el Excel.
 const nameSchema = z
   .string()
   .trim()
   .min(1, "Ingresa el nombre")
   .max(80, "Nombre muy largo")
-  .transform((s) => s.replace(/\s+/g, " ").toUpperCase());
+  .transform((s) =>
+    s
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .replace(/(^|\s)([a-záéíóúñü])/g, (_, sep, letter) => sep + letter.toUpperCase()),
+  );
 
 export async function getSettingsOverview() {
   const session = await requirePermission("quote:read");
